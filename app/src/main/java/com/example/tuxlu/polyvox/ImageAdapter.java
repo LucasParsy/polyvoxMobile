@@ -70,20 +70,22 @@ public class ImageAdapter extends BaseAdapter {
             View v = view;
             ImageView picture;
             TextView name;
+            TextView viewers;
 
             if (v == null) {
                 v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
                 v.setTag(R.id.picture, v.findViewById(R.id.picture));
                 v.setTag(R.id.text, v.findViewById(R.id.text));
+                v.setTag(R.id.viewers, v.findViewById(R.id.viewers));
             }
             picture = (ImageView) v.getTag(R.id.picture);
             name = (TextView) v.getTag(R.id.text);
-
+            viewers = (TextView) v.getTag(R.id.viewers);
             RoomBox item = getItem(i);
 
             picture.setImageBitmap(item.bitmap);
             name.setText(item.name);
-
+            viewers.setText(String.valueOf(item.viewers));
             return v;
         }
 
