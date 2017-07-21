@@ -44,7 +44,7 @@ public class HomepageInfoThread extends Thread {
 
         try {
             infoJson = new JSONObject(context.getString(R.string.sampleHomepageJSON));
-            //infoJson = NetworkUtils.downloadJSON("https://polyvox.com/api/v1/homepage");
+            //infoJson = NetworkUtils.downloadJSON("https://polyvox.com/api/v1/homepage", context);
             //Log.v(TAG, R.string.sampleHomepageJSON);
             //Log.v(TAG, R.string.sampleHomepageJSON);
             jArray = infoJson.getJSONArray("rooms");
@@ -52,7 +52,6 @@ public class HomepageInfoThread extends Thread {
             e.printStackTrace();
         }
 
-        Log.v(TAG, context.getString(R.string.sampleHomepageJSON));
         Log.v(TAG, jArray.toString());
 
         for (int i=0; i < jArray.length(); i++)

@@ -49,7 +49,7 @@ public class ImageUtils {
         if(fpath.exists()){
             return BitmapFactory.decodeFile(fpath.getPath());
         }
-        InputStream stream = NetworkUtils.downloadStream(urlStr);
+        InputStream stream = NetworkUtils.downloadStream(urlStr, context);
         Bitmap bmpimg = BitmapFactory.decodeStream(stream);
         try{if(stream != null)stream.close();}catch(Exception e){ e.printStackTrace(); }
         bitmapToFile(bmpimg, id, context);

@@ -1,6 +1,11 @@
 package com.example.tuxlu.polyvox;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 
 import org.json.JSONObject;
@@ -20,9 +25,25 @@ import java.net.URLConnection;
 
 public class NetworkUtils  {
 
-    public static InputStream downloadStream(String urlStr)
+    public static boolean isConnected(Context context) {
+        ConnectivityManager mgr = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = mgr.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    public static InputStream downloadStream(String urlStr, Context context)
     {
         InputStream in = null;
+
+        while (!isConnected(context)) {
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         try
         {
@@ -46,8 +67,8 @@ public class NetworkUtils  {
     }
 
     @Nullable
-    public static JSONObject downloadJSON(String url) {
-        InputStream in = downloadStream(url);
+    public static JSONObject downloadJSON(String url, Context context) {
+        InputStream in = downloadStream(url, context);
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"), 8);
             StringBuilder sb = new StringBuilder();
