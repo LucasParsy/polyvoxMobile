@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -42,7 +43,11 @@ public class Home extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
 
-        //TODO enlever l'icone de recherche sur la searchbar.
+        //enlève icône de recherche sur la searchBar
+        ImageView magImage = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        magImage.setVisibility(View.GONE);
+        magImage.setImageDrawable(null);
+
         final MenuItem searchItem = menu.findItem(R.id.search);
         MenuItemCompat.setOnActionExpandListener(searchItem, new SearchBarExpander(searchItem, menu));
         return true;

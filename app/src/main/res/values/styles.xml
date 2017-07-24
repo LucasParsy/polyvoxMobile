@@ -13,11 +13,6 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="searchViewStyle">@style/SearchViewStyle</item>
-    </style>
-
-    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="searchHintIcon">@null</item>
     </style>
 
 
