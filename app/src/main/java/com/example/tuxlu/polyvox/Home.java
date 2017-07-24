@@ -1,7 +1,14 @@
 package com.example.tuxlu.polyvox;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +25,10 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home);
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(myToolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
         //myToolbar.setNavigationIcon(R.drawable.ic_search_black_24dp);
-        //getSupportActionBar().setTitle("Sujets");
+        getSupportActionBar().setTitle("Sujets");
         homepage = new HomepageInfo(this, (GridView) findViewById(R.id.gridview));
     }
 
@@ -29,6 +36,15 @@ public class Home extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
+        //TODO enlever l'icone de recherche sur la searchbar.
+        final MenuItem searchItem = menu.findItem(R.id.search);
+        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchBarExpander(searchItem, menu));
         return true;
     }
 
@@ -40,9 +56,9 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+            //return true;
+        //}
         return super.onOptionsItemSelected(item);
     }
 }
