@@ -53,6 +53,13 @@
         ]
     }
     </string>
+
+
+    <string name="search_hint">
+        sujet, thème&#8230;
+    </string>
+
+
     <string name="large_text">
         \"Material is the metaphor.\n\n\"
 

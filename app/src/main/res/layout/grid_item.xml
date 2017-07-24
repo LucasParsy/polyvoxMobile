@@ -12,6 +12,7 @@
         android:scaleType="centerCrop" />
 
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
@@ -56,6 +57,7 @@
                 android:layout_weight="0.3">
 
             <ImageView
+                android:contentDescription="viewer icon"
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
