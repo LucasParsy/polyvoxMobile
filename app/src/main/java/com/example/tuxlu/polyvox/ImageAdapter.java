@@ -19,23 +19,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-public class HomepageInfo extends Activity {
-    HomepageInfoDownloader dlThread;
-    Handler handler = new Handler();
-
-
-
-    @Override
-     public void handleMessage(Message msg) {
-        myAdapter.notifyDataSetChanged();
-     }
-
-};
-*/
-
-
-
 public class ImageAdapter extends BaseAdapter {
 
         private static final String TAG = "ImageAdapter";

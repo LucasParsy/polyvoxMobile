@@ -1,38 +1,72 @@
 package com.example.tuxlu.polyvox;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+
+import java.util.List;
+import java.util.Vector;
 
 
 public class Home extends AppCompatActivity {
 
-    HomepageInfo homepage;
+    Discover homepage;
+    PagerAdapter adapter;
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_home);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-        //myToolbar.setNavigationIcon(R.drawable.ic_search_black_24dp);
-        getSupportActionBar().setTitle("Sujets");
-        homepage = new HomepageInfo(this, (GridView) findViewById(R.id.gridview));
+        setContentView(R.layout.activity_home);
+        configToolbar();
+
+
+        //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
+        List fragments = new Vector();
+        fragments.add(Fragment.instantiate(this,Discover.class.getName())); //discover
+        fragments.add(Fragment.instantiate(this,Discover.class.getName())); //amis
+        fragments.add(Fragment.instantiate(this,Discover.class.getName())); //chat
+        int[] tabTitles = new int[]{R.string.tab_discover,
+                                    R.string.tab_friends, R.string.tab_chat};
+
+        adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles);
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+
+        ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
     }
 
+    private void configToolbar()
+    {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle(R.string.app_name);
+    }
+
+    /*
+    Toolbar configuration
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -55,15 +89,41 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-            //return true;
-        //}
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+    public class PagerAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> fragments;
+        int[] tabTitles;
+
+        public PagerAdapter(FragmentManager fm, List nfragments, int[] ntabTitles) {
+            super(fm);
+            this.fragments = nfragments;
+            this.tabTitles = ntabTitles;
+        }
+
+        public CharSequence getPageTitle(int position) {
+            return getResources().getString(tabTitles[position]);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return this.fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return this.fragments.size();
+        }
+
+    }
+
+
+
+
 }
