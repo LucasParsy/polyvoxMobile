@@ -5,16 +5,10 @@
     tools:context="Discover">
 
 
-    <GridView
-        android:id="@+id/gridview"
+    <ListView
+        android:id="@+id/private_chat_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:columnWidth="90dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="@integer/homepage_rooms_row_number"
-        android:stretchMode="columnWidth" />
+        android:layout_height="match_parent" />
 
     <include
         layout="@layout/loading_layout"

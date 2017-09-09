@@ -1,9 +1,6 @@
 package com.example.tuxlu.polyvox;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +48,7 @@ public class ImageAdapter extends BaseAdapter {
             TextView viewers;
 
             if (v == null) {
-                v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
+                v = mInflater.inflate(R.layout.discover_room_info, viewGroup, false);
                 v.setTag(R.id.picture, v.findViewById(R.id.picture));
                 v.setTag(R.id.text, v.findViewById(R.id.text));
                 v.setTag(R.id.viewers, v.findViewById(R.id.viewers));

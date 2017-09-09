@@ -28,22 +28,23 @@ import java.util.List;
 
 //TODO changer Thread en Activity, et ajouter loading spinner.
 
-public class DiscoverThread extends Thread {
-    private static final String TAG = "DiscoverThread";
+public class DiscoverTask extends AsyncTask<Void ,Integer, Void> {
+    private static final String TAG = "DiscoverTask";
     ImageAdapter adapter;
     Handler handler;
     Context context;
+    View view;
     //TODO enlever  context lorsque API finalisée: utilisé juste pour récupérer JSON de test.
 
-    public DiscoverThread(ImageAdapter nadap, Handler nhand, Context ncont)
+    public DiscoverTask(ImageAdapter nadap, Handler nhand, View nview,  Context ncont)
     {
         handler = nhand;
         adapter = nadap;
         context = ncont;
+        view = nview;
     }
 
-    @Override
-    public void run()
+    public Void doInBackground(Void... none)
     {
         JSONObject infoJson = null;
         JSONArray jArray = null;
@@ -73,7 +74,23 @@ public class DiscoverThread extends Thread {
             }
             adapter.addBox(rb);
             handler.sendMessage(handler.obtainMessage());
+            publishProgress(i); //removes loading bar at 2 elements.
         }
+        return null;
+    }
+
+    protected void onProgressUpdate(Integer... progress) {
+        if (progress[0] == 0) {
+            LoadingUtils.endNoWifiView(view);
+        }
+
+        if (progress[0] == 2) {
+            LoadingUtils.EndLoadingView(view);
+        }
+    }
+
+    protected Void onPostExecute() {
+    return null;
     }
 
 

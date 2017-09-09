@@ -45,7 +45,7 @@ public class Home extends AppCompatActivity {
         List fragments = new Vector();
         fragments.add(Fragment.instantiate(this,Discover.class.getName())); //discover
         fragments.add(Fragment.instantiate(this,Discover.class.getName())); //amis
-        fragments.add(Fragment.instantiate(this,Discover.class.getName())); //chat
+        fragments.add(Fragment.instantiate(this,PrivateChatList.class.getName())); //chat
         int[] tabTitles = new int[]{R.string.tab_discover,
                                     R.string.tab_friends, R.string.tab_chat};
 
