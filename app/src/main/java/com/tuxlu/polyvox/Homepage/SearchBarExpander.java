@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Homepage;
 
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;

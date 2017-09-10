@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Homepage;
 
 import android.app.Activity;
 import android.app.SearchManager;

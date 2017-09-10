@@ -1,17 +1,17 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Homepage;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.LoadingUtils;
 
 /**
  * Created by tuxlu on 09/09/17.

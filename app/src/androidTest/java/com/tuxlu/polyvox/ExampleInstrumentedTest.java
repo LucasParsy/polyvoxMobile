@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.tuxlu.polyvox", appContext.getPackageName());
+        assertEquals("com.tuxlu.polyvox", appContext.getPackageName());
     }
 }

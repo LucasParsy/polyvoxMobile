@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Homepage;
 
 
 import android.content.Context;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.LoadingUtils;
 
 public class Discover extends Fragment {
     private DiscoverTask dlThread;

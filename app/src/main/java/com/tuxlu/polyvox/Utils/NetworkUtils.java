@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

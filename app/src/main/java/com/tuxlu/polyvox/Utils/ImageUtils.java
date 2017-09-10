@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

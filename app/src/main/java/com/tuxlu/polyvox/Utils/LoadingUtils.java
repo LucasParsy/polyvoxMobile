@@ -1,4 +1,4 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.example.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.R;
 
 /**
  * Created by tuxlu on 09/09/17.

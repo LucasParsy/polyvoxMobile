@@ -1,26 +1,17 @@
-package com.example.tuxlu.polyvox;
+package com.tuxlu.polyvox.Homepage;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.UiThread;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
+
+import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.LoadingUtils;
+import com.tuxlu.polyvox.Utils.ImageUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 
 /**
  * Created by parsyl on 19/07/2017.
