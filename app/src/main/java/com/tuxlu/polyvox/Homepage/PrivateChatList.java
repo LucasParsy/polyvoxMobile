@@ -50,7 +50,7 @@ public class PrivateChatList extends Fragment {
     }
 
 
-    void setGridView(final ListView list, final ImageAdapter adapter, final Context context)
+/*    void setGridView(final ListView list, final ImageAdapter adapter, final Context context)
     {
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,5 +59,5 @@ public class PrivateChatList extends Fragment {
             }
         });
     }
-
+*/
 }

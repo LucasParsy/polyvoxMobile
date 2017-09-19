@@ -8,9 +8,10 @@ import android.graphics.Bitmap;
 
 public class RoomBox {
     public String name;
+    public String imageUrl;
     public int viewers;
     public int roomID;
-    public Bitmap bitmap;
+
 
     RoomBox() {}
 }

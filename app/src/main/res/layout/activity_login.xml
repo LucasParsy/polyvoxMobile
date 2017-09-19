@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/LoginBigLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/LoginPromptMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_prompt_message"
+        android:textAlignment="center" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <!-- Todo changer si identification par username plutot que mail -->
+        <!-- EditText
+            android:id="@+id/LoginIDInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+            android:drawableStart="@drawable/ic_account_circle_black_24dp"
+            android:hint="@string/username_hint"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout-->
+
+
+        <EditText
+            android:id="@+id/LoginIDInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@android:drawable/ic_dialog_email"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:hint="@string/mail_hint"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/LoginPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/LoginConnectButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/login_connect" />
+
+    <Button
+        android:id="@+id/LoginConnectionProblemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/login_connection_problem"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/LoginFacebookAlternative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/login_or"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/LoginFacebookStub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/colorPrimary"
+        android:text="Connexion Facebook Soon"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/LoginCreateAccountPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_create_prompt"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/LoginCreateAccountButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/login_create_account" />
+
+
+</LinearLayout>

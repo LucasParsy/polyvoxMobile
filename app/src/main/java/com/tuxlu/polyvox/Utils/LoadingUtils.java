@@ -32,16 +32,16 @@ public class LoadingUtils {
 
         handler.postDelayed(new Runnable(){
             public void run(){
-                ((View) view.findViewById(R.id.noWifiLinear)).setVisibility(View.VISIBLE);
-                ((View) view.findViewById(R.id.noWifiProgressBar)).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.noWifiLinear).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.noWifiProgressBar).setVisibility(View.INVISIBLE);
             }
         }, delay);
     }
 
     public static void endNoWifiView(View view)
     {
-        ((View) view.findViewById(R.id.noWifiLinear)).setVisibility(View.INVISIBLE);
-        ((View) view.findViewById(R.id.noWifiProgressBar)).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.noWifiLinear).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.noWifiProgressBar).setVisibility(View.VISIBLE);
         handler.removeCallbacksAndMessages(null);
     }
 

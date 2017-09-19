@@ -48,7 +48,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:onClick="LoadingUtils."
             android:text="@string/network_settings"
             tools:text="@string/network_settings" />
 

@@ -2,64 +2,126 @@ package com.tuxlu.polyvox.Homepage;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.DummyAPIServer;
 import com.tuxlu.polyvox.Utils.LoadingUtils;
+import com.tuxlu.polyvox.Utils.VHttp;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Discover extends Fragment {
-    private DiscoverTask dlThread;
-    private   Handler handler;
     private static final String TAG = "Discover";
-    private boolean finishedLoading = false;
 
     public Discover() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_discover, container, false);
 
         final Context context = getContext();
-        LoadingUtils.StartLoadingView(view, context);
+
+       final RecyclerView grid = (RecyclerView) view.findViewById(R.id.recycleView);
+        grid.setHasFixedSize(true);
+
+        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),
+                getResources().getInteger(R.integer.homepage_rooms_row_number));
+
+        SpaceItemDecoration dividerItemDecoration = new SpaceItemDecoration(8);
+        grid.addItemDecoration(dividerItemDecoration);
+
+        grid.setLayoutManager(layoutManager);
 
 
 
-        final ImageAdapter adapter = new ImageAdapter(context);
+        //todo changer URL pour API
+        String url = "https://gist.githubusercontent.com/LucasParsy/ac7d519b13d75c1bdaacdda6841cff3a/raw/81ae461fbe0108de41e0cf795e86b4b09240e7c4/pvSampleHomepageJSON";
 
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                adapter.notifyDataSetChanged();
-            }
-        };
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-        dlThread = new DiscoverTask(adapter, handler, view, context);
-        dlThread.execute();
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        grid.setAdapter(new DiscoverAdapter(parseRoomboxJSON(response)));
+                        LoadingUtils.EndLoadingView(view);
+                    }
+                }, new Response.ErrorListener() {
 
-        final GridView grid  = (GridView) view.findViewById(R.id.gridview);
-        setGridView(grid, adapter, context);
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        VHttp.getInstance(context).addToRequestQueue(jsObjRequest);
 
         return view;
     }
 
-    void setGridView(final GridView grid, final ImageAdapter adapter, final Context context)
-    {
-        grid.setAdapter(adapter);
+    List<RoomBox> parseRoomboxJSON(JSONObject infoJson) {
+        List<RoomBox> data = new ArrayList<>();
+        JSONArray jArray = null;
 
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(context , "" + position, Toast.LENGTH_SHORT).show();
-           }
-        });
+        try {
+            jArray = infoJson.getJSONArray("rooms");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < jArray.length(); i++) {
+            RoomBox rb = new RoomBox();
+            try {
+                JSONObject obj = jArray.getJSONObject(i);
+                rb.name = obj.getString("title");
+                rb.imageUrl = obj.getString("picture");
+                rb.viewers = obj.getInt("viewers");
+                rb.roomID = obj.getInt("roomID");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            data.add(rb);
+        }
+        return data;
+    }
+
+    public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private final int mSpaceHeight;
+
+        public SpaceItemDecoration(int mSpaceHeight) {
+            this.mSpaceHeight = mSpaceHeight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            outRect.bottom = mSpaceHeight;
+            outRect.top = mSpaceHeight;
+            outRect.left = mSpaceHeight;
+            outRect.right = mSpaceHeight;
+        }
     }
 }

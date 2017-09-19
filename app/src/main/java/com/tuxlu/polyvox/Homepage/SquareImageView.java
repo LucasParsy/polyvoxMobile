@@ -4,7 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class SquareImageView extends ImageView {
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
+public class SquareImageView extends NetworkImageView {  //android.support.v7.widget.AppCompatImageView {
     public SquareImageView(Context context) {
         super(context);
     }
