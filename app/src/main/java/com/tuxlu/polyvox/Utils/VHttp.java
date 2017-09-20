@@ -23,7 +23,7 @@ public class VHttp {
 
     private VHttp(Context context) {
         mCtx = context;
-        final int cacheSize = 4 * 1024 * 1024;
+        final int cacheSize = 20;
         mRequestQueue = getRequestQueue();
 
         mImageLoader = new ImageLoader(mRequestQueue,
@@ -54,8 +54,10 @@ public class VHttp {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
+            //todo enlever Dummy quand connexion API faite
+            DummyAPIServer dummy = new DummyAPIServer(mCtx);
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext(),
-                    new OkHttp3Stack());
+                    new OkHttp3Stack(dummy));
         }
         return mRequestQueue;
     }

@@ -1,0 +1,83 @@
+        "users": [
+            {
+            "name": "Lucas",
+            "pass": "lucas",
+            "picture": "https://i.imgflip.com/2/kf99f.jpg",
+            "premium": true,
+            "friendList": [1, 2, 1337],
+            "currentRoom": 1744,
+            "id": 42
+            },
+
+            {
+            "name": "Simon",
+            "pass": "SMBForever",
+            "premium": true,
+            "picture": "http://www.cheatcodes.com/images/covers/19456.jpg",
+            "friendList": [42, 2],
+            "currentRoom": 1045,
+            "id": 1
+            },
+
+            {
+            "name": "Vincent",
+            "pass": "pognon",
+            "premium": true,
+            "picture": "http://www.union-habitat.org/sites/default/files/sarkozy.jpg",
+            "friendList": [42, 1],
+            "currentRoom": 3615,
+            "id": 2
+            },
+
+            {
+            "name": "Charles",
+            "pass": "Poutine",
+            "premium": false,
+            "picture": "http://securityaffairs.co/wordpress/wp-content/uploads/2015/02/Russian-hackers-150x150.png",
+            "friendList": [42],
+            "currentRoom": 0,
+            "id": 1337
+            },
+
+            {
+            "name": "Hippo",
+            "pass": "boobs",
+            "premium": false,
+            "picture": "http://www.lifelovebeauty.com/wp-content/uploads/img/fashion/products-for-breast-lift_.jpg",
+            "friendList": [],
+            "currentRoom": 1036,
+            "id": 3
+            },
+
+            {
+            "name": "Marian",
+            "pass": "marian",
+            "premium": false,
+            "picture": "http://i3.kym-cdn.com/photos/images/newsfeed/000/925/494/218.png_large",
+            "friendList": [],
+            "currentRoom": 0,
+            "id": 4
+            },
+
+            {
+            "name": "pierre",
+            "pass": "insulaire",
+            "premium": false,
+            "picture": "http://cache2.allpostersimages.com/p/MED/70/7030/YPRW100Z/posters/satellite-image-of-piton-de-la-fournaise-volcano-reunion-island-french-overseas.jpg",
+            "friendList": [],
+            "currentRoom": 0,
+            "id": 5
+            },
+
+            {
+            "name": "Etienne",
+            "pass": "etienne",
+            "premium": false,
+            "picture": "",
+            "friendList": [],
+            "currentRoom": 7854,
+            "id": 6
+            }
+        ]
+    }
+ 

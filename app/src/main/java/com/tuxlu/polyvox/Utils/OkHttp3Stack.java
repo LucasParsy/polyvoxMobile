@@ -34,7 +34,8 @@ import com.android.volley.AuthFailureError;
         import org.apache.http.ProtocolVersion;
         import org.apache.http.StatusLine;
         import org.apache.http.entity.BasicHttpEntity;
-        import org.apache.http.message.BasicHeader;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
         import org.apache.http.message.BasicHttpResponse;
         import org.apache.http.message.BasicStatusLine;
 
@@ -57,12 +58,19 @@ import com.android.volley.AuthFailureError;
  */
 public class OkHttp3Stack implements HttpStack {
 
-    public OkHttp3Stack() {
+    //todo enlever Dummy quand connexion API faite
+    private DummyAPIServer dummy;
+
+    public OkHttp3Stack(DummyAPIServer ndummy) {
+        dummy = ndummy;
     }
 
     @Override
     public HttpResponse performRequest(com.android.volley.Request<?> request, Map<String, String> additionalHeaders)
             throws IOException, AuthFailureError {
+
+        if (request.getUrl().startsWith(APIUrl.BASE_URL))
+            return dummy.dummyRequest(request, additionalHeaders);
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         int timeoutMs = request.getTimeoutMs();

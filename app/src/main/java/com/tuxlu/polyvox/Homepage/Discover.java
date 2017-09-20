@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.DummyAPIServer;
 import com.tuxlu.polyvox.Utils.LoadingUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
@@ -57,10 +58,8 @@ public class Discover extends Fragment {
 
         grid.setLayoutManager(layoutManager);
 
-
-
         //todo changer URL pour API
-        String url = "https://gist.githubusercontent.com/LucasParsy/ac7d519b13d75c1bdaacdda6841cff3a/raw/81ae461fbe0108de41e0cf795e86b4b09240e7c4/pvSampleHomepageJSON";
+        String url = APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -74,7 +73,6 @@ public class Discover extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
         VHttp.getInstance(context).addToRequestQueue(jsObjRequest);
