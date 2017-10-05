@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".User.Login"
+    android:id="@+id/LayoutLoginActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -21,12 +23,14 @@
 
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/LoginIDLayout"
         android:layout_width="match_parent"
+        app:errorEnabled="true"
         android:layout_height="wrap_content">
 
 
         <!-- Todo changer si identification par username plutot que mail -->
-        <!-- EditText
+        <!-- TextInputEditText
             android:id="@+id/LoginIDInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +42,7 @@
     </android.support.design.widget.TextInputLayout-->
 
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/LoginIDInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,10 +55,11 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/LoginPasswordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/LoginPasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:onClick="onLoginClick"
         android:text="@string/login_connect" />
 
     <Button
@@ -79,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:onClick="onLoginProblemClick"
         android:text="@string/login_connection_problem"
         android:visibility="gone" />
 
@@ -111,6 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:onClick="onCreateAccountClick"
         android:text="@string/login_create_account" />
 
 

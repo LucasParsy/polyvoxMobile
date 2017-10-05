@@ -44,10 +44,9 @@ public class Discover extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_discover, container, false);
-
         final Context context = getContext();
-
        final RecyclerView grid = (RecyclerView) view.findViewById(R.id.recycleView);
+
         grid.setHasFixedSize(true);
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),
@@ -58,7 +57,6 @@ public class Discover extends Fragment {
 
         grid.setLayoutManager(layoutManager);
 
-        //todo changer URL pour API
         String url = APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest

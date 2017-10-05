@@ -11,9 +11,8 @@
         app:showAsAction="collapseActionView|always">
     </item>
     <item
-        android:id="@+id/miProfile"
+        android:id="@+id/profileButton"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="Profile"
-        app:showAsAction="always">
-    </item>
+        app:showAsAction="always"></item>
 </menu>

@@ -1,198 +1,14 @@
 <resources>
     <string name="app_name">Polyvox</string>
-    <string name="roomList">
-    {
-        \"rooms\": [
-            {
-            \"title\": \"Mélenchon ou MLP?\",
-            \"picture\": \"http://media1.woopic.com/api/v1/images/165%2FpT_Z%2Fmelenchon-vs-le-pen-dans-la-11eme-circonscription-du-pas-de-calais|x240-Tg3.jpg?format=470x264&amp;quality=65\",
-            \"picCacheID\": \"2017-08-22-qpow\",
-            \"viewers\": 42,
-            \"roomID\": 7854
-            },
+    <string name="account_type">Polyvox</string>
 
-            {
-            \"title\": \"Retours de la Japan Expo\",
-            \"picture\": \"https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Japan_Expo_logo_2.svg/148px-Japan_Expo_logo_2.svg.png\",
-            \"picCacheID\": \"2017-08-21-jaex\",
-            \"viewers\": 72,
-            \"roomID\": 1231
-            },
-
-            {
-            \"title\": \"La Nintendo Switch: carton ou bide?\",
-            \"picture\": \"http://itechfuture.com/wp-content/uploads/2015/10/Future-technology-Innovative-gaming-tablet-based-Tegra-K1.jpg\",
-            \"picCacheID\": \"2017-08-21-switch\",
-            \"viewers\": 28,
-            \"roomID\": 1045
-            },
-
-            {
-            \"title\": \"La legalizacion, oui ou non?\",
-            \"picture\": \"http://polomania.hu/images/designs/tn3/bf68e26b.jpg\",
-            \"picCacheID\": \"2017-08-21-mjna\",
-            \"viewers\": 420,
-            \"roomID\": 420
-            },
-
-            {
-            \"title\": \"Fromage ou raclette?\",
-            \"picture\": \"https://upload.wikimedia.org/wikipedia/commons/7/7f/Raclette2.jpg\",
-            \"picCacheID\": \"2017-08-21-aqod\",
-            \"viewers\": 94,
-            \"roomID\": 1521
-            },
-
-            {
-            \"title\": \"Les films Marvel: Futur de la série\",
-            \"picture\": \"https://thepatronsaintofsuperheroes.files.wordpress.com/2015/01/marvel-logo-80s.jpg\",
-            \"picCacheID\": \"2017-08-21-mrvl\",
-            \"viewers\": 232,
-            \"roomID\": 1763
-            },
-
-
-            {
-            \"title\": \"La loi travail\",
-            \"picture\": \"https://i.ytimg.com/vi/Ozs50kSUr30/mqdefault.jpg\",
-            \"picCacheID\": \"2017-08-21-sld\",
-            \"viewers\": 3615,
-            \"roomID\": 3615
-            },
-
-
-
-            {
-            \"title\": \"the Room\",
-            \"picture\": \"http://www.oddfilms.com/blog/media/room-football.jpg\",
-            \"picCacheID\": \"2017-08-23-ohhi\",
-            \"viewers\": 72,
-            \"roomID\": 1337
-            },
-
-            {
-            \"title\": \"MisterMV: Pur génie, ou vendu à Webedia?\",
-            \"picture\": \"http://storage.programme-streaming.tv/1/Aw32kLsnz4dA0q289pn5tkVYAzXIusG6.jpg\",
-            \"picCacheID\": \"2017-08-21-mb1v\",
-            \"viewers\": 5842,
-            \"roomID\": 1744
-            },
-
-            {
-            \"title\": \"Pain au chocolat, ou chocolatine?\",
-            \"picture\": \"http://www.chococlic.com/photo/art/grande/8626869-13605559.jpg?v=1449515894\",
-            \"picCacheID\": \"2017-08-23-pcch\",
-            \"viewers\": 22,
-            \"roomID\": 1036
-            },
-
-            {
-            \"title\": \"J\'ai plus d\'idées\",
-            \"picture\": \"http://metrocapuccinododo.m.e.pic.centerblog.net/gfiyw5t2.jpg\",
-            \"picCacheID\": \"2017-08-25-zut\",
-            \"viewers\": 1,
-            \"roomID\": 2
-            }
-        ]
-    }
-    </string>
-
-    <string name="userList">
-    {
-        \"users\": [
-            {
-            \"name\": \"Lucas\",
-            \"pass\": \"lucas\",
-            \"picture\": \"https://i.imgflip.com/2/kf99f.jpg\",
-            \"premium\": true,
-            \"friendList": [1, 2, 1337],
-            \"currentRoom\": 1744,
-            \"id\": 42
-            },
-
-            {
-            \"name\": \"Simon\",
-            \"pass\": \"SMBForever\",
-            \"premium\": true,
-            \"picture\": \"http://www.cheatcodes.com/images/covers/19456.jpg\",
-            \"friendList": [42, 2],
-            \"currentRoom\": 1045,
-            \"id\": 1
-            },
-
-            {
-            \"name\": \"Vincent\",
-            \"pass\": \"pognon\",
-            \"premium\": true,
-            \"picture\": \"http://www.union-habitat.org/sites/default/files/sarkozy.jpg\",
-            \"friendList": [42, 1],
-            \"currentRoom\": 3615,
-            \"id\": 2
-            },
-
-            {
-            \"name\": \"Charles\",
-            \"pass\": \"Poutine\",
-            \"premium\": false,
-            \"picture\": \"http://securityaffairs.co/wordpress/wp-content/uploads/2015/02/Russian-hackers-150x150.png\",
-            \"friendList": [42],
-            \"currentRoom\": 0,
-            \"id\": 1337
-            },
-
-            {
-            \"name\": \"Hippo\",
-            \"pass\": \"boobs\",
-            \"premium\": false,
-            \"picture\": \"http://www.lifelovebeauty.com/wp-content/uploads/img/fashion/products-for-breast-lift_.jpg\",
-            \"friendList": [],
-            \"currentRoom\": 1036,
-            \"id\": 3
-            },
-
-            {
-            \"name\": \"Marian\",
-            \"pass\": \"marian\",
-            \"premium\": false,
-            \"picture\": \"http://i3.kym-cdn.com/photos/images/newsfeed/000/925/494/218.png_large\",
-            \"friendList": [],
-            \"currentRoom\": 0,
-            \"id\": 4
-            },
-
-            {
-            \"name\": \"pierre\",
-            \"pass\": \"insulaire\",
-            \"premium\": false,
-            \"picture\": \"http://cache2.allpostersimages.com/p/MED/70/7030/YPRW100Z/posters/satellite-image-of-piton-de-la-fournaise-volcano-reunion-island-french-overseas.jpg\",
-            \"friendList": [],
-            \"currentRoom\": 0,
-            \"id\": 5
-            },
-
-            {
-            \"name\": \"Etienne\",
-            \"pass\": \"etienne\",
-            \"premium\": false,
-            \"picture\": \"\",
-            \"friendList": [],
-            \"currentRoom\": 7854,
-            \"id\": 6
-            }
-
-        ]
-    }
-    </string>
-
-    <string name="search_hint">
-        sujet, thème&#8230;
-    </string>
-
+    <string name="search_hint">sujet, thème&#8230;</string>
     <string name="action_settings">Paramètres</string>
     <string name="tab_discover">Diffusions</string>
     <string name="tab_friends">Amis</string>
     <string name="tab_chat">Chat</string>
     <string name="network_settings">Paramètres réseau</string>
+    <string name="no_network">Problème de réseau</string>
     <string name="no_wifi_home">Erreur de réseau.\n
         Veuillez vérifier vos paramètres internet</string>
     <string name="username_hint">Identifiant</string>
@@ -205,6 +21,7 @@
     <string name="login_create_prompt">Pas encore rejoint la communauté?</string>
     <string name="login_create_account">Créer un compte</string>
     <string name="login_incorrect_credentials">E-mail ou mot de passe incorrect</string>
+    <string name="unknown_error">erreur innatendue</string>
     <!--string name="login_incorrect_credentials">Identifiant ou mot de passe incorrect</string-->
 
     <string name="large_text">

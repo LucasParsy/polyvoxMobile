@@ -79,7 +79,7 @@ public class DummyAPIServer {
         try {
             byte[] rbody = request.getBody();
             if (rbody != null) {
-                String sbod = rbody.toString();
+                String sbod = new String(rbody);
                 body = new JSONObject(sbod);
             }
         } catch (Exception e) {
@@ -99,10 +99,10 @@ public class DummyAPIServer {
     }
 
     private HttpResponse makeHttpResponse(JSONObject obj, int code) {
-        BasicStatusLine stats = new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), 200, "OK");
+        BasicStatusLine stats = new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), code, "");
         BasicHttpResponse res = new BasicHttpResponse(stats);
         try {
-            res.setEntity(new StringEntity(obj.toString()));
+            res.setEntity(new StringEntity(obj.toString(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -120,13 +120,12 @@ public class DummyAPIServer {
         JSONObject error;
 
         try {
-            valid = new JSONObject("{\"token\": \"Black\"}");
+            valid = new JSONObject("{\"token\": \"Black\", \"refreshToken\": \"refresh\"}");
             error = new JSONObject("{\"reason\": \"none\"}");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
-        JSONArray arr = new JSONArray();
 
         try {
             login = obj.getString("login");
