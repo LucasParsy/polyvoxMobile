@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DownloadManager;
 import android.app.SearchManager;
@@ -56,7 +57,6 @@ import java.util.logging.LogRecord;
 public class Home extends AppCompatActivity {
 
     private static final String TAG = "Home";
-    Discover homepage;
     PagerAdapter adapter;
     ViewPager pager;
 
@@ -106,91 +106,88 @@ public class Home extends AppCompatActivity {
             //ex: replace image getter by settings menu opener. put image Getter somewhere else.
             public boolean onMenuItemClick(MenuItem item) {
                 final Context context = getBaseContext();
-                if (!NetworkUtils.isAPIConnected(getBaseContext()))
-                    startActivity(new Intent(context, Login.class));
-                else {
-                    JSONObject req = new JSONObject();
-                    try {
-                        req.put("query", 42);
-                    } catch (JSONException e) {
-                        return true;
-                    }
-                    NetworkUtils.JSONrequest(context, Request.Method.GET,
-                            APIUrl.BASE_URL + APIUrl.INFO_USER,
-                            true, req, new Response.Listener<JSONObject>() {
-
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    String imageUrl;
-                                    try {
-                                        imageUrl = response.getString("picture");
-                                    } catch (JSONException e) {
-                                        return;
-                                    }
-                                    ImageRequest request = new ImageRequest(imageUrl,
-                                            new Response.Listener<Bitmap>() {
-                                                @Override
-                                                public void onResponse(Bitmap bitmap) {
-                                                    profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
-                                                 }
-                                            }, 0, 0, null, null, null);
-                                    VHttp.getInstance(context).addToRequestQueue(request);
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                }
-                            });
+                JSONObject req = new JSONObject();
+                try {
+                    req.put("query", 42);
+                } catch (JSONException e) {
+                    return true;
                 }
-                return true;
-            }});
-                SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-                SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-                searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-                searchView.setIconifiedByDefault(false);
+                NetworkUtils.JSONrequest(context, Request.Method.GET,
+                        APIUrl.BASE_URL + APIUrl.INFO_USER,
+                        true, req, new Response.Listener<JSONObject>() {
 
-                //enlève icône de recherche sur la searchBar
-                ImageView magImage = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-                magImage.setVisibility(View.GONE);
-                magImage.setImageDrawable(null);
-
-                final MenuItem searchItem = menu.findItem(R.id.search);
-                MenuItemCompat.setOnActionExpandListener(searchItem, new SearchBarExpander(searchItem, menu));
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                String imageUrl;
+                                try {
+                                    imageUrl = response.getString("picture");
+                                } catch (JSONException e) {
+                                    return;
+                                }
+                                ImageRequest request = new ImageRequest(imageUrl,
+                                        new Response.Listener<Bitmap>() {
+                                            @Override
+                                            public void onResponse(Bitmap bitmap) {
+                                                profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
+                                            }
+                                        }, 0, 0, null, null, null);
+                                VHttp.getInstance(context).addToRequestQueue(request);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
                 return true;
             }
+        });
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
 
-            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-                int id = item.getItemId();
-                return super.onOptionsItemSelected(item);
-            }
+        //enlève icône de recherche sur la searchBar
+        ImageView magImage = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        magImage.setVisibility(View.GONE);
+        magImage.setImageDrawable(null);
+
+        final MenuItem searchItem = menu.findItem(R.id.search);
+        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchBarExpander(searchItem, menu));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
+    }
 
 
-            public class PagerAdapter extends FragmentPagerAdapter {
+    public class PagerAdapter extends FragmentPagerAdapter {
 
-                private final List<Fragment> fragments;
-                int[] tabTitles;
+        private final List<Fragment> fragments;
+        int[] tabTitles;
 
-                public PagerAdapter(FragmentManager fm, List nfragments, int[] ntabTitles) {
-                    super(fm);
-                    this.fragments = nfragments;
-                    this.tabTitles = ntabTitles;
-                }
-
-                public CharSequence getPageTitle(int position) {
-                    return getResources().getString(tabTitles[position]);
-                }
-
-                @Override
-                public Fragment getItem(int position) {
-                    return this.fragments.get(position);
-                }
-
-                @Override
-                public int getCount() {
-                    return this.fragments.size();
-                }
-
-            }
-
+        public PagerAdapter(FragmentManager fm, List nfragments, int[] ntabTitles) {
+            super(fm);
+            this.fragments = nfragments;
+            this.tabTitles = ntabTitles;
         }
+
+        public CharSequence getPageTitle(int position) {
+            return getResources().getString(tabTitles[position]);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return this.fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return this.fragments.size();
+        }
+
+    }
+
+}

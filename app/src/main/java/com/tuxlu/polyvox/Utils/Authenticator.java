@@ -35,11 +35,12 @@ public class Authenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         final Intent intent = new Intent(context, Login.class);
 
+        /*
         //who needs it anyway?
         intent.putExtra(context.getString(R.string.account_type) , accountType);
         intent.putExtra("full_access", authTokenType);
         //intent.putExtra("is_adding_new_account", true);
-
+        */
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
@@ -69,7 +70,10 @@ public class Authenticator extends AbstractAccountAuthenticator {
             result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
             return result;
         }
-        return addAccount(response, account.type, authTokenType, null, options);
+        return null;
+        //useless, à moins de faire une connection obligatoire à l'app.
+        //voir https://github.com/SamuGG/android-account-manager-example/tree/master/Account%20Manager/src/com/samugg/example
+        //return addAccount(response, account.type, authTokenType, null, options);
     }
 
     @Override

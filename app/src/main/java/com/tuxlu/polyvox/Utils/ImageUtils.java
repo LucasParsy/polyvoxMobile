@@ -40,21 +40,4 @@ public class ImageUtils {
             e.printStackTrace();
         }
     }
-
-    //TODO supprimer le cache des anciennes images;
-
-    public static Bitmap getImage(String id, String urlStr, Context context)
-    {
-        File fpath = new File(context.getCacheDir() + "/" + id + ".png");
-        if(fpath.exists()){
-            return BitmapFactory.decodeFile(fpath.getPath());
-        }
-        InputStream stream = NetworkUtils.downloadStream(urlStr, context);
-        Bitmap bmpimg = BitmapFactory.decodeStream(stream);
-        try{if(stream != null)stream.close();}catch(Exception e){ e.printStackTrace(); }
-        bitmapToFile(bmpimg, id, context);
-        return bmpimg;
-    }
-
-
 }

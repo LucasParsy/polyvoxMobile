@@ -93,6 +93,7 @@ public class Login extends AccountAuthenticatorActivity {
                         am.addAccountExplicitly(account, null, null);
                         am.setUserData(account, "refreshToken", refreshToken);
                         am.setAuthToken(account, getString(R.string.account_type), token);
+                        //setResult(RESULT_OK); si utilisation startActivityForResult()
                         finish();
                     }
                 }, new Response.ErrorListener() {
