@@ -2,20 +2,14 @@ package com.tuxlu.polyvox.Homepage;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APIUrl;
-import com.tuxlu.polyvox.Utils.DummyAPIServer;
 import com.tuxlu.polyvox.Utils.LoadingUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
 
@@ -34,10 +27,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class Discover extends Fragment {
     private static final String TAG = "Discover";
 
     public Discover() {
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +45,7 @@ public class Discover extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_discover, container, false);
         final Context context = getContext();
-       final RecyclerView grid = (RecyclerView) view.findViewById(R.id.recycleView);
+         final RecyclerView grid = (RecyclerView) view.findViewById(R.id.recycleView);
 
         grid.setHasFixedSize(true);
 
@@ -87,6 +87,8 @@ public class Discover extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if (jArray == null)
+            return  data;
         for (int i = 0; i < jArray.length(); i++) {
             RoomBox rb = new RoomBox();
             try {

@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +9,6 @@
         android:id="@+id/gridviewDep"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
         android:columnWidth="90dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
@@ -22,7 +20,7 @@
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginStart="5dp" />
 
     <include
         layout="@layout/loading_layout"

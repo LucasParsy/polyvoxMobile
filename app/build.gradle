@@ -9,14 +9,33 @@ android {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
         targetSdkVersion 25
-        versionName 'LA connection'
+        versionName 'Salut Polyvox, mets un pouce blô!'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en", "fr" //enlève ressources langages non supportés.
     }
+
+    productFlavors {
+        dev {
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles fileTree('proguard').asList().toArray()
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+
     }
     sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/Homepage'] } }
     productFlavors {
@@ -25,6 +44,9 @@ android {
 
 repositories {
     jcenter()
+    maven {
+        url 'https://maven.google.com'
+    }
 }
 
 dependencies {
@@ -34,11 +56,25 @@ dependencies {
     })
 
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:design:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v4:25.4.0'
+
+    //network
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.android.volley:volley:1.0.0'
+
+    //debug and tools
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+
+    //exo
+    compile 'com.google.android.exoplayer:exoplayer-core:r2.5.0'
+    compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.0'
+    compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.0'
     testCompile 'junit:junit:4.12'
 }

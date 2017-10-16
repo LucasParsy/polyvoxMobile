@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.tuxlu.polyvox.R;
 
@@ -17,8 +15,8 @@ import com.tuxlu.polyvox.R;
 
 public class LoadingUtils {
 
-    private static int delay = 5000;
-    private static Handler handler = new Handler();
+    private static final int delay = 5000;
+    private static final Handler handler = new Handler();
 
     public static void StartLoadingView(final View view, final Context context)
     {

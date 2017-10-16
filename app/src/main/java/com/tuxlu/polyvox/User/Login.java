@@ -1,34 +1,22 @@
 package com.tuxlu.polyvox.User;
 
-import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Authenticator;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.tuxlu.polyvox.Homepage.DiscoverAdapter;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APIUrl;
-import com.tuxlu.polyvox.Utils.LoadingUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 

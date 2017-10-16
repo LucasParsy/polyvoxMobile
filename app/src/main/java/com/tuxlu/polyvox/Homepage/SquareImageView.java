@@ -2,9 +2,7 @@ package com.tuxlu.polyvox.Homepage;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 public class SquareImageView extends NetworkImageView {  //android.support.v7.widget.AppCompatImageView {

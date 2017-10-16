@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -19,11 +17,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Room.Room;
 import com.tuxlu.polyvox.Utils.VHttp;
 
-import org.json.JSONObject;
-
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tuxlu on 19/09/17.
@@ -32,32 +32,43 @@ import java.util.List;
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder> {
 
     private static final String TAG = "DiscoverAdapter";
-    private List<RoomBox> data;
+    protected final List<RoomBox> data;
     private VHttp vHttp;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public NetworkImageView image; //NetworkImageView?
-        public TextView name;
-        public TextView viewers;
-        private FrameLayout layout;
+        private final List<RoomBox> data;
+        public final NetworkImageView image;
+        public final TextView name;
+        public final TextView viewers;
+        private final FrameLayout layout;
 
-        public ViewHolder(View v) {
+        @OnClick(R.id.discover_room_frame) public void openRoom(View v)
+        {
+            Intent intent = new Intent(v.getContext(), Room.class);
+            intent.putExtra("id", data.get(getAdapterPosition()).roomID);
+            intent.putExtra("title", data.get(getAdapterPosition()).name);
+            v.getContext().startActivity(intent);
+        }
+
+        public ViewHolder(View v, List<RoomBox> ndata) {
             super(v);
+            ButterKnife.bind(this, v);
+            data = ndata;
             image = (NetworkImageView) v.findViewById(R.id.discover_room_picture);
             name = (TextView) v.findViewById(R.id.discover_room_name);
             viewers = (TextView) v.findViewById(R.id.discover_room_viewers);
             layout = (FrameLayout) v.findViewById(R.id.discover_room_frame);
 
             //clickListener
-            layout.setOnClickListener(new View.OnClickListener() {
+/*            layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), Home.class);
-                    intent.putExtra("id", getAdapterPosition());
+                    Intent intent = new Intent(v.getContext(), Room.class);
+                    intent.putExtra("id", data.get(getAdapterPosition()).roomID);
                     v.getContext().startActivity(intent);
                 }
-            });
+            });*/
         }
     }
 
@@ -91,9 +102,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
                 .inflate(R.layout.discover_room_info , parent, false);
         // set the view's size, margins, paddings and layout parameters
         vHttp = VHttp.getInstance(parent.getContext());
-        ViewHolder vh = new ViewHolder(v);
-
-        return vh;
+        return new ViewHolder(v, data);
     }
 
     @Override

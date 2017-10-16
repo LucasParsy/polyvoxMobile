@@ -9,8 +9,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-import okhttp3.OkHttpClient;
-
 /**
  * Created by tuxlu on 19/09/17.
  */
@@ -18,12 +16,17 @@ import okhttp3.OkHttpClient;
 public class VHttp {
     private static VHttp mInstance;
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
-    private static Context mCtx;
+    private final ImageLoader mImageLoader;
 
     private VHttp(Context context) {
-        mCtx = context;
         final int cacheSize = 20;
+
+        //todo enlever Dummy quand connexion API faite
+        DummyAPIServer dummy = new DummyAPIServer(context);
+        mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(),
+                new OkHttp3Stack(dummy));
+
+
         mRequestQueue = getRequestQueue();
 
         mImageLoader = new ImageLoader(mRequestQueue,
@@ -51,14 +54,6 @@ public class VHttp {
     }
 
     public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
-            //todo enlever Dummy quand connexion API faite
-            DummyAPIServer dummy = new DummyAPIServer(mCtx);
-            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext(),
-                    new OkHttp3Stack(dummy));
-        }
         return mRequestQueue;
     }
 

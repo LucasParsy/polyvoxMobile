@@ -2,12 +2,8 @@ package com.tuxlu.polyvox.Utils;
 
 import android.content.Context;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
-import com.tuxlu.polyvox.Homepage.Discover;
 import com.tuxlu.polyvox.R;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.entity.StringEntity;
@@ -18,17 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.Map;
-
-import okhttp3.Protocol;
-import okhttp3.Response;
 
 /**
  * Created by tuxlu on 16/09/17.
@@ -50,19 +39,16 @@ public class DummyAPIServer {
         }
     }
 
-    private JSONObject fileToJSON(int id, Context context) throws IOException, JSONException {
+    private JSONObject fileToJSON(int id, Context context) throws JSONException {
         InputStream is = context.getResources().openRawResource(id);
         String jsonString = "";
         String line;
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
             while ((line = reader.readLine()) != null)
                 jsonString += line;
 
         } catch (Exception e){
             e.printStackTrace();
-        } finally{
-            is.close();
         }
         return new JSONObject(jsonString);
     }
@@ -162,9 +148,6 @@ public class DummyAPIServer {
             e.printStackTrace();
             return null;
         }
-
-
-        JSONArray arr = new JSONArray();
 
         try {
             login = obj.getString("login");

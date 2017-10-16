@@ -1,7 +1,6 @@
 package com.tuxlu.polyvox.Homepage;
 
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,8 +10,8 @@ import android.view.MenuItem;
 
 public class SearchBarExpander implements MenuItemCompat.OnActionExpandListener {
 
-    private MenuItem searchItem;
-    private Menu menu;
+    private final MenuItem searchItem;
+    private final Menu menu;
 
     SearchBarExpander(MenuItem nIt, Menu nmen) {
         searchItem = nIt;

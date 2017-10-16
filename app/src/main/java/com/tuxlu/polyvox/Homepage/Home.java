@@ -1,17 +1,7 @@
 package com.tuxlu.polyvox.Homepage;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.DownloadManager;
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -21,25 +11,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.User.Login;
 import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
@@ -47,30 +33,35 @@ import com.tuxlu.polyvox.Utils.VHttp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class Home extends AppCompatActivity {
 
     private static final String TAG = "Home";
     PagerAdapter adapter;
-    ViewPager pager;
+    @BindView(R.id.pager) ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
         configToolbar();
 
+        //leaks verification, in debug builds only.
+        if (LeakCanary.isInAnalyzerProcess(this)) {return;}
+        LeakCanary.install(this.getApplication());
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
-        List fragments = new Vector();
+        List<Fragment> fragments = new Vector<>();
         fragments.add(Fragment.instantiate(this, Discover.class.getName())); //discover
         fragments.add(Fragment.instantiate(this, Discover.class.getName())); //amis
         fragments.add(Fragment.instantiate(this, PrivateChatList.class.getName())); //chat
@@ -78,7 +69,6 @@ public class Home extends AppCompatActivity {
                 R.string.tab_friends, R.string.tab_chat};
 
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles);
-        pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
 
@@ -88,12 +78,16 @@ public class Home extends AppCompatActivity {
     private void configToolbar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setTitle(R.string.app_name);
+        }
     }
 
     /*
     Toolbar configuration
     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -166,9 +160,9 @@ public class Home extends AppCompatActivity {
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragments;
-        int[] tabTitles;
+        final int[] tabTitles;
 
-        public PagerAdapter(FragmentManager fm, List nfragments, int[] ntabTitles) {
+        public PagerAdapter(FragmentManager fm, List<Fragment> nfragments, int[] ntabTitles) {
             super(fm);
             this.fragments = nfragments;
             this.tabTitles = ntabTitles;

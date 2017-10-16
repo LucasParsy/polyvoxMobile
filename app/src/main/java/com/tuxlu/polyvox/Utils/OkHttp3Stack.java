@@ -23,34 +23,32 @@
  */
 
 package com.tuxlu.polyvox.Utils;
+
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.HttpStack;
 
-        import com.android.volley.AuthFailureError;
-        import com.android.volley.Request;
-        import com.android.volley.toolbox.HttpStack;
-
-        import org.apache.http.*;
-        import org.apache.http.HttpResponse;
-        import org.apache.http.ProtocolVersion;
-        import org.apache.http.StatusLine;
-        import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.StatusLine;
+import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
-        import org.apache.http.message.BasicHttpResponse;
-        import org.apache.http.message.BasicStatusLine;
+import org.apache.http.message.BasicHttpResponse;
+import org.apache.http.message.BasicStatusLine;
 
-        import java.io.IOException;
-        import java.util.Map;
-        import java.util.concurrent.TimeUnit;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-        import okhttp3.Call;
-        import okhttp3.Headers;
-        import okhttp3.MediaType;
-        import okhttp3.OkHttpClient;
-        import okhttp3.Protocol;
-        import okhttp3.RequestBody;
-        import okhttp3.Response;
-        import okhttp3.ResponseBody;
+import okhttp3.Call;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * OkHttp backed {@link com.android.volley.toolbox.HttpStack HttpStack} that does not
@@ -59,7 +57,7 @@ import org.apache.http.message.BasicHeader;
 public class OkHttp3Stack implements HttpStack {
 
     //todo enlever Dummy quand connexion API faite
-    private DummyAPIServer dummy;
+    private final DummyAPIServer dummy;
 
     public OkHttp3Stack(DummyAPIServer ndummy) {
         dummy = ndummy;

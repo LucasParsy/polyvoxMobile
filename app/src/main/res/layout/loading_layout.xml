@@ -27,7 +27,8 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_wifi_off_24dp" />
+            app:srcCompat="@drawable/ic_wifi_off_24dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/noWifiText"

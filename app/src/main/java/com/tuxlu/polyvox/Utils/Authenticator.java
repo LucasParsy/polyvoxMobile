@@ -5,12 +5,10 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
 
 /**
@@ -19,7 +17,7 @@ import com.tuxlu.polyvox.User.Login;
 
 public class Authenticator extends AbstractAccountAuthenticator {
 
-    private Context context;
+    private final Context context;
 
     public Authenticator(Context ncontext) {
         super(ncontext);

@@ -2,40 +2,21 @@ package com.tuxlu.polyvox.Utils;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.AndroidAuthenticator;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,6 +54,8 @@ public class NetworkUtils {
             e.printStackTrace();
             return null;
         }
+        if (res == null)
+            return null;
         return res.get(AccountManager.KEY_AUTHTOKEN).toString();
     }
 
@@ -96,7 +79,7 @@ public class NetworkUtils {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         if (!usesApi)
                             return super.getHeaders();
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("token", token);
                         return params;
                     }
