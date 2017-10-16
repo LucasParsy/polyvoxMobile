@@ -13,7 +13,7 @@ public class APIUrl {
     public static final String CREATE_ACCOUNT = "createAccount";
     public static final String INFO_ROOM = "infoRoom";
     public static final String INFO_USER = "infoUser";
-    //public static final String VIDEO_STREAM = "video";
+    public static final String VIDEO_STREAM = "video";
     //public static final String GET_CHAT = "getChat";
     //public static final String SEND_CHAT = "sendChat";
 

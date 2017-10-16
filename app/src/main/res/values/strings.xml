@@ -2,11 +2,19 @@
     <string name="app_name">Polyvox</string>
     <string name="account_type">Polyvox</string>
 
+    <string name="share_stream_body">Je suis un débat sur Polyvox:</string>
+    <string name="join_me">rejoignez moi!</string>
+    <string name="share_with">Partager avec:</string>
+
+    <string name="search">Rechercher</string>
+    <string name="profile">Profil</string>
     <string name="search_hint">sujet, thème&#8230;</string>
     <string name="action_settings">Paramètres</string>
     <string name="tab_discover">Diffusions</string>
     <string name="tab_friends">Amis</string>
     <string name="tab_chat">Chat</string>
+    <string name="tab_queue">File d\'attente</string>
+    <string name="tab_files">Documents</string>
     <string name="network_settings">Paramètres réseau</string>
     <string name="no_network">Problème de réseau</string>
     <string name="no_wifi_home">Erreur de réseau.\n

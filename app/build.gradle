@@ -9,7 +9,7 @@ android {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
         targetSdkVersion 25
-        versionName 'StillBuilding'
+        versionName 'LA connection'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
