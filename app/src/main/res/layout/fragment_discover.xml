@@ -15,7 +15,6 @@
         android:numColumns="@integer/homepage_rooms_row_number"
         android:stretchMode="columnWidth"
         android:visibility="gone" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -76,10 +77,12 @@ public class Home extends AppCompatActivity {
     }
 
     private void configToolbar() {
+        AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
+            appBar.setExpanded(true,true);
             bar.setTitle(R.string.app_name);
         }
     }

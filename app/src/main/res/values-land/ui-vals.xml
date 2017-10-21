@@ -2,4 +2,5 @@
 <resources>
     <integer name="homepage_rooms_row_number">3</integer>
     <integer name="homepage_rooms_columns_number">2</integer>
+    <dimen name="room_video_player_size">220dp</dimen>
 </resources>

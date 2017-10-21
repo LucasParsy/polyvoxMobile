@@ -50,8 +50,6 @@ public class Room extends AppCompatActivity {
     @BindView(R.id.videoPlayerView) protected SimpleExoPlayerView videoPlayerView;
 
     @BindView(R.id.player_button_fullscreen) protected AppCompatImageButton fullscreenButton;
-    @BindDrawable(R.drawable.ic_fullscreen_expand_24dp) protected Drawable fullscreenExpandIcon;
-    @BindDrawable(R.drawable.ic_fullscreen_skrink_24dp) protected Drawable fullscreenShrinkIcon;
 
     private SimpleExoPlayer player;
 
