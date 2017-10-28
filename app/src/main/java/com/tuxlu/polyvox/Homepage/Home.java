@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +38,6 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class Home extends AppCompatActivity {
@@ -149,7 +147,7 @@ public class Home extends AppCompatActivity {
         magImage.setImageDrawable(null);
 
         final MenuItem searchItem = menu.findItem(R.id.search);
-        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchBarExpander(searchItem, menu));
+        searchItem.setOnActionExpandListener(new SearchBarExpander(searchItem, menu));
         return true;
     }
 

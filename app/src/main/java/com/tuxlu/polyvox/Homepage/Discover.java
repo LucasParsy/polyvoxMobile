@@ -27,8 +27,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 public class Discover extends Fragment {
     private static final String TAG = "Discover";
 

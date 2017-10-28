@@ -1,26 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     useLibrary 'org.apache.http.legacy' //for OkHTTP
 
     defaultConfig {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionName 'Salut Polyvox, mets un pouce blô!'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr" //enlève ressources langages non supportés.
-    }
-
-    productFlavors {
-        dev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            minSdkVersion 21
-        }
     }
 
     buildTypes {
@@ -31,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles fileTree('proguard').asList().toArray()
         }
+
         debug {
             debuggable true
             minifyEnabled false
@@ -44,9 +36,7 @@ android {
 
 repositories {
     jcenter()
-    maven {
-        url 'https://maven.google.com'
-    }
+    google()
 }
 
 dependencies {
@@ -56,10 +46,10 @@ dependencies {
     })
 
 
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:design:25.4.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.android.support:support-v4:26.1.0'
 
     //network
     compile 'com.squareup.okhttp3:okhttp:3.9.0'

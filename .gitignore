@@ -155,4 +155,4 @@ local.properties
 .recommenders/
 
 *.o
-PolyvoxServer
+/app/app-dev-release.apk

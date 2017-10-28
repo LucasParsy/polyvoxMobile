@@ -19,7 +19,8 @@
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="5dp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp" />
 
     <include
         layout="@layout/loading_layout"

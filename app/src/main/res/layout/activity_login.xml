@@ -51,7 +51,8 @@
             android:drawableStart="@android:drawable/ic_dialog_email"
             android:hint="@string/mail_hint"
             android:inputType="textEmailAddress"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:drawableLeft="@android:drawable/ic_dialog_email" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -66,7 +67,8 @@
             android:drawableStart="@android:drawable/ic_lock_idle_lock"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock" />
 
     </android.support.design.widget.TextInputLayout>
 

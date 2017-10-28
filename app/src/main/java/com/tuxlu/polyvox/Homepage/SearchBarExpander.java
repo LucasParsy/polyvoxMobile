@@ -1,6 +1,5 @@
 package com.tuxlu.polyvox.Homepage;
 
-import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -8,7 +7,7 @@ import android.view.MenuItem;
  * Created by parsyl on 24/07/2017.
  */
 
-public class SearchBarExpander implements MenuItemCompat.OnActionExpandListener {
+public class SearchBarExpander implements MenuItem.OnActionExpandListener {
 
     private final MenuItem searchItem;
     private final Menu menu;

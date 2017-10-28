@@ -14,5 +14,6 @@
         android:id="@+id/profileButton"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/profile"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom">
+    </item>
 </menu>
