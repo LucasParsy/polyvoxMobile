@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
@@ -67,4 +69,5 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.0'
     compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.0'
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

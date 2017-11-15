@@ -88,10 +88,11 @@ public class ImageUtils {
 
     }
 
+/*
             protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     // Check which request we're responding to
                 if (requestCode == REQUESTCODENUMBER) {
-
+*/
 
     public static void bitmapToFile(Bitmap myBmp, String filename, Context context)
     {

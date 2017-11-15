@@ -156,3 +156,6 @@ local.properties
 
 *.o
 /app/app-dev-release.apk
+app/debug
+app/release
+.idea

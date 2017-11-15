@@ -89,65 +89,71 @@ public class Home extends AppCompatActivity {
     Toolbar configuration
     */
 
+    boolean testOnClickProfileButton(MenuItem item, final MenuItem profileIcon)
+    {
+        final Context context = getBaseContext();
+        JSONObject req = new JSONObject();
+        try {
+            req.put("query", 42);
+        } catch (JSONException e) {
+            return true;
+        }
+        NetworkUtils.JSONrequest(context, Request.Method.GET,
+                APIUrl.BASE_URL + APIUrl.INFO_USER,
+                true, req, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String imageUrl;
+                        try {
+                            imageUrl = response.getString("picture");
+                        } catch (JSONException e) {
+                            return;
+                        }
+                        ImageRequest request = new ImageRequest(imageUrl,
+                                new Response.Listener<Bitmap>() {
+                                    @Override
+                                    public void onResponse(Bitmap bitmap) {
+                                        profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
+                                    }
+                                }, 0, 0, null, null, null);
+                        VHttp.getInstance(context).addToRequestQueue(request);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        return true;
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         final MenuItem profileIcon = menu.findItem(R.id.profileButton);
+        final MenuItem searchItem = menu.findItem(R.id.search);
         profileIcon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
 
             //TODO stupid request used to test Auth Token requests. To be modified.
             //ex: replace image getter by settings menu opener. put image Getter somewhere else.
             public boolean onMenuItemClick(MenuItem item) {
-                final Context context = getBaseContext();
-                JSONObject req = new JSONObject();
-                try {
-                    req.put("query", 42);
-                } catch (JSONException e) {
-                    return true;
-                }
-                NetworkUtils.JSONrequest(context, Request.Method.GET,
-                        APIUrl.BASE_URL + APIUrl.INFO_USER,
-                        true, req, new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                String imageUrl;
-                                try {
-                                    imageUrl = response.getString("picture");
-                                } catch (JSONException e) {
-                                    return;
-                                }
-                                ImageRequest request = new ImageRequest(imageUrl,
-                                        new Response.Listener<Bitmap>() {
-                                            @Override
-                                            public void onResponse(Bitmap bitmap) {
-                                                profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
-                                            }
-                                        }, 0, 0, null, null, null);
-                                VHttp.getInstance(context).addToRequestQueue(request);
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                            }
-                        });
-                return true;
+                return testOnClickProfileButton(item, profileIcon);
             }
         });
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
 
         //enlève icône de recherche sur la searchBar
         ImageView magImage = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
         magImage.setVisibility(View.GONE);
         magImage.setImageDrawable(null);
 
-        final MenuItem searchItem = menu.findItem(R.id.search);
-        searchItem.setOnActionExpandListener(new SearchBarExpander(searchItem, menu));
+        searchItem.setOnActionExpandListener(new SearchBarExpander(searchItem, menu, this));
         return true;
     }
 
@@ -156,33 +162,4 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
-
-    public class PagerAdapter extends FragmentPagerAdapter {
-
-        private final List<Fragment> fragments;
-        final int[] tabTitles;
-
-        public PagerAdapter(FragmentManager fm, List<Fragment> nfragments, int[] ntabTitles) {
-            super(fm);
-            this.fragments = nfragments;
-            this.tabTitles = ntabTitles;
-        }
-
-        public CharSequence getPageTitle(int position) {
-            return getResources().getString(tabTitles[position]);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return this.fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return this.fragments.size();
-        }
-
-    }
-
 }

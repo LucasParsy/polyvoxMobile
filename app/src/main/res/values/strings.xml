@@ -8,7 +8,7 @@
 
     <string name="search">Rechercher</string>
     <string name="profile">Profil</string>
-    <string name="search_hint">sujet, thème&#8230;</string>
+    <string name="search_hint">Sujet, thème&#8230;</string>
     <string name="action_settings">Paramètres</string>
     <string name="tab_discover">Diffusions</string>
     <string name="tab_friends">Amis</string>

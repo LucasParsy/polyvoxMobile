@@ -1,7 +1,10 @@
 package com.tuxlu.polyvox.Homepage;
 
+import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.tuxlu.polyvox.R;
 
 /**
  * Created by parsyl on 24/07/2017.
@@ -11,10 +14,12 @@ public class SearchBarExpander implements MenuItem.OnActionExpandListener {
 
     private final MenuItem searchItem;
     private final Menu menu;
+    private final Activity activity;
 
-    SearchBarExpander(MenuItem nIt, Menu nmen) {
+    SearchBarExpander(MenuItem nIt, Menu nmen, Activity nact) {
         searchItem = nIt;
         menu = nmen;
+        activity = nact;
     }
 
     @Override

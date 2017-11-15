@@ -6,7 +6,7 @@ package com.tuxlu.polyvox.Utils;
 
 public class APIUrl {
 
-    public static final String BASE_URL = "https://polyvox.fr/api/v1/";
+    public static final String BASE_URL = "https://api.polyvox.fr/";
     public static final String DISCOVER_ROOMS = "discoverRoom";
     public static final String SEARCH_ROOMS = "searchRoom";
     public static final String LOGIN = "login";

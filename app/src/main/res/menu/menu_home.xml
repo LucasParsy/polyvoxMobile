@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tuxlu.polyvox.Homepage.Home">
 
+
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom">
+        app:showAsAction="collapseActionView|always">
     </item>
     <item
         android:id="@+id/profileButton"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/profile"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
     </item>
 </menu>
