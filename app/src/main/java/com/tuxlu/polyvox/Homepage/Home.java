@@ -61,13 +61,13 @@ public class Home extends AppCompatActivity {
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
         List<Fragment> fragments = new Vector<>();
-        fragments.add(Fragment.instantiate(this, Discover.class.getName())); //discover
-        fragments.add(Fragment.instantiate(this, Discover.class.getName())); //amis
+        fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //discover
+        fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
         fragments.add(Fragment.instantiate(this, PrivateChatList.class.getName())); //chat
         int[] tabTitles = new int[]{R.string.tab_discover,
                 R.string.tab_friends, R.string.tab_chat};
 
-        adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles);
+        adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
 
 

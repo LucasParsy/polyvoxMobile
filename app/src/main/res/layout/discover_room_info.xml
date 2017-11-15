@@ -2,12 +2,12 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/discover_room_frame"
+    android:id="@+id/infoRoomLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.tuxlu.polyvox.Homepage.SquareImageView
-        android:id="@+id/discover_room_picture"
+        android:id="@+id/infoRoomPicture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="false"
@@ -27,7 +27,7 @@
             android:layout_weight="0.75">
 
             <TextView
-                android:id="@+id/discover_room_name"
+                android:id="@+id/infoRoomName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#7e9e9e9e"
@@ -75,7 +75,7 @@
                     android:layout_weight="0.7">
 
                     <TextView
-                        android:id="@+id/discover_room_viewers"
+                        android:id="@+id/infoRoomViewers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="bottom"
