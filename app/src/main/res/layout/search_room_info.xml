@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:id="@+id/infoRoomLayout"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:id="@+id/room_search_image_frame"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/infoRoomPicture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:scaleType="centerCrop" />
+
+        <!--android:transitionName="videoTransition"-->
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/room_search_viewers_layout"
+        android:layout_toRightOf="@+id/room_search_image_frame"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/infoRoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            tools:text="title" />
+
+        <TextView
+            android:id="@+id/infoRoomSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            tools:text="subject" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/room_search_viewers_layout"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_view" />
+
+        <TextView
+            android:id="@+id/infoRoomViewers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp"
+            tools:text="42" />
+    </LinearLayout>
+
+
+</RelativeLayout>
