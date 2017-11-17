@@ -8,13 +8,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -60,6 +63,11 @@ public class NetworkUtils {
     }
 
 
+    private static void startLoginActivity(Context context)
+    {
+        context.startActivity(new Intent(context, Login.class));
+    }
+
     public static void JSONrequest(final Context context, final int method, final String url,
                                    final boolean usesApi, final JSONObject body,
                                    final Response.Listener<JSONObject> listener,
@@ -69,12 +77,30 @@ public class NetworkUtils {
             public void run() {
                 if (usesApi && !isAPIConnected(context))
                 {
-                    context.startActivity(new Intent(context, Login.class));
+                    startLoginActivity(context);
                     return;
                 }
                 final String token = usesApi ? getToken(context) : null;
                 JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                        (method, url, body, listener, errorListener) {
+                        (method, url, body, listener, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                try {
+                                    JSONObject json = new JSONObject(new String(error.networkResponse.data));
+                                    if (json.has(APIUrl.INVALID_CREDENTIALS_JSON) &&
+                                            json.getBoolean(APIUrl.INVALID_CREDENTIALS_JSON))
+                                    {
+                                        startLoginActivity(context);
+                                        return;
+                                    }
+                                }
+                                catch (JSONException e)
+                                {
+                                    Log.wtf("JSONUtils", e);
+                                }
+                                errorListener.onErrorResponse(error);
+                            }
+                        }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         if (!usesApi)
