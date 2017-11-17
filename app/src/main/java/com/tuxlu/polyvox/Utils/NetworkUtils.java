@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,17 @@ import java.util.Map;
 
 
 public class NetworkUtils {
+
+    public static String getParametrizedUrl(String path, HashMap<String, String> params) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(APIUrl.SCHEME);
+        builder.authority(APIUrl.AUTHORITY);
+        builder.appendPath(path);
+        for (Map.Entry<String, String> entry : params.entrySet())
+            params.put(entry.getKey(), entry.getValue());
+        return builder.build().toString();
+    }
+
 
     public static boolean isConnected(Context context) {
         ConnectivityManager mgr = (ConnectivityManager) context
