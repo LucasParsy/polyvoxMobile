@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.APIJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.VHttp;
 
@@ -60,16 +61,16 @@ public class Login extends AccountAuthenticatorActivity {
         //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
 
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+        JsonObjectRequest jsObjRequest = new APIJsonObjectRequest
                 (Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         String token;
-                        String refreshToken;
+                        //String refreshToken;
                         try {
-                        token = response.getString("token");
-                        refreshToken = response.getString("refreshToken");
+                        token = response.getString(APIUrl.COOKIE_HEADER);
+                        //refreshToken = response.getString("refreshToken");
                         }
                         catch (JSONException e) {
                             displayError(e, loginLayout);
@@ -79,7 +80,7 @@ public class Login extends AccountAuthenticatorActivity {
                         Account account = new Account(login, getString(R.string.account_type));
                         AccountManager am = AccountManager.get(getBaseContext());
                         am.addAccountExplicitly(account, null, null);
-                        am.setUserData(account, "refreshToken", refreshToken);
+                        //am.setUserData(account, "refreshToken", refreshToken);
                         am.setAuthToken(account, getString(R.string.account_type), token);
                         //setResult(RESULT_OK); si utilisation startActivityForResult()
                         finish();
