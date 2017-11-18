@@ -7,7 +7,7 @@ package com.tuxlu.polyvox.Utils;
 public class APIUrl {
     public static final String SCHEME = "https";
     public static final String AUTHORITY = "api.polyvox.fr";
-    public static final String BASE_URL = "https://api.polyvox.fr/";
+    public static final String BASE_URL = SCHEME + "://" + AUTHORITY + "/";
 
     public static final String DISCOVER_ROOMS = "discoverRoom";
     public static final String SEARCH_ROOMS = "searchRoom";

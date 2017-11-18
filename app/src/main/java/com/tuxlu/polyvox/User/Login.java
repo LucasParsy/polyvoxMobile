@@ -51,15 +51,20 @@ public class Login extends AccountAuthenticatorActivity {
         if (login.isEmpty() || password.isEmpty())
             return;
 
+        JSONObject req = new JSONObject();
+        try {
+            req.put(APIUrl.LOGIN_PARAM1, login);
+            req.put(APIUrl.LOGIN_PARAM2, password);
+        }
+        catch (JSONException e) {
+            displayError(e, loginLayout);
+            return;
+        }
         //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
 
-        HashMap params = new HashMap();
-        params.put(APIUrl.LOGIN_PARAM1, login);
-        params.put(APIUrl.LOGIN_PARAM2, password);
-        String url = getParametrizedUrl(APIUrl.LOGIN, params);
 
         JsonObjectRequest jsObjRequest = new APIJsonObjectRequest
-                (Request.Method.POST, url, new JSONObject(), new Response.Listener<JSONObject>() {
+                (Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
