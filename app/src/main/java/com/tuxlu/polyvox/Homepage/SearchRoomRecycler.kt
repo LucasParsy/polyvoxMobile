@@ -32,7 +32,7 @@ open class SearchRoomBinder : DiscoverBinder() {
         super.bind(holder, item)
     }
 
-    override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: List<DiscoverBox>)
+    override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)
     {
         super.setClickListener(holder, data)
     }
@@ -50,11 +50,14 @@ open class SearchRoomRecycler() : DiscoverRecycler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            requestBody.put("query", arguments.getString("query"))
-        } catch (e: JSONException) {
-            Log.wtf(tag, e);
-        }
+        requestBody.put("query", arguments.getString("query"))
+    }
+
+    fun search(query : String)
+    {
+        val body = JSONObject()
+        body.put("query", query)
+        request(requestUrl, body,false)
     }
 
     override fun errorListener(error: VolleyError)

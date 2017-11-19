@@ -2,6 +2,7 @@ package com.tuxlu.polyvox.Homepage;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class Home extends AppCompatActivity {
@@ -153,6 +155,17 @@ public class Home extends AppCompatActivity {
         magImage.setVisibility(View.GONE);
         magImage.setImageDrawable(null);
 
+        final Context that = this;
+
+        /*TODO: décommenter ce listener et décommenter la dernier ligne l active la recherche dès qu'on tape.
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                startActivity(new Intent(that, SearchResultsActivity.class));
+                return true;
+            }
+        });
+        */
         searchItem.setOnActionExpandListener(new SearchBarExpander(searchItem, menu, this));
         return true;
     }

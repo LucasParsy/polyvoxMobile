@@ -56,7 +56,9 @@
         </activity>
 
 
-        <activity android:name="com.tuxlu.polyvox.Homepage.SearchResultsActivity" >
+        <activity android:name="com.tuxlu.polyvox.Homepage.SearchResultsActivity"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />

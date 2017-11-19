@@ -5,6 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.text.method.TextKeyListener.clear
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 /**
@@ -13,7 +17,7 @@ import android.view.ViewGroup
 
 interface ViewHolderBinder<T: Any> {
     fun bind(holder: Adapter.ViewHolder<T>, item: T)
-    fun setClickListener(holder: Adapter.ViewHolder<T>, data: List<T>)
+    fun setClickListener(holder: Adapter.ViewHolder<T>, data: MutableList<T>)
 /*    {
         val clickListener = View.OnClickListener {view ->
             view.context;
@@ -24,7 +28,7 @@ interface ViewHolderBinder<T: Any> {
 }
 
 class Adapter<T: Any>(private  val context : Context,
-                      private val data: List<T>,
+                      private val data: MutableList<T>,
                       private val layout: Int,
                       private val binder : ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
 
@@ -35,7 +39,7 @@ class Adapter<T: Any>(private  val context : Context,
             binder.bind(this, item)
         }
 
-        fun setClickListener(data: List<T>) {
+        fun setClickListener(data: MutableList<T>) {
             binder.setClickListener(this, data)
         }
     }
@@ -51,6 +55,19 @@ class Adapter<T: Any>(private  val context : Context,
         val item = data[position]
         holder.bind(item)
         holder.setClickListener(data)
+    }
+
+    fun clear() {
+        val size = data.size
+        data.clear();
+        notifyItemRangeRemoved(0, size)
+    }
+
+    fun add(ndata :List<T>){
+        val size = data.size - 1
+        data += ndata
+        notifyItemRangeInserted(size, size + ndata.size)
+
     }
 
     override fun getItemCount(): Int = data.size

@@ -51,7 +51,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         image.setImageUrl(item.imageUrl, vHttp.imageLoader)
     }
 
-    override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: List<DiscoverBox>)
+    override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)
     {
         val context = holder.v.getContext()
         val clickListener = View.OnClickListener {_ ->

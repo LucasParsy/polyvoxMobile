@@ -223,7 +223,7 @@ public class DummyAPIServer {
             for (int i=0; i < rooms.length(); i++)
             {
                 JSONObject info = rooms.getJSONObject(i);
-                if (info.getString("title").contains(req))
+                if (info.getString("title").toLowerCase().contains(req.toLowerCase()))
                     arr.put(info);
             }
             res.put("result", arr);
