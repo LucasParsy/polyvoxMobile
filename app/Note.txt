@@ -1,0 +1,13 @@
+changer mode de recherche dans Page d'acceuil:
+
+décommenter XML dans res/menu/menu_home
+
+enlever Searchview dans layout/activity_search
+et décommenter reste.
+
+enlever dans Manifest le theme "NoToitleBar"
+
+Décommenter texte au bout de SearchResultActivity.java
+et recommenter ligne dans OnCreate.
+
+Décommenter texte de Home.java dans OnCreateOptionsMenu 

@@ -8,8 +8,9 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|always">
+        <!-- app:actionViewClass="android.support.v7.widget.SearchView"
+          For search in this activity,   -->
     </item>
     <item
         android:id="@+id/profileButton"

@@ -144,20 +144,9 @@ public class Home extends AppCompatActivity {
                 return testOnClickProfileButton(item, profileIcon);
             }
         });
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
 
-        //enlève icône de recherche sur la searchBar
-        ImageView magImage = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        magImage.setVisibility(View.GONE);
-        magImage.setImageDrawable(null);
-
+        //For search in different activity
         final Context that = this;
-
-        /*TODO: décommenter ce listener et décommenter la dernier ligne l active la recherche dès qu'on tape.
         searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -165,8 +154,23 @@ public class Home extends AppCompatActivity {
                 return true;
             }
         });
-        */
+
+
+        /*
+        //Research on this activity instead of new one.
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        //enlève icône de recherche sur la searchBar
+        ImageView magImage = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        magImage.setVisibility(View.GONE);
+        magImage.setImageDrawable(null);
         searchItem.setOnActionExpandListener(new SearchBarExpander(searchItem, menu, this));
+        */
+
         return true;
     }
 
