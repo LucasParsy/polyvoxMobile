@@ -15,7 +15,7 @@ import com.tuxlu.polyvox.R;
 
 public class LoadingUtils {
 
-    private static final int delay = 5000;
+    private static final int delay = 10000;
     private static final Handler handler = new Handler();
 
     public static void StartLoadingView(final View view, final Context context)

@@ -21,7 +21,9 @@
         Veuillez vérifier vos paramètres internet</string>
     <string name="username_hint">Identifiant</string>
     <string name="mail_hint">E-mail</string>
+    <string name="date_hint">Date de naissance</string>
     <string name="password_hint">Mot de passe</string>
+    <string name="login_title">Connexion</string>
     <string name="login_prompt_message">Connectez vous!</string>
     <string name="login_or">ou</string>
     <string name="login_connect">Se connecter</string>
@@ -30,7 +32,50 @@
     <string name="login_create_account">Créer un compte</string>
     <string name="login_incorrect_credentials">E-mail ou mot de passe incorrect</string>
     <string name="unknown_error">erreur innatendue</string>
+    <string name="create_account">Inscription</string>
+    <string name="CGU_accept_start">Accepter les \u0020</string>
+    <string name="CGU">Conditions générales d\'utilisation</string>
     <!--string name="login_incorrect_credentials">Identifiant ou mot de passe incorrect</string-->
+
+    <string name="register_mail_hint_bottom">Votre email ne sera jamais divulgué.</string>
+    <string name="register_username_hint_bottom">Votre nom d\'utilisateur est le nom sous lequel les autres utilisateurs vous verront.</string>
+    <string name="register_password_hint_bottom">entre 5 et 42 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
+
+    <string name="register_mail_error">Email non valide.</string>
+    <string name="register_username_error">Nom d\'utilisateur invalide.</string>
+    <string name="register_dob_error">L\'utilisateur doit avoir 13 ans au minimum.</string>
+    <string name="register_password_error">Mot de passe invalide</string>
+    <string name="register_confirm_password_error">Mot de passe different.</string>
+    <string name="register_cgu_error">Veuillez acceter les conditions d\'utilisation.</string>
+
+    <string name="year">Année</string>
+    <string name="day">Jour</string>
+    <string-array name="months_spinner">
+        <item>Mois</item>
+        <item>Janvier</item>
+        <item>Février</item>
+        <item>Mars</item>
+        <item>Avril</item>
+        <item>Mai</item>
+        <item>Juin</item>
+        <item>Juillet</item>
+        <item>Aout</item>
+        <item>Septembre</item>
+        <item>Octobre</item>
+        <item>Novembre</item>
+        <item>Décembre</item>
+    </string-array>
+
+    <string name="CGU_Text">
+ "THE BEER-WARE LICENSE" (Revision 42.2):\n
+ &lt;lucas.parsy@epitech.eu> wrote this file.\n
+ As long as you retain this notice\n
+ you can do whatever you want with this stuff.\n
+ If we meet some day,\n
+ and you think this stuff is worth it,\n
+ you can buy me a beer in return.\n
+ Lucas Parsy
+    </string>
 
     <string name="large_text">
         \"Material is the metaphor.\n\n\"

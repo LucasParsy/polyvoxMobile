@@ -3,5 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="PolyvoxMainColor">#ffa400</color>
+    <color name="PolyvoxMainColor">#ff7500</color>
+    <color name="PolyvoxMainColorDark">#ff6400</color>
+    <color name="PolyvoxMainColorTransparent">#7aff7500</color>
+    <color name="PolyvoxSecondColor">#ffa400</color>
+    <color name="background_material_lighter">#fafafa</color>
+    <color name="lighter_gray">#e3e3e3</color>
 </resources>

@@ -29,5 +29,7 @@ public class APIUrl {
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_USER = 3;
 
+    public static final String CGU = "https://polyvox.fr/gtu";
+
     private APIUrl(){}
 }
