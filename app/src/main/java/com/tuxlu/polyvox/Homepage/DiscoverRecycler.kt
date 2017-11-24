@@ -47,7 +47,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
         var image = holder.v.findViewById<NetworkImageView>(R.id.infoRoomPicture)
-        var vHttp = VHttp.getInstance(holder.v.context)
+        var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
         image.setImageUrl(item.imageUrl, vHttp.imageLoader)
     }
 

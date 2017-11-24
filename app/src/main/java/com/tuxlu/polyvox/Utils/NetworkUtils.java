@@ -122,7 +122,7 @@ public class NetworkUtils {
                         return params;
                     }
                 };
-                VHttp.getInstance(context).addToRequestQueue(jsObjRequest);
+                VHttp.getInstance(context.getApplicationContext()).addToRequestQueue(jsObjRequest);
             }
         });
     }

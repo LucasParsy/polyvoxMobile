@@ -26,7 +26,6 @@ public class VHttp {
         mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(),
                 new OkHttp3Stack(dummy));
 
-
         mRequestQueue = getRequestQueue();
 
         mImageLoader = new ImageLoader(mRequestQueue,

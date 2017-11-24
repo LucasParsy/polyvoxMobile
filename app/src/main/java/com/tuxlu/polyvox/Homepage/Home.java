@@ -119,7 +119,7 @@ public class Home extends AppCompatActivity {
                                         profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
                                     }
                                 }, 0, 0, null, null, null);
-                        VHttp.getInstance(context).addToRequestQueue(request);
+                        VHttp.getInstance(getApplicationContext()).addToRequestQueue(request);
                     }
                 }, new Response.ErrorListener() {
                     @Override
