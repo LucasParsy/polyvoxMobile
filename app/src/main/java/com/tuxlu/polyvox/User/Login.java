@@ -3,10 +3,13 @@ package com.tuxlu.polyvox.User;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.Toolbar;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -19,7 +22,6 @@ import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.VHttp;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.HashMap;
 
 import static com.tuxlu.polyvox.Utils.NetworkUtils.getParametrizedUrl;
 
@@ -33,6 +35,23 @@ public class Login extends AccountAuthenticatorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar bar = findViewById(R.id.LoginToolbar);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            setActionBar(bar);
+            bar.setTitleTextColor(Color.WHITE);
+        }
+        else
+            bar.setVisibility(View.GONE);
+
+        //lastPass Integration
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            View login = findViewById(R.id.LoginIDInput);
+            View pass = findViewById(R.id.LoginPasswordInput);
+            login.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
+            pass.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
+            login.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_YES);
+            pass.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_YES);
+        }
     }
 
     private void displayError(JSONException e, TextInputLayout loginLayout)
@@ -46,7 +65,17 @@ public class Login extends AccountAuthenticatorActivity {
 
         View v = buttonView.getRootView();
         final TextInputLayout loginLayout = (TextInputLayout)v.findViewById(R.id.LoginIDLayout);
-        final String login = ((TextInputEditText) loginLayout.findViewById(R.id.LoginIDInput)).getText().toString();
+        final TextInputEditText loginInput = loginLayout.findViewById(R.id.LoginIDInput);
+
+        loginInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    loginLayout.setErrorEnabled(false);
+            }
+        }});
+
+        final String login = loginInput.getText().toString();
         final String password = ((TextInputEditText)v.findViewById(R.id.LoginPasswordInput)).getText().toString();
         if (login.isEmpty() || password.isEmpty())
             return;
@@ -99,18 +128,18 @@ public class Login extends AccountAuthenticatorActivity {
                             loginLayout.setError(getString(R.string.no_network));
                     }
                 });
-        VHttp.getInstance(v.getContext()).addToRequestQueue(jsObjRequest);
+        VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
 
     }
 
     public void onLoginProblemClick(View v)
     {
-
+        //startActivity(new Intent(this, ForgotPassword.class));
     }
 
     public void onCreateAccountClick(View v)
     {
-
+        startActivity(new Intent(this, Register.class));
     }
 
 
