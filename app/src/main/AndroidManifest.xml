@@ -73,11 +73,13 @@
 
             <activity android:name="com.tuxlu.polyvox.User.Login"
                 android:theme="@style/AppTheme"
+                android:screenOrientation="portrait"
                 android:label="@string/login_title">
             </activity>
 
         <activity android:name="com.tuxlu.polyvox.User.Register"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:label="@string/create_account" >
             </activity>
 

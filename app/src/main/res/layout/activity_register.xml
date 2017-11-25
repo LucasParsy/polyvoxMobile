@@ -1,117 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LayoutCreateAccountActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:layout_marginBottom="15dp"
-    android:layout_marginTop="15dp"
-    android:clipToPadding="false"
-    android:orientation="vertical"
-    android:visibility="visible"
-    tools:context=".User.Login">
+    android:id="@+id/LayoutCreateAccountActivity">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/mail_hint" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/BottomRegisterButtons"
+        android:fillViewport="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/RegisterEmailLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/RegisterEmailInput"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rectangle_border_textview"
-            android:inputType="textEmailAddress"
-            android:maxLines="1">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:context=".User.Login">
 
-        </android.support.design.widget.TextInputEditText>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
-        <TextView
-            android:id="@+id/RegisterMailHint"
-            style="@style/AppTheme.RegisterHint"
-            android:text="@string/register_mail_hint_bottom" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/mail_hint" />
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/RegisterEmailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
 
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/RegisterEmailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/username_hint" />
+                </android.support.design.widget.TextInputEditText>
 
+                <TextView
+                    android:id="@+id/RegisterMailHint"
+                    style="@style/AppTheme.RegisterHint"
+                    android:text="@string/register_mail_hint_bottom" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/RegisterIDLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:visibility="visible"
-        app:errorEnabled="true">
-
-        <TextView
-            android:id="@+id/RegisterIDHint"
-            style="@style/AppTheme.RegisterHint"
-            android:text="@string/register_username_hint_bottom" />
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/RegisterIDInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:background="@drawable/rectangle_border_textview"
-            android:inputType="textEmailAddress"
-            android:maxLines="1">
-
-        </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
 
 
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/password_hint" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username_hint" />
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/RegisterPasswordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/RegisterIDLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:visibility="visible"
+                app:errorEnabled="true">
 
-        <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+                <TextView
+                    android:id="@+id/RegisterIDHint"
+                    style="@style/AppTheme.RegisterHint"
+                    android:text="@string/register_username_hint_bottom" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/RegisterPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
-            android:background="@drawable/rectangle_border_textview"
-            android:inputType="textPassword"
-            android:maxLines="1">
-        </android.support.design.widget.TextInputEditText>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/RegisterIDInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1">
 
-        <TextView
-            android:id="@+id/RegisterPassHint"
-            style="@style/AppTheme.RegisterHint"
-            android:textSize="11sp"
-            android:text="@string/register_password_hint_bottom" />
-
-    </android.support.design.widget.TextInputLayout>
+                </android.support.design.widget.TextInputEditText>
 
 
-    <!-- android.support.design.widget.TextInputLayout
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/password_hint" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/RegisterPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/RegisterPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textPassword"
+                    android:maxLines="1"></android.support.design.widget.TextInputEditText>
+
+                <TextView
+                    android:id="@+id/RegisterPassHint"
+                    style="@style/AppTheme.RegisterHint"
+                    android:text="@string/register_password_hint_bottom"
+                    android:textSize="11sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <!-- android.support.design.widget.TextInputLayout
         android:id="@+id/RegisterPasswordConfirmLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -128,72 +144,87 @@
     </android.support.design.widget.TextInputLayout -->
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="-5dp"
-        android:text="@string/date_hint" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-5dp"
+                android:text="@string/date_hint" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <Spinner
+                    android:id="@+id/spinnerDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <Spinner
+                    android:id="@+id/spinnerYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/BottomRegisterButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinnerMonth"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0" />
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinnerDays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0" />
+            <CheckBox
+                android:id="@+id/CGUCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/CGU_accept_start"
+                tools:text="@string/CGU_accept_start" />
 
-        <Spinner
-            android:id="@+id/spinnerYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/CGUCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/CGU_accept_start"
-            tools:text="@string/CGU_accept_start" />
+            <Button
+                android:id="@+id/CGUButton"
+                style="@style/AppTheme.ColoredButton.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onCGUButtonClick"
+                android:text="@string/CGU"
+                android:textColor="@color/colorPrimary"
+                tools:text="@string/CGU" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/CGUButton"
-            style="@style/AppTheme.ColoredButton.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onCGUButtonClick"
-            android:text="@string/CGU"
-            android:textColor="@color/colorPrimary"
-            tools:text="@string/CGU" />
+            android:id="@+id/LoginRegisterButton"
+            style="@style/AppTheme.coloredButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exo_media_button_height"
+            android:onClick="onRegisterClick"
+            android:text="@string/create_account"
+            android:visibility="visible" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/LoginRegisterButton"
-        style="@style/AppTheme.coloredButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/exo_media_button_height"
-        android:onClick="onRegisterClick"
-        android:text="@string/create_account"
-        android:visibility="visible" />
-
-</LinearLayout>
+</RelativeLayout>
