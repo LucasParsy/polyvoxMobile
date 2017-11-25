@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Toolbar;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -100,7 +101,7 @@ public class Login extends AccountAuthenticatorActivity {
                         String token;
                         //String refreshToken;
                         try {
-                        token = response.getString(APIUrl.COOKIE_HEADER);
+                        token = response.getString(APIUrl.COOKIE_HEADER_RECEIVE);
                         //refreshToken = response.getString("refreshToken");
                         }
                         catch (JSONException e) {
@@ -119,8 +120,10 @@ public class Login extends AccountAuthenticatorActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                         NetworkResponse networkResponse = error.networkResponse;
-                        if (networkResponse != null && networkResponse.statusCode == 400) {
+                        loginLayout.setError(error.getMessage());
+                        if (networkResponse != null && networkResponse.statusCode == APIUrl.LOGIN_INVALID_USER_CODE) {
                             loginLayout.setError(getString(R.string.login_incorrect_credentials));
                             findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
                         }
@@ -128,6 +131,7 @@ public class Login extends AccountAuthenticatorActivity {
                             loginLayout.setError(getString(R.string.no_network));
                     }
                 });
+
         VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
 
     }

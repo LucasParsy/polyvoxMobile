@@ -27,7 +27,16 @@ class APIJsonObjectRequest : JsonObjectRequest {
         try {
             val jsonString = String(response.data, Charset.forName(HttpHeaderParser.parseCharset(response.headers, JsonRequest.PROTOCOL_CHARSET)))
             val jsonResponse = JSONObject(jsonString)
-            jsonResponse.put(APIUrl.COOKIE_HEADER, JSONObject(response.headers[APIUrl.COOKIE_HEADER]))
+            var token : String? = null;
+            if (response.headers.containsKey(APIUrl.COOKIE_HEADER_RECEIVE))
+                token = response.headers[APIUrl.COOKIE_HEADER_RECEIVE];
+            if (token != null)
+            {
+                var semicolon : Int = token.indexOf(';')
+                if (semicolon != -1)
+                    token = token.substring(0, semicolon)
+                jsonResponse.put(APIUrl.COOKIE_HEADER_RECEIVE, token)
+            }
             return Response.success(jsonResponse, HttpHeaderParser.parseCacheHeaders(response))
         } catch (e: Exception) {
             return Response.error(ParseError(e))

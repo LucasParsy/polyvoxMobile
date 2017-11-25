@@ -9,6 +9,8 @@ public class APIUrl {
     public static final String AUTHORITY = "api.polyvox.fr";
     public static final String BASE_URL = SCHEME + "://" + AUTHORITY + "/";
 
+    public static final String FAKE_BASE_URL = SCHEME + "://" + "fakeApi.polyvox.fr" + "/";
+
     public static final String DISCOVER_ROOMS = "discoverRoom";
     public static final String SEARCH_ROOMS = "searchRoom";
 
@@ -16,14 +18,17 @@ public class APIUrl {
     public static final String INFO_ROOM = "infoRoom";
     public static final String INFO_USER = "infoUser";
     public static final String VIDEO_STREAM = "video";
+    public static final String COOKIE_HEADER_RECEIVE = "set-cookie";
     public static final String COOKIE_HEADER = "Cookie";
     public static final String INVALID_CREDENTIALS_JSON = "invalidCredentials";
     //public static final String GET_CHAT = "getChat";
     //public static final String SEND_CHAT = "sendChat";
 
-    public static final String LOGIN = "login";
+
+    public static final String LOGIN = "users/login";
     public static final String LOGIN_PARAM1 = "email";
     public static final String LOGIN_PARAM2 = "password";
+    public static final Integer LOGIN_INVALID_USER_CODE = 404;
 
     public static final int ERROR_CREATE_ACCOUNT_INVALID_MAIL = 1;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;

@@ -118,7 +118,7 @@ public class NetworkUtils {
                         if (!usesApi)
                             return super.getHeaders();
                         Map<String, String> params = new HashMap<>();
-                        params.put("token", token);
+                        params.put(APIUrl.COOKIE_HEADER, token);
                         return params;
                     }
                 };
