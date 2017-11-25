@@ -6,6 +6,7 @@ import android.support.v4.util.LruCache;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
@@ -21,10 +22,9 @@ public class VHttp {
     private VHttp(Context context) {
         final int cacheSize = 20;
 
-        //todo enlever Dummy quand connexion API faite
         DummyAPIServer dummy = new DummyAPIServer(context);
-        mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(),
-                new OkHttp3Stack(dummy));
+        HurlStack stack = new HurlWithDummyStack(dummy); //todo: replace with HurlStack() to remove dummy;
+        mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(), stack);
 
         mRequestQueue = getRequestQueue();
 
