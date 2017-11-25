@@ -3,20 +3,21 @@ package com.tuxlu.polyvox.User;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+
 import java.util.Calendar;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -26,12 +27,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APIJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by tuxlu on 16/09/17.
@@ -57,9 +60,9 @@ public class Register extends AppCompatActivity {
         mail = findViewById(R.id.RegisterEmailInput);
         pass = findViewById(R.id.RegisterPasswordInput);
 
-        ID.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterIDHint)));
-        mail.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterMailHint)));
-        pass.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterPassHint)));
+        ID.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterIDHint), findViewById(R.id.RegisterIDLayout)));
+        mail.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterMailHint), findViewById(R.id.RegisterEmailLayout)));
+        pass.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterPassHint), findViewById(R.id.RegisterPasswordLayout)));
 
         //lastPass Integration
         if (android.os.Build.VERSION.SDK_INT >= 26) {
@@ -112,17 +115,77 @@ public class Register extends AppCompatActivity {
         loginLayout.setError(getString(R.string.unknown_error));
     }
 
+
+    private Date checkDate()
+    {
+        TextView hint = findViewById(R.id.RegisterDateHint);
+        Spinner spinnerYear = findViewById(R.id.spinnerYear);
+        int month = ((Spinner)findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
+        int day = ((Spinner)findViewById(R.id.spinnerDays)).getSelectedItemPosition();
+
+        if (spinnerYear.getSelectedItemPosition() == 0 || month == -1 || day == 0)
+        {
+            hint.setError(getString(R.string.register_dob_error));
+            return null;
+        }
+
+        int year = Integer.parseInt(spinnerYear.getSelectedItem().toString());
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Calendar today = Calendar.getInstance();
+        if (MyDateUtils.getDiffYears(cal, today) < 13)
+        {
+            hint.setError(getString(R.string.register_dob_error));
+            return null;
+        }
+        hint.setError(null);
+        Date dateRepresentation = cal.getTime();
+
+        return dateRepresentation;
+    }
+
     public void onRegisterClick(View buttonView)
     {
 
-        View v = buttonView.getRootView();
-        final TextInputLayout loginLayout = (TextInputLayout)v.findViewById(R.id.LoginIDLayout);
-        final String login = ((TextInputEditText) loginLayout.findViewById(R.id.LoginIDInput)).getText().toString();
+       String IDText = ID.getText().toString();;
+        String mailText = mail.getText().toString();
+        String passText = pass.getText().toString();
+        TextView CGUHint = findViewById(R.id.CGUButton);
 
-        final String password = ((TextInputEditText)v.findViewById(R.id.LoginPasswordInput)).getText().toString();
-        if (login.isEmpty() || password.isEmpty())
+        Boolean CGUAccepted = ((CheckBox)findViewById(R.id.CGUCheck)).isChecked();
+
+        if (!mailText.contains("@")) {
+            ((TextInputLayout)findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_error));
+            findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
+            return;
+        }
+
+        if (IDText.length() < 4) {
+            ((TextInputLayout)findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_username_error));
+            findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
+            return;
+        }
+
+        if (!passText.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,42}$")) {
+            ((TextInputLayout)findViewById(R.id.RegisterPasswordLayout)).setError(getString(R.string.register_password_error));
+            findViewById(R.id.RegisterPassHint).setVisibility(View.GONE);
+            return;
+        }
+
+        if (!CGUAccepted) {
+            CGUHint.setError(getString(R.string.register_cgu_error));
+            return;
+        }
+        else
+            CGUHint.setError(null);
+
+        Date date = checkDate();
+        if (date == null)
             return;
 
+
+        /*
         JSONObject req = new JSONObject();
         try {
             req.put(APIUrl.LOGIN_PARAM1, login);
@@ -133,7 +196,6 @@ public class Register extends AppCompatActivity {
             return;
         }
         //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
-
 
         JsonObjectRequest jsObjRequest = new APIJsonObjectRequest
                 (Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
@@ -172,7 +234,7 @@ public class Register extends AppCompatActivity {
                     }
                 });
         VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
-
+    */
     }
 
     
@@ -195,12 +257,17 @@ public class Register extends AppCompatActivity {
 
     private class RegisterHintFocus implements View.OnFocusChangeListener {
         private  View hint;
+        private  TextInputLayout upperLay;
 
-        public RegisterHintFocus(View nhint) {hint = nhint;}
+        public RegisterHintFocus(View nhint, View nUpper) {
+            hint = nhint;
+            upperLay = (TextInputLayout)nUpper;
+        }
 
         @Override
         public void onFocusChange(android.view.View view, boolean hasFocus) {
             hint.setVisibility(hasFocus ? android.view.View.VISIBLE : android.view.View.GONE);
+            upperLay.setError(null);
         }
     }
 }

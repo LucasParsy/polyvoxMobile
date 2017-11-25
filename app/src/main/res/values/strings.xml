@@ -21,7 +21,7 @@
         Veuillez vérifier vos paramètres internet</string>
     <string name="username_hint">Identifiant</string>
     <string name="mail_hint">E-mail</string>
-    <string name="date_hint">Date de naissance</string>
+    <string name="date_hint">Date de naissance (13 ans minimum)</string>
     <string name="password_hint">Mot de passe</string>
     <string name="login_title">Connexion</string>
     <string name="login_prompt_message">Connectez vous!</string>

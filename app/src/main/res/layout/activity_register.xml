@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutCreateAccountActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/LayoutCreateAccountActivity">
+    android:orientation="vertical"
+    android:fillViewport="true">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_above="@id/BottomRegisterButtons"
-        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
@@ -26,18 +22,13 @@
             android:visibility="visible"
             tools:context=".User.Login">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/mail_hint" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout
                 android:id="@+id/RegisterEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +50,7 @@
                     style="@style/AppTheme.RegisterHint"
                     android:text="@string/register_mail_hint_bottom" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout>
 
 
             <TextView
@@ -68,7 +59,7 @@
                 android:text="@string/username_hint" />
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout
                 android:id="@+id/RegisterIDLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +84,7 @@
                 </android.support.design.widget.TextInputEditText>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -102,7 +93,7 @@
                 android:text="@string/password_hint" />
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout
                 android:id="@+id/RegisterPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -116,7 +107,8 @@
                     android:layout_marginBottom="35dp"
                     android:background="@drawable/rectangle_border_textview"
                     android:inputType="textPassword"
-                    android:maxLines="1"></android.support.design.widget.TextInputEditText>
+                    android:maxLines="1">
+                </android.support.design.widget.TextInputEditText>
 
                 <TextView
                     android:id="@+id/RegisterPassHint"
@@ -124,7 +116,7 @@
                     android:text="@string/register_password_hint_bottom"
                     android:textSize="11sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout>
 
 
             <!-- android.support.design.widget.TextInputLayout
@@ -145,11 +137,11 @@
 
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/RegisterDateHint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="-5dp"
+                android:layout_marginTop="-10dp"
                 android:text="@string/date_hint" />
 
             <LinearLayout
@@ -177,46 +169,33 @@
                     android:layout_weight="0" />
             </LinearLayout>
 
-
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/BottomRegisterButtons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/CGUCheck"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="@string/CGU_accept_start"
-                tools:text="@string/CGU_accept_start" />
+                android:layout_gravity="bottom"
+                android:layout_marginTop="15dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/CGUButton"
-                style="@style/AppTheme.ColoredButton.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onCGUButtonClick"
-                android:text="@string/CGU"
-                android:textColor="@color/colorPrimary"
-                tools:text="@string/CGU" />
-        </LinearLayout>
+                <CheckBox
+                    android:id="@+id/CGUCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/CGU_accept_start"
+                    tools:text="@string/CGU_accept_start" />
+
+                <Button
+                    android:id="@+id/CGUButton"
+                    style="@style/AppTheme.ColoredButton.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onCGUButtonClick"
+                    android:text="@string/CGU"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="@string/CGU" />
+            </LinearLayout>
 
         <Button
             android:id="@+id/LoginRegisterButton"
@@ -227,4 +206,4 @@
             android:text="@string/create_account"
             android:visibility="visible" />
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>
