@@ -25,6 +25,8 @@ public class APIUrl {
     //public static final String SEND_CHAT = "sendChat";
 
 
+    public static final Integer TOKEN_DENIED_CODE = 401;
+
     public static final String LOGIN = "users/login";
     public static final String LOGIN_PARAM1 = "email";
     public static final String LOGIN_PARAM2 = "password";

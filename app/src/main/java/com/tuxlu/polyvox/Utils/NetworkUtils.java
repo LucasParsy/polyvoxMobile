@@ -42,6 +42,16 @@ public class NetworkUtils {
     }
 
 
+    public static void removeAccountLogout(Context context) {
+        AccountManager am = AccountManager.get(context);
+        if (android.os.Build.VERSION.SDK_INT >= 22) {
+            am.removeAccountExplicitly(am.getAccounts()[0]);
+        }
+        else {
+            am.removeAccount(am.getAccounts()[0], null, null);
+        }
+    }
+
     public static boolean isConnected(Context context) {
         ConnectivityManager mgr = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -97,19 +107,12 @@ public class NetworkUtils {
                         (method, url, body, listener, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                try {
-                                    JSONObject json = new JSONObject(new String(error.networkResponse.data));
-                                    if (json.has(APIUrl.INVALID_CREDENTIALS_JSON) &&
-                                            json.getBoolean(APIUrl.INVALID_CREDENTIALS_JSON))
-                                    {
+                                    if (error.networkResponse != null &&
+                                            error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
+                                        removeAccountLogout(context);
                                         startLoginActivity(context);
                                         return;
                                     }
-                                }
-                                catch (JSONException e)
-                                {
-                                    Log.wtf("JSONUtils", e);
-                                }
                                 errorListener.onErrorResponse(error);
                             }
                         }) {
