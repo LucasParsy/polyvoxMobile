@@ -84,6 +84,13 @@
             android:label="@string/create_account" >
             </activity>
 
+        <activity android:name="com.tuxlu.polyvox.User.RegisterSuccesful"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:label="@string/welcome" >
+        </activity>
+
+
         <activity android:name="com.tuxlu.polyvox.Utils.SimpleWebView"
             android:theme="@style/AppTheme"
             android:label="ChangedByCode">
