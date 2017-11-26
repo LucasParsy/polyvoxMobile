@@ -17,17 +17,20 @@ public class LoadingUtils {
 
     private static final int delay = 10000;
     private static final Handler handler = new Handler();
+    private static boolean init = false;
 
     public static void StartLoadingView(final View view, final Context context)
     {
-        Button btn = (Button) view.findViewById(R.id.noWifiButton);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-            }
-        });
-
+        if (init == false) {
+            Button btn = (Button) view.findViewById(R.id.noWifiButton);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                }
+            });
+            init = true;
+        }
         handler.postDelayed(new Runnable(){
             public void run(){
                 view.findViewById(R.id.noWifiLinear).setVisibility(View.VISIBLE);
@@ -46,6 +49,7 @@ public class LoadingUtils {
     public static void EndLoadingView(final View view)
     {
         handler.removeCallbacksAndMessages(null);
+        endNoWifiView(view);
         view.findViewById(R.id.noWifiLayout).setVisibility(View.GONE);
     }
 
