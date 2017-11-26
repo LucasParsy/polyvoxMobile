@@ -38,9 +38,9 @@ public class APIUrl {
     public static final String REGISTER_PARAM3 = "userName";
     public static final String REGISTER_PARAM4 = "birthday";
     public static final String REGISTER_PARAM5 = "cgu";
-    public static final Integer REGISTER_ERROR_CODE = 401;
-    public static final String REGISTER_MAIL_ERROR = "mail";
-    public static final String REGISTER_LOGIN_ERROR = "login";
+    public static final Integer REGISTER_ERROR_CODE = 422;
+    public static final String REGISTER_MAIL_ERROR = "Email";
+    public static final String REGISTER_LOGIN_ERROR = "Username";
 
     public static final String MAIL_SEND = "users/send";
 

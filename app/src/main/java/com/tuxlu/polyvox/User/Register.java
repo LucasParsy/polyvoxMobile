@@ -144,6 +144,7 @@ public class Register extends AppCompatActivity {
 
     private Date checkInput(String IDText, String mailText, String passText)
     {
+
         TextView CGUHint = findViewById(R.id.CGUButton);
         Boolean CGUAccepted = ((CheckBox) findViewById(R.id.CGUCheck)).isChecked();
 
@@ -153,13 +154,14 @@ public class Register extends AppCompatActivity {
             return null;
         }
 
-        if (IDText.length() < 4) {
+        if (!IDText.matches("^[a-zA-Z0-9].{5,}$")) {
             ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_username_error));
             findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
             return null;
         }
 
-        if (!passText.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,42}$")) {
+
+        if (!passText.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,42}$")) {
             ((TextInputLayout) findViewById(R.id.RegisterPasswordLayout)).setError(getString(R.string.register_password_error));
             findViewById(R.id.RegisterPassHint).setVisibility(View.GONE);
             return null;
@@ -225,9 +227,10 @@ public class Register extends AppCompatActivity {
                         button.setText(getString(R.string.create_account));
                         if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE)
                         {
-                            if (error.networkResponse.data.toString().contains(APIUrl.REGISTER_MAIL_ERROR))
+                            String errData = new String(error.networkResponse.data);
+                            if (errData.contains(APIUrl.REGISTER_MAIL_ERROR))
                                 ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_already_used));
-                            if (error.networkResponse.data.toString().contains(APIUrl.REGISTER_LOGIN_ERROR))
+                            if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
                                 ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
                         }
                         else

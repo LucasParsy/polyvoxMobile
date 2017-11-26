@@ -1,6 +1,5 @@
 package com.tuxlu.polyvox.Homepage;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,17 +8,12 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,7 +33,6 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class Home extends AppCompatActivity {
@@ -100,6 +93,7 @@ public class Home extends AppCompatActivity {
         } catch (JSONException e) {
             return true;
         }
+        //todo modifier requete avec bonne url et bons params
         NetworkUtils.JSONrequest(context, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.INFO_USER,
                 true, req, new Response.Listener<JSONObject>() {

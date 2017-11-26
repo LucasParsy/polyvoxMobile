@@ -43,7 +43,7 @@ class RegisterSuccessful() : AppCompatActivity() {
         LoadingUtils.StartLoadingView(rootView, applicationContext)
 
         //ENVOI MAIL CONFIRMATION
-        NetworkUtils.JSONrequest(applicationContext, Request.Method.POST, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
+        NetworkUtils.JSONrequest(applicationContext, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
                 { _ ->
                     mainView.visibility = View.VISIBLE
                     LoadingUtils.EndLoadingView(rootView)

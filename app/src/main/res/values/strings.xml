@@ -39,7 +39,7 @@
     <!--string name="login_incorrect_credentials">Identifiant ou mot de passe incorrect</string-->
 
     <string name="register_mail_hint_bottom">Votre email ne sera jamais divulgué.</string>
-    <string name="register_username_hint_bottom">Votre nom d\'utilisateur est le nom sous lequel les autres utilisateurs vous verront.</string>
+    <string name="register_username_hint_bottom">6 caractères minimum, composé uniquement de lettres et chiffres</string>
     <string name="register_password_hint_bottom">entre 5 et 42 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
 
 
@@ -82,7 +82,7 @@
     <string name="welcome">Bienvenue!</string>
     <string name="confirmation_mail_sent1">Un e-mail de confirmation a été envoyé à l\'adresse:</string>
     <string name="confirmation_mail_sent2">Consultez votre boite mail pour valider votre compte\n
-        et profiter pleinement de l'expérience Polyvox</string>
+        et profiter pleinement de l\'expérience Polyvox</string>
     <string name="back_home">Retourner à la page d\'acceuil</string>
 
     <string name="CGU_Text">

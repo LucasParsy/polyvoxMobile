@@ -24,10 +24,13 @@ import java.nio.charset.Charset
 
 class APILoginJsonObjectRequest : JsonObjectRequest {
 
-    lateinit var context : Context
-    lateinit var login : String
+    private val context : Context
+    private val login : String
 
-    constructor(context: Context, login: String, method: Int, url: String, jsonRequest: JSONObject, listener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener) : super(method, url, jsonRequest, listener, errorListener) {}
+    constructor(ncontext: Context, nlogin: String, method: Int, url: String, jsonRequest: JSONObject, listener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener) : super(method, url, jsonRequest, listener, errorListener) {
+        context = ncontext
+        login = nlogin
+    }
 
     //constructor(url: String, jsonRequest: JSONObject, listener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener) : super(url, jsonRequest, listener, errorListener) {}
 
