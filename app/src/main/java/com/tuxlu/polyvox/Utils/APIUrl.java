@@ -32,6 +32,18 @@ public class APIUrl {
     public static final String LOGIN_PARAM2 = "password";
     public static final Integer LOGIN_INVALID_USER_CODE = 404;
 
+    public static final String REGISTER = "users";
+    public static final String REGISTER_PARAM1 = "email";
+    public static final String REGISTER_PARAM2 = "password";
+    public static final String REGISTER_PARAM3 = "userName";
+    public static final String REGISTER_PARAM4 = "birthday";
+    public static final String REGISTER_PARAM5 = "cgu";
+    public static final Integer REGISTER_ERROR_CODE = 401;
+    public static final String REGISTER_MAIL_ERROR = "mail";
+    public static final String REGISTER_LOGIN_ERROR = "login";
+
+    public static final String MAIL_SEND = "users/send";
+
     public static final int ERROR_CREATE_ACCOUNT_INVALID_MAIL = 1;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_USER = 3;

@@ -197,13 +197,13 @@
                     tools:text="@string/CGU" />
             </LinearLayout>
 
-        <Button
-            android:id="@+id/LoginRegisterButton"
-            style="@style/AppTheme.coloredButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/exo_media_button_height"
-            android:onClick="onRegisterClick"
-            android:text="@string/create_account"
-            android:visibility="visible" />
+            <Button
+                android:id="@+id/RegisterButton"
+                style="@style/AppTheme.coloredButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exo_media_button_height"
+                android:onClick="onRegisterClick"
+                android:text="@string/create_account"
+                android:visibility="visible" />
     </LinearLayout>
 </ScrollView>

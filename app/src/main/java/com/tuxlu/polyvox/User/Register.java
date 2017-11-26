@@ -1,31 +1,28 @@
 package com.tuxlu.polyvox.User;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.app.Activity;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.APIJsonObjectRequest;
+import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
@@ -41,15 +38,12 @@ import java.util.Date;
  */
 
 
-
 public class Register extends AppCompatActivity {
     private TextInputEditText ID;
     private TextInputEditText mail;
     private TextInputEditText pass;
 
 
-    //todo: ajouter erreur si champs incorrects avant upload.
-    //todo: gérer erreurs pour CGU et date naissance.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,22 +103,19 @@ public class Register extends AppCompatActivity {
         spinDays.setAdapter(adapterDays);
     }
 
-    private void displayError(JSONException e, TextInputLayout loginLayout)
-    {
+    private void displayError(JSONException e, TextInputLayout loginLayout) {
         e.printStackTrace();
         loginLayout.setError(getString(R.string.unknown_error));
     }
 
 
-    private Date checkDate()
-    {
+    private Date checkDate() {
         TextView hint = findViewById(R.id.RegisterDateHint);
         Spinner spinnerYear = findViewById(R.id.spinnerYear);
-        int month = ((Spinner)findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
-        int day = ((Spinner)findViewById(R.id.spinnerDays)).getSelectedItemPosition();
+        int month = ((Spinner) findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
+        int day = ((Spinner) findViewById(R.id.spinnerDays)).getSelectedItemPosition();
 
-        if (spinnerYear.getSelectedItemPosition() == 0 || month == -1 || day == 0)
-        {
+        if (spinnerYear.getSelectedItemPosition() == 0 || month == -1 || day == 0) {
             hint.setError(getString(R.string.register_dob_error));
             return null;
         }
@@ -134,8 +125,7 @@ public class Register extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         Calendar today = Calendar.getInstance();
-        if (MyDateUtils.getDiffYears(cal, today) < 13)
-        {
+        if (MyDateUtils.getDiffYears(cal, today) < 13) {
             hint.setError(getString(R.string.register_dob_error));
             return null;
         }
@@ -145,101 +135,111 @@ public class Register extends AppCompatActivity {
         return dateRepresentation;
     }
 
-    public void onRegisterClick(View buttonView)
+    private void endActivity(String mail, String pass) {
+        Intent intent = new Intent(this, RegisterSuccessful.class);
+        intent.putExtra("mail", mail);
+        startActivity(intent);
+        finish();
+    }
+
+    private Date checkInput(String IDText, String mailText, String passText)
     {
-
-       String IDText = ID.getText().toString();;
-        String mailText = mail.getText().toString();
-        String passText = pass.getText().toString();
         TextView CGUHint = findViewById(R.id.CGUButton);
-
-        Boolean CGUAccepted = ((CheckBox)findViewById(R.id.CGUCheck)).isChecked();
+        Boolean CGUAccepted = ((CheckBox) findViewById(R.id.CGUCheck)).isChecked();
 
         if (!mailText.contains("@")) {
-            ((TextInputLayout)findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_error));
+            ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_error));
             findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
-            return;
+            return null;
         }
 
         if (IDText.length() < 4) {
-            ((TextInputLayout)findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_username_error));
+            ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_username_error));
             findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
-            return;
+            return null;
         }
 
         if (!passText.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,42}$")) {
-            ((TextInputLayout)findViewById(R.id.RegisterPasswordLayout)).setError(getString(R.string.register_password_error));
+            ((TextInputLayout) findViewById(R.id.RegisterPasswordLayout)).setError(getString(R.string.register_password_error));
             findViewById(R.id.RegisterPassHint).setVisibility(View.GONE);
-            return;
+            return null;
         }
 
         if (!CGUAccepted) {
             CGUHint.setError(getString(R.string.register_cgu_error));
-            return;
-        }
-        else
+            return null;
+        } else
             CGUHint.setError(null);
 
         Date date = checkDate();
         if (date == null)
+            return null;
+        return date;
+    }
+
+    public void onRegisterClick(View buttonView) {
+
+        final Button button = findViewById(R.id.RegisterButton);
+
+        String IDText = ID.getText().toString();
+        final String mailText = mail.getText().toString();
+        final String passText = pass.getText().toString();
+        Date date = checkInput(IDText, mailText, passText);
+
+        if (date == null)
             return;
 
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        String textDate = ft.format(date);
 
-        /*
         JSONObject req = new JSONObject();
         try {
-            req.put(APIUrl.LOGIN_PARAM1, login);
-            req.put(APIUrl.LOGIN_PARAM2, password);
-        }
-        catch (JSONException e) {
-            displayError(e, loginLayout);
+            req.put(APIUrl.REGISTER_PARAM1, mailText);
+            req.put(APIUrl.REGISTER_PARAM2, passText);
+            req.put(APIUrl.REGISTER_PARAM3, IDText);
+            req.put(APIUrl.REGISTER_PARAM4, textDate);
+            req.put(APIUrl.REGISTER_PARAM5, true);
+        } catch (JSONException e) {
+            Log.wtf("Register", e);
             return;
         }
-        //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
 
-        JsonObjectRequest jsObjRequest = new APIJsonObjectRequest
-                (Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
+        button.setText(getString(R.string.register_sending));
+
+
+        JsonObjectRequest jsObjRequest = new APILoginJsonObjectRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
+                new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        String token;
-                        //String refreshToken;
-                        try {
-                        token = response.getString(APIUrl.COOKIE_HEADER);
-                        //refreshToken = response.getString("refreshToken");
-                        }
-                        catch (JSONException e) {
-                            displayError(e, loginLayout);
-                            return;
-                        }
 
-                        Account account = new Account(login, getString(R.string.account_type));
-                        AccountManager am = AccountManager.get(getBaseContext());
-                        am.addAccountExplicitly(account, null, null);
-                        //am.setUserData(account, "refreshToken", refreshToken);
-                        am.setAuthToken(account, getString(R.string.account_type), token);
-                        //setResult(RESULT_OK); si utilisation startActivityForResult()
-                        finish();
+                        button.setText(getString(R.string.create_account));
+                        endActivity(mailText, passText);
+                        //la réponse
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        if (networkResponse != null && networkResponse.statusCode == 400) {
-                            loginLayout.setError(getString(R.string.login_incorrect_credentials));
-                            findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
+                        error.printStackTrace();
+                        button.setText(getString(R.string.create_account));
+                        if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE)
+                        {
+                            if (error.networkResponse.data.toString().contains(APIUrl.REGISTER_MAIL_ERROR))
+                                ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_already_used));
+                            if (error.networkResponse.data.toString().contains(APIUrl.REGISTER_LOGIN_ERROR))
+                                ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
                         }
                         else
-                            loginLayout.setError(getString(R.string.no_network));
+                            ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.no_network));
                     }
-                });
-        VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
-    */
+                }
+        );
+        VHttp.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
 
-    
-    public void onCGUButtonClick(View v)
-    {
+
+    public void onCGUButtonClick(View v) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_cgu);
         dialog.setTitle(getResources().getString(R.string.CGU));
@@ -256,12 +256,12 @@ public class Register extends AppCompatActivity {
 
 
     private class RegisterHintFocus implements View.OnFocusChangeListener {
-        private  View hint;
-        private  TextInputLayout upperLay;
+        private View hint;
+        private TextInputLayout upperLay;
 
         public RegisterHintFocus(View nhint, View nUpper) {
             hint = nhint;
-            upperLay = (TextInputLayout)nUpper;
+            upperLay = (TextInputLayout) nUpper;
         }
 
         @Override
