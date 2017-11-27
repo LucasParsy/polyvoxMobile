@@ -54,8 +54,6 @@
     <string name="register_mail_already_used">L\'adresse e-mail est déjà utilisée</string>
     <string name="register_ID_already_used">Ce nom d\'utilisateur est déjà pris</string>
 
-    register_ID_already_used
-
     <string name="year">Année</string>
     <string name="day">Jour</string>
     <string-array name="months_spinner">
@@ -84,6 +82,13 @@
     <string name="confirmation_mail_sent2">Consultez votre boite mail pour valider votre compte\n
         et profiter pleinement de l\'expérience Polyvox</string>
     <string name="back_home">Retourner à la page d\'acceuil</string>
+
+
+    <string name="users">Utilisateurs</string>
+    <string name="rooms">Salons de discussion</string>
+
+    <string name="no_search_result">Aucun résultat</string>
+    <string name="no_search_result_details">La recherche n\'a pas donnée de résultats\nVeuillez essayer une autre requete.</string>
 
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n

@@ -50,9 +50,10 @@ public class Home extends AppCompatActivity {
         configToolbar();
 
         //leaks verification, in debug builds only.
+        /*
         if (LeakCanary.isInAnalyzerProcess(this)) {return;}
         LeakCanary.install(this.getApplication());
-
+        */
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
         List<Fragment> fragments = new Vector<>();
