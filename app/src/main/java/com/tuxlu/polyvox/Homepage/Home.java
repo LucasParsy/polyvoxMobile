@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
+import android.net.Network;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -14,11 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APIUrl;
@@ -85,43 +90,31 @@ public class Home extends AppCompatActivity {
     Toolbar configuration
     */
 
-    boolean testOnClickProfileButton(MenuItem item, final MenuItem profileIcon)
+    void setUserIcon(final NetworkImageView image)
     {
         final Context context = getBaseContext();
-        JSONObject req = new JSONObject();
-        try {
-            req.put("query", 42);
-        } catch (JSONException e) {
-            return true;
-        }
-        //todo modifier requete avec bonne url et bons params
+        if (!NetworkUtils.isAPIConnected(context))
+            return;
         NetworkUtils.JSONrequest(context, Request.Method.GET,
-                APIUrl.BASE_URL + APIUrl.INFO_USER,
-                true, req, new Response.Listener<JSONObject>() {
+                APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
+                true, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         String imageUrl;
                         try {
-                            imageUrl = response.getString("picture");
+                            imageUrl = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT).getString("picture");
                         } catch (JSONException e) {
                             return;
                         }
-                        ImageRequest request = new ImageRequest(imageUrl,
-                                new Response.Listener<Bitmap>() {
-                                    @Override
-                                    public void onResponse(Bitmap bitmap) {
-                                        profileIcon.setIcon(new BitmapDrawable(getResources(), bitmap));
-                                    }
-                                }, 0, 0, null, null, null);
-                        VHttp.getInstance(getApplicationContext()).addToRequestQueue(request);
+                        if (!imageUrl.isEmpty())
+                            image.setImageUrl(imageUrl, VHttp.getInstance(context).getImageLoader());
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        return true;
     }
 
     @Override
@@ -129,14 +122,16 @@ public class Home extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         final MenuItem profileIcon = menu.findItem(R.id.profileButton);
+        FrameLayout actionView = (FrameLayout)profileIcon.getActionView();
+        final NetworkImageView image  = actionView.findViewById(R.id.infoUserPicture);
+        image.setDefaultImageResId(R.drawable.ic_account_circle_black_24dp);
+        setUserIcon(image);
         final MenuItem searchItem = menu.findItem(R.id.search);
-        profileIcon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
 
-            //TODO stupid request used to test Auth Token requests. To be modified.
-            //ex: replace image getter by settings menu opener. put image Getter somewhere else.
-            public boolean onMenuItemClick(MenuItem item) {
-                return testOnClickProfileButton(item, profileIcon);
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo: open profile page with ProfilePage and userName
             }
         });
 

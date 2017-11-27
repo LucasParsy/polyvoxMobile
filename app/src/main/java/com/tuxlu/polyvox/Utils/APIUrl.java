@@ -11,12 +11,14 @@ public class APIUrl {
 
     public static final String FAKE_BASE_URL = SCHEME + "://" + "fakeApi.polyvox.fr" + "/";
 
+    public static final String INFO_CURRENT_USER = "users/currentUser";
+
     public static final String DISCOVER_ROOMS = "discoverRoom";
     public static final String SEARCH_ROOMS = "searchRoom";
 
     public static final String CREATE_ACCOUNT = "createAccount";
     public static final String INFO_ROOM = "infoRoom";
-    public static final String INFO_USER = "infoUser";
+    public static final String INFO_USER = "users/";
     public static final String VIDEO_STREAM = "video";
     public static final String COOKIE_HEADER_RECEIVE = "set-cookie";
     public static final String COOKIE_HEADER = "Cookie";
