@@ -23,6 +23,9 @@ import android.widget.Toast
 import android.R.attr.data
 import org.json.JSONArray
 import kotlin.collections.HashMap
+import android.view.Gravity
+import android.widget.TextView
+import org.w3c.dom.Text
 
 
 /**
@@ -85,9 +88,9 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
                     }
                     //todo: gérer autres fragments
                 }, { error ->
-            if (error.networkResponse == null)
-                Toast.makeText(this, getString(R.string.no_wifi_home), Toast.LENGTH_LONG).show()
-            val debugStringData = String(error.networkResponse.data)
+            if (error.networkResponse == null) {
+                ImageUtils.showToast(this, getString(R.string.no_wifi_home))
+            }
             error.printStackTrace()
         });
     }

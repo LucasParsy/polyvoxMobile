@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.os.Build;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tuxlu.polyvox.R;
 
@@ -19,7 +22,7 @@ import java.io.FileOutputStream;
 
 public class ImageUtils {
 
-    //Todo déplacer les fonction dans un fichier plus à propos
+    //todo: move theses function in more appropriate file
     public static void shareContent(Context context, String body, String url)
     {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -29,6 +32,16 @@ public class ImageUtils {
         context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)));
     }
 
+    //todo: move theses function in more appropriate file
+    public static void showToast(Context context, String text) {
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        TextView v = toast.getView().findViewById(android.R.id.message);
+        if (v != null)
+            v.setGravity(Gravity.CENTER);
+        toast.show();
+    }
+
+    //todo: move theses function in more appropriate file
     public static boolean setNotificationSilentState(Context context, int mode) {
         AudioManager manager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (manager == null)
