@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toolbar;
 
 import com.android.volley.NetworkResponse;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.ImageUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,25 +92,29 @@ public class Login extends AccountAuthenticatorActivity {
         //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
 
 
+        final Button button = ((Button)buttonView);
+        button.setText(getString(R.string.login_connect_waiting));
         JsonObjectRequest jsObjRequest = new APILoginJsonObjectRequest
                 (getApplicationContext(), login, Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //setResult(RESULT_OK); si utilisation startActivityForResult()
+                        button.setText(getString(R.string.login_connect));
                         finish();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        button.setText(getString(R.string.login_connect));
                         NetworkResponse networkResponse = error.networkResponse;
                         loginLayout.setError(error.getMessage());
                         if (networkResponse != null && networkResponse.statusCode == APIUrl.LOGIN_INVALID_USER_CODE) {
                             loginLayout.setError(getString(R.string.login_incorrect_credentials));
                             findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
                         }
-                        else
+                            ImageUtils.checkNetworkError(getApplicationContext(), error);
                             loginLayout.setError(getString(R.string.no_network));
                     }
                 });

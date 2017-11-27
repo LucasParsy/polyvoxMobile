@@ -19,6 +19,8 @@
     <string name="no_network">Problème de réseau</string>
     <string name="no_wifi_home">Erreur de réseau.\n
         Veuillez vérifier vos paramètres internet</string>
+    <string name="no_server">l'application Polyox n\'est pas disponible actuellement.\n
+        Veuillez réessayer plus tard.</string>
     <string name="username_hint">Identifiant</string>
     <string name="mail_hint">E-mail</string>
     <string name="date_hint">Date de naissance (13 ans minimum)</string>
@@ -27,6 +29,7 @@
     <string name="login_prompt_message">Connectez vous!</string>
     <string name="login_or">ou</string>
     <string name="login_connect">Se connecter</string>
+    <string name="login_connect_waiting">Connexion...</string>
     <string name="login_connection_problem">Problèmes de connexion?</string>
     <string name="login_create_prompt">Pas encore rejoint la communauté?</string>
     <string name="login_create_account">Créer un compte</string>

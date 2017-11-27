@@ -10,6 +10,13 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.tuxlu.polyvox.R;
 
 import java.io.ByteArrayOutputStream;
@@ -33,9 +40,26 @@ public class ImageUtils {
     }
 
     //todo: move theses function in more appropriate file
-    public static void showToast(Context context, String text) {
+    public static void checkNetworkError(Context context, VolleyError error) {
+        if (error instanceof NetworkError ||
+                error instanceof AuthFailureError ||
+                error instanceof TimeoutError ||
+                error instanceof ParseError)
+        {
+            showToast(context, context.getString(R.string.no_wifi_home), R.style.ToastStyleNoWifi);
+        }
+        else if (error instanceof ServerError)
+            showToast(context, context.getString(R.string.no_server), R.style.ToastStyleNoServer);
+    }
+
+    //todo: move theses function in more appropriate file
+    public static void showToast(Context context, String text, int layout) {
         Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
         TextView v = toast.getView().findViewById(android.R.id.message);
+
+        //StyleableToast toast = StyleableToast.makeText(context, text, Toast.LENGTH_LONG, layout);
+        //TextView v = toast.getStyleableToast().getView().findViewById(android.R.id.message);
+
         if (v != null)
             v.setGravity(Gravity.CENTER);
         toast.show();

@@ -10,12 +10,17 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
 
@@ -47,8 +52,7 @@ public class NetworkUtils {
         AccountManager am = AccountManager.get(context);
         if (android.os.Build.VERSION.SDK_INT >= 22) {
             am.removeAccountExplicitly(am.getAccounts()[0]);
-        }
-        else {
+        } else {
             am.removeAccount(am.getAccounts()[0], null, null);
         }
     }
@@ -74,8 +78,8 @@ public class NetworkUtils {
             return null;
         Bundle res;
         try {
-                res = am.getAuthToken(am.getAccounts()[0],
-                        context.getString(R.string.account_type), null, false, null, null).getResult();
+            res = am.getAuthToken(am.getAccounts()[0],
+                    context.getString(R.string.account_type), null, false, null, null).getResult();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -86,8 +90,7 @@ public class NetworkUtils {
     }
 
 
-    private static void startLoginActivity(Context context)
-    {
+    private static void startLoginActivity(Context context) {
         context.startActivity(new Intent(context, Login.class));
     }
 
@@ -98,8 +101,7 @@ public class NetworkUtils {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                if (usesApi && !isAPIConnected(context))
-                {
+                if (usesApi && !isAPIConnected(context)) {
                     startLoginActivity(context);
                     return;
                 }
@@ -108,12 +110,13 @@ public class NetworkUtils {
                         (method, url, body, listener, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                    if (error.networkResponse != null &&
-                                            error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
-                                        removeAccountLogout(context);
-                                        startLoginActivity(context);
-                                        return;
-                                    }
+                                if (error.networkResponse != null &&
+                                        error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
+                                    removeAccountLogout(context);
+                                    startLoginActivity(context);
+                                    return;
+                                }
+                                ImageUtils.checkNetworkError(context, error);
                                 errorListener.onErrorResponse(error);
                             }
                         }) {

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.ImageUtils;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
 
@@ -233,8 +234,10 @@ public class Register extends AppCompatActivity {
                             if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
                                 ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
                         }
-                        else
+                        else {
+                            ImageUtils.checkNetworkError(getApplicationContext(), error);
                             ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.no_network));
+                        }
                     }
                 }
         );
