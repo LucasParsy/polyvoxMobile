@@ -40,7 +40,15 @@ abstract class IRequestRecycler<T : Any>() : IRecycler<T>() {
     internal fun request(url: String, body: JSONObject, append: Boolean, view: View? = null) {
         val eListen = Response.ErrorListener { error -> errorListener(error) }
         NetworkUtils.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + url, usesAPI, body, Response.Listener<JSONObject> { response ->
-            add(response, false)
+
+            var jArray: JSONArray? = null
+            try {
+                jArray = response.getJSONArray(requestObjectName)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            if (jArray != null)
+                add(jArray, false)
             if (view != null)
                 LoadingUtils.EndLoadingView(view)
         }, eListen)

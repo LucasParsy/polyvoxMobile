@@ -37,7 +37,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
     abstract fun setLayoutManager(): RecyclerView.LayoutManager
 
     lateinit var rootView : View
-    lateinit var noResView : View
+    var noResView : View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,15 +64,15 @@ abstract class IRecycler<T: Any>() : Fragment() {
         return rootView
     }
 
-    fun add(data: JSONObject, replace: Boolean=false)
+    fun add(data: JSONArray, replace: Boolean=false)
     {
         var list : MutableList<T> = parseJSON(data)
 
         if (noResView != null) {
             if (list.size == 0)
-                noResView.visibility = View.VISIBLE
+                noResView!!.visibility = View.VISIBLE
             else
-                noResView.visibility = View.INVISIBLE
+                noResView!!.visibility = View.INVISIBLE
         }
 
         if (replace || list.size == 0)
@@ -88,16 +88,8 @@ abstract class IRecycler<T: Any>() : Fragment() {
         adapter?.notifyDataSetChanged()
     }
 
-    internal fun parseJSON(infoJson: JSONObject): MutableList<T> {
+    internal fun parseJSON(jArray: JSONArray): MutableList<T> {
         val data = ArrayList<T>()
-        var jArray: JSONArray? = null
-
-        try {
-            jArray = infoJson.getJSONArray(requestObjectName)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
         if (jArray == null)
             return data
         for (i in 0 until jArray.length()) {

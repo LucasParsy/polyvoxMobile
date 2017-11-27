@@ -78,19 +78,16 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         var map = HashMap<String, String>()
         map.put(APIUrl.SEARCH_PARAM1, query)
         val url = NetworkUtils.getParametrizedUrl(APIUrl.SEARCH, map)
-        NetworkUtils.JSONrequest(applicationContext, Request.Method.GET, url, false, null,
+        NetworkUtils.JSONrequest(this, Request.Method.GET, url, false, null,
                 { result ->
                     val debugResponse = result
                     val debugSure = 1+1
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
-                        usersFragment.add(result, true)
+                        usersFragment.add(result.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
                     }
                     //todo: gérer autres fragments
                 }, { error ->
-            if (error.networkResponse == null) {
-                ImageUtils.showToast(this, getString(R.string.no_wifi_home))
-            }
             error.printStackTrace()
         });
     }
