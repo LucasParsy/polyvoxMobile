@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -37,7 +38,7 @@ public class NetworkUtils {
         builder.authority(APIUrl.AUTHORITY);
         builder.appendPath(path);
         for (Map.Entry<String, String> entry : params.entrySet())
-            params.put(entry.getKey(), entry.getValue());
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
         return builder.build().toString();
     }
 
@@ -125,6 +126,13 @@ public class NetworkUtils {
                         return params;
                     }
                 };
+
+                //avoid timeout
+                jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        15000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                 VHttp.getInstance(context.getApplicationContext()).addToRequestQueue(jsObjRequest);
             }
         });
