@@ -20,97 +20,30 @@ import kotlin.collections.ArrayList
  */
 
 
-abstract class IRequestRecycler<T: Any>() : Fragment() {
+abstract class IRequestRecycler<T : Any>() : IRecycler<T>() {
 
-    abstract val layoutListId: Int
-    abstract val layoutObjectId: Int
-    abstract val recycleId: Int
-    abstract val requestUrl : String
+    abstract val requestUrl: String
     abstract val requestBody: JSONObject
-    abstract val usesAPI : Boolean;
-    abstract val requestObjectName : String
-
-    abstract val itemDecoration: RecyclerView.ItemDecoration
-    abstract val binder: ViewHolderBinder<T>
-
-    private var adapter: Adapter<T>? = null;
+    abstract val usesAPI: Boolean;
 
     abstract fun errorListener(error: VolleyError)
-    abstract fun fillDataObject(json: JSONObject): T
-    abstract fun setLayoutManager(): RecyclerView.LayoutManager
-    /*{
-        return final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),
-                getResources().getInteger(R.integer.homepage_rooms_row_number))
-    }*/
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = inflater!!.inflate(layoutListId, container, false)
-        val recycler = view.findViewById<View>(recycleId) as RecyclerView
-        recycler.setHasFixedSize(true)
-
-
-        val layoutManager = setLayoutManager()
-        recycler.addItemDecoration(itemDecoration)
-        recycler.layoutManager = layoutManager
-
-        adapter = Adapter(context, ArrayList(), layoutObjectId, binder)
-        recycler.adapter = adapter
+        val view: View? = super.onCreateView(inflater, container, savedInstanceState)
+        LoadingUtils.StartLoadingView(view, context)
         request(requestUrl, requestBody, true, view)
         return view
     }
 
-
-    fun clear()
-    {
-        adapter?.clear()
-        adapter?.notifyDataSetChanged()
-    }
-
-    internal fun request(url: String, body: JSONObject, append: Boolean, view: View? = null)
-    {
+    internal fun request(url: String, body: JSONObject, append: Boolean, view: View? = null) {
         val eListen = Response.ErrorListener { error -> errorListener(error) }
-        NetworkUtils.JSONrequest(context,Request.Method.GET, APIUrl.BASE_URL  + url, usesAPI, body, Response.Listener<JSONObject> { response ->
-            if (!append)
-                adapter?.clear()
-            adapter?.add(parseJSON(response))
-            adapter?.notifyDataSetChanged()
+        NetworkUtils.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + url, usesAPI, body, Response.Listener<JSONObject> { response ->
+            add(response, false)
             if (view != null)
                 LoadingUtils.EndLoadingView(view)
         }, eListen)
 
-    }
-
-    internal fun parseJSON(infoJson: JSONObject): MutableList<T> {
-        val data = ArrayList<T>()
-        var jArray: JSONArray? = null
-
-        try {
-            jArray = infoJson.getJSONArray(requestObjectName)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-        if (jArray == null)
-            return data
-        for (i in 0 until jArray.length()) {
-            val obj : T
-            try {
-                val json = jArray.getJSONObject(i)
-                obj = fillDataObject(json);
-                data.add(obj)
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }
-        return data
     }
 }

@@ -34,8 +34,8 @@ class SpaceItemDecoration : RecyclerView.ItemDecoration() {
                                 state: RecyclerView.State?) {
         outRect.right = spaceHeight
         outRect.left = outRect.right
-        outRect.top = outRect.left
-        outRect.top = outRect.top
+        outRect.bottom = outRect.left
+        outRect.top = outRect.bottom
     }
 }
 
