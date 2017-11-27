@@ -48,6 +48,14 @@ public class APIUrl {
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_USER = 3;
 
+
+
+    public static final String SEARCH = "search";
+    public static final String SEARCH_PARAM1 = "query";
+    public static final String SEARCH_USER_JSONOBJECT = "data";
+    public static final String SEARCH_USER_NAME = "userName";
+    public static final String SEARCH_USER_IMAGE_URL = "picture";
+
     public static final String CGU = "https://polyvox.fr/gtu";
 
     private APIUrl(){}

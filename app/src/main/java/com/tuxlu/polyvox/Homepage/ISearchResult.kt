@@ -12,8 +12,18 @@ import android.support.v7.widget.SearchView
 import android.view.View
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.android.volley.Request
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.*
+import kotlinx.android.synthetic.main.fragment_search_all.*
+import org.json.JSONObject
+import java.io.Serializable
 import java.util.*
+import android.widget.Toast
+import android.R.attr.data
+import org.json.JSONArray
+import kotlin.collections.HashMap
+
 
 /**
  * Created by tuxlu on 20/11/17.
@@ -24,17 +34,23 @@ import java.util.*
  * Created by parsyl on 24/07/2017.
  */
 
-abstract class ISearchResult: AppCompatActivity() {
+abstract class ISearchResult : AppCompatActivity() {
+/*todo: gérer multiples fragments, avec recherche room ET fragment "global",
+todo: qui inclut plusieurs fragment DONC Différent type des deux autres, exception, galère, chiant.
+*/
+
     internal var adapter: PagerAdapter? = null
-    internal var fragments: MutableList<Fragment>? = null
-    lateinit internal var  pager: ViewPager
+    //lateinit private var roomFragment: SearchUserRecycler
+    //lateinit private var globalFragment: GlobalSearchFragment
+    lateinit private var usersFragment: SearchUserRecycler
+    lateinit internal var pager: ViewPager
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         setContentView(R.layout.activity_search)
-        pager = findViewById(R.id.pager)
+        instanciateFragments()
         setupSearchView()
     }
 
@@ -56,29 +72,35 @@ abstract class ISearchResult: AppCompatActivity() {
     }
 
     fun search(query: String) {
-        if (fragments == null && !query.isEmpty())
-            instanciateFragments(query)
-        else if (fragments != null)
-        {
-            val recycler = fragments!![0] as SearchRoomRecycler
-            if (query.isEmpty())
-                recycler.clear()
-            else
-                recycler.search(query)
-        }
+        var map = HashMap<String, String>()
+        map.put(APIUrl.SEARCH_PARAM1, query)
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.SEARCH, map)
+        NetworkUtils.JSONrequest(applicationContext, Request.Method.GET, url, false, null,
+                { result ->
+                    val debugResponse = result
+                    val debugSure = 1+1
+                    if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
+                    {
+                        usersFragment.add(result, true)
+                    }
+                    //todo: gérer autres fragments
+                }, { error ->
+            if (error.networkResponse == null)
+                Toast.makeText(this, getString(R.string.no_wifi_home), Toast.LENGTH_LONG).show()
+            val debugStringData = String(error.networkResponse.data)
+            error.printStackTrace()
+        });
     }
 
-    protected fun instanciateFragments(query: String) {
-        if (fragments == null) {
-            fragments = Vector()
-            val args = Bundle()
-            args.putString("query", query)
-            fragments!!.add(Fragment.instantiate(this, SearchRoomRecycler::class.java.name, args))
+    protected fun instanciateFragments() {
+        pager = findViewById(R.id.pager)
+        var fragments = mutableListOf<Fragment>()
+        usersFragment = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
+        fragments.add(usersFragment)
+        val tabTitles = intArrayOf(R.string.tab_discover, R.string.tab_friends, R.string.tab_chat)
+        adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
+        pager.adapter = adapter
+        //((TabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(pager);
 
-            val tabTitles = intArrayOf(R.string.tab_discover, R.string.tab_friends, R.string.tab_chat)
-            adapter = PagerAdapter(supportFragmentManager, fragments!!, tabTitles, this)
-            pager!!.adapter = adapter
-            //((TabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(pager);
-        }
     }
 }
