@@ -29,7 +29,7 @@
                 android:textColor="@android:color/background_dark" />
 
             <fragment
-                android:id="@+id/fragment"
+                android:id="@+id/fragmen1t"
                 android:name="android.app.ListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -54,7 +54,7 @@
                 android:textColor="@android:color/background_dark" />
 
             <fragment
-                android:id="@+id/fragment"
+                android:id="@+id/fragment2"
                 android:name="android.app.ListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

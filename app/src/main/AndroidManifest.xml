@@ -104,6 +104,18 @@
         <activity android:name="com.tuxlu.polyvox.User.ProfilePage">
         </activity>
 
+        <activity android:name="com.tuxlu.polyvox.Options.OptionsMenu"
+            android:label="Paramètres">
+        </activity>
+
+        <activity android:name="com.tuxlu.polyvox.Options.OptionsBio"
+            android:label="Biographie">
+        </activity>
+
+        <activity android:name="com.tuxlu.polyvox.Options.OptionsInfoUser"
+            android:label="Informations personnelles">
+        </activity>
+
 
     </application>
 

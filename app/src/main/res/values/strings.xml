@@ -89,6 +89,7 @@
     <string name="is_no_more_followed"> \u0020 n\'est plus suivi</string>
 
     <string name="modify_profile">Modifier le profil</string>
+    <string name="update">Mettre à jour</string>
 
     <string name="welcome">Bienvenue!</string>
     <string name="not_verified_title">Compte non vérifié</string>
@@ -108,6 +109,17 @@
 
     <string name="no_search_result">Aucun résultat</string>
     <string name="no_search_result_details">La recherche n\'a pas donnée de résultats\nVeuillez essayer une autre requete.</string>
+
+
+    <string name="description">description</string>
+    <string name="photo">photo</string>
+    <string name="user_info">informations utilisateur</string>
+    <string name="mail">e-mail</string>
+
+    <string name="bio_hint">présentez vous!</string>
+    <string name="bio_updated">la biographie a bien été mise à jour</string>
+    <string name="bio_too_long">la biographie est trop longue (500 caractères max)</string>
+
 
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n
