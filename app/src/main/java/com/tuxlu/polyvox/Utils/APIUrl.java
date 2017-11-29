@@ -28,6 +28,7 @@ public class APIUrl {
 
 
     public static final Integer TOKEN_DENIED_CODE = 401;
+    public static final Integer USER_NOT_VALIDATED = 403;
 
     public static final String LOGIN = "users/login";
     public static final String LOGIN_PARAM1 = "email";
@@ -46,6 +47,8 @@ public class APIUrl {
 
     public static final String MAIL_SEND = "users/send";
 
+    public static final String FOLLOW = "users/follow";
+
     public static final int ERROR_CREATE_ACCOUNT_INVALID_MAIL = 1;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_USER = 3;
@@ -59,6 +62,10 @@ public class APIUrl {
     public static final String SEARCH_USER_IMAGE_URL = "picture";
 
     public static final String CGU = "https://polyvox.fr/gtu";
+
+
+    public static final String LOGOUT = "users/logout";
+
 
     private APIUrl(){}
 }

@@ -15,10 +15,10 @@
         android:layout_height="fill_parent"
         android:layout_weight="50">
 
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <ImageView
                 android:id="@+id/backgroundImage"
@@ -39,14 +39,34 @@
                 android:orientation="vertical">
 
 
-                <com.tuxlu.polyvox.Homepage.SquareImageView
-                    android:id="@+id/profileIcon"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="center"
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_gravity="center_horizontal"
+
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+                    android:clickable="false"
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    app:cardBackgroundColor="@android:color/black"
+                    android:background="@android:color/black"
+                    android:thicknessRatio="30"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="0dp"
+                    tools:cardElevation="0dp">
+
+                    <com.android.volley.toolbox.NetworkImageView
+                        android:id="@+id/ProfileIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_account_circle_white_24dp"
+                        app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+
+                </android.support.v7.widget.CardView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,11 +74,10 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0"
-                    android:text="TextView"
+                    android:text="@string/followers"
                     android:textAlignment="center"
                     android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                    android:textColor="@android:color/white"
-                    tools:text="@string/followers" />
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/ProfileFollowerNumber"
@@ -66,31 +85,33 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0"
-                    android:text="TextView"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@android:color/white"
                     tools:text="42" />
 
+                <!-- android:text="@string/bio_empty" -->
                 <TextView
                     android:id="@+id/ProfileBio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="0"
-                    android:text="@string/bio_bidon"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="@string/bio_empty"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/ProfileActionButton"
-                    style="@style/AppTheme.ColoredButton.Transparent"
+                    style="@style/AppTheme.ColoredButton.Framed"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="0"
-                    android:text="Button" />
+                    android:text="@string/follow" />
             </LinearLayout>
 
 
@@ -102,7 +123,6 @@
         android:layout_height="fill_parent"
         android:layout_weight="50"
         android:orientation="vertical">
-
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayoutHome"
@@ -122,7 +142,7 @@
                 android:id="@+id/TabTextFriends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_discover"
+                android:text="@string/followed"
                 android:visibility="visible" />
         </android.support.design.widget.TabLayout>
 
@@ -130,7 +150,7 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

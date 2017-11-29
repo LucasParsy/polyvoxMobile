@@ -24,6 +24,18 @@
         <item name="android:background">@color/PolyvoxMainColor</item>
     </style>
 
+    <style name="AppTheme.ColoredButton.Framed" parent="@style/AppTheme.coloredButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:color">@color/PolyvoxMainColor</item>
+        <item name="android:background">@drawable/rectangle_white_border</item>
+    </style>
+
+
     <style name="AppTheme.ColoredButton.Transparent" parent="@style/AppTheme.coloredButton">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/PolyvoxMainColorTransparent</item>
@@ -60,8 +72,17 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="SimpleToast">
+        <item name="android:colorBackground">@color/lighter_gray</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <style name="ToastStyleNoServer">
         <item name="android:icon">@drawable/no_server</item>
+    </style>
+
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

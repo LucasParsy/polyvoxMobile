@@ -101,6 +101,10 @@
             android:configChanges="orientation|screenSize">
         </activity>
 
+        <activity android:name="com.tuxlu.polyvox.User.ProfilePage">
+        </activity>
+
+
     </application>
 
 </manifest>

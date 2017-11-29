@@ -19,7 +19,7 @@
     <string name="no_network">Problème de réseau</string>
     <string name="no_wifi_home">Erreur de réseau.\n
         Veuillez vérifier vos paramètres internet</string>
-    <string name="no_server">l'application Polyox n\'est pas disponible actuellement.\n
+    <string name="no_server">l\'application Polyox n\'est pas disponible actuellement.\n
         Veuillez réessayer plus tard.</string>
     <string name="username_hint">Identifiant</string>
     <string name="mail_hint">E-mail</string>
@@ -29,11 +29,14 @@
     <string name="login_prompt_message">Connectez vous!</string>
     <string name="login_or">ou</string>
     <string name="login_connect">Se connecter</string>
-    <string name="login_connect_waiting">Connexion...</string>
+    <string name="login_connect_waiting">Connexion…</string>
     <string name="login_connection_problem">Problèmes de connexion?</string>
     <string name="login_create_prompt">Pas encore rejoint la communauté?</string>
     <string name="login_create_account">Créer un compte</string>
     <string name="login_incorrect_credentials">E-mail ou mot de passe incorrect</string>
+
+    <string name="logout">Déconnexion</string>
+    <string name="logout_confirm">Voulez vous vous déconnecter de l\'application Polyvox?</string>
     <string name="unknown_error">erreur innatendue</string>
     <string name="create_account">Inscription</string>
     <string name="register_sending">envoi en cours…</string>
@@ -45,7 +48,9 @@
     <string name="register_username_hint_bottom">6 caractères minimum, composé uniquement de lettres et chiffres</string>
     <string name="register_password_hint_bottom">entre 5 et 42 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
 
-
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="maybe_i_dont_know">Can you repeat the question? YOU\'RE NOT THE BOSS OF ME NOW</string>
 
     <string name="register_mail_error">Email non valide.</string>
     <string name="register_username_error">Nom d\'utilisateur invalide.</string>
@@ -78,9 +83,20 @@
     <string name="followers">followers</string>
     <string name="followed">suivis</string>
     <string name="follow">suivre</string>
+    <string name="unfollow">ne plus suivre</string>
+    <string name="user">Utilisateur</string>
+    <string name="is_followed"> \u0020 est suivi</string>
+    <string name="is_no_more_followed"> \u0020 n\'est plus suivi</string>
+
     <string name="modify_profile">Modifier le profil</string>
 
     <string name="welcome">Bienvenue!</string>
+    <string name="not_verified_title">Compte non vérifié</string>
+    <string name="not_verified_message">vérifiez votre adresse e-mail pour accéder à cette fonctionnalité.\n\n
+    Un mail de confirmation vous a été envoyé à l\'inscription, veuillez le consulter.</string>
+    <string name="not_verified_resend">Me le renvoyer</string>
+    <string name="not_verified_nope">Je vais le retrouver</string>
+    <string name="confirmation_mail_sent_short">L\'e-mail de confirmation a bien été envoyé</string>
     <string name="confirmation_mail_sent1">Un e-mail de confirmation a été envoyé à l\'adresse:</string>
     <string name="confirmation_mail_sent2">Consultez votre boite mail pour valider votre compte\n
         et profiter pleinement de l\'expérience Polyvox</string>
@@ -104,10 +120,11 @@
  Lucas Parsy
     </string>
 
+    <string name="bio_empty">Cet utilisateur n\'a pas encore rempli sa biographie.</string>
 
     <string name="bio_bidon">
- Je suis un passionné de l'univers vidéoludique\n
- Fan de l'objectivité totale de Julien C,\n
+ Je suis un passionné de l\'univers vidéoludique\n
+ Fan de l\'objectivité totale de Julien C,\n
  Je veux discuter des choix des lootbox dans le dernier CallOfStarFifa.\n
  à bientot pour partager ensemble notre passion commune…\n
  Le jeu vidéo!
