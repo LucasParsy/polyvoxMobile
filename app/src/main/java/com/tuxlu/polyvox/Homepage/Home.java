@@ -26,6 +26,8 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.User.Login;
+import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.VHttp;
@@ -43,8 +45,10 @@ import butterknife.ButterKnife;
 public class Home extends AppCompatActivity {
 
     private static final String TAG = "Home";
+    private String username = "";
     PagerAdapter adapter;
-    @BindView(R.id.pager) ViewPager pager;
+    @BindView(R.id.pager)
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +66,11 @@ public class Home extends AppCompatActivity {
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
         List<Fragment> fragments = new Vector<>();
+
         fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //discover
         fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
         fragments.add(Fragment.instantiate(this, PrivateChatList.class.getName())); //chat
-        int[] tabTitles = new int[]{R.string.tab_discover,
-                R.string.tab_friends, R.string.tab_chat};
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_friends, R.string.tab_chat};
 
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
@@ -81,7 +85,7 @@ public class Home extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
-            appBar.setExpanded(true,true);
+            appBar.setExpanded(true, true);
             bar.setTitle(R.string.app_name);
         }
     }
@@ -90,8 +94,7 @@ public class Home extends AppCompatActivity {
     Toolbar configuration
     */
 
-    void setUserIcon(final NetworkImageView image)
-    {
+    void setUserIcon(final NetworkImageView image) {
         final Context context = getBaseContext();
         if (!NetworkUtils.isAPIConnected(context))
             return;
@@ -103,11 +106,13 @@ public class Home extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         String imageUrl;
                         try {
-                            imageUrl = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT).getString("picture");
+                            JSONObject obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT);
+                            username = obj.getString("userName");
+                            imageUrl = obj.getString("picture");
                         } catch (JSONException e) {
                             return;
                         }
-                        if (!imageUrl.isEmpty())
+                        if (!imageUrl.isEmpty() && (imageUrl != "null"))
                             image.setImageUrl(imageUrl, VHttp.getInstance(context).getImageLoader());
                     }
                 }, new Response.ErrorListener() {
@@ -117,33 +122,77 @@ public class Home extends AppCompatActivity {
                 });
     }
 
+    private void startProfileIntent() {
+        Intent intent = new Intent(this, ProfilePage.class);
+        Bundle b = new Bundle();
+        b.putString("name", username);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         final MenuItem profileIcon = menu.findItem(R.id.profileButton);
-        FrameLayout actionView = (FrameLayout)profileIcon.getActionView();
-        final NetworkImageView image  = actionView.findViewById(R.id.infoUserPicture);
+        FrameLayout actionView = (FrameLayout) profileIcon.getActionView();
+        final NetworkImageView image = actionView.findViewById(R.id.infoUserPicture);
         image.setDefaultImageResId(R.drawable.ic_account_circle_black_24dp);
         setUserIcon(image);
         final MenuItem searchItem = menu.findItem(R.id.search);
 
         actionView.setOnClickListener(new View.OnClickListener() {
+            boolean clicked = false;
+
             @Override
             public void onClick(View view) {
-                //todo: open profile page with ProfilePage and userName
+                if (clicked)
+                    return;
+                if (!NetworkUtils.isAPIConnected(getApplicationContext())) {
+                    NetworkUtils.startLoginActivity(getApplicationContext());
+                    return;
+                }
+
+                if (!username.isEmpty())
+                    startProfileIntent();
+                else {
+                    clicked = true;
+                    NetworkUtils.JSONrequest(getApplicationContext(), Request.Method.GET,
+                            APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
+                            true, null, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONObject obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT);
+                                        username = obj.getString("userName");
+                                    } catch (JSONException e) {
+                                        return;
+                                    }
+                                    startProfileIntent();
+                                    clicked = false;
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    clicked = false;
+                                    error.printStackTrace();
+                                }
+                            });
+                }
             }
         });
 
-        //For search in different activity
-        final Context that = this;
-        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                startActivity(new Intent(that, SearchResultsActivity.class));
-                return true;
-            }
-        });
+    //For search in different activity
+    final Context that = this;
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
+
+    {
+        @Override
+        public boolean onMenuItemClick (MenuItem menuItem){
+        startActivity(new Intent(that, SearchResultsActivity.class));
+        return true;
+    }
+    });
 
 
         /*
@@ -162,7 +211,7 @@ public class Home extends AppCompatActivity {
         */
 
         return true;
-    }
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
