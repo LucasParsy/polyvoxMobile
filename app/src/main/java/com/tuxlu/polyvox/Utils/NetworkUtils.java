@@ -3,19 +3,23 @@ package com.tuxlu.polyvox.Utils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -23,12 +27,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
+import com.tuxlu.polyvox.User.RegisterSuccessful;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import android.support.v7.app.AlertDialog;
 
 /**
  * Created by parsyl on 19/07/2017.
@@ -41,7 +48,9 @@ public class NetworkUtils {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(APIUrl.SCHEME);
         builder.authority(APIUrl.AUTHORITY);
-        builder.appendPath(path);
+        String[] items = path.split("/");
+        for (String item : items)
+            builder.appendPath(item);
         for (Map.Entry<String, String> entry : params.entrySet())
             builder.appendQueryParameter(entry.getKey(), entry.getValue());
         return builder.build().toString();
@@ -90,7 +99,7 @@ public class NetworkUtils {
     }
 
 
-    private static void startLoginActivity(Context context) {
+    public static void startLoginActivity(Context context) {
         context.startActivity(new Intent(context, Login.class));
     }
 
@@ -110,11 +119,24 @@ public class NetworkUtils {
                         (method, url, body, listener, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                if (error.networkResponse != null &&
-                                        error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
-                                    removeAccountLogout(context);
-                                    startLoginActivity(context);
-                                    return;
+                                if (error.networkResponse != null) {
+                                    if (error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
+                                        removeAccountLogout(context);
+                                        startLoginActivity(context);
+                                        return;
+                                    }
+                                    if (error.networkResponse.statusCode == APIUrl.USER_NOT_VALIDATED) {
+                                        AlertDialog.Builder build = new AlertDialog.Builder(context);
+                                        build.setTitle(context.getString(R.string.not_verified_title))
+                                                .setMessage(context.getString(R.string.not_verified_message))
+                                                .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        UtilsKt.sendMail(context);
+                                                    }
+                                                })
+                                                .setNegativeButton(context.getString(R.string.not_verified_nope), null)
+                                                .show();
+                                    }
                                 }
                                 ImageUtils.checkNetworkError(context, error);
                                 errorListener.onErrorResponse(error);
