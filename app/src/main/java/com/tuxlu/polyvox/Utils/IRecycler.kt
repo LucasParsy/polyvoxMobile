@@ -38,12 +38,12 @@ abstract class IRecycler<T: Any>() : Fragment() {
 
     lateinit var rootView : View
     var noResView : View? = null
+    var isNoResViewVisible : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //retainInstance = true  //seems to leak
     }
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -64,12 +64,17 @@ abstract class IRecycler<T: Any>() : Fragment() {
         return rootView
     }
 
+    fun setNoResViewVisibility(nvis : Boolean)
+    {
+        isNoResViewVisible = nvis
+    }
+
     fun add(data: JSONArray, replace: Boolean=false)
     {
         var list : MutableList<T> = parseJSON(data)
 
         if (noResView != null) {
-            if (list.size == 0)
+            if (list.size == 0 && isNoResViewVisible)
                 noResView!!.visibility = View.VISIBLE
             else
                 noResView!!.visibility = View.INVISIBLE
