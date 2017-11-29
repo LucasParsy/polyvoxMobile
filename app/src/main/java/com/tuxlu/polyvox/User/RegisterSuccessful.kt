@@ -2,6 +2,7 @@ package com.tuxlu.polyvox.User
 
 import android.accounts.Account
 import android.accounts.AccountManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -54,7 +55,9 @@ class RegisterSuccessful() : AppCompatActivity() {
     }
 
     public fun backHome(v: View) {
-        startActivity(Intent(this, Home::class.java))
+        val nin: Intent = Intent(applicationContext, Home::class.java)
+        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(nin)
         finish()
     }
 }
