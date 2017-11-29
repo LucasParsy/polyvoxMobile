@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.tuxlu.polyvox.Homepage.DiscoverBinder
 import com.tuxlu.polyvox.Homepage.DiscoverBox
 import com.tuxlu.polyvox.Homepage.SpaceItemDecoration
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.User.ProfilePage
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -33,7 +35,7 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
         var image = holder.v.findViewById<NetworkImageView>(R.id.infoUserPicture)
         var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
-        if (!item.imageUrl.isBlank())
+        if (!item.imageUrl.isBlank() && item.imageUrl != "null")
             image.setImageUrl(item.imageUrl, vHttp.imageLoader)
         image.setDefaultImageResId(R.drawable.ic_account_circle_black_24dp)
     }
@@ -42,13 +44,12 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
     {
         val context = holder.v.getContext()
         val clickListener = View.OnClickListener {_ ->
-            //todo: user page click intent
-            /*
-            val intent = Intent(context, Room::class.java)
-            val name: String = data[holder.adapterPosition].name
-            intent.putExtra("name", name)
+
+            val intent = Intent(context, ProfilePage::class.java)
+            val b = Bundle()
+            b.putString("name", data[holder.adapterPosition].name)
+            intent.putExtras(b)
             context.startActivity(intent)
-            */
         }
         holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener);
     }
