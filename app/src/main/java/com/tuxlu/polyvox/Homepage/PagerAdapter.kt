@@ -5,12 +5,13 @@ import android.provider.Settings.Global.getString
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.util.Log
 
 /**
  * Created by tuxlu on 15/11/17.
  */
 
-open class PagerAdapter(fm: FragmentManager, private val fragments: List<Fragment>,
+open class PagerAdapter(private val fm: FragmentManager, private val fragments: List<Fragment>,
                         private val tabTitles: IntArray,
                         private val context: Context) : FragmentPagerAdapter(fm) {
 
@@ -26,4 +27,9 @@ open class PagerAdapter(fm: FragmentManager, private val fragments: List<Fragmen
         return this.fragments.size
     }
 
+    fun destroy() {
+        for (obj in fragments)
+            fm.beginTransaction().remove(obj).commit()
+            //fm.beginTransaction().detach(obj).commit()
+    }
 }

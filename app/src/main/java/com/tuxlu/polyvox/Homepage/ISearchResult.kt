@@ -103,4 +103,9 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         //((TabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(pager);
 
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        adapter?.destroy()
+        super.onSaveInstanceState(outState)
+    }
 }
