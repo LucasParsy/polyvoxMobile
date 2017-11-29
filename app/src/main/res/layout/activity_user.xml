@@ -96,13 +96,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    tools:text="@string/bio_empty"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="@string/bio_empty" />
 
                 <Button
                     android:id="@+id/ProfileActionButton"

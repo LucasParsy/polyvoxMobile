@@ -23,6 +23,7 @@ import android.content.DialogInterface
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
+import com.tuxlu.polyvox.Options.OptionsMenu
 
 
 /**
@@ -144,7 +145,7 @@ class ProfilePage() : AppCompatActivity() {
 
         followButton.setOnClickListener {
             if (user.isCurrentUser)
-                logout() //todo: open params
+                startActivityForResult(Intent(baseContext, OptionsMenu::class.java), 1234)
             else
                 followButtonlistener()
         }
@@ -244,4 +245,19 @@ class ProfilePage() : AppCompatActivity() {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        NetworkUtils.JSONrequest(this, Request.Method.GET,
+                APIUrl.BASE_URL + APIUrl.INFO_USER + user.userName,
+                connected, null, { response ->
+            val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
+            val info = topObj.getJSONObject("info")
+            user.description = info.getString("description")
+
+            val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
+            if (user.description != null && !user.description!!.isBlank() && user.description != "null")
+                bio.text = user.description
+        }, { e -> e.printStackTrace() })
+    }
 }

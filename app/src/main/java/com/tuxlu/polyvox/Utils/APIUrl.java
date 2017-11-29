@@ -53,7 +53,8 @@ public class APIUrl {
     public static final int ERROR_CREATE_ACCOUNT_INVALID_PASS = 2;
     public static final int ERROR_CREATE_ACCOUNT_INVALID_USER = 3;
 
-
+    public static final String UPDATE_INF0 = "users/updateInfo";
+    public static final String UPDATE_INF0_BIO = "description";
 
     public static final String SEARCH = "search";
     public static final String SEARCH_PARAM1 = "query";
@@ -65,7 +66,6 @@ public class APIUrl {
 
 
     public static final String LOGOUT = "users/logout";
-
 
     private APIUrl(){}
 }
