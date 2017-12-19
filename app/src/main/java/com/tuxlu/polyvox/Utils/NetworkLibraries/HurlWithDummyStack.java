@@ -27,8 +27,7 @@ package com.tuxlu.polyvox.Utils.NetworkLibraries;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HurlStack;
-import com.tuxlu.polyvox.Utils.APIUrl;
-import com.tuxlu.polyvox.Utils.NetworkLibraries.DummyAPIServer;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 
 import org.apache.http.HttpResponse;
 

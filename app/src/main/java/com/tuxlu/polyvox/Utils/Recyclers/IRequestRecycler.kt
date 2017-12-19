@@ -1,19 +1,18 @@
-package com.tuxlu.polyvox.Utils
+package com.tuxlu.polyvox.Utils.Recyclers
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.LoadingUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by tuxlu on 12/11/17.
@@ -39,7 +38,7 @@ abstract class IRequestRecycler<T : Any>() : IRecycler<T>() {
 
     internal fun request(url: String, body: JSONObject, append: Boolean, view: View? = null) {
         val eListen = Response.ErrorListener { error -> errorListener(error) }
-        NetworkUtils.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + url, usesAPI, body, Response.Listener<JSONObject> { response ->
+        APIRequest.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + url, usesAPI, body, Response.Listener<JSONObject> { response ->
 
             var jArray: JSONArray? = null
             try {

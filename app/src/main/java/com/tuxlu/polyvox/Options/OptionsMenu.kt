@@ -8,9 +8,10 @@ import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.APIUrl
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.MyAppCompatActivity
-import com.tuxlu.polyvox.Utils.NetworkUtils
 
 @Suppress("UNUSED_PARAMETER")
 /**
@@ -57,10 +58,10 @@ class OptionsMenu() : MyAppCompatActivity() {
                 .setTitle(getString(R.string.logout))
                 .setMessage(getString(R.string.logout_confirm))
                 .setPositiveButton(getString(R.string.yes), DialogInterface.OnClickListener { _, _ ->
-                    NetworkUtils.JSONrequest(this, Request.Method.GET,
+                    APIRequest.JSONrequest(this, Request.Method.GET,
                             APIUrl.BASE_URL + APIUrl.LOGOUT,
                             true, null, { _ ->
-                        NetworkUtils.removeAccountLogout(this)
+                        AuthUtils.removeAccountLogout(this)
                         val nin: Intent = Intent(baseContext, Home::class.java)
                         nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(nin)

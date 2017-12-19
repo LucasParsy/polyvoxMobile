@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".Utils.AuthenticatorService"
+            android:name=".Utils.Auth.AuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

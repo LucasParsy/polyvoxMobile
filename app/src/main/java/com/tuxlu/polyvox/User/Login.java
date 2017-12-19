@@ -16,8 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
-import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.API.APILoginRequest;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
+import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import org.json.JSONException;
@@ -92,7 +93,7 @@ public class Login extends AccountAuthenticatorActivity {
 
         final Button button = ((Button)buttonView);
         button.setText(getString(R.string.login_connect_waiting));
-        JsonObjectRequest jsObjRequest = new APILoginJsonObjectRequest
+        JsonObjectRequest jsObjRequest = new APILoginRequest
                 (getApplicationContext(), login, Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
 
                     @Override
@@ -113,7 +114,7 @@ public class Login extends AccountAuthenticatorActivity {
                             findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
                         }
                         else {
-                            UtilsTemp.checkNetworkError(getApplicationContext(), error);
+                            NetworkUtils.checkNetworkError(getApplicationContext(), error);
                             loginLayout.setError(getString(R.string.no_network));
                         }
                     }

@@ -14,6 +14,8 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
 import kotlin.collections.HashMap
 import com.tuxlu.polyvox.Homepage.PagerAdapter
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
 
 
 /**
@@ -66,7 +68,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         var map = HashMap<String, String>()
         map.put(APIUrl.SEARCH_PARAM1, query)
         val url = NetworkUtils.getParametrizedUrl(APIUrl.SEARCH, map)
-        NetworkUtils.JSONrequest(this, Request.Method.GET, url, false, null,
+        APIRequest.JSONrequest(this, Request.Method.GET, url, false, null,
                 { result ->
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
@@ -96,6 +98,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         super.onSaveInstanceState(outState)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onBackButtonClick(v:View)
     {
         onBackPressed();

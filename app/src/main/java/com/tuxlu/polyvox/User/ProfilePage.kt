@@ -23,6 +23,9 @@ import android.view.View
 import android.widget.ImageView
 import com.tuxlu.polyvox.Options.OptionsMenu
 import com.tuxlu.polyvox.Search.SearchUserRecycler
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 
 
@@ -51,13 +54,13 @@ class ProfilePage() : MyAppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
-        connected = NetworkUtils.isAPIConnected(this)
+        connected = com.tuxlu.polyvox.Utils.API.APIRequest.isAPIConnected(this)
         followButton = findViewById(R.id.ProfileActionButton)
         followerNumbersText = findViewById(R.id.ProfileFollowerNumber)
 
         val userName = intent.getStringExtra("name")
 
-        NetworkUtils.JSONrequest(this, Request.Method.GET,
+        APIRequest.JSONrequest(this, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.INFO_USER + userName,
                 connected, null, { response ->
             val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
@@ -70,7 +73,7 @@ class ProfilePage() : MyAppCompatActivity() {
             user.picture = info.getString("picture")
 
             if (connected && user.isCurrentUser == false) {
-                NetworkUtils.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
+                APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
                         true, null, { current ->
                     val obj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                     currentUserName = obj.getString("userName")
@@ -171,10 +174,10 @@ class ProfilePage() : MyAppCompatActivity() {
                 .setTitle(getString(R.string.logout))
                 .setMessage(getString(R.string.logout_confirm))
                 .setPositiveButton(getString(R.string.yes), DialogInterface.OnClickListener { _, _ ->
-                    NetworkUtils.JSONrequest(this, Request.Method.GET,
+                    APIRequest.JSONrequest(this, Request.Method.GET,
                             APIUrl.BASE_URL + APIUrl.LOGOUT,
                             true, null, { _ ->
-                        NetworkUtils.removeAccountLogout(this)
+                        AuthUtils.removeAccountLogout(this)
                         val nin: Intent = Intent(baseContext, Home::class.java)
                         nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(nin)
@@ -195,7 +198,7 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
     public fun setFollow(url: String) {
-        NetworkUtils.JSONrequest(this, Request.Method.POST,
+        APIRequest.JSONrequest(this, Request.Method.POST,
                 url, true, null, { _ ->
             user.following = true
             setButtonsText()
@@ -213,7 +216,7 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
     public fun setUnfollow(url: String) {
-        NetworkUtils.JSONrequest(this, Request.Method.DELETE,
+        APIRequest.JSONrequest(this, Request.Method.DELETE,
                 url, true, null, { _ ->
             user.following = false
             setButtonsText()
@@ -247,7 +250,7 @@ class ProfilePage() : MyAppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        NetworkUtils.JSONrequest(this, Request.Method.GET,
+        APIRequest.JSONrequest(this, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.INFO_USER + user.userName,
                 connected, null, { response ->
             val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)

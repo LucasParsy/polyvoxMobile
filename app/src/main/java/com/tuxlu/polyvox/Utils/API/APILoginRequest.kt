@@ -1,11 +1,8 @@
-package com.tuxlu.polyvox.Utils
+package com.tuxlu.polyvox.Utils.API
 
 import com.android.volley.ParseError
-import org.json.JSONException
 import com.android.volley.toolbox.HttpHeaderParser
-import com.android.volley.Response.success
 import org.json.JSONObject
-import android.R.attr.data
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
@@ -14,7 +11,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.User.Login
 import java.nio.charset.Charset
 
 
@@ -22,7 +18,7 @@ import java.nio.charset.Charset
  * Created by tuxlu on 17/11/17.
  */
 
-class APILoginJsonObjectRequest : JsonObjectRequest {
+class APILoginRequest : JsonObjectRequest {
 
     private val context : Context
     private val login : String

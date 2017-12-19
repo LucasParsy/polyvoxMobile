@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils;
+package com.tuxlu.polyvox.Utils.Auth;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

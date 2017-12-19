@@ -6,6 +6,8 @@ import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
 import org.json.JSONObject
 
 /**
@@ -32,13 +34,13 @@ class OptionsBio() : MyAppCompatActivity() {
 
         LoadingUtils.StartLoadingView(rootView, this)
 
-        NetworkUtils.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
+        com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
                 true, null, { current ->
             val obj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
             val currentUserName = obj.getString("userName")
 
 
-            NetworkUtils.JSONrequest(this, Request.Method.GET,
+           APIRequest.JSONrequest(this, Request.Method.GET,
                     APIUrl.BASE_URL + APIUrl.INFO_USER + currentUserName,
                     true, null, { response ->
                 val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
@@ -63,6 +65,7 @@ class OptionsBio() : MyAppCompatActivity() {
         })
     }
 
+    @Suppress("UNUSED_PARAMETER")
     public fun buttonClick(v: View) {
 
         val bio: String = findViewById<TextInputEditText>(R.id.input).text.toString()
@@ -72,7 +75,7 @@ class OptionsBio() : MyAppCompatActivity() {
 
         val body = JSONObject()
         body.put(APIUrl.UPDATE_INF0_BIO, bio)
-        NetworkUtils.JSONrequest(this, Request.Method.POST,
+        APIRequest.JSONrequest(this, Request.Method.POST,
                 APIUrl.BASE_URL + APIUrl.UPDATE_INF0, true, body, { _ ->
             UtilsTemp.showToast(this, getString(R.string.bio_updated))
         }, { e ->

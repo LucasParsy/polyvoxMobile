@@ -4,17 +4,16 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
-import android.support.annotation.ColorInt
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.*
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.API.APIUrl
 import es.dmoral.toasty.Toasty
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -36,7 +35,7 @@ class UtilsTemp {
 
         @JvmStatic
         fun sendMail(context: Context) {
-            NetworkUtils.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
+            com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
                     { _ ->
                         showToast(context, context.getString(R.string.confirmation_mail_sent_short), ToastType.SUCCESS)
                     }, { error ->
@@ -56,16 +55,6 @@ class UtilsTemp {
         }
 
         //todo: move theses function in more appropriate file
-        @JvmStatic
-        fun checkNetworkError(context: Context, error: VolleyError) {
-            if (error is NetworkError ||
-                    error is AuthFailureError ||
-                    error is TimeoutError ||
-                    error is ParseError) {
-                showToast(context, context.getString(R.string.no_wifi_home), ToastType.NORMAL, R.drawable.ic_wifi_off_24dp)
-            } else if (error is ServerError)
-                showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
-        }
 
         //todo: move theses function in more appropriate file
         @JvmStatic

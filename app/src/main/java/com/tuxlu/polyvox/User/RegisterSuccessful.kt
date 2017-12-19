@@ -9,6 +9,7 @@ import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
+import com.tuxlu.polyvox.Utils.API.APIUrl
 
 /**
  * Created by tuxlu on 26/11/17.
@@ -35,7 +36,7 @@ class RegisterSuccessful() : AppCompatActivity() {
         LoadingUtils.StartLoadingView(rootView, applicationContext)
 
         //ENVOI MAIL CONFIRMATION
-        NetworkUtils.JSONrequest(applicationContext, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
+        com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(applicationContext, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
                 { _ ->
                     mainView.visibility = View.VISIBLE
                     LoadingUtils.EndLoadingView(rootView)
@@ -45,6 +46,7 @@ class RegisterSuccessful() : AppCompatActivity() {
         });
     }
 
+    @Suppress("UNUSED_PARAMETER")
     public fun backHome(v: View) {
         val nin: Intent = Intent(applicationContext, Home::class.java)
         nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

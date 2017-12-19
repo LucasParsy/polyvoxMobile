@@ -3,7 +3,7 @@ package com.tuxlu.polyvox.Utils.NetworkLibraries;
 import android.content.Context;
 
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;

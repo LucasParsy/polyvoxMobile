@@ -22,9 +22,9 @@ import com.android.volley.VolleyError;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
-import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.API.APIRequest;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
-import com.tuxlu.polyvox.Utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,9 +90,9 @@ public class Home extends AppCompatActivity {
 
     void setUserIcon(final ImageView image) {
         final Context context = getBaseContext();
-        if (!NetworkUtils.isAPIConnected(context))
+        if (!APIRequest.isAPIConnected(context))
             return;
-        NetworkUtils.JSONrequest(context, Request.Method.GET,
+        APIRequest.JSONrequest(context, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
                 true, null, new Response.Listener<JSONObject>() {
 
@@ -142,8 +142,8 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 if (clicked)
                     return;
-                if (!NetworkUtils.isAPIConnected(getApplicationContext())) {
-                    NetworkUtils.startLoginActivity(getApplicationContext());
+                if (!APIRequest.isAPIConnected(getApplicationContext())) {
+                    APIRequest.startLoginActivity(getApplicationContext());
                     return;
                 }
 
@@ -151,7 +151,7 @@ public class Home extends AppCompatActivity {
                     startProfileIntent();
                 else {
                     clicked = true;
-                    NetworkUtils.JSONrequest(getApplicationContext(), Request.Method.GET,
+                    APIRequest.JSONrequest(getApplicationContext(), Request.Method.GET,
                             APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
                             true, null, new Response.Listener<JSONObject>() {
                                 @Override

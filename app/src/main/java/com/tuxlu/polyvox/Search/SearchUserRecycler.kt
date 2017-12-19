@@ -10,12 +10,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
-import com.tuxlu.polyvox.Utils.APIUrl
-import com.tuxlu.polyvox.Utils.Adapter
-import com.tuxlu.polyvox.Utils.IRecycler
+import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Recyclers.Adapter
+import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
-import com.tuxlu.polyvox.Utils.ViewHolderBinder
+import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
 import org.json.JSONException
 import org.json.JSONObject
 

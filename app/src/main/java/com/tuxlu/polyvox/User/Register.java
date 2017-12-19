@@ -22,9 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
-import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.API.APILoginRequest;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
+import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 
@@ -210,7 +211,7 @@ public class Register extends AppCompatActivity {
         button.setText(getString(R.string.register_sending));
 
 
-        JsonObjectRequest jsObjRequest = new APILoginJsonObjectRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
+        JsonObjectRequest jsObjRequest = new APILoginRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -235,7 +236,7 @@ public class Register extends AppCompatActivity {
                                 ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
                         }
                         else {
-                            UtilsTemp.checkNetworkError(getApplicationContext(), error);
+                            NetworkUtils.checkNetworkError(getApplicationContext(), error);
                             ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.no_network));
                         }
                     }
