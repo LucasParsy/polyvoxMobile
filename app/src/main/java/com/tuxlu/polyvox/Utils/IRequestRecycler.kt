@@ -28,7 +28,7 @@ abstract class IRequestRecycler<T : Any>() : IRecycler<T>() {
 
     abstract fun errorListener(error: VolleyError)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         val view: View? = super.onCreateView(inflater, container, savedInstanceState)

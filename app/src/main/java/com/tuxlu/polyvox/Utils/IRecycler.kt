@@ -45,10 +45,11 @@ abstract class IRecycler<T: Any>() : Fragment() {
         //retainInstance = true  //seems to leak
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        rootView = inflater!!.inflate(layoutListId, container, false)
+        rootView = inflater.inflate(layoutListId, container, false)
         LoadingUtils.EndLoadingView(rootView)
         noResView = rootView.findViewById<View>(R.id.noResultsLayout)
         val recycler = rootView.findViewById<View>(recycleId) as RecyclerView
@@ -59,7 +60,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
         recycler.addItemDecoration(itemDecoration)
         recycler.layoutManager = layoutManager
 
-        adapter = Adapter(context, ArrayList(), layoutObjectId, binder)
+        adapter = Adapter(context!!, ArrayList(), layoutObjectId, binder)
         recycler.adapter = adapter
         return rootView
     }

@@ -50,7 +50,7 @@ open class SearchRoomRecycler() : DiscoverRecycler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestBody.put("query", arguments.getString("query"))
+        requestBody.put("query", arguments!!.getString("query"))
     }
 
     fun search(query : String)
