@@ -12,6 +12,7 @@ import com.tuxlu.polyvox.Utils.APIUrl
 import com.tuxlu.polyvox.Utils.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.NetworkUtils
 
+@Suppress("UNUSED_PARAMETER")
 /**
  * Created by tuxlu on 29/11/17.
  */

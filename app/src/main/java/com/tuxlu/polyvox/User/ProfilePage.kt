@@ -25,6 +25,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toolbar
 import com.tuxlu.polyvox.Options.OptionsMenu
+import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 
 
 /**
@@ -126,13 +127,13 @@ class ProfilePage() : MyAppCompatActivity() {
         title = user.userName
 
         val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
-        if (user.description != null && !user.description!!.isBlank() && user.description != "null")
+        if (!user.description.isBlank() && user.description != "null")
             bio.text = user.description
         else
             bio.text = getString(R.string.bio_empty)
 
         val image = (findViewById<ImageView>(R.id.ProfileIcon))
-        if (user.picture != null && !user.picture!!.isBlank() && user.picture != "null")
+        if (!user.picture.isBlank() && user.picture != "null")
             GlideApp.with(this).load(user.picture).into(image)
         else {
             image.setImageResource(R.drawable.ic_account_circle_white_24dp)
@@ -256,7 +257,7 @@ class ProfilePage() : MyAppCompatActivity() {
             user.description = info.getString("description")
 
             val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
-            if (user.description != null && !user.description!!.isBlank() && user.description != "null")
+            if (!user.description.isBlank() && user.description != "null")
                 bio.text = user.description
         }, { e -> e.printStackTrace() })
     }
