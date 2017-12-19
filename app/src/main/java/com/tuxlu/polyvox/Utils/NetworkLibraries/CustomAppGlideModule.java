@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils;
+package com.tuxlu.polyvox.Utils.NetworkLibraries;
 
 /**
  * Created by tuxlu on 19/12/17.

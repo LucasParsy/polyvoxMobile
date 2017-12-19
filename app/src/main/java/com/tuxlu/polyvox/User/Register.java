@@ -26,7 +26,7 @@ import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
-import com.tuxlu.polyvox.Utils.VHttp;
+import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 
 import org.json.JSONException;
 import org.json.JSONObject;

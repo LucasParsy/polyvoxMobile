@@ -19,11 +19,11 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.APIUrl;
-import com.tuxlu.polyvox.Utils.GlideApp;
+import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 
 import org.json.JSONException;

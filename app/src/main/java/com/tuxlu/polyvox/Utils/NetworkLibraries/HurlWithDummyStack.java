@@ -22,34 +22,18 @@
  * THE SOFTWARE.
  */
 
-package com.tuxlu.polyvox.Utils;
+package com.tuxlu.polyvox.Utils.NetworkLibraries;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
+import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.NetworkLibraries.DummyAPIServer;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicHttpResponse;
-import org.apache.http.message.BasicStatusLine;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Call;
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * OkHttp backed {@link com.android.volley.toolbox.HttpStack HttpStack} that does not

@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils;
+package com.tuxlu.polyvox.Utils.NetworkLibraries;
 
 import android.content.Context;
 import android.graphics.Bitmap;
