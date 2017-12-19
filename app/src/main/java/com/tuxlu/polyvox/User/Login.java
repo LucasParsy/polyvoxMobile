@@ -112,8 +112,10 @@ public class Login extends AccountAuthenticatorActivity {
                             loginLayout.setError(getString(R.string.login_incorrect_credentials));
                             findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
                         }
-                        UtilsTemp.checkNetworkError(getApplicationContext(), error);
+                        else {
+                            UtilsTemp.checkNetworkError(getApplicationContext(), error);
                             loginLayout.setError(getString(R.string.no_network));
+                        }
                     }
                 });
         VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
