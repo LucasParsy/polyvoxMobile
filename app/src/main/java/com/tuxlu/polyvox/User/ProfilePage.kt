@@ -200,7 +200,7 @@ class ProfilePage() : AppCompatActivity() {
                 url, true, null, { _ ->
             user.following = true
             setButtonsText()
-            ImageUtils.showToast(this, user.userName + getString(R.string.is_followed), R.style.SimpleToast)
+            UtilsTemp.showToast(this, user.userName + getString(R.string.is_followed), ToastType.SUCCESS)
             followerNumbers++
             followerNumbersText.text = followerNumbers.toString()
         }, { e ->
@@ -218,7 +218,7 @@ class ProfilePage() : AppCompatActivity() {
                 url, true, null, { _ ->
             user.following = false
             setButtonsText()
-            ImageUtils.showToast(this, user.userName + getString(R.string.is_no_more_followed), R.style.SimpleToast)
+            UtilsTemp.showToast(this, user.userName + getString(R.string.is_no_more_followed))
             followerNumbers--
             followerNumbersText.text = followerNumbers.toString()
         }, { e ->

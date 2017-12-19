@@ -25,12 +25,12 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.tuxlu.polyvox.Utils.ImageUtils.shareContent;
 
 /**
  * Created by tuxlu on 16/09/17.
@@ -89,7 +89,7 @@ public class Room extends AppCompatActivity {
         //Todo Un jour, si on devient riche, recoder tout le partage de fichiers pour faire un beau thème.
         String url = "https://polyvox.fr/stream/" + id;
         String body = getString(R.string.share_stream_body)  +"\n" + title + "\n" + getString(R.string.join_me);
-        shareContent(this, body, url);
+        UtilsTemp.shareContent(this, body, url);
     }
 
     @OnClick(R.id.player_button_fullscreen) public void setScreenOrientation(View v)

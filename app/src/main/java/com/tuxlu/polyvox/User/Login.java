@@ -1,8 +1,6 @@
 package com.tuxlu.polyvox.User;
 
-import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,7 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.APILoginJsonObjectRequest;
 import com.tuxlu.polyvox.Utils.APIUrl;
-import com.tuxlu.polyvox.Utils.ImageUtils;
+import com.tuxlu.polyvox.Utils.UtilsTemp;
 import com.tuxlu.polyvox.Utils.VHttp;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,7 +112,7 @@ public class Login extends AccountAuthenticatorActivity {
                             loginLayout.setError(getString(R.string.login_incorrect_credentials));
                             findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
                         }
-                            ImageUtils.checkNetworkError(getApplicationContext(), error);
+                        UtilsTemp.checkNetworkError(getApplicationContext(), error);
                             loginLayout.setError(getString(R.string.no_network));
                     }
                 });

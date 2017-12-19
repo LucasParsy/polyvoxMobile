@@ -9,14 +9,12 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import butterknife.internal.Utils
 import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
-import com.tuxlu.polyvox.Utils.APIUrl
-import com.tuxlu.polyvox.Utils.ImageUtils
-import com.tuxlu.polyvox.Utils.LoadingUtils
-import com.tuxlu.polyvox.Utils.NetworkUtils
+import com.tuxlu.polyvox.Utils.*
 import org.json.JSONObject
 
 /**
@@ -77,14 +75,14 @@ class OptionsBio() : AppCompatActivity() {
 
         val bio: String = findViewById<TextInputEditText>(R.id.input).text.toString()
         if (bio.length > 500) {
-            ImageUtils.showToast(this, getString(R.string.bio_too_long), R.style.SimpleToast)
+            UtilsTemp.showToast(this, getString(R.string.bio_too_long))
         }
 
         val body = JSONObject()
         body.put(APIUrl.UPDATE_INF0_BIO, bio)
         NetworkUtils.JSONrequest(this, Request.Method.POST,
                 APIUrl.BASE_URL + APIUrl.UPDATE_INF0, true, body, { _ ->
-            ImageUtils.showToast(this, getString(R.string.bio_updated), R.style.SimpleToast)
+            UtilsTemp.showToast(this, getString(R.string.bio_updated))
         }, { e ->
             e.printStackTrace()
             if (e.networkResponse != null) {

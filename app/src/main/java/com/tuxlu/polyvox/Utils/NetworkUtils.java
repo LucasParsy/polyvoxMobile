@@ -17,25 +17,16 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
-import com.tuxlu.polyvox.User.RegisterSuccessful;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import android.support.v7.app.AlertDialog;
 
 /**
  * Created by parsyl on 19/07/2017.
@@ -131,14 +122,14 @@ public class NetworkUtils {
                                                 .setMessage(context.getString(R.string.not_verified_message))
                                                 .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
-                                                        UtilsKt.sendMail(context);
+                                                        UtilsTemp.sendMail(context);
                                                     }
                                                 })
                                                 .setNegativeButton(context.getString(R.string.not_verified_nope), null)
                                                 .show();
                                     }
                                 }
-                                ImageUtils.checkNetworkError(context, error);
+                                UtilsTemp.checkNetworkError(context, error);
                                 errorListener.onErrorResponse(error);
                             }
                         }) {
