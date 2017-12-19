@@ -57,7 +57,7 @@
                     app:cardElevation="0dp"
                     tools:cardElevation="0dp">
 
-                    <com.android.volley.toolbox.NetworkImageView
+                    <ImageView
                         android:id="@+id/ProfileIcon"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.toolbox.NetworkImageView
 import com.tuxlu.polyvox.Homepage.DiscoverBinder
 import com.tuxlu.polyvox.Homepage.DiscoverBox
 import com.tuxlu.polyvox.Homepage.SpaceItemDecoration
@@ -33,11 +33,10 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
     override fun bind(holder: Adapter.ViewHolder<UserSearchResult>, item: UserSearchResult)
     {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
-        var image = holder.v.findViewById<NetworkImageView>(R.id.infoUserPicture)
+        var image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
         var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
         if (!item.imageUrl.isBlank() && item.imageUrl != "null")
-            image.setImageUrl(item.imageUrl, vHttp.imageLoader)
-        image.setDefaultImageResId(R.drawable.ic_account_circle_black_24dp)
+            GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>)

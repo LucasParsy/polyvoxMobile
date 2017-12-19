@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.NetworkImageView
@@ -46,9 +47,9 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
-        var image = holder.v.findViewById<NetworkImageView>(R.id.infoRoomPicture)
+        var image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
         var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
-        image.setImageUrl(item.imageUrl, vHttp.imageLoader)
+        GlideApp.with(holder.v.context).load(item.imageUrl).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)

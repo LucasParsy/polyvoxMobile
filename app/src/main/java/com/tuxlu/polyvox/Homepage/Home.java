@@ -14,17 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.APIUrl;
+import com.tuxlu.polyvox.Utils.GlideApp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
-import com.tuxlu.polyvox.Utils.VHttp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +88,7 @@ public class Home extends AppCompatActivity {
     Toolbar configuration
     */
 
-    void setUserIcon(final NetworkImageView image) {
+    void setUserIcon(final ImageView image) {
         final Context context = getBaseContext();
         if (!NetworkUtils.isAPIConnected(context))
             return;
@@ -107,7 +107,8 @@ public class Home extends AppCompatActivity {
                             return;
                         }
                         if (!imageUrl.isEmpty() && (imageUrl != "null"))
-                            image.setImageUrl(imageUrl, VHttp.getInstance(context).getImageLoader());
+                             GlideApp.with(context).load(imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
+                        //placeholder(R.drawable.ic_account_circle_black_24dp)
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -130,8 +131,7 @@ public class Home extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         final MenuItem profileIcon = menu.findItem(R.id.profileButton);
         FrameLayout actionView = (FrameLayout) profileIcon.getActionView();
-        final NetworkImageView image = actionView.findViewById(R.id.infoUserPicture);
-        image.setDefaultImageResId(R.drawable.ic_account_circle_black_24dp);
+        final ImageView image = actionView.findViewById(R.id.infoUserPicture);
         setUserIcon(image);
         final MenuItem searchItem = menu.findItem(R.id.search);
 

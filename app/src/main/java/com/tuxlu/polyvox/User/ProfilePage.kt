@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.NetworkImageView
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
@@ -23,6 +22,7 @@ import android.content.DialogInterface
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.ImageView
 import com.tuxlu.polyvox.Options.OptionsMenu
 
 
@@ -130,12 +130,11 @@ class ProfilePage() : AppCompatActivity() {
         else
             bio.text = getString(R.string.bio_empty)
 
-        val image = (findViewById<NetworkImageView>(R.id.ProfileIcon))
+        val image = (findViewById<ImageView>(R.id.ProfileIcon))
         if (user.picture != null && !user.picture!!.isBlank() && user.picture != "null")
-            image.setImageUrl(user.picture, VHttp.getInstance(baseContext).imageLoader)
+            GlideApp.with(this).load(user.picture).into(image)
         else {
-            image.setDefaultImageResId(R.drawable.ic_account_circle_white_24dp)
-            image.setBackgroundResource(R.drawable.ic_account_circle_white_24dp)
+            image.setImageResource(R.drawable.ic_account_circle_white_24dp)
         }
 
         followerNumbersText.text = followerNumbers.toString()

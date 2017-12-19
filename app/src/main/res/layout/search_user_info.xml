@@ -16,20 +16,20 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/view2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            app:cardElevation="0dp"
-            tools:cardElevation="0dp"
             android:innerRadius="0dp"
             android:shape="ring"
             android:thicknessRatio="0.2"
-            app:cardCornerRadius="6dp">
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            tools:cardElevation="0dp">
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:id="@+id/infoUserPicture"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_account_circle_black_24dp"
                 app:srcCompat="@drawable/ic_account_circle_black_24dp" />
