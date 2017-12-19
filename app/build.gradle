@@ -43,9 +43,6 @@ repositories {
     google()
 }
 
-kapt {
-    generateStubs = true
-}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
