@@ -23,6 +23,7 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toolbar
 import com.tuxlu.polyvox.Options.OptionsMenu
 
 
@@ -39,7 +40,7 @@ data class ProfileUser(var isCurrentUser: Boolean = false,
                        var following: Boolean = false)
 
 
-class ProfilePage() : AppCompatActivity() {
+class ProfilePage() : MyAppCompatActivity() {
     private var user: ProfileUser = ProfileUser()
     private lateinit var toolbarIcon: MenuItem
     private lateinit var followButton: Button

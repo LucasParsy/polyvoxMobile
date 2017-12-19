@@ -108,4 +108,15 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         adapter?.destroy()
         super.onSaveInstanceState(outState)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    fun onBackButtonClick(v:View)
+    {
+        onBackPressed();
+    }
+
 }

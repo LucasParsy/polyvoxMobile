@@ -11,13 +11,14 @@ import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.APIUrl
+import com.tuxlu.polyvox.Utils.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.NetworkUtils
 
 /**
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsMenu() : AppCompatActivity() {
+class OptionsMenu() : MyAppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

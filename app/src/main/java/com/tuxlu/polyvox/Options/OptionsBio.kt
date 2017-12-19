@@ -21,7 +21,7 @@ import org.json.JSONObject
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsBio() : AppCompatActivity() {
+class OptionsBio() : MyAppCompatActivity() {
 
     private fun showLayout(rootView: View, mainView: View)
     {
@@ -32,6 +32,7 @@ class OptionsBio() : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_options_bio)
+
         val rootView = findViewById<View>(R.id.rootView)
 
         val mainView : View = findViewById<TextInputEditText>(R.id.mainView)
