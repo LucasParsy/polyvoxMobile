@@ -1,10 +1,14 @@
-package com.tuxlu.polyvox.Homepage
+package com.tuxlu.polyvox.Search
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.android.volley.VolleyError
+import com.tuxlu.polyvox.Homepage.DiscoverBinder
+import com.tuxlu.polyvox.Homepage.DiscoverBox
+import com.tuxlu.polyvox.Homepage.DiscoverRecycler
+import com.tuxlu.polyvox.Homepage.SpaceItemDecoration
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
 import org.json.JSONObject

@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
@@ -23,8 +21,8 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toolbar
 import com.tuxlu.polyvox.Options.OptionsMenu
+import com.tuxlu.polyvox.Search.SearchUserRecycler
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 
 

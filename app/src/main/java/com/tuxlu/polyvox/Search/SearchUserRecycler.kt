@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils
+package com.tuxlu.polyvox.Search
 
 import android.content.Intent
 import android.graphics.Rect
@@ -10,6 +10,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
+import com.tuxlu.polyvox.Utils.APIUrl
+import com.tuxlu.polyvox.Utils.Adapter
+import com.tuxlu.polyvox.Utils.IRecycler
+import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
+import com.tuxlu.polyvox.Utils.ViewHolderBinder
 import org.json.JSONException
 import org.json.JSONObject
 

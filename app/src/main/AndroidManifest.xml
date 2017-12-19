@@ -57,7 +57,7 @@
         </activity>
 
 
-        <activity android:name="com.tuxlu.polyvox.Homepage.SearchResultsActivity"
+        <activity android:name="com.tuxlu.polyvox.Search.SearchResultsActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             >

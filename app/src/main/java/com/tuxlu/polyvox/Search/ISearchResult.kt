@@ -1,31 +1,19 @@
-package com.tuxlu.polyvox.Homepage
+package com.tuxlu.polyvox.Search
 
 import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.View
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
-import kotlinx.android.synthetic.main.fragment_search_all.*
-import org.json.JSONObject
-import java.io.Serializable
-import java.util.*
-import android.widget.Toast
-import android.R.attr.data
-import org.json.JSONArray
 import kotlin.collections.HashMap
-import android.view.Gravity
-import android.widget.TextView
-import org.w3c.dom.Text
+import com.tuxlu.polyvox.Homepage.PagerAdapter
 
 
 /**
@@ -43,7 +31,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
 */
 
     internal var adapter: PagerAdapter? = null
-    //lateinit private var roomFragment: SearchUserRecycler
+    //lateinit private var roomFragment: SearchRoomRecycler
     //lateinit private var globalFragment: GlobalSearchFragment
     lateinit private var usersFragment: SearchUserRecycler
     lateinit internal var pager: ViewPager
@@ -80,8 +68,6 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         val url = NetworkUtils.getParametrizedUrl(APIUrl.SEARCH, map)
         NetworkUtils.JSONrequest(this, Request.Method.GET, url, false, null,
                 { result ->
-                    val debugResponse = result
-                    val debugSure = 1+1
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
                         usersFragment.add(result.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
@@ -97,6 +83,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         var fragments = mutableListOf<Fragment>()
         usersFragment = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
         fragments.add(usersFragment)
+        //todo: gérer autres fragments
         val tabTitles = intArrayOf(R.string.tab_discover, R.string.tab_friends, R.string.tab_chat)
         adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
@@ -107,11 +94,6 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
     override fun onSaveInstanceState(outState: Bundle?) {
         adapter?.destroy()
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     fun onBackButtonClick(v:View)
