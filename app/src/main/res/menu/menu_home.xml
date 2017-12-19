@@ -18,6 +18,6 @@
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/profile"
         app:showAsAction="always"
-        app:actionLayout="@layout/rounded_menu_item_icon">
+        app:actionLayout="@layout/item_rounded_menu_icon">
     </item>
 </menu>

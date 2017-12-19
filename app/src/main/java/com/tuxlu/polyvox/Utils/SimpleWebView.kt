@@ -1,17 +1,11 @@
 package com.tuxlu.polyvox.Utils
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.webkit.WebView
 import com.tuxlu.polyvox.R
-import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
-import kotlinx.android.synthetic.main.activity_search.*
-import android.widget.ProgressBar
-
-
 
 
 /**
@@ -25,7 +19,7 @@ class SimpleWebView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.simple_webview)
+        setContentView(R.layout.util_layout_webview)
         //todo: view could break on some devices, see https://stackoverflow.com/questions/4486034/get-root-view-from-current-activity
         rootView = findViewById(android.R.id.content)
         val title = intent.getIntExtra("title", -1);

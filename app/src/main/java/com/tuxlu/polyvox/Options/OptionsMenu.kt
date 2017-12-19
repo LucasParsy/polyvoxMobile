@@ -4,12 +4,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.APIUrl
 import com.tuxlu.polyvox.Utils.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.NetworkUtils
@@ -22,7 +20,7 @@ class OptionsMenu() : MyAppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.options_menu)
+        setContentView(R.layout.activity_user_options)
     }
 
         public fun profileClick(v: View)

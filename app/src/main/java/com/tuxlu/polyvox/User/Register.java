@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login_register);
         setSpinners();
 
         ID = findViewById(R.id.RegisterIDInput);
@@ -80,7 +80,7 @@ public class Register extends AppCompatActivity {
     private void setSpinners() {
         Spinner spinMonth = findViewById(R.id.spinnerMonth);
         ArrayAdapter<String> adapterMonth = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, getResources().getStringArray(R.array.months_spinner));
+                R.layout.item_spinner, getResources().getStringArray(R.array.months_spinner));
         spinMonth.setAdapter(adapterMonth);
 
         Spinner spinDays = findViewById(R.id.spinnerDays);
@@ -92,7 +92,7 @@ public class Register extends AppCompatActivity {
         for (int i = thisYear; i >= 1900; i--) {
             years.add(Integer.toString(i));
         }
-        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(this, R.layout.spinner_item, years);
+        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(this, R.layout.item_spinner, years);
         spinYears.setAdapter(adapterYear);
 
         ArrayList<String> days = new ArrayList<String>();
@@ -100,7 +100,7 @@ public class Register extends AppCompatActivity {
         for (int i = 0; i <= 31; i++) {
             days.add(Integer.toString(i));
         }
-        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, R.layout.spinner_item, days);
+        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, R.layout.item_spinner, days);
         spinDays.setAdapter(adapterDays);
     }
 
@@ -247,7 +247,7 @@ public class Register extends AppCompatActivity {
 
     public void onCGUButtonClick(View v) {
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_cgu);
+        dialog.setContentView(R.layout.util_layout_dialog_cgu);
         dialog.setTitle(getResources().getString(R.string.CGU));
         dialog.show();
 

@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.VolleyError
-import com.android.volley.toolbox.NetworkImageView
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Room.Room
 import com.tuxlu.polyvox.Utils.*
@@ -72,7 +71,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
 open class DiscoverRecycler() : IRequestRecycler<DiscoverBox>()
 {
     override val layoutListId: Int = R.layout.fragment_recycler_view
-    override val layoutObjectId: Int = R.layout.discover_room_info
+    override val layoutObjectId: Int = R.layout.info_discover_room
     override val recycleId: Int = R.id.recycleView
     override val requestUrl : String = APIUrl.DISCOVER_ROOMS
     override val requestBody: JSONObject = JSONObject()

@@ -1,24 +1,12 @@
 package com.tuxlu.polyvox.Homepage
 
-import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.util.Log
-import android.view.View
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.android.volley.VolleyError
-import com.android.volley.toolbox.NetworkImageView
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Room.Room
 import com.tuxlu.polyvox.Utils.*
-import org.json.JSONException
 import org.json.JSONObject
 
 /**
@@ -41,7 +29,7 @@ open class SearchRoomBinder : DiscoverBinder() {
 
 open class SearchRoomRecycler() : DiscoverRecycler()
 {
-    override val layoutObjectId: Int = R.layout.search_room_info
+    override val layoutObjectId: Int = R.layout.info_search_room
     override var requestUrl : String = APIUrl.SEARCH_ROOMS //+ "?query=" + arguments.getString("query")
 
     override val binder = SearchRoomBinder()

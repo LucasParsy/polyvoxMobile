@@ -1,23 +1,14 @@
 package com.tuxlu.polyvox.User
 
-import android.accounts.Account
-import android.accounts.AccountManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonObjectRequest
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
-import org.json.JSONException
-import org.json.JSONObject
 
 /**
  * Created by tuxlu on 26/11/17.
@@ -31,7 +22,7 @@ class RegisterSuccessful() : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_successful)
+        setContentView(R.layout.activity_login_register_successful)
 
         rootView = findViewById(R.id.rootView)
         mainView = findViewById(R.id.mainView)

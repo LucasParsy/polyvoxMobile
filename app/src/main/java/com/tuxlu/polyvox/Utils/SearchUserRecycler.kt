@@ -3,18 +3,11 @@ package com.tuxlu.polyvox.Utils
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.tuxlu.polyvox.Homepage.DiscoverBinder
-import com.tuxlu.polyvox.Homepage.DiscoverBox
-import com.tuxlu.polyvox.Homepage.SpaceItemDecoration
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
 import org.json.JSONException
@@ -69,7 +62,7 @@ class LinearItemDecoration : RecyclerView.ItemDecoration() {
 class SearchUserRecycler : IRecycler<UserSearchResult>() {
 
     override val layoutListId: Int = R.layout.fragment_recycler_view
-    override val layoutObjectId: Int = R.layout.search_user_info
+    override val layoutObjectId: Int = R.layout.info_search_user
     override val recycleId: Int = R.id.recycleView
     override val requestObjectName : String = APIUrl.SEARCH_USER_JSONOBJECT
 

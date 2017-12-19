@@ -1,19 +1,10 @@
 package com.tuxlu.polyvox.Options
 
-import android.content.DialogInterface
-import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.TextView
-import butterknife.internal.Utils
 import com.android.volley.Request
-import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.*
 import org.json.JSONObject
 
@@ -31,7 +22,7 @@ class OptionsBio() : MyAppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_options_bio)
+        setContentView(R.layout.activity_user_options_bio)
 
         val rootView = findViewById<View>(R.id.rootView)
 
