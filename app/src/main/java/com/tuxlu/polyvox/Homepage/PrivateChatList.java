@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.LoadingUtils;
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils;
 
 /**
  * Created by tuxlu on 09/09/17.

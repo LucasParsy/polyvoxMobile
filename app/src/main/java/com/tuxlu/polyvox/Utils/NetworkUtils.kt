@@ -52,4 +52,16 @@ object NetworkUtils {
             UtilsTemp.showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
     }
 
+    @JvmStatic
+    fun sendMail(context: Context) {
+        com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
+                { _ ->
+                    UtilsTemp.showToast(context, context.getString(R.string.confirmation_mail_sent_short), ToastType.SUCCESS)
+                }, { error ->
+            //Todo: Gestion d'erreur si tout se passe mal
+            error.printStackTrace()
+        });
+    }
+
+
 }

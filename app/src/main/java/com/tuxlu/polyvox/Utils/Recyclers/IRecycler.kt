@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.LoadingUtils
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -93,7 +93,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
 
     internal fun parseJSON(jArray: JSONArray): MutableList<T> {
         val data = ArrayList<T>()
-        if (jArray == null)
+        if (jArray.length() == 0)
             return data
         for (i in 0 until jArray.length()) {
             val obj : T

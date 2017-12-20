@@ -66,7 +66,7 @@ public class APIRequest {
                                                 .setMessage(context.getString(R.string.not_verified_message))
                                                 .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
-                                                        UtilsTemp.sendMail(context);
+                                                        NetworkUtils.sendMail(context);
                                                     }
                                                 })
                                                 .setNegativeButton(context.getString(R.string.not_verified_nope), null)

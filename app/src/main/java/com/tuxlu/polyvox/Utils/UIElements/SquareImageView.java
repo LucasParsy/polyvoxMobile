@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Homepage;
+package com.tuxlu.polyvox.Utils.UIElements;
 
 import android.content.Context;
 import android.util.AttributeSet;

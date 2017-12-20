@@ -8,8 +8,8 @@ import android.widget.TextView
 import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.*
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 
 /**
  * Created by tuxlu on 26/11/17.

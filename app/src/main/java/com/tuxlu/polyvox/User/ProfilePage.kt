@@ -21,12 +21,13 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
-import com.tuxlu.polyvox.Options.OptionsMenu
+import com.tuxlu.polyvox.Options.Options
 import com.tuxlu.polyvox.Search.SearchUserRecycler
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 
 
 /**
@@ -113,7 +114,7 @@ class ProfilePage() : MyAppCompatActivity() {
         fragments.add(followed)
 
         val tabTitles = intArrayOf(R.string.followers, R.string.followed)
-        adapter = com.tuxlu.polyvox.Homepage.PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
+        adapter = com.tuxlu.polyvox.Utils.UIElements.PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
         (findViewById<View>(R.id.tabLayoutHome) as TabLayout).setupWithViewPager(pager)
 
@@ -147,7 +148,7 @@ class ProfilePage() : MyAppCompatActivity() {
 
         followButton.setOnClickListener {
             if (user.isCurrentUser)
-                startActivityForResult(Intent(baseContext, OptionsMenu::class.java), 1234)
+                startActivityForResult(Intent(baseContext, Options::class.java), 1234)
             else
                 followButtonlistener()
         }

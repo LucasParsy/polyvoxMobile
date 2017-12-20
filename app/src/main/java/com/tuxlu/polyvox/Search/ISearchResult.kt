@@ -13,7 +13,7 @@ import com.android.volley.Request
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
 import kotlin.collections.HashMap
-import com.tuxlu.polyvox.Homepage.PagerAdapter
+import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 

@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils;
+package com.tuxlu.polyvox.Utils.UIElements;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

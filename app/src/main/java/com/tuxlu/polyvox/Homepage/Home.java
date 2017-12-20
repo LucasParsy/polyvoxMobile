@@ -24,6 +24,7 @@ import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
+import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 
 import org.json.JSONException;

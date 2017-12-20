@@ -91,7 +91,7 @@
         </activity>
 
 
-        <activity android:name="com.tuxlu.polyvox.Utils.SimpleWebView"
+        <activity android:name="com.tuxlu.polyvox.Utils.UIElements.SimpleWebView"
             android:theme="@style/AppTheme"
             android:label="ChangedByCode">
         </activity>
@@ -104,7 +104,7 @@
         <activity android:name="com.tuxlu.polyvox.User.ProfilePage">
         </activity>
 
-        <activity android:name="com.tuxlu.polyvox.Options.OptionsMenu"
+        <activity android:name="com.tuxlu.polyvox.Options.Options"
             android:label="Paramètres">
         </activity>
 

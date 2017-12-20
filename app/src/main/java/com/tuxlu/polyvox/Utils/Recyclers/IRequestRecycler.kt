@@ -9,7 +9,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
-import com.tuxlu.polyvox.Utils.LoadingUtils
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

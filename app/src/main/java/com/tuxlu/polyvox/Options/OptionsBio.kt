@@ -8,6 +8,8 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import org.json.JSONObject
 
 /**
@@ -81,8 +83,8 @@ class OptionsBio() : MyAppCompatActivity() {
         }, { e ->
             e.printStackTrace()
             if (e.networkResponse != null) {
-                var debug_response: String = String(e.networkResponse.data)
-                debug_response += "debug"
+                var debugResponse: String = String(e.networkResponse.data)
+                debugResponse += "debug"
             }
         })
     }

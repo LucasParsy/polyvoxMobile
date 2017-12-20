@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout
+        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -26,7 +26,7 @@
                 android:lines="5"
                 android:maxLines="5"
                 android:minLines="5" />
-        </com.tuxlu.polyvox.User.NoChangingBackgroundTextInputLayout>
+        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
 
         <Button
             android:id="@+id/LoginConnectButton"

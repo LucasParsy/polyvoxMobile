@@ -11,14 +11,14 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
-import com.tuxlu.polyvox.Utils.MyAppCompatActivity
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 
 @Suppress("UNUSED_PARAMETER")
 /**
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsMenu() : MyAppCompatActivity() {
+class Options() : MyAppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
