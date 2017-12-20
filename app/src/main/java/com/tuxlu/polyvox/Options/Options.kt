@@ -27,7 +27,7 @@ class Options() : MyAppCompatActivity() {
 
         public fun profileClick(v: View)
     {
-        //startActivity(Intent(baseContext, Home::class.java))
+        startActivity(Intent(baseContext, OptionsInfoUser::class.java))
     }
 
     public fun bioClick(v: View)

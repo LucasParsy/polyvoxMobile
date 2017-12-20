@@ -1,0 +1,127 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tuxlu.polyvox.Homepage.DiscoverRecycler">
+
+
+    <LinearLayout
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/name" />
+
+
+        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+            android:id="@+id/NameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/rectangle_border_textview"
+                android:inputType="text"
+                android:maxLines="1">
+            </android.support.design.widget.TextInputEditText>
+
+        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/surname"/>
+
+
+        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+            android:id="@+id/SurnameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/rectangle_border_textview"
+                android:inputType="text"
+                android:maxLines="1">
+            </android.support.design.widget.TextInputEditText>
+
+
+        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+
+
+        <TextView
+            android:id="@+id/RegisterDateHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="-10dp"
+            android:text="@string/date_hint" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinnerMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <Spinner
+                android:id="@+id/spinnerDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <Spinner
+                android:id="@+id/spinnerYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/LoginConnectButton"
+            style="@style/AppTheme.coloredButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exo_media_button_height"
+            android:layout_margin="20dp"
+            android:layout_marginTop="50dp"
+            android:onClick="buttonClick"
+            android:text="@string/update"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/util_layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+</FrameLayout>

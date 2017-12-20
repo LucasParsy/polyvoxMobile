@@ -64,6 +64,8 @@ public class APIUrl {
 
     public static final String CGU = "https://polyvox.fr/gtu";
 
+    public static final String INFO_FIRSTNAME = "firstName";
+    public static final String INFO_LASTNAME = "lastName";
 
     public static final String LOGOUT = "users/logout";
 

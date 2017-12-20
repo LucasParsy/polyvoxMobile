@@ -11,3 +11,5 @@ Décommenter texte au bout de SearchResultActivity.java
 et recommenter ligne dans OnCreate.
 
 Décommenter texte de Home.java dans OnCreateOptionsMenu 
+
+UnaspLongPouréviterLeHack42

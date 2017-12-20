@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -50,7 +51,8 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
-        setSpinners();
+        setSpinners(findViewById(R.id.LayoutCreateAccountActivity), this,
+                getResources().getString(R.string.day), getResources().getString(R.string.year));
 
         ID = findViewById(R.id.RegisterIDInput);
         mail = findViewById(R.id.RegisterEmailInput);
@@ -78,30 +80,30 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private void setSpinners() {
-        Spinner spinMonth = findViewById(R.id.spinnerMonth);
-        ArrayAdapter<String> adapterMonth = new ArrayAdapter<String>(this,
-                R.layout.item_spinner, getResources().getStringArray(R.array.months_spinner));
+    static public void setSpinners(View v, Context context, String daysString, String yearsString) {
+        Spinner spinMonth = v.findViewById(R.id.spinnerMonth);
+        ArrayAdapter<String> adapterMonth = new ArrayAdapter<String>(context,
+                R.layout.item_spinner, context.getResources().getStringArray(R.array.months_spinner));
         spinMonth.setAdapter(adapterMonth);
 
-        Spinner spinDays = findViewById(R.id.spinnerDays);
-        Spinner spinYears = (Spinner) findViewById(R.id.spinnerYear);
+        Spinner spinDays = v.findViewById(R.id.spinnerDays);
+        Spinner spinYears = (Spinner) v.findViewById(R.id.spinnerYear);
 
         ArrayList<String> years = new ArrayList<String>();
-        years.add(getResources().getString(R.string.year));
+        years.add(yearsString);
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = thisYear; i >= 1900; i--) {
             years.add(Integer.toString(i));
         }
-        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(this, R.layout.item_spinner, years);
+        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(context, R.layout.item_spinner, years);
         spinYears.setAdapter(adapterYear);
 
         ArrayList<String> days = new ArrayList<String>();
-        days.add(getResources().getString(R.string.day));
+        days.add(daysString);
         for (int i = 0; i <= 31; i++) {
             days.add(Integer.toString(i));
         }
-        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, R.layout.item_spinner, days);
+        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(context, R.layout.item_spinner, days);
         spinDays.setAdapter(adapterDays);
     }
 
@@ -111,14 +113,14 @@ public class Register extends AppCompatActivity {
     }
 
 
-    private Date checkDate() {
-        TextView hint = findViewById(R.id.RegisterDateHint);
-        Spinner spinnerYear = findViewById(R.id.spinnerYear);
-        int month = ((Spinner) findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
-        int day = ((Spinner) findViewById(R.id.spinnerDays)).getSelectedItemPosition();
+    public static Date checkDate(View v, String errMess) {
+        TextView hint = v.findViewById(R.id.RegisterDateHint);
+        Spinner spinnerYear = v.findViewById(R.id.spinnerYear);
+        int month = ((Spinner) v.findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
+        int day = ((Spinner) v.findViewById(R.id.spinnerDays)).getSelectedItemPosition();
 
         if (spinnerYear.getSelectedItemPosition() == 0 || month == -1 || day == 0) {
-            hint.setError(getString(R.string.register_dob_error));
+            hint.setError(errMess);
             return null;
         }
 
@@ -128,7 +130,7 @@ public class Register extends AppCompatActivity {
         cal.set(year, month, day);
         Calendar today = Calendar.getInstance();
         if (MyDateUtils.getDiffYears(cal, today) < 13) {
-            hint.setError(getString(R.string.register_dob_error));
+            hint.setError(errMess);
             return null;
         }
         hint.setError(null);
@@ -175,7 +177,7 @@ public class Register extends AppCompatActivity {
         } else
             CGUHint.setError(null);
 
-        Date date = checkDate();
+        Date date = checkDate(findViewById(R.id.LayoutCreateAccountActivity), getString(R.string.register_dob_error));
         if (date == null)
             return null;
         return date;

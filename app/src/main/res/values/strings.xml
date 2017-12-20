@@ -111,6 +111,8 @@
     <string name="no_search_result">Aucun résultat</string>
     <string name="no_search_result_details">La recherche n\'a pas donnée de résultats\nVeuillez essayer une autre requete.</string>
 
+    <string name="name">Nom</string>
+    <string name="surname">Prénom</string>
 
     <string name="description">description</string>
     <string name="photo">photo</string>
