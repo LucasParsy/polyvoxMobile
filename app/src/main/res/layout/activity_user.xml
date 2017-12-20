@@ -6,23 +6,21 @@
     android:id="@+id/llScrollingContent"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    android:weightSum="100">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_weight="50"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="50">
+        android:layout_weight="1">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -48,7 +46,6 @@
                 android:orientation="vertical">
 
 
-
                 <android.support.v7.widget.CardView
                     android:id="@+id/view2"
                     android:layout_width="62dp"
@@ -56,12 +53,12 @@
                     android:layout_gravity="center_horizontal"
 
                     android:layout_marginTop="10dp"
+                    android:background="@android:color/black"
                     android:clickable="false"
                     android:innerRadius="0dp"
                     android:shape="ring"
-                    app:cardBackgroundColor="@android:color/black"
-                    android:background="@android:color/black"
                     android:thicknessRatio="30"
+                    app:cardBackgroundColor="@android:color/black"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="0dp"
                     tools:cardElevation="0dp">
@@ -132,7 +129,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="50"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
@@ -161,7 +158,6 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
