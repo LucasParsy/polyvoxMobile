@@ -20,6 +20,7 @@ import kotlin.collections.ArrayList
 
 abstract class IRecycler<T: Any>() : Fragment() {
 
+    var saveJArray: JSONArray = JSONArray()
     abstract val layoutListId: Int
     abstract val layoutObjectId: Int
     abstract val recycleId: Int
@@ -69,6 +70,14 @@ abstract class IRecycler<T: Any>() : Fragment() {
 
     fun add(data: JSONArray, replace: Boolean=false)
     {
+        if (replace)
+            saveJArray = data
+        else
+        {
+            for (i in 0..(data.length() - 1))
+                saveJArray.put(data.get(i))
+        }
+
         var list : MutableList<T> = parseJSON(data)
 
         if (noResView != null) {
@@ -107,4 +116,19 @@ abstract class IRecycler<T: Any>() : Fragment() {
         }
         return data
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            val json =  savedInstanceState.getString("json")
+            add(JSONArray(json), true)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("json", saveJArray.toString())
+        super.onSaveInstanceState(outState)
+
+    }
+
 }

@@ -2,9 +2,12 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/rootView"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -12,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="150dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -31,69 +34,58 @@
                 android:background="@color/PolyvoxMainColor"
                 android:clickable="false"
                 android:iconifiedByDefault="false"
+                app:queryBackground="@android:color/transparent"
+                app:submitBackground="@android:color/transparent"
                 app:actionViewClass="android.support.v7.widget.SearchView">
 
             </android.support.v7.widget.SearchView>
         </LinearLayout>
 
         <android.support.design.widget.AppBarLayout
-android:id="@+id/appbar"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_weight="1"
-app:expanded="false">
-
-<!--android.support.v7.widget.Toolbar
-android:id="@+id/toolbar"
-android:layout_width="match_parent"
-android:layout_height="?attr/actionBarSize"
-android:background="?attr/colorPrimary"
-android:theme="?attr/actionBarTheme"
-android:visibility="visible"
-app:layout_scrollFlags="scroll|enterAlways"
-app:layout_constraintDimensionRatio="w,1:1">
-</android.support.v7.widget.Toolbar-->
-
-            <!--android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
+            android:id="@+id/appbar"
+            app:elevation="0dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            app:expanded="true">
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/TabTextDiscover"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_discover"
-                android:visibility="visible" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/TabTextFriends"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_friends"
-                android:visibility="visible" />
+                <android.support.design.widget.TabItem
+                    android:id="@+id/TabTextDiscover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/users"
+                    android:visibility="visible" />
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/TabTextChat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_chat"
-                android:visibility="visible" />
-        </android.support.design.widget.TabLayout-->
+                <android.support.design.widget.TabItem
+                    android:id="@+id/TabTextFriends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_friends"
+                    android:visibility="visible" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/TabTextChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_chat"
+                    android:visibility="visible" />
+            </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </android.support.v4.view.ViewPager>
 
     </LinearLayout>
 
