@@ -100,8 +100,6 @@ class ProfilePage() : MyAppCompatActivity() {
         val followers = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
         val followed = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
 
-        followers.add(followersData)
-        followed.add(obj.getJSONArray("followed"))
         followers.setNoResViewVisibility(false)
         followed.setNoResViewVisibility(false)
 
@@ -119,6 +117,8 @@ class ProfilePage() : MyAppCompatActivity() {
         if (connected && !user.isCurrentUser)
             checkFollowed(followersData)
 
+        (fragments[0] as SearchUserRecycler).add(followersData)
+        (fragments[1] as SearchUserRecycler).add(obj.getJSONArray("followed"))
         setupPage()
     }
 
