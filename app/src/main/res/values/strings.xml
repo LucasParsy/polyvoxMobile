@@ -123,6 +123,7 @@
     <string name="bio_updated">la biographie a bien été mise à jour</string>
     <string name="bio_too_long">la biographie est trop longue (500 caractères max)</string>
 
+    <string name="user_info_updated">les informations ont bien été mises à jour</string>
 
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n
