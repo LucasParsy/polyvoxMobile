@@ -24,6 +24,7 @@ import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
@@ -41,7 +42,6 @@ import butterknife.ButterKnife;
 public class Home extends AppCompatActivity {
 
     private static final String TAG = "Home";
-    private String username = "";
     PagerAdapter adapter;
     @BindView(R.id.pager)
     ViewPager pager;
@@ -103,7 +103,6 @@ public class Home extends AppCompatActivity {
                         String imageUrl;
                         try {
                             JSONObject obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT);
-                            username = obj.getString("userName");
                             imageUrl = obj.getString("picture");
                         } catch (JSONException e) {
                             return;
@@ -122,7 +121,7 @@ public class Home extends AppCompatActivity {
     private void startProfileIntent() {
         Intent intent = new Intent(this, ProfilePage.class);
         Bundle b = new Bundle();
-        b.putString("name", username);
+        b.putString("name", AuthUtils.getUsername(getBaseContext()));
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -148,32 +147,7 @@ public class Home extends AppCompatActivity {
                     APIRequest.startLoginActivity(getApplicationContext());
                     return;
                 }
-
-                if (!username.isEmpty())
-                    startProfileIntent();
-                else {
-                    clicked = true;
-                    APIRequest.JSONrequest(getApplicationContext(), Request.Method.GET,
-                            APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
-                            true, null, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        JSONObject obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT);
-                                        username = obj.getString("userName");
-                                    } catch (JSONException e) {
-                                        return;
-                                    }
-                                    startProfileIntent();
-                                    clicked = false;
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    clicked = false;
-                                }
-                            });
-                }
+                 startProfileIntent();
             }
         });
 

@@ -8,6 +8,7 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.*
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import org.json.JSONObject
@@ -36,14 +37,8 @@ class OptionsBio() : MyAppCompatActivity() {
 
         LoadingUtils.StartLoadingView(rootView, this)
 
-        com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
-                true, null, { current ->
-            val obj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
-            val currentUserName = obj.getString("userName")
-
-
-           APIRequest.JSONrequest(this, Request.Method.GET,
-                    APIUrl.BASE_URL + APIUrl.INFO_USER + currentUserName,
+         APIRequest.JSONrequest(this, Request.Method.GET,
+                    APIUrl.BASE_URL + APIUrl.INFO_USER + AuthUtils.getUsername(baseContext),
                     true, null, { response ->
                 val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                 val info = topObj.getJSONObject("info")
@@ -57,9 +52,6 @@ class OptionsBio() : MyAppCompatActivity() {
             }
                     , { _ -> showLayout(rootView, mainView)
            })
-
-        }, { _ -> showLayout(rootView, mainView)
-        })
     }
 
     @Suppress("UNUSED_PARAMETER")

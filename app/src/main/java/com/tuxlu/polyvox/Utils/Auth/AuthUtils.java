@@ -22,6 +22,14 @@ public class AuthUtils {
         }
     }
 
+    public static String getUsername(Context context)
+    {
+        AccountManager am = AccountManager.get(context);
+        if (am.getAccounts().length == 0)
+            return "";
+        return am.getUserData(am.getAccounts()[0], "name");
+    }
+
     public static String getToken(Context context) {
         AccountManager am = AccountManager.get(context);
         //should'nt happen

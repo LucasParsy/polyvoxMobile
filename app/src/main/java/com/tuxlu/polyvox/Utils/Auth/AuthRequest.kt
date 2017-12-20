@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Utils.API
+package com.tuxlu.polyvox.Utils.Auth
 
 import com.android.volley.ParseError
 import com.android.volley.toolbox.HttpHeaderParser
@@ -11,6 +11,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.API.APIUrl
 import java.nio.charset.Charset
 
 
@@ -18,7 +19,7 @@ import java.nio.charset.Charset
  * Created by tuxlu on 17/11/17.
  */
 
-class APILoginRequest : JsonObjectRequest {
+class AuthRequest : JsonObjectRequest {
 
     private val context : Context
     private val login : String
@@ -47,6 +48,8 @@ class APILoginRequest : JsonObjectRequest {
                 am.addAccountExplicitly(account, null, null)
                 //am.setUserData(account, "refreshToken", refreshToken);
                 am.setAuthToken(account, context.getString(R.string.account_type), token)
+                val username = jsonResponse.getJSONObject("data").getString("userName")
+                am.setUserData(account, "name", username)
             }
             return Response.success(jsonResponse, HttpHeaderParser.parseCacheHeaders(response))
         } catch (e: Exception) {

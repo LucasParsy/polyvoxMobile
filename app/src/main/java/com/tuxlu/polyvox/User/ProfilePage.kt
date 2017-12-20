@@ -49,7 +49,6 @@ class ProfilePage() : MyAppCompatActivity() {
     private var user: ProfileUser = ProfileUser()
     private lateinit var toolbarIcon: MenuItem
     private var followerNumbers: Int = 0
-    private lateinit var currentUserName: String
     private var connected: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,16 +69,7 @@ class ProfilePage() : MyAppCompatActivity() {
             user.lastName = info.getString("lastName")
             user.description = info.getString("description")
             user.picture = info.getString("picture")
-
-            if (connected && user.isCurrentUser == false) {
-                APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
-                        true, null, { current ->
-                    val obj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
-                    currentUserName = obj.getString("userName")
-                    setupViewPager(topObj)
-                }, null)
-            } else
-                setupViewPager(topObj)
+            setupViewPager(topObj)
         }, null)
     }
 
@@ -87,7 +77,7 @@ class ProfilePage() : MyAppCompatActivity() {
     private fun checkFollowed(followersData: JSONArray) {
         for (i in 0..(followersData.length() - 1)) {
             val item = followersData.getJSONObject(i)
-            if (item.getString("userName") == currentUserName) {
+            if (item.getString("userName") == AuthUtils.getUsername(baseContext)) {
                 user.following = true
                 break
             }

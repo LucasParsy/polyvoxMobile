@@ -23,11 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.API.APILoginRequest;
+import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
-import com.tuxlu.polyvox.Utils.UtilsTemp;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 
 import org.json.JSONException;
@@ -213,7 +212,7 @@ public class Register extends AppCompatActivity {
         button.setText(getString(R.string.register_sending));
 
 
-        JsonObjectRequest jsObjRequest = new APILoginRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
+        JsonObjectRequest jsObjRequest = new AuthRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
                 new Response.Listener<JSONObject>() {
 
                     @Override
