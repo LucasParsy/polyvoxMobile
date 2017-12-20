@@ -46,7 +46,7 @@ class UtilsTemp {
         //todo: move theses function in more appropriate file
 
         //todo: move theses function in more appropriate file
-        @JvmStatic
+        @JvmStatic @JvmOverloads
         fun showToast(context: Context, text: String, type: ToastType = ToastType.NORMAL, icon: Int = -1) {
 
             var toast: Toast? = null
@@ -137,6 +137,10 @@ class UtilsTemp {
 
         }
 
+        @JvmStatic
+        fun isStringEmpty(str: String) : Boolean {
+            return (str.isBlank() || str == "null")
+        }
         /*
                     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             // Check which request we're responding to

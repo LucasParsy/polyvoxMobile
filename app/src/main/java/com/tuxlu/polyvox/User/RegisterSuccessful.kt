@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
-import com.android.volley.Request
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.android.volley.Response
+import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import org.json.JSONObject
 
 /**
  * Created by tuxlu on 26/11/17.
@@ -36,14 +37,10 @@ class RegisterSuccessful() : AppCompatActivity() {
         LoadingUtils.StartLoadingView(rootView, applicationContext)
 
         //ENVOI MAIL CONFIRMATION
-        com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(applicationContext, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
-                { _ ->
-                    mainView.visibility = View.VISIBLE
-                    LoadingUtils.EndLoadingView(rootView)
-                }, { error ->
-            //Todo: Gestion d'erreur si tout se passe mal
-            error.printStackTrace()
-        });
+        NetworkUtils.sendMail(baseContext, Response.Listener {
+            mainView.visibility = View.VISIBLE
+            LoadingUtils.EndLoadingView(rootView)
+         })
     }
 
     @Suppress("UNUSED_PARAMETER")

@@ -2,12 +2,12 @@ package com.tuxlu.polyvox.Utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
 import com.android.volley.*
 import com.tuxlu.polyvox.R
 
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import org.json.JSONObject
 
 import java.util.HashMap
 
@@ -52,16 +52,12 @@ object NetworkUtils {
             UtilsTemp.showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
     }
 
-    @JvmStatic
-    fun sendMail(context: Context) {
+    @JvmStatic @JvmOverloads
+    fun sendMail(context: Context, listener: Response.Listener<JSONObject>? = null) {
         com.tuxlu.polyvox.Utils.API.APIRequest.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.MAIL_SEND, true, null,
-                { _ ->
+                { r ->
                     UtilsTemp.showToast(context, context.getString(R.string.confirmation_mail_sent_short), ToastType.SUCCESS)
-                }, { error ->
-            //Todo: Gestion d'erreur si tout se passe mal
-            error.printStackTrace()
-        });
+                    listener?.onResponse(r)
+                }, null);
     }
-
-
 }

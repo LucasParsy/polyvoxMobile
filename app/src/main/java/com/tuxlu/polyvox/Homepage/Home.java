@@ -26,6 +26,7 @@ import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
+import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,7 +108,7 @@ public class Home extends AppCompatActivity {
                         } catch (JSONException e) {
                             return;
                         }
-                        if (!imageUrl.isEmpty() && (imageUrl != "null"))
+                        if (!UtilsTemp.isStringEmpty(imageUrl))
                              GlideApp.with(context).load(imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
                         //placeholder(R.drawable.ic_account_circle_black_24dp)
                     }
@@ -170,7 +171,6 @@ public class Home extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     clicked = false;
-                                    error.printStackTrace();
                                 }
                             });
                 }

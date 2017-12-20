@@ -75,9 +75,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
                         usersFragment.add(result.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
                     }
                     //todo: gérer autres fragments
-                }, { error ->
-            error.printStackTrace()
-        });
+                }, null);
     }
 
     protected fun instanciateFragments() {

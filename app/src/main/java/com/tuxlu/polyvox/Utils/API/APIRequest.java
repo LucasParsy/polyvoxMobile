@@ -7,23 +7,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.User.Login;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
+import com.tuxlu.polyvox.Utils.ToastType;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import butterknife.internal.Utils;
 
 /**
  * Created by tuxlu on 19/12/17.
@@ -42,6 +48,12 @@ public class APIRequest {
                                    final boolean usesApi, final JSONObject body,
                                    final Response.Listener<JSONObject> listener,
                                    final Response.ErrorListener errorListener) {
+        if (!NetworkUtils.isConnected(context))
+        {
+            UtilsTemp.showToast(context, context.getString(R.string.no_network));
+            return;
+        }
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -58,6 +70,7 @@ public class APIRequest {
                                     if (error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
                                         AuthUtils.removeAccountLogout(context);
                                         startLoginActivity(context);
+                                        UtilsTemp.showToast(context, context.getString(R.string.logout_been));
                                         return;
                                     }
                                     if (error.networkResponse.statusCode == APIUrl.USER_NOT_VALIDATED) {
@@ -74,7 +87,19 @@ public class APIRequest {
                                     }
                                 }
                                 NetworkUtils.checkNetworkError(context, error);
-                                errorListener.onErrorResponse(error);
+
+                                if (BuildConfig.DEBUG) {
+                                    error.printStackTrace();
+                                    if (error.networkResponse != null) {
+                                        NetworkResponse resp = error.networkResponse;
+                                        String data = new String(resp.data);
+                                        Log.wtf("NETWORK", "code = " + resp.statusCode +
+                                                "\n data=" + data);
+                                    }
+                                }
+
+                                if (errorListener != null)
+                                    errorListener.onErrorResponse(error);
                             }
                         }) {
                     @Override

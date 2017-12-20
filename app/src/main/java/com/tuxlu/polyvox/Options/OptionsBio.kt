@@ -48,22 +48,17 @@ class OptionsBio() : MyAppCompatActivity() {
                 val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                 val info = topObj.getJSONObject("info")
                 val description = info.getString("description")
-                if (!description.isBlank() && description != "null")
+               if (!UtilsTemp.isStringEmpty(description))
                     bioInput.setText(description)
                 else
                     bioInput.setHint(R.string.bio_hint)
 
                 showLayout(rootView, mainView)
             }
-                    , { e ->
-                e.printStackTrace()
-                showLayout(rootView, mainView)
-            })
+                    , { _ -> showLayout(rootView, mainView)
+           })
 
-
-        }, { e ->
-            e.printStackTrace()
-            showLayout(rootView, mainView)
+        }, { _ -> showLayout(rootView, mainView)
         })
     }
 
@@ -80,13 +75,7 @@ class OptionsBio() : MyAppCompatActivity() {
         APIRequest.JSONrequest(this, Request.Method.POST,
                 APIUrl.BASE_URL + APIUrl.UPDATE_INF0, true, body, { _ ->
             UtilsTemp.showToast(this, getString(R.string.bio_updated))
-        }, { e ->
-            e.printStackTrace()
-            if (e.networkResponse != null) {
-                var debugResponse: String = String(e.networkResponse.data)
-                debugResponse += "debug"
-            }
-        })
+        }, null)
     }
 
 }

@@ -37,6 +37,7 @@
 
     <string name="logout">Déconnexion</string>
     <string name="logout_confirm">Voulez vous vous déconnecter de l\'application Polyvox?</string>
+    <string name="logout_been">vous avez été déconnecté de l\'application</string>
     <string name="unknown_error">erreur innatendue</string>
     <string name="create_account">Inscription</string>
     <string name="register_sending">envoi en cours…</string>

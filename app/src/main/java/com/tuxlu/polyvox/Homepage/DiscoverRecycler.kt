@@ -52,7 +52,6 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
         var image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-        var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
         GlideApp.with(holder.v.context).load(item.imageUrl).into(image)
     }
 
@@ -62,7 +61,6 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         val clickListener = View.OnClickListener {_ ->
 
             val intent = Intent(context, Room::class.java)
-            val name: String = data[holder.adapterPosition].name
 
             intent.putExtra("id", data[holder.adapterPosition].roomID)
             intent.putExtra("title", data[holder.adapterPosition].name)

@@ -55,7 +55,7 @@ class ProfilePage() : MyAppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
-        connected = com.tuxlu.polyvox.Utils.API.APIRequest.isAPIConnected(this)
+        connected = APIRequest.isAPIConnected(this)
         followButton = findViewById(R.id.ProfileActionButton)
         followerNumbersText = findViewById(R.id.ProfileFollowerNumber)
 
@@ -79,10 +79,10 @@ class ProfilePage() : MyAppCompatActivity() {
                     val obj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                     currentUserName = obj.getString("userName")
                     setupViewPager(topObj)
-                }, { e -> e.printStackTrace() })
+                }, null)
             } else
                 setupViewPager(topObj)
-        }, { e -> e.printStackTrace() })
+        }, null)
     }
 
 
@@ -129,13 +129,13 @@ class ProfilePage() : MyAppCompatActivity() {
         title = user.userName
 
         val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
-        if (!user.description.isBlank() && user.description != "null")
+        if (!UtilsTemp.isStringEmpty(user.description))
             bio.text = user.description
         else
             bio.text = getString(R.string.bio_empty)
 
         val image = (findViewById<ImageView>(R.id.ProfileIcon))
-        if (!user.picture.isBlank() && user.picture != "null")
+        if (!UtilsTemp.isStringEmpty(user.picture))
             GlideApp.with(this).load(user.picture).into(image)
         else {
             image.setImageResource(R.drawable.ic_account_circle_white_24dp)
@@ -182,7 +182,7 @@ class ProfilePage() : MyAppCompatActivity() {
                         val nin: Intent = Intent(baseContext, Home::class.java)
                         nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(nin)
-                    }, { e -> e.printStackTrace() })
+                    }, null)
                 })
                 .setNegativeButton(getString(R.string.no), null)
                 .show()
@@ -193,12 +193,12 @@ class ProfilePage() : MyAppCompatActivity() {
         map.put("userName", user.userName)
         val url = NetworkUtils.getParametrizedUrl(APIUrl.FOLLOW, map)
         if (user.following)
-            setUnfollow(url)
+            unfollow(url)
         else
-            setFollow(url)
+            follow(url)
     }
 
-    public fun setFollow(url: String) {
+    public fun follow(url: String) {
         APIRequest.JSONrequest(this, Request.Method.POST,
                 url, true, null, { _ ->
             user.following = true
@@ -206,17 +206,11 @@ class ProfilePage() : MyAppCompatActivity() {
             UtilsTemp.showToast(this, user.userName + getString(R.string.is_followed), ToastType.SUCCESS)
             followerNumbers++
             followerNumbersText.text = followerNumbers.toString()
-        }, { e ->
-            e.printStackTrace()
-            if (e.networkResponse != null) {
-                var debug_response: String = String(e.networkResponse.data)
-                debug_response += "debug"
-            }
-        })
+        }, null)
 
     }
 
-    public fun setUnfollow(url: String) {
+    public fun unfollow(url: String) {
         APIRequest.JSONrequest(this, Request.Method.DELETE,
                 url, true, null, { _ ->
             user.following = false
@@ -224,13 +218,7 @@ class ProfilePage() : MyAppCompatActivity() {
             UtilsTemp.showToast(this, user.userName + getString(R.string.is_no_more_followed))
             followerNumbers--
             followerNumbersText.text = followerNumbers.toString()
-        }, { e ->
-            e.printStackTrace()
-            if (e.networkResponse != null) {
-                var debug_response: String = String(e.networkResponse.data)
-                debug_response += "debug"
-            }
-        })
+        }, null)
     }
 
 
@@ -259,8 +247,8 @@ class ProfilePage() : MyAppCompatActivity() {
             user.description = info.getString("description")
 
             val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
-            if (!user.description.isBlank() && user.description != "null")
+            if (!UtilsTemp.isStringEmpty(user.description))
                 bio.text = user.description
-        }, { e -> e.printStackTrace() })
+        }, null)
     }
 }

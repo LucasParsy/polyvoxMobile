@@ -105,7 +105,6 @@ public class Login extends AccountAuthenticatorActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
                         button.setText(getString(R.string.login_connect));
                         NetworkResponse networkResponse = error.networkResponse;
                         loginLayout.setError(error.getMessage());

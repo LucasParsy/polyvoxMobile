@@ -16,6 +16,7 @@ import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -33,8 +34,7 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
     {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
         var image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
-        var vHttp = VHttp.getInstance(holder.v.context.applicationContext)
-        if (!item.imageUrl.isBlank() && item.imageUrl != "null")
+        if (!UtilsTemp.isStringEmpty(item.imageUrl))
             GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
