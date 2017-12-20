@@ -1,5 +1,6 @@
 package com.tuxlu.polyvox.User
 
+import android.app.VoiceInteractor
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -28,6 +29,7 @@ import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
+import kotlinx.android.synthetic.main.activity_user.*
 
 
 /**
@@ -46,9 +48,7 @@ data class ProfileUser(var isCurrentUser: Boolean = false,
 class ProfilePage() : MyAppCompatActivity() {
     private var user: ProfileUser = ProfileUser()
     private lateinit var toolbarIcon: MenuItem
-    private lateinit var followButton: Button
     private var followerNumbers: Int = 0
-    private lateinit var followerNumbersText: TextView
     private lateinit var currentUserName: String
     private var connected: Boolean = false
 
@@ -56,8 +56,6 @@ class ProfilePage() : MyAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         connected = APIRequest.isAPIConnected(this)
-        followButton = findViewById(R.id.ProfileActionButton)
-        followerNumbersText = findViewById(R.id.ProfileFollowerNumber)
 
         val userName = intent.getStringExtra("name")
 
@@ -86,40 +84,40 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
 
+    private fun checkFollowed(followersData: JSONArray) {
+        for (i in 0..(followersData.length() - 1)) {
+            val item = followersData.getJSONObject(i)
+            if (item.getString("userName") == currentUserName) {
+                user.following = true
+                break
+            }
+        }
+    }
+
     private fun setupViewPager(obj: JSONObject) {
-        val pager: ViewPager = findViewById(R.id.pager)
         val adapter: PagerAdapter
+        val followersData: JSONArray = obj.getJSONArray("followers")
         val followers = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
         val followed = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
 
-        val followersData: JSONArray = obj.getJSONArray("followers")
-        followerNumbers = followersData.length()
-
-        //check if following user
-        if (connected && !user.isCurrentUser) {
-            for (i in 0..(followersData.length() - 1)) {
-                val item = followersData.getJSONObject(i)
-                if (item.getString("userName") == currentUserName) {
-                    user.following = true
-                    break
-                }
-            }
-        }
-
+        followers.add(followersData)
+        followed.add(obj.getJSONArray("followed"))
         followers.setNoResViewVisibility(false)
         followed.setNoResViewVisibility(false)
 
         val fragments = mutableListOf<Fragment>()
         fragments.add(followers)
         fragments.add(followed)
-
         val tabTitles = intArrayOf(R.string.followers, R.string.followed)
         adapter = com.tuxlu.polyvox.Utils.UIElements.PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
-        (findViewById<View>(R.id.tabLayoutHome) as TabLayout).setupWithViewPager(pager)
+        tabLayoutHome.setupWithViewPager(pager)
 
-        (fragments[0] as SearchUserRecycler).add(followersData)
-        (fragments[1] as SearchUserRecycler).add(obj.getJSONArray("followed"))
+
+        followerNumbers = followersData.length()
+        ProfileFollowerNumber.text = followerNumbers.toString()
+        if (connected && !user.isCurrentUser)
+            checkFollowed(followersData)
 
         setupPage()
     }
@@ -128,48 +126,43 @@ class ProfilePage() : MyAppCompatActivity() {
     private fun setupPage() {
         title = user.userName
 
-        val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
         if (!UtilsTemp.isStringEmpty(user.description))
-            bio.text = user.description
+            ProfileBio.text = user.description
         else
-            bio.text = getString(R.string.bio_empty)
+            ProfileBio.text = getString(R.string.bio_empty)
 
-        val image = (findViewById<ImageView>(R.id.ProfileIcon))
         if (!UtilsTemp.isStringEmpty(user.picture))
-            GlideApp.with(this).load(user.picture).into(image)
-        else {
-            image.setImageResource(R.drawable.ic_account_circle_white_24dp)
-        }
-
-        followerNumbersText.text = followerNumbers.toString()
+            GlideApp.with(this).load(user.picture).into(ProfileIcon)
+        else
+            ProfileIcon.setImageResource(R.drawable.ic_account_circle_white_24dp)
         setButtonsText()
 
 
 
-        followButton.setOnClickListener {
+        ProfileActionButton.setOnClickListener {
             if (user.isCurrentUser)
                 startActivityForResult(Intent(baseContext, Options::class.java), 1234)
             else
-                followButtonlistener()
+                follow(user.following)
         }
     }
 
     private fun setButtonsText() {
         if (user.isCurrentUser) {
             toolbarIcon.setIcon(R.drawable.logout)
-            followButton.text = getString(R.string.modify_profile)
+            ProfileActionButton.text = getString(R.string.modify_profile)
         } else {
             if (user.following) {
                 toolbarIcon.setIcon(R.drawable.hearth_full)
-                followButton.text = getString(R.string.unfollow)
+                ProfileActionButton.text = getString(R.string.unfollow)
             } else {
                 toolbarIcon.setIcon(R.drawable.hearth_empty)
-                followButton.text = getString(R.string.follow)
+                ProfileActionButton.text = getString(R.string.follow)
             }
         }
     }
 
-
+    //todo: add logout to authUtils. Problem: it's a java file...
     public fun logout() {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.logout))
@@ -188,37 +181,34 @@ class ProfilePage() : MyAppCompatActivity() {
                 .show()
     }
 
-    private fun followButtonlistener() {
-        var map = HashMap<String, String>()
+    public fun follow(follow: Boolean)
+    {
+        var message : Int
+        var method : Int
+        if (follow)
+        {
+            method = Request.Method.POST
+            followerNumbers++
+            message = R.string.is_followed;
+        }
+
+        else {
+            method = Request.Method.DELETE
+            followerNumbers--
+            message = R.string.is_no_more_followed
+        }
+
+        val map = HashMap<String, String>()
         map.put("userName", user.userName)
         val url = NetworkUtils.getParametrizedUrl(APIUrl.FOLLOW, map)
-        if (user.following)
-            unfollow(url)
-        else
-            follow(url)
-    }
-
-    public fun follow(url: String) {
-        APIRequest.JSONrequest(this, Request.Method.POST,
+        APIRequest.JSONrequest(this, method,
                 url, true, null, { _ ->
-            user.following = true
+            user.following = follow
             setButtonsText()
-            UtilsTemp.showToast(this, user.userName + getString(R.string.is_followed), ToastType.SUCCESS)
-            followerNumbers++
-            followerNumbersText.text = followerNumbers.toString()
+            UtilsTemp.showToast(this, user.userName + getString(message), ToastType.SUCCESS)
+            ProfileFollowerNumber.text = followerNumbers.toString()
         }, null)
 
-    }
-
-    public fun unfollow(url: String) {
-        APIRequest.JSONrequest(this, Request.Method.DELETE,
-                url, true, null, { _ ->
-            user.following = false
-            setButtonsText()
-            UtilsTemp.showToast(this, user.userName + getString(R.string.is_no_more_followed))
-            followerNumbers--
-            followerNumbersText.text = followerNumbers.toString()
-        }, null)
     }
 
 
@@ -229,8 +219,9 @@ class ProfilePage() : MyAppCompatActivity() {
         toolbarIcon.setOnMenuItemClickListener {
             if (user.isCurrentUser)
                 logout()
-            else
-                followButtonlistener()
+            else {
+                follow(user.following)
+            }
             true
         }
         return true
@@ -246,9 +237,8 @@ class ProfilePage() : MyAppCompatActivity() {
             val info = topObj.getJSONObject("info")
             user.description = info.getString("description")
 
-            val bio: TextView = findViewById<TextView>(R.id.ProfileBio)
             if (!UtilsTemp.isStringEmpty(user.description))
-                bio.text = user.description
+                ProfileBio.text = user.description
         }, null)
     }
 }
