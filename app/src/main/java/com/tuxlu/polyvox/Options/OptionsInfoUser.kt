@@ -1,6 +1,7 @@
 package com.tuxlu.polyvox.Options
 
 import android.os.Bundle
+import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.android.volley.Request
@@ -9,6 +10,7 @@ import com.tuxlu.polyvox.User.Register
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.MyDateUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user_options_info_user.*
@@ -34,7 +36,7 @@ class OptionsInfoUser() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_info_user)
         mainView.visibility = View.INVISIBLE
-        Register.setSpinners(rootView, this, getResources().getString(R.string.day), getResources().getString(R.string.year))
+        MyDateUtils.setDateSpinners(rootView, this)
 
         val url = APIUrl.BASE_URL + APIUrl.INFO_USER + AuthUtils.getUsername(baseContext)
         APIRequest.JSONrequest(this, Request.Method.GET, url,
@@ -44,16 +46,8 @@ class OptionsInfoUser() : AppCompatActivity() {
             surname.setText(info.getString("firstName"))
             name.setText(info.getString("lastName"))
 
-            //todo: déplacer dans DateUtils
-            val ft = SimpleDateFormat("yyyy-MM-dd")
-            val currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            var date: Date = ft.parse(info.getString("birthday"))
-            val calendar = Calendar.getInstance()
-            calendar.time = date
-            spinnerMonth.setSelection(calendar.get(Calendar.MONTH) + 1)
-            spinnerDays.setSelection(calendar.get(Calendar.DAY_OF_MONTH) + 1)
-            spinnerYear.setSelection(currentYear - calendar.get(Calendar.YEAR) + 1)
-
+            val date = info.getString("birthday")
+            MyDateUtils.setSpinnersToDate(date, "yyyy-MM-dd", rootView)
             showLayout()
         }, {_ -> showLayout()})
 
@@ -61,7 +55,15 @@ class OptionsInfoUser() : AppCompatActivity() {
 
     public fun buttonClick(v: View)
     {
-        var date : Date? = Register.checkDate(rootView, getString(R.string.register_dob_error))
+
+/*
+        if (!surname.text.matches("REGEX".toRegex())) {
+            SurnameLayout.error = getString(R.string.INVALID_SURNAME)
+            return
+        }
+*/
+
+        var date : Date? = MyDateUtils.checkDate(rootView, getString(R.string.register_dob_error))
         if (date == null)
             return
         val ft = SimpleDateFormat("yyyy-MM-dd")

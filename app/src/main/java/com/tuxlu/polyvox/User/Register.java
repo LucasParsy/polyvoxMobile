@@ -50,8 +50,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
-        setSpinners(findViewById(R.id.LayoutCreateAccountActivity), this,
-                getResources().getString(R.string.day), getResources().getString(R.string.year));
+        MyDateUtils.setDateSpinners(findViewById(R.id.LayoutCreateAccountActivity), this);
 
         ID = findViewById(R.id.RegisterIDInput);
         mail = findViewById(R.id.RegisterEmailInput);
@@ -79,71 +78,6 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    static public void setSpinners(View v, Context context, String daysString, String yearsString) {
-        Spinner spinMonth = v.findViewById(R.id.spinnerMonth);
-        ArrayAdapter<String> adapterMonth = new ArrayAdapter<String>(context,
-                R.layout.item_spinner, context.getResources().getStringArray(R.array.months_spinner));
-        spinMonth.setAdapter(adapterMonth);
-
-        Spinner spinDays = v.findViewById(R.id.spinnerDays);
-        Spinner spinYears = (Spinner) v.findViewById(R.id.spinnerYear);
-
-        ArrayList<String> years = new ArrayList<String>();
-        years.add(yearsString);
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = thisYear; i >= 1900; i--) {
-            years.add(Integer.toString(i));
-        }
-        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(context, R.layout.item_spinner, years);
-        spinYears.setAdapter(adapterYear);
-
-        ArrayList<String> days = new ArrayList<String>();
-        days.add(daysString);
-        for (int i = 0; i <= 31; i++) {
-            days.add(Integer.toString(i));
-        }
-        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(context, R.layout.item_spinner, days);
-        spinDays.setAdapter(adapterDays);
-    }
-
-    private void displayError(JSONException e, TextInputLayout loginLayout) {
-        e.printStackTrace();
-        loginLayout.setError(getString(R.string.unknown_error));
-    }
-
-
-    public static Date checkDate(View v, String errMess) {
-        TextView hint = v.findViewById(R.id.RegisterDateHint);
-        Spinner spinnerYear = v.findViewById(R.id.spinnerYear);
-        int month = ((Spinner) v.findViewById(R.id.spinnerMonth)).getSelectedItemPosition() - 1;
-        int day = ((Spinner) v.findViewById(R.id.spinnerDays)).getSelectedItemPosition();
-
-        if (spinnerYear.getSelectedItemPosition() == 0 || month == -1 || day == 0) {
-            hint.setError(errMess);
-            return null;
-        }
-
-        int year = Integer.parseInt(spinnerYear.getSelectedItem().toString());
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day);
-        Calendar today = Calendar.getInstance();
-        if (MyDateUtils.getDiffYears(cal, today) < 13) {
-            hint.setError(errMess);
-            return null;
-        }
-        hint.setError(null);
-        Date dateRepresentation = cal.getTime();
-
-        return dateRepresentation;
-    }
-
-    private void endActivity(String mail, String pass) {
-        Intent intent = new Intent(this, RegisterSuccessful.class);
-        intent.putExtra("mail", mail);
-        startActivity(intent);
-        finish();
-    }
 
     private Date checkInput(String IDText, String mailText, String passText)
     {
@@ -176,7 +110,7 @@ public class Register extends AppCompatActivity {
         } else
             CGUHint.setError(null);
 
-        Date date = checkDate(findViewById(R.id.LayoutCreateAccountActivity), getString(R.string.register_dob_error));
+        Date date = MyDateUtils.checkDate(findViewById(R.id.LayoutCreateAccountActivity), getString(R.string.register_dob_error));
         if (date == null)
             return null;
         return date;
@@ -226,15 +160,16 @@ public class Register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
                         button.setText(getString(R.string.create_account));
                         if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE)
                         {
                             String errData = new String(error.networkResponse.data);
                             if (errData.contains(APIUrl.REGISTER_MAIL_ERROR))
                                 ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_already_used));
-                            if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
+                            else if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
                                 ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
+                            else
+                                ((TextInputLayout)findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.unknown_error));
                         }
                         else {
                             NetworkUtils.checkNetworkError(getApplicationContext(), error);
@@ -260,6 +195,13 @@ public class Register extends AppCompatActivity {
         webIntent.putExtra("url", APIUrl.CGU);
         startActivity(webIntent);
      */
+    }
+
+    private void endActivity(String mail, String pass) {
+        Intent intent = new Intent(this, RegisterSuccessful.class);
+        intent.putExtra("mail", mail);
+        startActivity(intent);
+        finish();
     }
 
 
