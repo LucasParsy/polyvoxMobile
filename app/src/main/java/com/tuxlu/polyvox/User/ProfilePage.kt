@@ -133,7 +133,7 @@ class ProfilePage() : MyAppCompatActivity() {
             if (user.isCurrentUser)
                 startActivityForResult(Intent(baseContext, Options::class.java), 1234)
             else
-                follow(user.following)
+                follow(!user.following)
         }
     }
 
@@ -175,16 +175,17 @@ class ProfilePage() : MyAppCompatActivity() {
     {
         var message : Int
         var method : Int
+        var increaseVar : Int
         if (follow)
         {
             method = Request.Method.POST
-            followerNumbers++
+            increaseVar = 1
             message = R.string.is_followed;
         }
 
         else {
             method = Request.Method.DELETE
-            followerNumbers--
+            increaseVar = -1
             message = R.string.is_no_more_followed
         }
 
@@ -195,6 +196,7 @@ class ProfilePage() : MyAppCompatActivity() {
                 url, true, null, { _ ->
             user.following = follow
             setButtonsText()
+            followerNumbers += increaseVar
             UtilsTemp.showToast(this, user.userName + getString(message), ToastType.SUCCESS)
             ProfileFollowerNumber.text = followerNumbers.toString()
         }, null)
@@ -210,7 +212,7 @@ class ProfilePage() : MyAppCompatActivity() {
             if (user.isCurrentUser)
                 logout()
             else {
-                follow(user.following)
+                follow(!user.following)
             }
             true
         }
