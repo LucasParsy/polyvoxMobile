@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
@@ -55,10 +56,10 @@ public class Home extends AppCompatActivity {
         configToolbar();
 
         //leaks verification, in debug builds only.
-        /*
+
         if (LeakCanary.isInAnalyzerProcess(this)) {return;}
         LeakCanary.install(this.getApplication());
-        */
+
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
         List<Fragment> fragments = new Vector<>();

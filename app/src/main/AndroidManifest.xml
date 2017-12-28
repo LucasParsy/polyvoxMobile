@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -17,6 +16,10 @@
 
     <!-- disables vibration when speaking -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <!-- Read-write pictures and documents -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
     <application
@@ -113,6 +116,10 @@
         </activity>
 
         <activity android:name="com.tuxlu.polyvox.Options.OptionsInfoUser"
+            android:label="Informations personnelles">
+        </activity>
+
+        <activity android:name="com.tuxlu.polyvox.Options.OptionsPicture"
             android:label="Informations personnelles">
         </activity>
 

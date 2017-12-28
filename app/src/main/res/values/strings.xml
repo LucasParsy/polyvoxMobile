@@ -125,6 +125,16 @@
 
     <string name="user_info_updated">les informations ont bien été mises à jour</string>
 
+    <string name="profile_picture_current">votre image de profil actuelle</string>
+    <string name="profile_picture_no">vous n\'avez pas encore d\'image de profil.\n
+    rajoutez en une!
+    </string>
+    <string name="profile_picture_new">la nouvelle image de profil</string>
+    <string name="profile_picture_add">ajouter une image de profil</string>
+    <string name="profile_picture_change">changer l\'image</string>
+    <string name="profile_picture_apply">utiliser cette image</string>
+    <string name="profile_picture_invalid">un problème s\'est produit avec cette image</string>
+
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n
  &lt;lucas.parsy@epitech.eu> wrote this file.\n

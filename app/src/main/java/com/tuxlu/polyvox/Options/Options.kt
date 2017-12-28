@@ -37,7 +37,7 @@ class Options() : MyAppCompatActivity() {
 
     public fun photoClick(v: View)
     {
-        //startActivity(Intent(baseContext, Home::class.java))
+        startActivity(Intent(baseContext, OptionsPicture::class.java))
     }
 
     public fun passwordClick(v: View)

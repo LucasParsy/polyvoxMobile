@@ -69,5 +69,7 @@ public class APIUrl {
 
     public static final String LOGOUT = "users/logout";
 
+    public static final String SEND_PICTURE = "users/upload/picture";
+
     private APIUrl(){}
 }

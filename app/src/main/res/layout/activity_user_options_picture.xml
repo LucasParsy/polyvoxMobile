@@ -1,0 +1,95 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tuxlu.polyvox.Homepage.DiscoverRecycler">
+
+
+    <LinearLayout
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/currentprofilePic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@drawable/imageview_border"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_account_circle_black_24dp" />
+
+        <TextView
+            android:id="@+id/currentprofilePicText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/profile_picture_current"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/addProfilePicButton"
+            style="@style/AppTheme.coloredButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exo_media_button_height"
+            android:layout_margin="20dp"
+            android:layout_marginTop="50dp"
+            android:onClick="addButtonClick"
+            android:text="@string/profile_picture_add"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/newProfilePicLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/newProfilePic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/imageview_border"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_account_circle_black_24dp" />
+
+            <TextView
+                android:id="@+id/newProfilePicText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/profile_picture_new"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/applyProfilePicButton"
+                style="@style/AppTheme.coloredButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exo_media_button_height"
+                android:layout_margin="20dp"
+                android:layout_marginTop="50dp"
+                android:onClick="sendButtonClick"
+                android:text="@string/profile_picture_apply"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/util_layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+</FrameLayout>
