@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.API.APIUrl
@@ -35,7 +36,7 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
         var image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
-            GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
+            GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>)

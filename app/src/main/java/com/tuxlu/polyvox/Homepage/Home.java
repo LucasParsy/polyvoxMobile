@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
@@ -42,6 +43,7 @@ import butterknife.ButterKnife;
 
 public class Home extends AppCompatActivity {
 
+    private ImageView profileImage = null;
     private static final String TAG = "Home";
     PagerAdapter adapter;
     @BindView(R.id.pager)
@@ -109,7 +111,7 @@ public class Home extends AppCompatActivity {
                             return;
                         }
                         if (!UtilsTemp.isStringEmpty(imageUrl))
-                             GlideApp.with(context).load(imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
+                             GlideApp.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
                         //placeholder(R.drawable.ic_account_circle_black_24dp)
                     }
                 }, new Response.ErrorListener() {
@@ -133,8 +135,8 @@ public class Home extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         final MenuItem profileIcon = menu.findItem(R.id.profileButton);
         FrameLayout actionView = (FrameLayout) profileIcon.getActionView();
-        final ImageView image = actionView.findViewById(R.id.infoUserPicture);
-        setUserIcon(image);
+        profileImage = actionView.findViewById(R.id.infoUserPicture);
+        setUserIcon(profileImage);
         final MenuItem searchItem = menu.findItem(R.id.search);
 
         actionView.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +184,14 @@ public class Home extends AppCompatActivity {
 
         return true;
 }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (profileImage != null)
+        setUserIcon(profileImage);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

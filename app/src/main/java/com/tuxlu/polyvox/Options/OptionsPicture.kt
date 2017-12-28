@@ -62,7 +62,7 @@ class OptionsPicture() : MyAppCompatActivity() {
                 currentprofilePic.visibility = View.GONE
             }
             else {
-                GlideApp.with(this).load(imageUrl).placeholder(R.drawable.ic_account_circle_black_24dp).into(currentprofilePic)
+                GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(currentprofilePic)
             }
 
             showLayout()

@@ -22,11 +22,13 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Options.Options
 import com.tuxlu.polyvox.Search.SearchUserRecycler
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils.logout
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user.*
@@ -122,7 +124,7 @@ class ProfilePage() : MyAppCompatActivity() {
             ProfileBio.text = getString(R.string.bio_empty)
 
         if (!UtilsTemp.isStringEmpty(user.picture))
-            GlideApp.with(this).load(user.picture).into(ProfileIcon)
+            GlideApp.with(this).load(user.picture).diskCacheStrategy(DiskCacheStrategy.NONE).into(ProfileIcon)
         else
             ProfileIcon.setImageResource(R.drawable.ic_account_circle_white_24dp)
         setButtonsText()

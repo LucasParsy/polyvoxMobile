@@ -9,10 +9,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.VolleyError
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Room.Room
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRequestRecycler
@@ -52,7 +54,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
         var image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-        GlideApp.with(holder.v.context).load(item.imageUrl).into(image)
+        GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)
