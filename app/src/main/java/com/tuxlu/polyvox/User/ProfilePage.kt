@@ -18,10 +18,13 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import android.content.DialogInterface
+import android.content.res.Configuration
+import android.graphics.drawable.GradientDrawable
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Options.Options
 import com.tuxlu.polyvox.Search.SearchUserRecycler
@@ -32,6 +35,7 @@ import com.tuxlu.polyvox.Utils.Auth.AuthUtils.logout
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user.*
+import org.intellij.lang.annotations.JdkConstants
 
 
 /**
@@ -56,6 +60,7 @@ class ProfilePage() : MyAppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
+        setLayoutOrientation(resources.configuration.orientation)
         connected = APIRequest.isAPIConnected(this)
 
         val userName = intent.getStringExtra("name")
@@ -203,6 +208,22 @@ class ProfilePage() : MyAppCompatActivity() {
         }
         return true
     }
+
+    fun setLayoutOrientation(orientation: Int)
+    {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rootView.orientation = LinearLayout.HORIZONTAL
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rootView.orientation = LinearLayout.VERTICAL
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig);
+    setLayoutOrientation(newConfig.orientation)
+    // Checks the orientation of the screen
+}
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
