@@ -54,20 +54,6 @@ class Options() : MyAppCompatActivity() {
     //todo: put in util function
     public fun decoClick(v: View)
     {
-        AlertDialog.Builder(this)
-                .setTitle(getString(R.string.logout))
-                .setMessage(getString(R.string.logout_confirm))
-                .setPositiveButton(getString(R.string.yes), DialogInterface.OnClickListener { _, _ ->
-                    APIRequest.JSONrequest(this, Request.Method.GET,
-                            APIUrl.BASE_URL + APIUrl.LOGOUT,
-                            true, null, { _ ->
-                        AuthUtils.removeAccountLogout(this)
-                        val nin: Intent = Intent(baseContext, Home::class.java)
-                        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(nin)
-                    }, { e -> e.printStackTrace() })
-                })
-                .setNegativeButton(getString(R.string.no), null)
-                .show()
+        AuthUtils.logout(this);
     }
 }

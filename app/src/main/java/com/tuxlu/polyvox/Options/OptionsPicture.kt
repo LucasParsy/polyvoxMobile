@@ -24,7 +24,9 @@ import butterknife.internal.Utils
 import com.tuxlu.polyvox.Utils.ToastType
 import java.io.IOException
 import android.R.attr.bitmap
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import java.io.ByteArrayOutputStream
 
 
@@ -32,7 +34,7 @@ import java.io.ByteArrayOutputStream
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsPicture() : AppCompatActivity() {
+class OptionsPicture() : MyAppCompatActivity() {
 
     private val SELECT_FILE : Int = 42;
     private var bm: Bitmap? = null

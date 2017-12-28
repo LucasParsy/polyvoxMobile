@@ -153,23 +153,6 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
     //todo: add logout to authUtils. Problem: it's a java file...
-    public fun logout() {
-        AlertDialog.Builder(this)
-                .setTitle(getString(R.string.logout))
-                .setMessage(getString(R.string.logout_confirm))
-                .setPositiveButton(getString(R.string.yes), DialogInterface.OnClickListener { _, _ ->
-                    APIRequest.JSONrequest(this, Request.Method.GET,
-                            APIUrl.BASE_URL + APIUrl.LOGOUT,
-                            true, null, { _ ->
-                        AuthUtils.removeAccountLogout(this)
-                        val nin: Intent = Intent(baseContext, Home::class.java)
-                        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(nin)
-                    }, null)
-                })
-                .setNegativeButton(getString(R.string.no), null)
-                .show()
-    }
 
     public fun follow(follow: Boolean)
     {
@@ -210,7 +193,7 @@ class ProfilePage() : MyAppCompatActivity() {
 
         toolbarIcon.setOnMenuItemClickListener {
             if (user.isCurrentUser)
-                logout()
+                logout(this)
             else {
                 follow(!user.following)
             }

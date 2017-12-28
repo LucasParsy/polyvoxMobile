@@ -12,6 +12,7 @@ import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.MyDateUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user_options_info_user.*
 import org.json.JSONObject
@@ -23,7 +24,7 @@ import java.util.*
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsInfoUser() : AppCompatActivity() {
+class OptionsInfoUser() : MyAppCompatActivity() {
 
     private fun showLayout()
     {
