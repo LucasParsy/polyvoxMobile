@@ -48,7 +48,7 @@ object NetworkUtils {
                 error is TimeoutError ||
                 error is ParseError) {
             UtilsTemp.showToast(context, context.getString(R.string.no_wifi_home), ToastType.NORMAL, R.drawable.ic_wifi_off_24dp)
-        } else if (error is ServerError)
+        } else if (error is ServerError && !(error.networkResponse != null && error.networkResponse.statusCode == 404))
             UtilsTemp.showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
     }
 

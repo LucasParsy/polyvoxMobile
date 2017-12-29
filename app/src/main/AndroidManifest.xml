@@ -121,8 +121,10 @@
         </activity>
 
         <activity android:name="com.tuxlu.polyvox.Options.OptionsPicture"
-            android:label="Informations personnelles">
+            android:label="Photo de profil">
         </activity>
+        <activity android:name=".User.ForgotPassword"
+            android:label="mot de passe oublié"/>
 
 
     </application>

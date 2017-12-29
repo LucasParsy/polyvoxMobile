@@ -135,6 +135,12 @@
     <string name="profile_picture_apply">utiliser cette image</string>
     <string name="profile_picture_invalid">un problème s\'est produit avec cette image</string>
 
+    <string name="forgot_password">mot de passe oublié</string>
+    <string name="forgot_password_prompt">Veuillez renseigner votre adresse e-mail\npour recevoir un lien de changement de mot de passe.</string>
+    <string name="forgot_password_button">envoyer le mail.</string>
+    <string name="mail_sent">l\'e-mail a bien été envoyé</string>
+
+
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n
  &lt;lucas.parsy@epitech.eu> wrote this file.\n

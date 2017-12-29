@@ -123,7 +123,7 @@ public class Login extends AccountAuthenticatorActivity {
 
     public void onLoginProblemClick(View v)
     {
-        //startActivity(new Intent(this, ForgotPassword.class));
+        startActivity(new Intent(this, ForgotPassword.class));
     }
 
     public void onCreateAccountClick(View v)
