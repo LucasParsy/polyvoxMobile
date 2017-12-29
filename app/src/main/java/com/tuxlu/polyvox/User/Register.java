@@ -1,10 +1,8 @@
 package com.tuxlu.polyvox.User;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -12,10 +10,8 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -32,8 +28,10 @@ import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
+
+import static com.tuxlu.polyvox.Utils.UIElements.InputFieldsVerifier.checkMail;
+import static com.tuxlu.polyvox.Utils.UIElements.InputFieldsVerifier.checkPassword;
 
 /**
  * Created by tuxlu on 16/09/17.
@@ -85,11 +83,8 @@ public class Register extends AppCompatActivity {
         TextView CGUHint = findViewById(R.id.CGUButton);
         Boolean CGUAccepted = ((CheckBox) findViewById(R.id.CGUCheck)).isChecked();
 
-        if (!mailText.contains("@")) {
-            ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_error));
-            findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
+        if (!checkMail(((TextInputLayout)findViewById(R.id.RegisterEmailLayout)), this))
             return null;
-        }
 
         if (!IDText.matches("^[a-zA-Z0-9].{5,}$")) {
             ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_username_error));
@@ -97,12 +92,8 @@ public class Register extends AppCompatActivity {
             return null;
         }
 
-
-        if (!passText.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,42}$")) {
-            ((TextInputLayout) findViewById(R.id.RegisterPasswordLayout)).setError(getString(R.string.register_password_error));
-            findViewById(R.id.RegisterPassHint).setVisibility(View.GONE);
+        if (!checkPassword(((TextInputLayout)findViewById(R.id.RegisterPasswordLayout)), this))
             return null;
-        }
 
         if (!CGUAccepted) {
             CGUHint.setError(getString(R.string.register_cgu_error));
