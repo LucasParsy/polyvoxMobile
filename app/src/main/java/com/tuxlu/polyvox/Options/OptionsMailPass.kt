@@ -53,11 +53,14 @@ class OptionsMailPass() : MyAppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     public fun buttonClick(v: View) {
 
-
-        if (!checkPassword(passwordLayout, this) ||
-                !checkPassword(oldPasswordLayout, this) ||
-                !checkMail(mailLayout, this))
+        if(passwordInput.text.isBlank() && mailInput.text.isBlank())
             return
+
+        if ((!mailInput.text.isBlank() && !checkMail(mailLayout, this)) ||
+                (!passwordInput.text.isBlank() && !checkPassword(passwordLayout, this)) ||
+                !checkPassword(oldPasswordLayout, this))
+            return
+
 
         val body = JSONObject()
         body.put("email", mailInput.text.toString())
