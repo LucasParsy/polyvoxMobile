@@ -145,6 +145,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.tuxlu.polyvox.User.MailValidated"
+            android:label="Valider l'adresse mail" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="api.polyvox.fr"
+                    android:pathPrefix="/users/verify"/>
+                <data android:scheme="https"
+                    android:host="api.polyvox.fr"
+                    android:pathPrefix="/users/verify"/>
+            </intent-filter>
+        </activity>
+
+
 
     </application>
 
