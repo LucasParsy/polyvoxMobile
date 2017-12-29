@@ -37,8 +37,6 @@
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.

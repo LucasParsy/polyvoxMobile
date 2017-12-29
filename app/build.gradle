@@ -13,7 +13,7 @@ android {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
         targetSdkVersion 26
-        versionName 'Salut Polyvox, mets un pouce blô!'
+        versionName '0.3 super polish, rush en retard'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr" //enlève ressources langages non supportés.
     }
