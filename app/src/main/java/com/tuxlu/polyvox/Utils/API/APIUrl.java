@@ -73,6 +73,7 @@ public class APIUrl {
 
     public static final String FORGOT_PASSWORD = "users/forgotPassword";
     public static final String RESET_PASSWORD = "users/resetPassword";
+    public static final String UPDATE_USER = "users/updateUser";
 
 
     private APIUrl(){}

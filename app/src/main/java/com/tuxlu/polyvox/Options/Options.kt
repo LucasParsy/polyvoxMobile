@@ -40,18 +40,13 @@ class Options() : MyAppCompatActivity() {
         startActivity(Intent(baseContext, OptionsPicture::class.java))
     }
 
-    public fun passwordClick(v: View)
-    {
-        //startActivity(Intent(baseContext, Home::class.java))
-    }
 
     public fun mailClick(v: View)
     {
-        //startActivity(Intent(baseContext, Home::class.java))
+        startActivity(Intent(baseContext, OptionsMailPass::class.java))
     }
 
 
-    //todo: put in util function
     public fun decoClick(v: View)
     {
         AuthUtils.logout(this);

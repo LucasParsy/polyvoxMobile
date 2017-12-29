@@ -123,6 +123,12 @@
         <activity android:name="com.tuxlu.polyvox.Options.OptionsPicture"
             android:label="Photo de profil">
         </activity>
+
+        <activity android:name=".Options.OptionsMailPass"
+            android:label="@string/mail_and_pass">
+        </activity>
+
+
         <activity android:name=".User.ForgotPassword"
             android:label="Mot de passe oublié"/>
 
