@@ -44,12 +44,14 @@ object NetworkUtils {
     @JvmStatic
     fun checkNetworkError(context: Context, error: VolleyError) {
         if (error is NetworkError ||
-                error is AuthFailureError ||
                 error is TimeoutError ||
                 error is ParseError) {
             UtilsTemp.showToast(context, context.getString(R.string.no_wifi_home), ToastType.NORMAL, R.drawable.ic_wifi_off_24dp)
-        } else if (error is ServerError && !(error.networkResponse != null && error.networkResponse.statusCode == 404))
-            UtilsTemp.showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
+        }
+        //todo: removed this error as it triggered for "normal" errors users could do (invalid password...)
+        //change for specific error codes if possible?
+        //else if (error is ServerError && !(error.networkResponse != null && error.networkResponse.statusCode == 404))
+        //    UtilsTemp.showToast(context, context.getString(R.string.no_server), ToastType.NORMAL, R.drawable.no_server)
     }
 
     @JvmStatic @JvmOverloads

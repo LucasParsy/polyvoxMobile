@@ -3,8 +3,6 @@ package com.tuxlu.polyvox.User
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.design.widget.TextInputEditText
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.android.volley.Request
@@ -13,12 +11,11 @@ import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.ToastType
-import com.tuxlu.polyvox.Utils.UIElements.InputFieldsVerifier.checkPassword
+import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkPassword
 import com.tuxlu.polyvox.Utils.UtilsTemp
-import kotlinx.android.synthetic.main.activity_login_reset_password.*
+import kotlinx.android.synthetic.main.activity_login_password_reset.*
 
 import org.json.JSONObject
-import java.net.URLEncoder
 
 /**
  * Created by tuxlu on 29/12/17.
@@ -31,21 +28,21 @@ class ForgotReset() : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_reset_password)
+        setContentView(R.layout.activity_login_password_reset)
         resetID = intent.data.getQueryParameter("id")
         if (UtilsTemp.isStringEmpty(resetID)) {
             UtilsTemp.showToast(this, getString(R.string.invalid_link), ToastType.ERROR)
             finish()
         }
-        RegisterPasswordInput.onFocusChangeListener = Register.RegisterHintFocus(RegisterPassHint, RegisterPasswordLayout)
-        RegisterPassword2Input.onFocusChangeListener = Register.RegisterHintFocus(registerPassHint2, RegisterPassword2Layout)
+        passwordInput.onFocusChangeListener = Register.RegisterHintFocus(passHint, passwordLayout)
+        oldPasswordInput.onFocusChangeListener = Register.RegisterHintFocus(registerPassHint2, oldPasswordLayout)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            RegisterPasswordInput.setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
-            RegisterPassword2Input.setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
-            RegisterPasswordInput.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
-            RegisterPassword2Input.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
+            passwordInput.setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
+            oldPasswordInput.setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
+            passwordInput.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
+            oldPasswordInput.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
         }
     }
 
@@ -53,14 +50,14 @@ class ForgotReset() : AppCompatActivity() {
     public fun buttonClick(v: View) {
 
 
-        if (!checkPassword(RegisterPasswordLayout, this))
+        if (!checkPassword(passwordLayout, this))
             return
-        val password = RegisterPasswordInput.text.toString()
-        val passwordCheck = RegisterPassword2Input.text.toString()
+        val password = passwordInput.text.toString()
+        val passwordCheck = oldPasswordInput.text.toString()
         if (password != passwordCheck)
         {
-            RegisterPasswordLayout.error = getString(R.string.passwords_not_identical)
-             RegisterPassHint.visibility = View.GONE
+            passwordLayout.error = getString(R.string.passwords_not_identical)
+             passHint.visibility = View.GONE
             return
         }
 

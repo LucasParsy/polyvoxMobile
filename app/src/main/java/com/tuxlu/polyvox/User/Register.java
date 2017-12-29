@@ -30,8 +30,8 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-import static com.tuxlu.polyvox.Utils.UIElements.InputFieldsVerifier.checkMail;
-import static com.tuxlu.polyvox.Utils.UIElements.InputFieldsVerifier.checkPassword;
+import static com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkMail;
+import static com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkPassword;
 
 /**
  * Created by tuxlu on 16/09/17.
@@ -52,11 +52,11 @@ public class Register extends AppCompatActivity {
 
         ID = findViewById(R.id.RegisterIDInput);
         mail = findViewById(R.id.RegisterEmailInput);
-        pass = findViewById(R.id.RegisterPasswordInput);
+        pass = findViewById(R.id.passwordInput);
 
         ID.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterIDHint), findViewById(R.id.RegisterIDLayout)));
         mail.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterMailHint), findViewById(R.id.RegisterEmailLayout)));
-        pass.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.RegisterPassHint), findViewById(R.id.RegisterPasswordLayout)));
+        pass.setOnFocusChangeListener(new RegisterHintFocus(findViewById(R.id.passHint), findViewById(R.id.passwordLayout)));
 
         //lastPass Integration
         if (android.os.Build.VERSION.SDK_INT >= 26) {
@@ -92,7 +92,7 @@ public class Register extends AppCompatActivity {
             return null;
         }
 
-        if (!checkPassword(((TextInputLayout)findViewById(R.id.RegisterPasswordLayout)), this))
+        if (!checkPassword(((TextInputLayout)findViewById(R.id.passwordLayout)), this))
             return null;
 
         if (!CGUAccepted) {

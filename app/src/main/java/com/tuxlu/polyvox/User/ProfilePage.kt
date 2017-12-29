@@ -159,8 +159,6 @@ class ProfilePage() : MyAppCompatActivity() {
         }
     }
 
-    //todo: add logout to authUtils. Problem: it's a java file...
-
     public fun follow(follow: Boolean)
     {
         var message : Int

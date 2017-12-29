@@ -1,12 +1,10 @@
-package com.tuxlu.polyvox.Utils.UIElements
+package com.tuxlu.polyvox.Utils
 
 import android.content.Context
-import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.view.View
 import android.widget.TextView
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.UtilsTemp
 
 /**
  * Created by tuxlu on 29/12/17.
