@@ -124,7 +124,20 @@
             android:label="Photo de profil">
         </activity>
         <activity android:name=".User.ForgotPassword"
-            android:label="mot de passe oublié"/>
+            android:label="Mot de passe oublié"/>
+
+        <activity
+            android:name="com.tuxlu.polyvox.User.ForgotReset"
+            android:label="Nouveau mot de passe" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="polyvox.fr"
+                    android:pathPrefix="/reset-password"/>
+            </intent-filter>
+        </activity>
 
 
     </application>

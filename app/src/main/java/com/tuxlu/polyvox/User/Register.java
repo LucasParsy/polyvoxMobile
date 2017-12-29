@@ -196,7 +196,7 @@ public class Register extends AppCompatActivity {
     }
 
 
-    private class RegisterHintFocus implements View.OnFocusChangeListener {
+    public static class RegisterHintFocus implements View.OnFocusChangeListener {
         private View hint;
         private TextInputLayout upperLay;
 

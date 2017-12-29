@@ -31,7 +31,6 @@ class ForgotPassword() : MyAppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     public fun buttonClick(v: View) {
 
-        MailInput.text;
         if (!checkMail(LoginMailLayout, this))
             return
 

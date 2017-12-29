@@ -25,7 +25,7 @@ object InputFieldsVerifier {
 
     @JvmStatic public fun checkPassword(view: TextInputLayout, context: Context): Boolean {
         val str: String = view.editText?.text.toString()
-        if (UtilsTemp.isStringEmpty(str) || !str.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,42}$".toRegex())) {
+        if (UtilsTemp.isStringEmpty(str) || !str.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,128}$".toRegex())) {
             view.error = context.getString(R.string.register_password_error)
             hideTextView(view)
             return false

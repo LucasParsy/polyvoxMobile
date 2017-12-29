@@ -72,6 +72,7 @@ public class APIUrl {
     public static final String SEND_PICTURE = "users/upload/picture";
 
     public static final String FORGOT_PASSWORD = "users/forgotPassword";
+    public static final String RESET_PASSWORD = "users/resetPassword";
 
 
     private APIUrl(){}

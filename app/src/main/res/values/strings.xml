@@ -47,7 +47,7 @@
 
     <string name="register_mail_hint_bottom">Votre email ne sera jamais divulgué.</string>
     <string name="register_username_hint_bottom">6 caractères minimum, composé uniquement de lettres et chiffres</string>
-    <string name="register_password_hint_bottom">entre 5 et 42 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
+    <string name="register_password_hint_bottom">entre 8 et 128 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
 
     <string name="yes">Oui</string>
     <string name="no">Non</string>
@@ -137,9 +137,16 @@
 
     <string name="forgot_password">mot de passe oublié</string>
     <string name="forgot_password_prompt">Veuillez renseigner votre adresse e-mail\npour recevoir un lien de changement de mot de passe.</string>
-    <string name="forgot_password_button">envoyer le mail.</string>
+    <string name="send_mail">envoyer le mail.</string>
     <string name="mail_sent">l\'e-mail a bien été envoyé</string>
 
+    <string name="password_changed">le mot de passe a bien été changé.\nvous pouvez vous connecter</string>
+    <string name="invalid_link">le lien que vous avez ouvert semble invalide</string>
+    <string name="change_password">changer le mot de passe</string>
+    <string name="change_password_prompt">Vous pouvez renseigner un nouveau mot de passe.</string>
+    <string name="confirm_password">Confirmez votre mot de passe</string>
+    <string name="passwords_not_identical">les mots de passes ne sont pas identiques</string>
+    <string name="confirm_password_hint_bottom">retapez votre mot de passe</string>
 
     <string name="CGU_Text">
  "THE BEER-WARE LICENSE" (Revision 42.2):\n
