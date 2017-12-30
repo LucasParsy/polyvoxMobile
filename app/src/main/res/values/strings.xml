@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Polyvox</string>
     <string name="account_type">Polyvox</string>
 
@@ -37,7 +37,7 @@
     <string name="new_incorrect_credentials">nouvel E-mail ou mot de passe actuel incorrects</string>
 
     <string name="logout">Déconnexion</string>
-    <string name="logout_confirm">Voulez vous vous déconnecter de l\'application Polyvox?</string>
+    <string name="logout_confirm" tools:ignore="Typos">Voulez vous vous déconnecter de l\'application Polyvox?</string>
     <string name="logout_been">vous avez été déconnecté de l\'application</string>
     <string name="unknown_error">erreur innatendue</string>
     <string name="create_account">Inscription</string>

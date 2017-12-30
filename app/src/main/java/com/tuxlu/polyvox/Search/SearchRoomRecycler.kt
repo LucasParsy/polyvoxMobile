@@ -55,7 +55,7 @@ open class SearchRoomRecycler() : DiscoverRecycler()
 
     override fun errorListener(error: VolleyError)
     {
-        Log.wtf(tag, error);
+        Log.wtf(tag, error)
     }
 
     override fun setLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)

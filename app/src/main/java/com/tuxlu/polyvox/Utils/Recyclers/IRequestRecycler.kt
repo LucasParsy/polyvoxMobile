@@ -19,11 +19,11 @@ import org.json.JSONObject
  */
 
 
-abstract class IRequestRecycler<T : Any>() : IRecycler<T>() {
+abstract class IRequestRecycler<T : Any> : IRecycler<T>() {
 
     abstract val requestUrl: String
     abstract val requestBody: JSONObject
-    abstract val usesAPI: Boolean;
+    abstract val usesAPI: Boolean
 
     abstract fun errorListener(error: VolleyError)
 

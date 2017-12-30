@@ -79,8 +79,8 @@ public class Home extends AppCompatActivity {
     }
 
     private void configToolbar() {
-        AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        AppBarLayout appBar = findViewById(R.id.appbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {

@@ -21,8 +21,8 @@ public class LoadingUtils {
 
     public static void StartLoadingView(final View view, final Context context)
     {
-        if (init == false) {
-            Button btn = (Button) view.findViewById(R.id.noWifiButton);
+        if (!init) {
+            Button btn = view.findViewById(R.id.noWifiButton);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

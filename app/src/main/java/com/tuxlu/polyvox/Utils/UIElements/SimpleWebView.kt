@@ -22,25 +22,25 @@ class SimpleWebView : AppCompatActivity() {
         setContentView(R.layout.util_layout_webview)
         //todo: view could break on some devices, see https://stackoverflow.com/questions/4486034/get-root-view-from-current-activity
         rootView = findViewById(android.R.id.content)
-        val title = intent.getIntExtra("title", -1);
-        val url = intent.getStringExtra("url");
+        val title = intent.getIntExtra("title", -1)
+        val url = intent.getStringExtra("url")
 
         setTitle(title)
         val webView = this.findViewById<WebView>(R.id.webView)
-        webView.settings.setJavaScriptEnabled(true)
-        webView.settings.setDomStorageEnabled(true)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
         webView.loadUrl(url)
         webView.webViewClient = AppWebViewClients()
-        LoadingUtils.StartLoadingView(rootView, applicationContext);
+        LoadingUtils.StartLoadingView(rootView, applicationContext)
     }
 
 
-    inner class AppWebViewClients() : WebViewClient() {
+    inner class AppWebViewClients : WebViewClient() {
 
         override fun onPageFinished(view: WebView, url: String) {
             super.onPageFinished(view, url)
-            LoadingUtils.EndLoadingView(rootView);
-            LoadingUtils.endNoWifiView(rootView);
+            LoadingUtils.EndLoadingView(rootView)
+            LoadingUtils.endNoWifiView(rootView)
         }
     }
 

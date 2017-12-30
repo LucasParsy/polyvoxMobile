@@ -50,6 +50,7 @@ public class Room extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
+        assert b != null;
         id = b.getInt("id");
         title = b.getString("title");
         setContentView(R.layout.activity_room);

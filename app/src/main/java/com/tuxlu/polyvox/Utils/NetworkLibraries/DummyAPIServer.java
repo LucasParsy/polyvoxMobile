@@ -44,7 +44,8 @@ public class DummyAPIServer {
         InputStream is = context.getResources().openRawResource(id);
         String jsonString = "";
         String line;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while ((line = reader.readLine()) != null)
                 jsonString += line;
 

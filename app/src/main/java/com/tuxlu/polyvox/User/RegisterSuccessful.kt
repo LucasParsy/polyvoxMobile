@@ -5,21 +5,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import com.android.volley.Response
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
-import com.android.volley.Response
 import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
-import org.json.JSONObject
 
 /**
  * Created by tuxlu on 26/11/17.
  */
 
-class RegisterSuccessful() : AppCompatActivity() {
+class RegisterSuccessful : AppCompatActivity() {
     lateinit var rootView: View
     lateinit var mainView: View
-    lateinit var mailView: TextView
+    private lateinit var mailView: TextView
 
     public override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,9 +43,9 @@ class RegisterSuccessful() : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun backHome(v: View) {
+    fun backHome(v: View) {
         val nin: Intent = Intent(applicationContext, Home::class.java)
-        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(nin)
         finish()
     }

@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.android.volley.ParseError
 import com.android.volley.Request
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.Volley
 import com.tuxlu.polyvox.Homepage.Home
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
@@ -16,13 +14,12 @@ import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_login_mail_validated.*
-import org.json.JSONException
 
 /**
  * Created by tuxlu on 26/11/17.
  */
 
-class MailValidated() : AppCompatActivity() {
+class MailValidated : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -54,9 +51,9 @@ class MailValidated() : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun backHome(v: View) {
+    fun backHome(v: View) {
         val nin: Intent = Intent(applicationContext, Home::class.java)
-        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(nin)
         finish()
     }

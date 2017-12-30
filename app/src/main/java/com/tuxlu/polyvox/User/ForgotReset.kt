@@ -22,7 +22,7 @@ import org.json.JSONObject
  */
 
 
-class ForgotReset() : AppCompatActivity() {
+class ForgotReset : AppCompatActivity() {
 
     private var resetID : String = ""
 
@@ -47,7 +47,7 @@ class ForgotReset() : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun buttonClick(v: View) {
+    fun buttonClick(v: View) {
 
 
         if (!checkPassword(passwordLayout, this))

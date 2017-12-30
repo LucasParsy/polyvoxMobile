@@ -36,12 +36,6 @@
     </style>
 
 
-    <style name="AppTheme.ColoredButton.Transparent" parent="@style/AppTheme.coloredButton">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/PolyvoxMainColorTransparent</item>
-    </style>
-
-
     <style name="AppTheme.ColoredButton.Borderless" parent="android:style/Widget.Button">
         <item name="android:layout_margin">0dip</item>
 
@@ -62,27 +56,10 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ToastStyleNoWifi">
-        <item name="android:colorBackground">@color/lighter_gray</item>
-        <item name="android:icon">@drawable/ic_wifi_off_24dp</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="SimpleToast">
-        <item name="android:colorBackground">@color/lighter_gray</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="ToastStyleNoServer">
-        <item name="android:icon">@drawable/no_server</item>
-    </style>
-
-    <style name="myDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowNoTitle">true</item>
+    <style name="AppTheme.ColoredButton.Transparent" parent="@style/AppTheme.coloredButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/PolyvoxMainColorTransparent</item>
     </style>
 
 </resources>

@@ -2,13 +2,7 @@ package com.tuxlu.polyvox.Utils.NetworkLibraries;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 
 import org.json.JSONObject;
@@ -18,7 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +28,6 @@ public class VolleyMultipartRequest extends APIRequest.APIJsonObjectRequest {
     private List<DataPart> content;
     private final String boundary = "apiclient-" + System.currentTimeMillis();
 
-    private Response.Listener<JSONObject> mListener;
-    private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
 
@@ -46,8 +37,8 @@ public class VolleyMultipartRequest extends APIRequest.APIJsonObjectRequest {
 
         super(method, url, null, listener, errorListener, token, context);
         content = nContent;
-        this.mListener = listener;
-        this.mErrorListener = errorListener;
+        Response.Listener<JSONObject> mListener = listener;
+        Response.ErrorListener mErrorListener = errorListener;
     }
 
     @Override

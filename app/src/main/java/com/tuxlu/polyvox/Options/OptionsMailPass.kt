@@ -23,9 +23,9 @@ import org.json.JSONObject
  */
 
 
-class OptionsMailPass() : MyAppCompatActivity() {
+class OptionsMailPass : MyAppCompatActivity() {
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_mail_pass)
 
@@ -46,12 +46,12 @@ class OptionsMailPass() : MyAppCompatActivity() {
             val info = topObj.getJSONObject("info")
             val mail = info.getString("email")
             if (!UtilsTemp.isStringEmpty(mail))
-                mailInput.setText(mail);
+                mailInput.setText(mail)
         }, null)
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun buttonClick(v: View) {
+    fun buttonClick(v: View) {
 
         if(passwordInput.text.isBlank() && mailInput.text.isBlank())
             return

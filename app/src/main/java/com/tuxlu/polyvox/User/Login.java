@@ -62,7 +62,7 @@ public class Login extends AccountAuthenticatorActivity {
     {
 
         View v = buttonView.getRootView();
-        final TextInputLayout loginLayout = (TextInputLayout)v.findViewById(R.id.LoginIDLayout);
+        final TextInputLayout loginLayout = v.findViewById(R.id.LoginIDLayout);
         final TextInputEditText loginInput = loginLayout.findViewById(R.id.LoginIDInput);
 
         loginInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {

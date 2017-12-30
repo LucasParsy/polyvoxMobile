@@ -60,6 +60,6 @@ object NetworkUtils {
                 { r ->
                     UtilsTemp.showToast(context, context.getString(R.string.confirmation_mail_sent_short), ToastType.SUCCESS)
                     listener?.onResponse(r)
-                }, null);
+                }, null)
     }
 }

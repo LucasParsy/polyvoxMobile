@@ -12,5 +12,6 @@
         android:layout_marginBottom="344dp"
         android:text="@string/CGU_Text"
         android:textAlignment="viewStart"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="start" />
 </android.support.constraint.ConstraintLayout>

@@ -12,10 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
-import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
-import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import org.json.JSONException
@@ -34,14 +33,14 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
     override fun bind(holder: Adapter.ViewHolder<UserSearchResult>, item: UserSearchResult)
     {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
-        var image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
+        val image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
             GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>)
     {
-        val context = holder.v.getContext()
+        val context = holder.v.context
         val clickListener = View.OnClickListener {_ ->
 
             val intent = Intent(context, ProfilePage::class.java)
@@ -50,7 +49,7 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
             intent.putExtras(b)
             context.startActivity(intent)
         }
-        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener);
+        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
     }
 }
 
@@ -80,7 +79,7 @@ class SearchUserRecycler : IRecycler<UserSearchResult>() {
 
     override fun fillDataObject(json: JSONObject): UserSearchResult
     {
-        var res = UserSearchResult()
+        val res = UserSearchResult()
         try {
             res.name = json.getString(APIUrl.SEARCH_USER_NAME)
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)

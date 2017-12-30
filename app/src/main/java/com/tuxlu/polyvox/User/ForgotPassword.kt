@@ -19,15 +19,15 @@ import org.json.JSONObject
  */
 
 
-class ForgotPassword() : MyAppCompatActivity() {
+class ForgotPassword : MyAppCompatActivity() {
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_password_forgot)
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun buttonClick(v: View) {
+    fun buttonClick(v: View) {
 
         if (!checkMail(mailLayout, this))
             return

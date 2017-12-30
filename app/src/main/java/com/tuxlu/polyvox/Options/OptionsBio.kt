@@ -17,7 +17,7 @@ import org.json.JSONObject
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsBio() : MyAppCompatActivity() {
+class OptionsBio : MyAppCompatActivity() {
 
     private fun showLayout(rootView: View, mainView: View)
     {
@@ -25,7 +25,7 @@ class OptionsBio() : MyAppCompatActivity() {
         LoadingUtils.EndLoadingView(rootView)
     }
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_bio)
 
@@ -55,7 +55,7 @@ class OptionsBio() : MyAppCompatActivity() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun buttonClick(v: View) {
+    fun buttonClick(v: View) {
 
         val bio: String = findViewById<TextInputEditText>(R.id.input).text.toString()
         if (bio.length > 500) {

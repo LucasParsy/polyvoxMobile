@@ -1,42 +1,35 @@
 package com.tuxlu.polyvox.Options
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.provider.MediaStore
 import android.view.View
 import com.android.volley.Request
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
-import com.tuxlu.polyvox.Utils.MyDateUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
+import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user_options_picture.*
-import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
-import android.content.Intent
-import android.provider.MediaStore
-import android.app.Activity
-import butterknife.internal.Utils
-import com.tuxlu.polyvox.Utils.ToastType
-import java.io.IOException
-import android.R.attr.bitmap
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
-import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.util.*
 
 
 /**
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsPicture() : MyAppCompatActivity() {
+class OptionsPicture : MyAppCompatActivity() {
 
-    private val SELECT_FILE : Int = 42;
+    private val SELECT_FILE : Int = 42
     private var bm: Bitmap? = null
 
     private fun showLayout()
@@ -46,7 +39,7 @@ class OptionsPicture() : MyAppCompatActivity() {
     }
 
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_picture)
         mainView.visibility = View.INVISIBLE
@@ -70,7 +63,8 @@ class OptionsPicture() : MyAppCompatActivity() {
 
     }
 
-    public fun addButtonClick(v: View)
+    @Suppress("UNUSED_PARAMETER")
+    fun addButtonClick(v: View)
     {
         val intent = Intent()
         intent.type = "image/*"
@@ -81,10 +75,11 @@ class OptionsPicture() : MyAppCompatActivity() {
         //should check after to see if there are no problems on other devices.
     }
 
-    public fun sendButtonClick(v: View)
+    @Suppress("UNUSED_PARAMETER")
+    fun sendButtonClick(v: View)
     {
         if (bm == null)
-            return;
+            return
 
         val ratio = bm!!.width / 120 //arbitrary size value
         val byteArrayOutputStream = ByteArrayOutputStream()
@@ -93,12 +88,12 @@ class OptionsPicture() : MyAppCompatActivity() {
         val stream : ByteArray = byteArrayOutputStream.toByteArray()
 
         val part = VolleyMultipartRequest.DataPart("profilePic", "pic", "image/png", stream)
-        var body = ArrayList<VolleyMultipartRequest.DataPart>()
+        val body = ArrayList<VolleyMultipartRequest.DataPart>()
         body.add(part)
 
         val url = APIUrl.BASE_URL + APIUrl.SEND_PICTURE
         APIRequest.Multipartequest(this, Request.Method.POST, url,
-                true, body, { response ->
+                true, body, { _ ->
             newProfilePicLayout.visibility = View.GONE
             addProfilePicButton.text = getString(R.string.profile_picture_add)
             currentprofilePic.setImageDrawable(newProfilePic.drawable)
@@ -119,7 +114,7 @@ class OptionsPicture() : MyAppCompatActivity() {
                 if (data != null) {
                     try {
                         bm = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data.data)
-                        newProfilePic.setImageBitmap(bm);
+                        newProfilePic.setImageBitmap(bm)
                         newProfilePicLayout.visibility = View.VISIBLE
                         addProfilePicButton.text = getString(R.string.profile_picture_change)
                     } catch (e: IOException) {

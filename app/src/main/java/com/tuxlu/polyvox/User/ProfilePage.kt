@@ -1,41 +1,31 @@
 package com.tuxlu.polyvox.User
 
-import android.app.VoiceInteractor
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
-import com.android.volley.Request
-import com.tuxlu.polyvox.Homepage.Home
-import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.*
-import org.json.JSONArray
-import org.json.JSONObject
-import java.util.*
-import android.content.DialogInterface
-import android.content.res.Configuration
-import android.graphics.drawable.GradientDrawable
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AlertDialog
-import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
+import com.android.volley.Request
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Options.Options
+import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Search.SearchUserRecycler
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils.logout
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+import com.tuxlu.polyvox.Utils.NetworkUtils
+import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user.*
-import org.intellij.lang.annotations.JdkConstants
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.*
 
 
 /**
@@ -51,13 +41,13 @@ data class ProfileUser(var isCurrentUser: Boolean = false,
                        var following: Boolean = false)
 
 
-class ProfilePage() : MyAppCompatActivity() {
+class ProfilePage : MyAppCompatActivity() {
     private var user: ProfileUser = ProfileUser()
     private lateinit var toolbarIcon: MenuItem
     private var followerNumbers: Int = 0
     private var connected: Boolean = false
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         setLayoutOrientation(resources.configuration.orientation)
@@ -69,7 +59,7 @@ class ProfilePage() : MyAppCompatActivity() {
                 APIUrl.BASE_URL + APIUrl.INFO_USER + userName,
                 connected, null, { response ->
             val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
-            user.isCurrentUser = topObj.getBoolean("isMyProfile");
+            user.isCurrentUser = topObj.getBoolean("isMyProfile")
             val info = topObj.getJSONObject("info")
             user.userName = info.getString("userName")
             user.firstName = info.getString("firstName")
@@ -159,16 +149,16 @@ class ProfilePage() : MyAppCompatActivity() {
         }
     }
 
-    public fun follow(follow: Boolean)
+    private fun follow(follow: Boolean)
     {
-        var message : Int
-        var method : Int
-        var increaseVar : Int
+        val message : Int
+        val method : Int
+        val increaseVar : Int
         if (follow)
         {
             method = Request.Method.POST
             increaseVar = 1
-            message = R.string.is_followed;
+            message = R.string.is_followed
         }
 
         else {
@@ -192,7 +182,7 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
 
-    public override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_profile, menu)
         toolbarIcon = menu.findItem(R.id.icon)
 
@@ -207,7 +197,7 @@ class ProfilePage() : MyAppCompatActivity() {
         return true
     }
 
-    fun setLayoutOrientation(orientation: Int)
+    private fun setLayoutOrientation(orientation: Int)
     {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rootView.orientation = LinearLayout.HORIZONTAL
@@ -217,8 +207,8 @@ class ProfilePage() : MyAppCompatActivity() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-    super.onConfigurationChanged(newConfig);
-    setLayoutOrientation(newConfig.orientation)
+    super.onConfigurationChanged(newConfig)
+        setLayoutOrientation(newConfig.orientation)
     // Checks the orientation of the screen
 }
 

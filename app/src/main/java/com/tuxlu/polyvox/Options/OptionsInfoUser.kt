@@ -1,12 +1,9 @@
 package com.tuxlu.polyvox.Options
 
 import android.os.Bundle
-import android.support.design.widget.TextInputLayout
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.User.Register
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
@@ -24,7 +21,7 @@ import java.util.*
  * Created by tuxlu on 29/11/17.
  */
 
-class OptionsInfoUser() : MyAppCompatActivity() {
+class OptionsInfoUser : MyAppCompatActivity() {
 
     private fun showLayout()
     {
@@ -33,7 +30,7 @@ class OptionsInfoUser() : MyAppCompatActivity() {
     }
 
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_info_user)
         mainView.visibility = View.INVISIBLE
@@ -54,7 +51,8 @@ class OptionsInfoUser() : MyAppCompatActivity() {
 
     }
 
-    public fun buttonClick(v: View)
+    @Suppress("UNUSED_PARAMETER")
+    fun buttonClick(v: View)
     {
 
 /*
@@ -64,9 +62,7 @@ class OptionsInfoUser() : MyAppCompatActivity() {
         }
 */
 
-        var date : Date? = MyDateUtils.checkDate(rootView, getString(R.string.register_dob_error))
-        if (date == null)
-            return
+        val date : Date? = MyDateUtils.checkDate(rootView, getString(R.string.register_dob_error)) ?: return
         val ft = SimpleDateFormat("yyyy-MM-dd")
         val birthday = ft.format(date)
         val body = JSONObject()

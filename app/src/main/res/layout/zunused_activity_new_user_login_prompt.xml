@@ -63,7 +63,8 @@
 
         <Space
             android:layout_width="10dp"
-            android:layout_weight="0" />
+            android:layout_weight="0"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/LoginCreateAccountButton2"

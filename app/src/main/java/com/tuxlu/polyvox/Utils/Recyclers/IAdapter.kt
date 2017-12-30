@@ -29,7 +29,7 @@ class Adapter<T: Any>(private  val context : Context,
                       private val binder : ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
 
 
-    class ViewHolder<T: Any> (public val v: View, private val binder : ViewHolderBinder<T>) : RecyclerView.ViewHolder(v) {
+    class ViewHolder<T: Any> (val v: View, private val binder : ViewHolderBinder<T>) : RecyclerView.ViewHolder(v) {
 
         fun bind(item: T) {
             binder.bind(this, item)
@@ -55,7 +55,7 @@ class Adapter<T: Any>(private  val context : Context,
 
     fun clear() {
         val size = data.size
-        data.clear();
+        data.clear()
         notifyItemRangeRemoved(0, size)
     }
 

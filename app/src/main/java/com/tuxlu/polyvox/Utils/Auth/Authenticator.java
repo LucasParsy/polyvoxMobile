@@ -56,10 +56,11 @@ public class Authenticator extends AbstractAccountAuthenticator {
         AccountManager am = AccountManager.get(context);
         String authToken = am.peekAuthToken(account, authTokenType);
 
+        /*
         if (authToken == null || authToken.isEmpty()) {
             //méthode de reconnexion: am.getUserData(account, "refreshToken"); ...
         }
-
+        */
 
         if (authToken != null && !authToken.isEmpty()) {
             final Bundle result = new Bundle();

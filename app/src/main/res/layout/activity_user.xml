@@ -82,7 +82,6 @@
                     android:layout_weight="0"
                     android:text="@string/followers"
                     android:textAlignment="center"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
                     android:textColor="@android:color/white" />
 
                 <TextView

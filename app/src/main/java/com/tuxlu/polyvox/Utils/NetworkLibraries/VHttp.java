@@ -31,7 +31,7 @@ public class VHttp {
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(cacheSize);
+                            cache = new LruCache<>(cacheSize);
 
                     @Override
                     public Bitmap getBitmap(String url) {

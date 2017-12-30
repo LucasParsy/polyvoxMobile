@@ -1,5 +1,6 @@
 package com.tuxlu.polyvox.Utils
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -7,13 +8,12 @@ import android.graphics.Bitmap
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
+import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
-import com.android.volley.*
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.API.APIUrl
 import es.dmoral.toasty.Toasty
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -82,6 +82,7 @@ class UtilsTemp {
         }
 
         //todo: move theses function in more appropriate file
+        @SuppressLint("InlinedApi")
         @JvmStatic
         fun setNotificationSilentState(context: Context, mode: Int): Boolean {
             val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager? ?: return false
@@ -95,10 +96,7 @@ class UtilsTemp {
 
                 if (!notificationManager.isNotificationPolicyAccessGranted) {
 
-                    val intent = Intent(
-                            Settings
-                                    .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
-
+                    val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
                     context.startActivity(intent)
                     return false
                 }

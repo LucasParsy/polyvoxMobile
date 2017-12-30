@@ -78,6 +78,9 @@ public class AuthUtils {
         }
         if (res == null)
             return null;
-        return res.get(AccountManager.KEY_AUTHTOKEN).toString();
+        Object acc = res.get(AccountManager.KEY_AUTHTOKEN);
+        if (acc != null)
+            return acc.toString();
+        return null;
     }
 }

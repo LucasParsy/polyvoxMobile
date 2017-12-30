@@ -14,8 +14,6 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Room.Room
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
-
-import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRequestRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
@@ -53,13 +51,13 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
-        var image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
+        val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
         GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)
     {
-        val context = holder.v.getContext()
+        val context = holder.v.context
         val clickListener = View.OnClickListener {_ ->
 
             val intent = Intent(context, Room::class.java)
@@ -68,12 +66,12 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
             intent.putExtra("title", data[holder.adapterPosition].name)
             context.startActivity(intent)
         }
-        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener);
+        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
     }
 }
 
 
-open class DiscoverRecycler() : IRequestRecycler<DiscoverBox>()
+open class DiscoverRecycler : IRequestRecycler<DiscoverBox>()
 {
     override val layoutListId: Int = R.layout.fragment_recycler_view
     override val layoutObjectId: Int = R.layout.info_discover_room
@@ -89,12 +87,12 @@ open class DiscoverRecycler() : IRequestRecycler<DiscoverBox>()
 
     override fun errorListener(error: VolleyError)
     {
-        Log.wtf(tag, error);
+        Log.wtf(tag, error)
     }
 
     override fun fillDataObject(json: JSONObject): DiscoverBox
     {
-        var rb = DiscoverBox()
+        val rb = DiscoverBox()
         try {
             rb.name = json.getString("title")
             rb.imageUrl = json.getString("picture")

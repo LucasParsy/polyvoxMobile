@@ -22,8 +22,8 @@ object MyDateUtils {
     @JvmStatic
     fun setSpinnersToDate(dateStr: String, format: String, root: View) {
         val ft = SimpleDateFormat(format)
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        var date: Date = ft.parse(dateStr)
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val date: Date = ft.parse(dateStr)
         val calendar = Calendar.getInstance()
         calendar.time = date
         root.findViewById<Spinner>(R.id.spinnerMonth).setSelection(calendar.get(Calendar.MONTH) + 1)
@@ -33,7 +33,7 @@ object MyDateUtils {
 
 
     @JvmStatic
-    fun getDiffYears(a: Calendar, b: Calendar): Int {
+    private fun getDiffYears(a: Calendar, b: Calendar): Int {
         var diff = b.get(YEAR) - a.get(YEAR)
         if (a.get(MONTH) > b.get(MONTH) || a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE)) {
             diff--

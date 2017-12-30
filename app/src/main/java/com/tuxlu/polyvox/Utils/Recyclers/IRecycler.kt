@@ -18,9 +18,9 @@ import kotlin.collections.ArrayList
  */
 
 
-abstract class IRecycler<T: Any>() : Fragment() {
+abstract class IRecycler<T: Any> : Fragment() {
 
-    var saveJArray: JSONArray = JSONArray()
+    private var saveJArray: JSONArray = JSONArray()
     abstract val layoutListId: Int
     abstract val layoutObjectId: Int
     abstract val recycleId: Int
@@ -29,19 +29,14 @@ abstract class IRecycler<T: Any>() : Fragment() {
     abstract val itemDecoration: RecyclerView.ItemDecoration
     abstract val binder: ViewHolderBinder<T>
 
-    private var adapter: Adapter<T>? = null;
+    private var adapter: Adapter<T>? = null
 
     abstract fun fillDataObject(json: JSONObject): T
     abstract fun setLayoutManager(): RecyclerView.LayoutManager
 
     lateinit var rootView : View
-    var noResView : View? = null
-    var isNoResViewVisible : Boolean = true
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //retainInstance = true  //seems to leak
-    }
+    private var noResView : View? = null
+    private var isNoResViewVisible : Boolean = true
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +73,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
                 saveJArray.put(data.get(i))
         }
 
-        var list : MutableList<T> = parseJSON(data)
+        val list : MutableList<T> = parseJSON(data)
 
         if (noResView != null) {
             if (list.size == 0 && isNoResViewVisible)
@@ -100,7 +95,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
         adapter?.notifyDataSetChanged()
     }
 
-    internal fun parseJSON(jArray: JSONArray): MutableList<T> {
+    private fun parseJSON(jArray: JSONArray): MutableList<T> {
         val data = ArrayList<T>()
         if (jArray.length() == 0)
             return data
@@ -108,7 +103,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
             val obj : T
             try {
                 val json = jArray.getJSONObject(i)
-                obj = fillDataObject(json);
+                obj = fillDataObject(json)
                 data.add(obj)
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -118,7 +113,7 @@ abstract class IRecycler<T: Any>() : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState);
+        super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             val json =  savedInstanceState.getString("json")
             add(JSONArray(json), true)

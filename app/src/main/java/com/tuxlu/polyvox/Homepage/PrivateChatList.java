@@ -2,6 +2,7 @@ package com.tuxlu.polyvox.Homepage;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils;
 
 public class PrivateChatList extends Fragment {
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_private_chat_list, container, false);
