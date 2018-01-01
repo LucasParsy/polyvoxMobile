@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
@@ -30,9 +31,11 @@ import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+//import io.fabric.sdk.android.Fabric;
+//import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.core.CrashlyticsCore;
 
 import java.util.List;
 import java.util.Vector;
@@ -56,7 +59,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         configToolbar();
-
+        //Fabric.with(this, new Crashlytics());
         //leaks verification, in debug builds only.
 
         if (LeakCanary.isInAnalyzerProcess(this)) {return;}
@@ -73,7 +76,6 @@ public class Home extends AppCompatActivity {
 
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
-
 
         ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
     }
@@ -150,7 +152,7 @@ public class Home extends AppCompatActivity {
                     APIRequest.startLoginActivity(getApplicationContext());
                     return;
                 }
-                 startProfileIntent();
+                startProfileIntent();
             }
         });
 

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "87353493096",
+    "firebase_url": "https://polyvoxmobile.firebaseio.com",
+    "project_id": "polyvoxmobile",
+    "storage_bucket": "polyvoxmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87353493096:android:77447a2689b61980",
+        "android_client_info": {
+          "package_name": "com.tuxlu.polyvox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87353493096-2rkm9sot8nu16lq44vp8mth5uqtd4kv5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tuxlu.polyvox",
+            "certificate_hash": "2aaa74a587e7ade25070709ab76a9dac8d23dcb0"
+          }
+        },
+        {
+          "client_id": "87353493096-i9k6qj3arato6svq6snm8aj8ebhuhldc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6UajRLtHwNOo7tBp_Y8SacZBTCLC-suc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87353493096-i9k6qj3arato6svq6snm8aj8ebhuhldc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
