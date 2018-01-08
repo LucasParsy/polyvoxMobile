@@ -1,11 +1,15 @@
 package com.tuxlu.polyvox;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.net.URLConnection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,5 +26,30 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.tuxlu.polyvox", appContext.getPackageName());
+
+        ContentResolver res = appContext.getContentResolver();
+
+        String mime = "";
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news"));
+        assertEquals(null, mime);
+
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.pdf"));
+        assertEquals("application/pdf", mime);
+
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.png"));
+        assert (mime.startsWith("image/"));
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.jpg"));
+        assert (mime.startsWith("image/"));
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.jpeg"));
+        assert (mime.startsWith("image/"));
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.tiff"));
+        assert (mime.startsWith("image/"));
+
+
+        mime = res.getType(Uri.parse("https://jeuxvideo.com/news.xls"));
+        assertEquals(null, mime);
+
+
+
     }
 }
