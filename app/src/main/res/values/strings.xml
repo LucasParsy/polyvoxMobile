@@ -148,6 +148,9 @@
     <string name="discovered">J\'ai découvert ça sur Polyvox:\n</string>
     <string name="open_with">Ouvrir avec:</string>
 
+    <string name="no_friends">Pas encore de contacts</string>
+    <string name="no_friends_subtext">Ajoutez des amis en cherchant leur profil sur Polyvox!</string>
+
     <string name="year">Année</string>
     <string name="day">Jour</string>
     <string-array name="months_spinner">

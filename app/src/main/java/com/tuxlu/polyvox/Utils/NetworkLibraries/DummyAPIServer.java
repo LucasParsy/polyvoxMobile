@@ -28,6 +28,9 @@ public class DummyAPIServer {
 
     private JSONObject roomList;
     private JSONObject userList;
+    private JSONObject chatList;
+    private JSONObject chatMessages;
+    private JSONObject chatMessages2;
     int userNum = 43;
 
 
@@ -35,6 +38,9 @@ public class DummyAPIServer {
         try {
             roomList = fileToJSON(R.raw.rooms, context);
             userList = fileToJSON(R.raw.users, context);
+            chatList = fileToJSON(R.raw.chat_list, context);
+            chatMessages = fileToJSON(R.raw.chat_messages, context);
+            chatMessages2 = fileToJSON(R.raw.chat_messages2, context);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,10 +81,11 @@ public class DummyAPIServer {
             return null;
         }
 
-        switch (endpoint) {
+        switch (url) {
             case APIUrl.DISCOVER_ROOMS:  return discoverRequest();
             case APIUrl.SEARCH_ROOMS:  return searchRequest(body);
             case APIUrl.LOGIN:  return loginRequest(body);
+            case APIUrl.LIST_USERS_CHAT: return makeHttpResponse(chatList, 200);
             case APIUrl.CREATE_ACCOUNT:  return createAccountRequest(body);
             case APIUrl.INFO_ROOM:  return infoRoomAndUserRequest(body, roomList, "rooms");
             case APIUrl.INFO_USER:  return infoRoomAndUserRequest(body, userList, "users");

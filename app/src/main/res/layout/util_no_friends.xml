@@ -17,12 +17,13 @@
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ballpit" />
+            android:adjustViewBounds="false"
+            app:srcCompat="@drawable/sad_keanu" />
 
         <TextView
             android:id="@+id/noResultsText"
@@ -32,7 +33,7 @@
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/no_search_result"
+            android:text="@string/no_friends"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -46,7 +47,7 @@
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/no_search_result_details"
+            android:text="@string/no_friends_subtext"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/darker_gray" />
 

@@ -1,0 +1,30 @@
+{
+  "message": "ok",
+  "data": {
+    "isLastMessages": true,
+    "messages": [
+      {
+        "type": "text",
+        "text": "voilà, tu peux charger des messages supplémentaires quand tu remontes au bout.",
+        "date": "2017-12-07 11:13"
+      },
+      "messages": [
+      {
+      "type": "text",
+      "text": "Un paramètre du JSON indique si il y a encore des messages à charger ou pas.",
+      "date": "2017-12-07 11:13"
+      },
+      "messages": [
+      {
+      "type": "text",
+      "text": "je sais pas quoi dire de plus, je vous laisse avec cette image",
+      "date": "2017-12-07 11:13"
+      },
+      {
+        "type": "image",
+        "url": "https://d2homsd77vx6d2.cloudfront.net/cache/8/b/aad210b0f27e6bc98c0db0fa6e280a.jpg",
+        "text": "je pense pas que le texte s'affiche en dessous des images...",
+        "date": "2017-12-07 17:27"
+      }    ]
+  }
+}

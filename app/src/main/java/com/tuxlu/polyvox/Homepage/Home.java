@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.leakcanary.LeakCanary;
+import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
@@ -73,7 +74,7 @@ public class Home extends AppCompatActivity {
 
         fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //discover
         fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
-        fragments.add(Fragment.instantiate(this, PrivateChatList.class.getName())); //chat
+        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
         int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_friends, R.string.tab_chat};
 
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);

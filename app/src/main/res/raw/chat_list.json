@@ -1,0 +1,34 @@
+{
+  "message": "ok",
+  "data": {
+    "users": [
+      {
+        "userName": "Bobby",
+        "picture": "https://www.explainxkcd.com/wiki/images/6/6d/BlackHat_head.png",
+        "unread": 1,
+        "lastMessage": "salut, comment ça va?",
+        "lastMessageDate": "2018-01-01 11:13"
+      },
+      {
+        "userName": "Vincent",
+        "picture": "https://cdni.rt.com/french/images/2017.04/article/58fa2dd3c46188ec718b458d.jpg",
+        "unread": 23,
+        "lastMessage": "Vite on est en rush!",
+        "lastMessageDate": "2018-01-07 10:10"
+      },
+      {
+        "userName": "Jean ma",
+        "picture": "https://i.ytimg.com/vi/qHdLsnmY-Po/hqdefault.jpg",
+        "unread": 0,
+        "lastMessage": "",
+        "lastMessageDate": ""
+      },
+      {
+        "userName": "Hippo",
+        "picture": "http://www.lifelovebeauty.com/wp-content/uploads/img/fashion/products-for-breast-lift_.jpg",
+        "unread": 2,
+        "lastMessage": "boobs",
+        "lastMessageDate": "2017-10-11 13:37"
+      }    ]
+  }
+}

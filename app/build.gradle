@@ -93,6 +93,8 @@ dependencies {
 
     //pdf viewer for API 21+
     compile 'es.voghdev.pdfviewpager:library:1.0.3'
+    //messaging UI
+    compile 'com.github.stfalcon:chatkit:0.2.2'
 }
 
 //apply plugin: 'com.google.gms.google-services'

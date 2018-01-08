@@ -5,10 +5,19 @@
     tools:context="com.tuxlu.polyvox.Homepage.DiscoverRecycler">
 
 
-    <ListView
-        android:id="@+id/private_chat_list"
+
+    <com.stfalcon.chatkit.dialogs.DialogsList
+        android:id="@+id/dialogsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
+
+    <include
+        android:id="@+id/noFriendsView"
+        layout="@layout/util_no_friends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
 
     <include
         layout="@layout/util_loading"
