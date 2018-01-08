@@ -6,9 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.Settings
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.TextView
@@ -33,15 +36,51 @@ class UtilsTemp {
     companion object {
         //@ColorInt val color = Color.parseColor("#DBDBDB")
 
-        //todo: move theses function in more appropriate file
+
+        @JvmStatic
+        fun getPath(nName: String) : File {
+
+            var extension : String = ""
+            val point = nName.lastIndexOf(".")
+            if (point != -1)
+                extension = nName.substring(point)
+
+            var name = nName
+            if (point != -1)
+                name = nName.substring(0, point)
+
+            val path = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/")
+            path.mkdirs() // creates needed dirs
+            var file = File(path, name + extension)
+            var num = 1;
+            while (file.exists()) {
+                file = File(path, "$name($num)$extension")
+                num++;
+            }
+            return file
+        }
+
+
+            //todo: move theses function in more appropriate file
         @JvmStatic
         fun shareContent(context: Context, body: String, url: String) {
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, body)
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, url)
+                sharingIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
+        }
+
+        @JvmStatic
+        fun shareImage(context: Context, body: String, image: File) {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "image/jpeg"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, body)
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, image.toURI());
             context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
         }
+
 
         //todo: move theses function in more appropriate file
 
