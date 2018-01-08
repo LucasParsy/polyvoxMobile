@@ -10,8 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.TextView
@@ -38,9 +36,9 @@ class UtilsTemp {
 
 
         @JvmStatic
-        fun getPath(nName: String) : File {
+        fun getPath(nName: String): File {
 
-            var extension : String = ""
+            var extension: String = ""
             val point = nName.lastIndexOf(".")
             if (point != -1)
                 extension = nName.substring(point)
@@ -61,15 +59,15 @@ class UtilsTemp {
         }
 
 
-            //todo: move theses function in more appropriate file
+        //todo: move theses function in more appropriate file
         @JvmStatic
         fun shareContent(context: Context, body: String, url: String) {
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, body)
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, url)
-                sharingIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
+            sharingIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
         }
 
         @JvmStatic
@@ -77,7 +75,8 @@ class UtilsTemp {
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "image/jpeg"
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, body)
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, image.toURI());
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, android.support.v4.content.FileProvider.getUriForFile(context, "com.tuxlu.fileprovider", image))
+            sharingIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
         }
 
@@ -85,7 +84,8 @@ class UtilsTemp {
         //todo: move theses function in more appropriate file
 
         //todo: move theses function in more appropriate file
-        @JvmStatic @JvmOverloads
+        @JvmStatic
+        @JvmOverloads
         fun showToast(context: Context, text: String, type: ToastType = ToastType.NORMAL, icon: Int = -1) {
 
             var toast: Toast? = null
@@ -98,7 +98,7 @@ class UtilsTemp {
                 toast = Toasty.success(context, text, Toast.LENGTH_LONG, true)
 
             if (type == ToastType.NORMAL && icon != -1)
-            toast = Toasty.normal(context, text, ContextCompat.getDrawable(context, icon))
+                toast = Toasty.normal(context, text, ContextCompat.getDrawable(context, icon))
             if (type == ToastType.NORMAL && icon == -1)
                 toast = Toasty.normal(context, text)
 
@@ -175,9 +175,10 @@ class UtilsTemp {
         }
 
         @JvmStatic
-        fun isStringEmpty(str: String) : Boolean {
+        fun isStringEmpty(str: String): Boolean {
             return (str.isBlank() || str == "null")
         }
+
         /*
                     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             // Check which request we're responding to

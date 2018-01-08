@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UtilsTemp
@@ -24,7 +23,8 @@ class DialogFragmentImage : DialogFragmentBase() {
 
     lateinit var image: ImageView
     private lateinit var layout: View;
-
+    private var keepFile: Boolean = false
+    private var file: File? = null;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -35,11 +35,13 @@ class DialogFragmentImage : DialogFragmentBase() {
 
         val downButt = layout.findViewById<ImageButton>(R.id.download)
         downButt.setOnClickListener({ _ ->
-            if (image.drawable == null)
+            if (file != null || image.drawable == null)
                 return@setOnClickListener
             val draw: BitmapDrawable = image.drawable as BitmapDrawable
             val bitmap = draw.bitmap
-            downloadImage(bitmap, name, this.activity) })
+            file = downloadImage(bitmap, name, this.activity)
+            keepFile = true
+        })
 
         setShareListener()
         setFavorite(url, name)
@@ -51,25 +53,31 @@ class DialogFragmentImage : DialogFragmentBase() {
         val bos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 0, bos)
         file.writeBytes(bos.toByteArray())
+        bos.close()
         if (showToast)
             UtilsTemp.showToast(context, name + context.getString(R.string.downloaded))
-        bos.close()
         return file
     }
 
 
-    private fun setShareListener()
-    {
+    private fun setShareListener() {
         val body = getString(R.string.discovered) + name + "\n" + url
         layout.findViewById<ImageButton>(R.id.share).setOnClickListener({ _ ->
             if (image.drawable == null)
                 return@setOnClickListener
             val draw: BitmapDrawable = image.drawable as BitmapDrawable
             val bitmap = draw.bitmap
-            val file = downloadImage(bitmap, name, this.activity, false)
-            UtilsTemp.shareImage(this.activity, body, file)
-            file.delete();
+            if (file == null)
+                file = downloadImage(bitmap, name, this.activity, false)
+            UtilsTemp.shareImage(this.activity, body, file!!)
         })
 
     }
+
+    override fun onStop() {
+        super.onStop()
+        if (!keepFile && file != null)
+            file!!.delete()
+    }
+
 }
