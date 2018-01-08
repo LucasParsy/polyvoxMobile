@@ -23,13 +23,13 @@
         android:background="@color/lighterter_gray" />
 
     <include
-        layout="@layout/util_layout_loading"
+        layout="@layout/util_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" />
 
     <include
-        layout="@layout/util_layout_no_results"
+        layout="@layout/util_no_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible" />

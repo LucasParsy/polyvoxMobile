@@ -19,7 +19,7 @@ class SimpleWebView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.util_layout_webview)
+        setContentView(R.layout.util_webview)
         //todo: view could break on some devices, see https://stackoverflow.com/questions/4486034/get-root-view-from-current-activity
         rootView = findViewById(android.R.id.content)
         val title = intent.getIntExtra("title", -1)

@@ -13,3 +13,9 @@ et recommenter ligne dans OnCreate.
 Décommenter texte de Home.java dans OnCreateOptionsMenu 
 
 UnaspLongPouréviterLeHack42
+
+PDF
+Image
+Page Web
+
+non: Son, Video, GIF

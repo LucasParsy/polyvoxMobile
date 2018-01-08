@@ -175,7 +175,7 @@ public class Register extends AppCompatActivity {
 
     public void onCGUButtonClick(View v) {
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.util_layout_dialog_cgu);
+        dialog.setContentView(R.layout.util_dialog_cgu);
         dialog.setTitle(getResources().getString(R.string.CGU));
         dialog.show();
 

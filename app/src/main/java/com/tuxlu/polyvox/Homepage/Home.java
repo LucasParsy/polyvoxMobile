@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -62,8 +63,9 @@ public class Home extends AppCompatActivity {
         //Fabric.with(this, new Crashlytics());
         //leaks verification, in debug builds only.
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {return;}
-        LeakCanary.install(this.getApplication());
+        //todo: reactivate leak check
+        //if (LeakCanary.isInAnalyzerProcess(this)) {return;}
+        //LeakCanary.install(this.getApplication());
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
