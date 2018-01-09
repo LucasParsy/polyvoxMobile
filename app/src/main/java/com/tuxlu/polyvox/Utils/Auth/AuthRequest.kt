@@ -45,6 +45,8 @@ class AuthRequest(ncontext: Context, nlogin: String, method: Int, url: String, j
                 am.setAuthToken(account, context.getString(R.string.account_type), token)
                 val username = jsonResponse.getJSONObject("data").getString("userName")
                 am.setUserData(account, "name", username)
+                val url = jsonResponse.getJSONObject("data").getString("picture")
+                am.setUserData(account, "picture", url)
             }
             return Response.success(jsonResponse, HttpHeaderParser.parseCacheHeaders(response))
         } catch (e: Exception) {

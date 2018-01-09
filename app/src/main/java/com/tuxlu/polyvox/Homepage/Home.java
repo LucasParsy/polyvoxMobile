@@ -102,28 +102,10 @@ public class Home extends AppCompatActivity {
         final Context context = getBaseContext();
         if (!APIRequest.isAPIConnected(context))
             return;
-        APIRequest.JSONrequest(context, Request.Method.GET,
-                APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER,
-                true, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        String imageUrl;
-                        try {
-                            JSONObject obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT);
-                            imageUrl = obj.getString("picture");
-                        } catch (JSONException e) {
-                            return;
-                        }
-                        if (!UtilsTemp.isStringEmpty(imageUrl))
-                             GlideApp.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
-                        //placeholder(R.drawable.ic_account_circle_black_24dp)
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
+        String imageUrl = AuthUtils.getPictureUrl(context);
+        if (!UtilsTemp.isStringEmpty(imageUrl))
+            GlideApp.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
+            //placeholder(R.drawable.ic_account_circle_black_24dp)
     }
 
     private void startProfileIntent() {

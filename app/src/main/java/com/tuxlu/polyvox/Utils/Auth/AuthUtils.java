@@ -63,6 +63,15 @@ public class AuthUtils {
         return am.getUserData(am.getAccounts()[0], "name");
     }
 
+    public static String getPictureUrl(Context context)
+    {
+        AccountManager am = AccountManager.get(context);
+        if (am.getAccounts().length == 0)
+            return "";
+        return am.getUserData(am.getAccounts()[0], "picture");
+    }
+
+
     public static String getToken(Context context) {
         AccountManager am = AccountManager.get(context);
         //should'nt happen

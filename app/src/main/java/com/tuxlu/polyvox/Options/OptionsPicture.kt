@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
 import com.tuxlu.polyvox.Utils.ToastType
@@ -29,11 +30,10 @@ import java.util.*
 
 class OptionsPicture : MyAppCompatActivity() {
 
-    private val SELECT_FILE : Int = 42
+    private val SELECT_FILE: Int = 42
     private var bm: Bitmap? = null
 
-    private fun showLayout()
-    {
+    private fun showLayout() {
         mainView.visibility = View.VISIBLE
         LoadingUtils.EndLoadingView(rootView)
     }
@@ -45,27 +45,18 @@ class OptionsPicture : MyAppCompatActivity() {
         mainView.visibility = View.INVISIBLE
         newProfilePicLayout.visibility = View.GONE
 
-        val url = APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER
-        APIRequest.JSONrequest(this, Request.Method.GET, url,
-                true, null, { response ->
-            val obj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
-            val imageUrl = obj.getString("picture")
-            if (UtilsTemp.isStringEmpty(imageUrl)) {
-                currentprofilePicText.text = resources.getString(R.string.profile_picture_no)
-                currentprofilePic.visibility = View.GONE
-            }
-            else {
-                GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(currentprofilePic)
-            }
-
-            showLayout()
-        }, {_ -> showLayout()})
-
+        val imageUrl = AuthUtils.getPictureUrl(baseContext)
+        if (UtilsTemp.isStringEmpty(imageUrl)) {
+            currentprofilePicText.text = resources.getString(R.string.profile_picture_no)
+            currentprofilePic.visibility = View.GONE
+        } else {
+            GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(currentprofilePic)
+        }
+        showLayout()
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun addButtonClick(v: View)
-    {
+    fun addButtonClick(v: View) {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -76,8 +67,7 @@ class OptionsPicture : MyAppCompatActivity() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun sendButtonClick(v: View)
-    {
+    fun sendButtonClick(v: View) {
         if (bm == null)
             return
 
@@ -85,7 +75,7 @@ class OptionsPicture : MyAppCompatActivity() {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bm = Bitmap.createScaledBitmap(bm, bm!!.width / ratio, bm!!.height / ratio, false)
         bm?.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream)
-        val stream : ByteArray = byteArrayOutputStream.toByteArray()
+        val stream: ByteArray = byteArrayOutputStream.toByteArray()
 
         val part = VolleyMultipartRequest.DataPart("profilePic", "pic", "image/png", stream)
         val body = ArrayList<VolleyMultipartRequest.DataPart>()
@@ -108,8 +98,7 @@ class OptionsPicture : MyAppCompatActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-            {
+            if (requestCode == SELECT_FILE) {
 
                 if (data != null) {
                     try {
@@ -122,8 +111,7 @@ class OptionsPicture : MyAppCompatActivity() {
                         //e.printStackTrace()
                     }
 
-                }
-                else
+                } else
                     UtilsTemp.showToast(this, getString(R.string.profile_picture_invalid), ToastType.ERROR)
             }
         }
