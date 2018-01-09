@@ -30,6 +30,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -51,7 +52,11 @@ public class HurlWithDummyStack extends HurlStack {
             throws IOException, AuthFailureError {
         if (request.getUrl().startsWith(APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS) ||
                 request.getUrl().startsWith(APIUrl.FAKE_BASE_URL))
-            return dummy.dummyRequest(request, additionalHeaders);
+            try {
+                return dummy.dummyRequest(request, additionalHeaders);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         return super.performRequest(request, additionalHeaders);
     }
 }

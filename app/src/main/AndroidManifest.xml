@@ -169,7 +169,7 @@
                     android:pathPrefix="/users/verify"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".Chat.Chat" />
 
 
     </application>

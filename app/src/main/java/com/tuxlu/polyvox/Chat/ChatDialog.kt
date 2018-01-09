@@ -16,6 +16,11 @@ class ChatDialog(private val friend : Author, val unread: Int, val message: IMes
         return friend.name
     }
 
+    fun getFriendUrl(): String {
+        return friend.url
+    }
+
+
     override fun getId(): String {
         return friend.name
     }

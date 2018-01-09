@@ -2,6 +2,8 @@ package com.tuxlu.polyvox.Utils.NetworkLibraries;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 
@@ -18,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -31,6 +34,8 @@ public class DummyAPIServer {
     private JSONObject chatList;
     private JSONObject chatMessages;
     private JSONObject chatMessages2;
+    private JSONObject chatMessageUpdate;
+    private boolean messageUpdated = false;
     int userNum = 43;
 
 
@@ -41,6 +46,7 @@ public class DummyAPIServer {
             chatList = fileToJSON(R.raw.chat_list, context);
             chatMessages = fileToJSON(R.raw.chat_messages, context);
             chatMessages2 = fileToJSON(R.raw.chat_messages2, context);
+            chatMessageUpdate = fileToJSON(R.raw.chat_messages_new, context);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +68,7 @@ public class DummyAPIServer {
     }
 
     public HttpResponse dummyRequest(com.android.volley.Request<?> request,
-                                     Map<String, String> additionalHeaders) {
+                                     Map<String, String> additionalHeaders) throws AuthFailureError, JSONException {
         String url = request.getUrl();
         JSONObject body = null;
         url = url.substring(APIUrl.BASE_URL.length());
@@ -85,6 +91,22 @@ public class DummyAPIServer {
             case APIUrl.DISCOVER_ROOMS:  return discoverRequest();
             case APIUrl.SEARCH_ROOMS:  return searchRequest(body);
             case APIUrl.LOGIN:  return loginRequest(body);
+            case APIUrl.CHAT + APIUrl.FAKE_CHAT_NAME:
+                JsonObjectRequest jreq = (JsonObjectRequest) request;
+                JSONObject obj = new JSONObject(new String(jreq.getBody()));
+                if (obj.getInt(APIUrl.CHAT_PARAM) == 2)
+                    return makeHttpResponse(chatMessages2, 200);
+                else
+                    return makeHttpResponse(chatMessages, 200);
+            case APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME:
+                if (!messageUpdated) {
+                    messageUpdated = true;
+                    HttpResponse res =  makeHttpResponse(chatMessageUpdate, 200);
+                    chatMessageUpdate.getJSONObject("data").put("messages", new JSONArray());
+                    return res;
+                }
+                else
+                    return makeHttpResponse(chatMessageUpdate, 200);
             case APIUrl.LIST_USERS_CHAT: return makeHttpResponse(chatList, 200);
             case APIUrl.CREATE_ACCOUNT:  return createAccountRequest(body);
             case APIUrl.INFO_ROOM:  return infoRoomAndUserRequest(body, roomList, "rooms");

@@ -1,0 +1,19 @@
+{
+  "message": "ok",
+  "data": {
+    "messages": [
+      {
+        "isMe": false,
+        "type": "text",
+        "text": "juste un petit message pour montrer que l'update fonctionne.",
+        "date": "2018-01-07 10:12"
+      },
+      {
+        "isMe": false,
+        "type": "text",
+        "text": "les messages que tu tapes vont s'effacer, normalement on les retélécharge et remplace ceux stockés en local avant l'update...",
+        "date": "2018-01-07 10:13"
+      }
+    ]
+  }
+}

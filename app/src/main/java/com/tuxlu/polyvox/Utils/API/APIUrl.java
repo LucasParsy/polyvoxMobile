@@ -10,6 +10,7 @@ public class APIUrl {
     public static final String BASE_URL = SCHEME + "://" + AUTHORITY + "/";
 
     public static final String FAKE_BASE_URL = SCHEME + "://" + "apo.polyvox.fr" + "/";
+    public static final String FAKE_CHAT_NAME = "/bobby";
 
     public static final String INFO_CURRENT_USER = "users/currentUser";
 
@@ -76,12 +77,11 @@ public class APIUrl {
     public static final String UPDATE_USER = "users/updateUser";
 
     public static final String LIST_USERS_CHAT = "chat/list";
-    public static final String CHAT = "chat";
-    public static final String CHAT_PARAM1 = "user";
-    public static final String CHAT_PARAM2 = "page";
+    public static final String CHAT = "chat/";
+    public static final String CHAT_PARAM = "page";
+    public static final String CHAT_UPDATE = "chat/update/";
 
     public static final String CHAT_SEND_PARAM1 = "message";
-    public static final String CHAT_SEND_PARAM2 = "type";
 
     private APIUrl(){}
 }

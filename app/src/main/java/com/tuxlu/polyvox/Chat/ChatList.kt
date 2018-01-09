@@ -1,25 +1,19 @@
 package com.tuxlu.polyvox.Chat
 
-import android.app.Dialog
-import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.Request
-import com.stfalcon.chatkit.commons.ImageLoader
-import com.stfalcon.chatkit.commons.models.IMessage
 import com.stfalcon.chatkit.dialogs.DialogsList
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
-import com.tuxlu.polyvox.Utils.MyDateUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
-import kotlinx.android.synthetic.main.activity_user_options_info_user.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,10 +22,10 @@ import java.util.*
  */
 class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialogClickListener<ChatDialog> {
     override fun onDialogClick(dialog: ChatDialog) {
-        val name = dialog.dialogName
-        val intent = Intent(this.activity, ProfilePage::class.java) //todo: replace with good fragment name
+        val intent = Intent(this.activity, Chat::class.java) //todo: replace with good fragment name
         val b = Bundle()
-        b.putString("name", name)
+        b.putString("name", dialog.dialogName)
+        b.putString("url", dialog.getFriendUrl())
         intent.putExtras(b)
         startActivity(intent)
     }

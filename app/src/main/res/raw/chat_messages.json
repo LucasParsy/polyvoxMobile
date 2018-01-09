@@ -1,46 +1,48 @@
 {
   "message": "ok",
   "data": {
+    "isLastMessages": false,
     "messages": [
       {
+        "isMe" : false,
         "type": "text",
         "text": "salut, comment ça va depuis la dernière fois?",
         "date": "2018-01-01 17:42"
       },
       {
+        "isMe" : false,
         "type": "image",
         "url": "https://polyvox.fr/assets/img/polyvox_logo_black.png",
-        "text": "je pense pas que le texte s'affiche en dessous des images...",
         "date": "2018-01-01 17:45"
       },
       {
+        "isMe" : false,
         "type": "text",
         "text": "je peux même envoyer des images!",
         "date": "2018-01-02 13:37"
       },
       {
+        "isMe" : true,
         "type": "file",
         "url": "http://www.pdf995.com/samples/pdf.pdf",
         "date": "2018-01-02 15:20"
       },
       {
+        "isMe" : true,
         "type": "file",
         "url": "https://www.cmu.edu/blackboard/files/evaluate/tests-example.xls",
         "date": "2018-01-02 15:21"
       },
       {
+        "isMe" : true,
         "type": "text",
         "text": "soon on pourra aussi envoyer des documents, mais il faut que je code ça, donc pour l'instant ça marche pas...",
         "date": "2018-01-03 19:30"
       },
       {
+        "isMe" : true,
         "type": "text",
         "text": "voilà, oublie pas de remonter pour voir de nouveaux messages, et teste l'envoi!",
-        "date": "2018-01-07 10:12"
-      },
-      {
-        "type": "text",
-        "text": "juste un petit message pour montrer que l'update de messages fonctionne.",
         "date": "2018-01-07 10:12"
       }
     ]
