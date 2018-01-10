@@ -75,12 +75,17 @@ app:outcomingTextSize="18sp"
         android:layout_height="match_parent"
         android:visibility="visible" />
 
-    <include
+    <LinearLayout
         android:id="@+id/fileChooserLayout"
-        layout="@layout/util_file_chooser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:visibility="invisible" />
+        android:visibility="invisible">
+
+        <fragment
+            android:name="com.tuxlu.polyvox.Utils.UIElements.FileChooser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </FrameLayout>
