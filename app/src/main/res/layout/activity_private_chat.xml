@@ -42,6 +42,7 @@ app:outcomingTextSize="18sp"
 
         <View
             android:id="@+id/separator"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_above="@+id/input"
@@ -73,5 +74,13 @@ app:outcomingTextSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" />
+
+    <include
+        android:id="@+id/fileChooserLayout"
+        layout="@layout/util_file_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="invisible" />
 
 </FrameLayout>

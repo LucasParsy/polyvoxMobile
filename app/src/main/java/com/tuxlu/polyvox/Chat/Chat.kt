@@ -1,7 +1,17 @@
 package com.tuxlu.polyvox.Chat
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
+import android.provider.OpenableColumns
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.android.volley.Request
 import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessagesListAdapter
@@ -9,11 +19,18 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
+import com.tuxlu.polyvox.Utils.UIElements.PathUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_private_chat.*
+import kotlinx.android.synthetic.main.util_file_chooser.*
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -24,7 +41,10 @@ import kotlin.collections.ArrayList
  */
 class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         MessageInput.InputListener,
-        MessageInput.AttachmentsListener{
+        MessageInput.AttachmentsListener {
+
+    private val FILE_SEND = 42
+    private val PHOTO_SEND = 64
 
     private lateinit var myAuthor: Author
     private lateinit var friendAuthor: Author
@@ -32,6 +52,10 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     private var shouldLoadMore = true
     private var pagesLoaded = 1
     private var sentList = ArrayList<String>()
+
+    private var fileName: String = ""
+    private var type: String = ""
+    private var byte: ByteArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +84,35 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         input.setInputListener(this)
         onLoadMore(1, 42)
 
+        setFileChooserListeners()
         val handler = Handler()
-        val delay : Long = 10000 //10 seconds
+        val delay: Long = 10000 //10 seconds
         handler.postDelayed(object : Runnable {
             override fun run() {
                 updateMessages()
                 handler.postDelayed(this, delay)
             }
         }, delay)
+
     }
 
-    override fun onSubmit(message: CharSequence): Boolean
-    {
+    fun startFileIntent(type: String, id: Int) {
+        val intent = Intent()
+        intent.type = type
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select File"), id)
+    }
+
+    private fun setFileChooserListeners() {
+        fChooserButtonBack.setOnClickListener({ _ ->
+            fChooserTypeView.visibility = View.VISIBLE
+            fileChooserLayout.visibility = View.INVISIBLE
+        })
+        buttonPhoto.setOnClickListener({ _ -> startFileIntent("image/*", PHOTO_SEND) })
+        buttonFile.setOnClickListener({ _ -> startFileIntent("*/*", FILE_SEND) })
+    }
+
+    override fun onSubmit(message: CharSequence): Boolean {
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME
         APIRequest.JSONrequest(this, Request.Method.POST, url,
@@ -85,8 +126,18 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         return true;
     }
 
+    fun hideKeyboard() {
+        val view = this.currentFocus;
+        if (view != null) {
+            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+            imm.hideSoftInputFromWindow(view.windowToken, 0);
+        }
+    }
+
     override fun onAddAttachments() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        hideKeyboard()
+        fileChooserLayout.visibility = View.VISIBLE
+        fChooserFileView.visibility = View.GONE
     }
 
 
@@ -138,6 +189,29 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     }
 
 
+    fun getFileName(uri: Uri): String {
+        var result: String = "";
+        if (uri.scheme.equals("content")) {
+            var cursor: Cursor = contentResolver.query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == "") {
+            result = uri.path;
+            val cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+
     override fun onLoadMore(page: Int, totalItemsCount: Int) {
         if (!shouldLoadMore)
             return
@@ -163,4 +237,46 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
                 LoadingUtils.EndLoadingView(rootView)
         })
     }
+
+    fun setDataSizeView(size: Float) {
+        fChooserDocumentSizeText.text = DecimalFormat("######.##").format(size / 1000000);
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            try {
+                if (data == null) {
+                    UtilsTemp.showToast(this, getString(R.string.file_invalid), ToastType.ERROR)
+                    return
+                }
+                fileName = getFileName(data.data)
+                fChooserDocumentName.text = fileName
+                type = contentResolver.getType(data.data)
+                if (requestCode == FILE_SEND) {
+                    val file = File(PathUtils.getPath(this, data.data))
+                    if (!file.exists() || !file.canRead())
+                        return UtilsTemp.showToast(this, getString(R.string.file_invalid), ToastType.ERROR)
+
+                    byte = file.readBytes()
+                    setDataSizeView(byte!!.size.toFloat())
+                }
+                if (requestCode == PHOTO_SEND) {
+                    val bm = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+                    setDataSizeView(bm.byteCount.toFloat())
+
+                    fileIcon.setImageBitmap(bm)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    bm?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                    byte = byteArrayOutputStream.toByteArray()
+                }
+            } catch (e: IOException) {
+                UtilsTemp.showToast(this, getString(R.string.file_invalid), ToastType.ERROR)
+                //e.printStackTrace()
+            }
+            fChooserTypeView.visibility = View.GONE
+            fChooserFileView.visibility = View.VISIBLE
+        }
+    }
+
 }

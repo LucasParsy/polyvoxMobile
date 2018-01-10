@@ -122,6 +122,7 @@
     <string name="profile_picture_change">changer l\'image</string>
     <string name="profile_picture_apply">utiliser cette image</string>
     <string name="profile_picture_invalid">un problème s\'est produit avec cette image</string>
+    <string name="file_invalid">un problème s\'est produit avec ce fichier</string>
 
     <string name="forgot_password">mot de passe oublié</string>
     <string name="forgot_password_prompt">Veuillez renseigner votre adresse e-mail\npour recevoir un lien de changement de mot de passe.</string>
@@ -152,6 +153,10 @@
     <string name="no_friends_subtext">Ajoutez des amis en cherchant leur profil sur Polyvox!</string>
 
     <string name="enter_message_hint">écrivez un message</string>
+    <string name="add_file">ajouter un fichier</string>
+    <string name="file">fichier</string>
+    <string name="send">envoyer</string>
+    <string name="size">taille: \u0020</string>
 
     <string name="year">Année</string>
     <string name="day">Jour</string>
