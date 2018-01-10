@@ -1,5 +1,6 @@
-package com.tuxlu.polyvox.Utils.UIElements;
+package com.tuxlu.polyvox.Utils;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 
 /**
  * file copied from KJEjava48
@@ -70,7 +72,31 @@ public class PathUtils {
         return null;
     }
 
-    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+    //method by Stefan Haustein
+    //at https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
+    public static String UriToFileName(Uri uri, Context context) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {column};
@@ -87,7 +113,7 @@ public class PathUtils {
         return null;
     }
 
-    public static boolean isExternalStorageDocument(Uri uri) {
+    private static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -95,7 +121,7 @@ public class PathUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static boolean isDownloadsDocument(Uri uri) {
+    private static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -103,7 +129,7 @@ public class PathUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
-    public static boolean isMediaDocument(Uri uri) {
+    private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
@@ -111,7 +137,7 @@ public class PathUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    public static boolean isGooglePhotosUri(Uri uri) {
+    private static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 

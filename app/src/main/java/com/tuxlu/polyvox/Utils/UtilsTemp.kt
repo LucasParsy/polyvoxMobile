@@ -1,6 +1,7 @@
 package com.tuxlu.polyvox.Utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -12,10 +13,12 @@ import android.os.Environment
 import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import com.tuxlu.polyvox.R
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.util_file_chooser.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -80,8 +83,29 @@ class UtilsTemp {
             context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_with)))
         }
 
+        //todo: move theses function in more appropriate file
+        @JvmStatic
+        fun byteSizeToString(bytes: Int, si: Boolean) : String {
+            val unit = if (si) 1000 else 1024
+            if (bytes < unit) {
+                return (bytes / 8).toString() + " B"
+            }
+            val exp = (Math.log(bytes.toDouble()) / Math.log(unit.toDouble())).toInt()
+            val pre = (if (si) "kMGTPE" else "KMGTPE")[exp - 1] + if (si) "" else "i"
+            return String.format("%.1f %sB", bytes / 8 / Math.pow(unit.toDouble(), exp.toDouble()), pre)
+        }
 
         //todo: move theses function in more appropriate file
+        @JvmStatic
+        fun hideKeyboard(act: Activity) {
+            val view =  act.currentFocus;
+            if (view != null) {
+                val imm: InputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+                imm.hideSoftInputFromWindow(view.windowToken, 0);
+            }
+        }
+
+
 
         //todo: move theses function in more appropriate file
         @JvmStatic

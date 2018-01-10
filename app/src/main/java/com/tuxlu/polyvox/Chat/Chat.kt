@@ -1,17 +1,11 @@
 package com.tuxlu.polyvox.Chat
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
+import butterknife.internal.Utils
 import com.android.volley.Request
 import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessagesListAdapter
@@ -19,20 +13,12 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
-import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
-import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.FileChooser
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
-import com.tuxlu.polyvox.Utils.UIElements.PathUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_private_chat.*
-import kotlinx.android.synthetic.main.util_file_chooser.*
-import kotlinx.android.synthetic.main.util_file_chooser.view.*
 import org.json.JSONObject
-import java.io.File
-import java.io.IOException
-import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,9 +58,8 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
 
         val myName = AuthUtils.getUsername(this);
         var imageUrl = AuthUtils.getPictureUrl(this)
-        if (UtilsTemp.isStringEmpty(imageUrl)) {
+        if (UtilsTemp.isStringEmpty(imageUrl))
             imageUrl = null
-        }
         myAuthor = Author(myName, imageUrl)
 
 
@@ -96,11 +81,6 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             }
         }, delay)
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
 
     override fun onSubmit(message: CharSequence): Boolean {
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
@@ -189,16 +169,8 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         return list
     }
 
-    fun hideKeyboard() {
-        val view = this.currentFocus;
-        if (view != null) {
-            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-            imm.hideSoftInputFromWindow(view.windowToken, 0);
-        }
-    }
-
     override fun onAddAttachments() {
-        hideKeyboard()
+        UtilsTemp.hideKeyboard(this)
         fileChooserLayout.visibility = View.VISIBLE
     }
 

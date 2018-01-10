@@ -2,7 +2,6 @@ package com.tuxlu.polyvox.Utils.UIElements
 
 import android.app.Activity
 import android.app.Fragment
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -17,12 +16,11 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
+import com.tuxlu.polyvox.Utils.PathUtils
 import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_private_chat.*
 import kotlinx.android.synthetic.main.util_file_chooser.*
-import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
@@ -82,7 +80,7 @@ class FileChooser: Fragment()
         })
     }
 
-    fun startFileIntent(type: String, id: Int) {
+    private fun startFileIntent(type: String, id: Int) {
         val intent = Intent()
         intent.type = type
         intent.action = Intent.ACTION_GET_CONTENT
@@ -100,7 +98,7 @@ class FileChooser: Fragment()
     }
 
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             try {
@@ -108,7 +106,7 @@ class FileChooser: Fragment()
                     UtilsTemp.showToast(this.activity, getString(R.string.file_invalid), ToastType.ERROR)
                     return
                 }
-                fileName = getFileName(data.data)
+                fileName = PathUtils.UriToFileName(data.data, this.activity)
                 fChooserDocumentName.text = fileName
                 type = activity.contentResolver.getType(data.data)
                 if (requestCode == FILE_SEND) {
@@ -117,11 +115,11 @@ class FileChooser: Fragment()
                         return UtilsTemp.showToast(this.activity, getString(R.string.file_invalid), ToastType.ERROR)
 
                     byte = file.readBytes()
-                    setDataSizeView(byte!!.size, true)
+                    fChooserDocumentSizeText.text = UtilsTemp.byteSizeToString(byte!!.size, true)
                 }
                 if (requestCode == PHOTO_SEND) {
                     val bm = MediaStore.Images.Media.getBitmap(activity.contentResolver, data.data)
-                    setDataSizeView(bm.byteCount, true)
+                    fChooserDocumentSizeText.text = UtilsTemp.byteSizeToString(bm.byteCount, true)
 
                     fileIcon.setImageBitmap(bm)
                     val byteBuffer = ByteBuffer.allocate(bm.byteCount)
@@ -135,41 +133,6 @@ class FileChooser: Fragment()
             fChooserTypeView.visibility = View.GONE
             fChooserFileView.visibility = View.VISIBLE
         }
-    }
-
-    fun getFileName(uri: Uri): String {
-        var result: String = "";
-        if (uri.scheme.equals("content")) {
-            var cursor: Cursor = activity.contentResolver.query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == "") {
-            result = uri.path;
-            val cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
-
-    //by aioobe at https://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
-    fun setDataSizeView(bytes: Int, si: Boolean) {
-        val unit = if (si) 1000 else 1024
-        if (bytes < unit) {
-            fChooserDocumentSizeText.text = (bytes / 8).toString() + " B"
-            return
-        }
-        val exp = (Math.log(bytes.toDouble()) / Math.log(unit.toDouble())).toInt()
-        val pre = (if (si) "kMGTPE" else "KMGTPE")[exp - 1] + if (si) "" else "i"
-        val res = String.format("%.1f %sB", bytes / 8 / Math.pow(unit.toDouble(), exp.toDouble()), pre)
-        fChooserDocumentSizeText.text = res;
     }
 
     public interface OnCloseListener {
