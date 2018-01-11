@@ -1,18 +1,17 @@
 package com.tuxlu.polyvox.Chat
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import butterknife.internal.Utils
 import com.android.volley.Request
+import com.stfalcon.chatkit.messages.MessageHolders
 import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessagesListAdapter
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.Fileloader
 import com.tuxlu.polyvox.Utils.UIElements.FileChooser
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
@@ -28,12 +27,10 @@ import kotlin.collections.ArrayList
  * Created by tuxlu on 08/01/18.
  */
 class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
+        MessagesListAdapter.OnMessageClickListener<ChatMessage>,
         MessageInput.InputListener,
         MessageInput.AttachmentsListener,
         FileChooser.OnCloseListener {
-
-    private val FILE_SEND = 42
-    private val PHOTO_SEND = 64
 
     private lateinit var myAuthor: Author
     private lateinit var friendAuthor: Author
@@ -42,9 +39,6 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     private var pagesLoaded = 1
     private var sentList = ArrayList<String>()
 
-    private var fileName: String = ""
-    private var type: String = ""
-    private var byte: ByteArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +59,19 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
 
 
         title = name
-        adapter = MessagesListAdapter<ChatMessage>(myName, ImageLoader(this))
+
+        val holders = MessageHolders()
+                .registerContentType(
+                        FileContentChecker.CONTENT_TYPE_FILE,
+                        IncomingFileMessageViewHolder::class.java,
+                        R.layout.chatkit_file_message_incoming,
+                        OutcomingFileMessageViewHolder::class.java,
+                        R.layout.chatkit_file_message_outcoming,
+                        FileContentChecker())
+
+        adapter = MessagesListAdapter(myName, holders, ImageLoader(this))
         messagesList.setAdapter(adapter)
+        adapter.setOnMessageClickListener(this)
         adapter.setLoadMoreListener(this)
         input.setAttachmentsListener(this)
         input.setInputListener(this)
@@ -82,13 +87,21 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         }, delay)
     }
 
+    override fun onMessageClick(message: ChatMessage) {
+        if (!message.imageUrl.isNullOrBlank())
+            Fileloader.openFile("", message.imageUrl!!, "image/", this)
+        if (!message.getFileUrl().isNullOrBlank())
+            Fileloader.openFile("", message.getFileUrl()!!, "", this)
+    }
+
+
     override fun onSubmit(message: CharSequence): Boolean {
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME
         APIRequest.JSONrequest(this, Request.Method.POST, url,
-                true, null, { response ->
+                true, null, { _ ->
             //works only for text messages, not images!
-            val message = ChatMessage(message.toString(), myAuthor, Date(), null)
+            val message = ChatMessage(message.toString(), myAuthor, Date())
             sentList.add(message.id)
             adapter.addToStart(message, true)
         }
@@ -147,7 +160,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             val type = elem.getString("type")
 
             var text = ""
-            if (type == "text")
+            if (type != "image") //todo: verify if File has title or not in final API
                 text = elem.getString("text")
 
             var author = myAuthor;
@@ -159,11 +172,14 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
 
 
             var url: String? = null;
-            if (type == "image")
+            if (type == "image" || type == "file")
                 url = elem.getString("url")
-            if (type == "file")
-                myAuthor
-            //doStuffForFile()
+            if (type == "file") {
+                val size = elem.getInt("size")
+                //text = Fileloader.getUrlLastSegment(url!!)
+                list.add(ChatMessage(text, author, date, null, size, url))
+                continue
+            }
             list.add(ChatMessage(text, author, date, url))
         }
         return list

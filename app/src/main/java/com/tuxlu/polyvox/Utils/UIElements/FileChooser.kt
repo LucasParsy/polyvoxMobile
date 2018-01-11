@@ -3,11 +3,8 @@ package com.tuxlu.polyvox.Utils.UIElements
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,11 +112,11 @@ class FileChooser: Fragment()
                         return UtilsTemp.showToast(this.activity, getString(R.string.file_invalid), ToastType.ERROR)
 
                     byte = file.readBytes()
-                    fChooserDocumentSizeText.text = UtilsTemp.byteSizeToString(byte!!.size, true)
+                    fChooserDocumentSize.text = UtilsTemp.byteSizeToString(byte!!.size, true)
                 }
                 if (requestCode == PHOTO_SEND) {
                     val bm = MediaStore.Images.Media.getBitmap(activity.contentResolver, data.data)
-                    fChooserDocumentSizeText.text = UtilsTemp.byteSizeToString(bm.byteCount, true)
+                    fChooserDocumentSize.text = UtilsTemp.byteSizeToString(bm.byteCount, true)
 
                     fileIcon.setImageBitmap(bm)
                     val byteBuffer = ByteBuffer.allocate(bm.byteCount)

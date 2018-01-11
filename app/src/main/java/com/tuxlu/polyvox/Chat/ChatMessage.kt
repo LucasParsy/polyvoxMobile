@@ -12,8 +12,11 @@ import java.util.*
 class ChatMessage(private val nText: String,
                   private val nUser: Author,
                   private val date: Date,
-                  private val iUrl: String? = null): IMessage, MessageContentType.Image
-{
+                  private val iUrl: String? = null,
+                  private val fileSize: Int = 0,
+                  private val fileUrl: String? = null) : IMessage,
+        MessageContentType,
+        MessageContentType.Image {
     override fun getImageUrl(): String? {
         return iUrl
     }
@@ -34,6 +37,14 @@ class ChatMessage(private val nText: String,
 
     override fun getText(): String {
         return nText
+    }
+
+    fun getFileSize(): Int {
+        return fileSize
+    }
+
+    fun getFileUrl(): String? {
+        return fileUrl
     }
 
 }

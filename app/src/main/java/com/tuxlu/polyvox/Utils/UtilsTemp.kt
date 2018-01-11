@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
@@ -18,7 +17,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.tuxlu.polyvox.R
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.util_file_chooser.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -85,7 +83,7 @@ class UtilsTemp {
 
         //todo: move theses function in more appropriate file
         @JvmStatic
-        fun byteSizeToString(bytes: Int, si: Boolean) : String {
+        fun byteSizeToString(bytes: Int, si: Boolean): String {
             val unit = if (si) 1000 else 1024
             if (bytes < unit) {
                 return (bytes / 8).toString() + " B"
@@ -98,13 +96,12 @@ class UtilsTemp {
         //todo: move theses function in more appropriate file
         @JvmStatic
         fun hideKeyboard(act: Activity) {
-            val view =  act.currentFocus;
+            val view = act.currentFocus;
             if (view != null) {
                 val imm: InputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
                 imm.hideSoftInputFromWindow(view.windowToken, 0);
             }
         }
-
 
 
         //todo: move theses function in more appropriate file

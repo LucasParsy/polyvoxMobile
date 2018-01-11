@@ -24,19 +24,23 @@
       {
         "isMe" : true,
         "type": "file",
+        "text": "pdf.pdf",
         "url": "http://www.pdf995.com/samples/pdf.pdf",
+        "size": 20807296,
         "date": "2018-01-02 15:20"
       },
       {
-        "isMe" : true,
+        "isMe" : false,
         "type": "file",
+        "text": "un fichier XLS.xls",
         "url": "https://www.cmu.edu/blackboard/files/evaluate/tests-example.xls",
+        "size": 485058,
         "date": "2018-01-02 15:21"
       },
       {
         "isMe" : true,
         "type": "text",
-        "text": "soon on pourra aussi envoyer des documents, mais il faut que je code ça, donc pour l'instant ça marche pas...",
+        "text": "On peut meme envoyer des documents!",
         "date": "2018-01-03 19:30"
       },
       {

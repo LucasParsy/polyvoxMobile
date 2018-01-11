@@ -33,17 +33,22 @@ class Fileloader {
     companion object {
 
         @JvmStatic
+        fun getUrlLastSegment(url: String): String {
+            var name = ""
+            name = url.trimEnd('/')
+            val start: Int = name.lastIndexOf("/") + 1;
+            name = name.substring(start)
+            return name
+        }
+
+        @JvmStatic
         fun openFile(nName: String, url: String, ntype: String = "", act: Activity) {
             var name = nName
-            if (name.isBlank()) {
-                name = url.trimEnd('/')
-                val start: Int = name.lastIndexOf("/") + 1;
-                name = name.substring(start)
-            }
-
+            if (name.isBlank())
+                name = getUrlLastSegment(url)
             var type = getType(ntype, url)
 
-            var newFragment : android.app.Fragment? = null
+            var newFragment: android.app.Fragment? = null
             newFragment = if (type.startsWith("image"))
                 DialogFragmentImage()
             else if (type == "application/pdf" && android.os.Build.VERSION.SDK_INT >= 21)
@@ -86,7 +91,7 @@ class Fileloader {
                 val file = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/",
                         response.first)
                 val path = Uri.fromFile(file)
-                var uri : Uri = FileProvider.getUriForFile(context, "com.tuxlu.fileprovider", file)
+                var uri: Uri = FileProvider.getUriForFile(context, "com.tuxlu.fileprovider", file)
                 val intent = Intent()
                 //val clip : ClipData = ClipData.newRawUri(response.first, path)
                 intent.action = Intent.ACTION_VIEW
@@ -114,7 +119,7 @@ class Fileloader {
         @JvmStatic
         private fun startFragment(name: String, url: String, act: Activity, frag: android.app.Fragment) {
             val fragmentManager: android.app.FragmentManager = act.fragmentManager
-            val  bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString("url", url)
             bundle.putString("name", name)
             frag.arguments = bundle
