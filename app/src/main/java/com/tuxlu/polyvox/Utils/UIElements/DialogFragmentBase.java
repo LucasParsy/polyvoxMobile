@@ -24,6 +24,7 @@ import com.tuxlu.polyvox.R;
 
 public abstract class DialogFragmentBase extends DialogFragment {
 
+    private String oldName = null;
     private View rootView = null;
     protected String name;
     protected String url;
@@ -37,10 +38,19 @@ public abstract class DialogFragmentBase extends DialogFragment {
         rootView = inflater.inflate(layout, container, false);
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
 
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (getActivity() instanceof MyAppCompatActivity)
+        {
+            oldName = actionBar.getTitle().toString();
+            actionBar.setTitle(name);
+            ((View)toolbar).setVisibility(View.GONE);
+            return rootView;
+        }
+
         toolbar.setTitle(name);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -59,6 +69,13 @@ public abstract class DialogFragmentBase extends DialogFragment {
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (oldName != null)
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(oldName);
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -72,6 +89,8 @@ public abstract class DialogFragmentBase extends DialogFragment {
         menu.clear();
         //getActivity().getMenuInflater().inflate(R.menu.menu_ak, menu);
     }
+
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
