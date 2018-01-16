@@ -85,6 +85,14 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
                 handler.postDelayed(this, delay)
             }
         }, delay)
+
+        //val url = APIUrl.BASE_URL + APIUrl.CHAT + friendAuthor.username
+        val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT + APIUrl.FAKE_CHAT_NAME
+        val frag = FileChooser()
+        val bundle = Bundle()
+        bundle.putString("url", url)
+        frag.arguments = bundle
+        fragmentManager.beginTransaction().add(R.id.fileChooserFragment, frag).commit()
     }
 
     override fun onMessageClick(message: ChatMessage) {

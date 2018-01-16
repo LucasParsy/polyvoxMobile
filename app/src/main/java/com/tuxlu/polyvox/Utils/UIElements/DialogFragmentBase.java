@@ -29,8 +29,7 @@ public abstract class DialogFragmentBase extends DialogFragment {
     protected String name;
     protected String url;
 
-    protected View setupLayout(LayoutInflater inflater, ViewGroup container, int layout)
-    {
+    protected View setupLayout(LayoutInflater inflater, ViewGroup container, int layout) {
         name = getArguments().getString("name");
         url = getArguments().getString("url");
 
@@ -39,11 +38,10 @@ public abstract class DialogFragmentBase extends DialogFragment {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (getActivity() instanceof MyAppCompatActivity)
-        {
+        if (getActivity() instanceof MyAppCompatActivity) {
             oldName = actionBar.getTitle().toString();
             actionBar.setTitle(name);
-            ((View)toolbar).setVisibility(View.GONE);
+            ((View) toolbar).setVisibility(View.GONE);
             return rootView;
         }
 
@@ -89,7 +87,6 @@ public abstract class DialogFragmentBase extends DialogFragment {
         menu.clear();
         //getActivity().getMenuInflater().inflate(R.menu.menu_ak, menu);
     }
-
 
 
     public boolean onOptionsItemSelected(MenuItem item) {

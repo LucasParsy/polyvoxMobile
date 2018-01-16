@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
-import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest
 import com.tuxlu.polyvox.Utils.PathUtils
 import com.tuxlu.polyvox.Utils.ToastType
@@ -33,10 +32,15 @@ private var fileName: String = ""
 private var type: String = ""
 private var byte: ByteArray? = null
 private var hasSent = false
-
+private lateinit var url : String;
 
 class FileChooser: Fragment()
 {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        url = arguments.getString("url")
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.util_file_chooser, container, false)
     }
@@ -64,8 +68,7 @@ class FileChooser: Fragment()
             val body = java.util.ArrayList<VolleyMultipartRequest.DataPart>()
             body.add(part)
 
-            //val url = APIUrl.BASE_URL + APIUrl.CHAT + friendAuthor.username
-            val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT + APIUrl.FAKE_CHAT_NAME
+
             APIRequest.Multipartequest(this.activity, Request.Method.POST, url,
                     true, body, { _ ->
                 byte = null
@@ -131,7 +134,6 @@ class FileChooser: Fragment()
             fChooserFileView.visibility = View.VISIBLE
         }
     }
-
     public interface OnCloseListener {
         public fun onClose(hasSent: Boolean);
     }

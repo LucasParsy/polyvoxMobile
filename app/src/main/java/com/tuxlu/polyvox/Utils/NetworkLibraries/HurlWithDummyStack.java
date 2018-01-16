@@ -24,6 +24,8 @@
 
 package com.tuxlu.polyvox.Utils.NetworkLibraries;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HurlStack;
@@ -54,8 +56,9 @@ public class HurlWithDummyStack extends HurlStack {
                 request.getUrl().startsWith(APIUrl.FAKE_BASE_URL))
             try {
                 return dummy.dummyRequest(request, additionalHeaders);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Log.wtf("HurlwithDymmyStack", e.getCause());
             }
         return super.performRequest(request, additionalHeaders);
     }
