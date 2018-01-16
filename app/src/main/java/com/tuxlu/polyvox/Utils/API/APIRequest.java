@@ -2,6 +2,7 @@ package com.tuxlu.polyvox.Utils.API;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -96,7 +97,10 @@ public class APIRequest {
     }
 
     public static void startLoginActivity(Context context) {
-        context.startActivity(new Intent(context, Login.class));
+        Intent intent = new Intent(context, Login.class);
+        if (!(context instanceof Activity))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 

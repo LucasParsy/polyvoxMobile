@@ -1,5 +1,6 @@
 package com.tuxlu.polyvox.Homepage;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,7 +61,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         configToolbar();
-        //Fabric.with(this, new Crashlytics());
         //leaks verification, in debug builds only.
 
         //todo: reactivate leak check
@@ -125,6 +125,7 @@ public class Home extends AppCompatActivity {
         setUserIcon(profileImage);
         final MenuItem searchItem = menu.findItem(R.id.search);
 
+        final Activity activity = this;
         actionView.setOnClickListener(new View.OnClickListener() {
             boolean clicked = false;
 
@@ -133,7 +134,7 @@ public class Home extends AppCompatActivity {
                 if (clicked)
                     return;
                 if (!APIRequest.isAPIConnected(getApplicationContext())) {
-                    APIRequest.startLoginActivity(getApplicationContext());
+                    APIRequest.startLoginActivity(activity);
                     return;
                 }
                 startProfileIntent();
