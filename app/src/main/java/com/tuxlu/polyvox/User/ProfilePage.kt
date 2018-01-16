@@ -54,9 +54,11 @@ class ProfilePage : MyAppCompatActivity() {
         connected = APIRequest.isAPIConnected(this)
 
         val userName = intent.getStringExtra("name")
+        val map = HashMap<String, String>()
+        map.put("userName", userName)
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
 
-        APIRequest.JSONrequest(this, Request.Method.GET,
-                APIUrl.BASE_URL + APIUrl.INFO_USER + userName,
+        APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->
             val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
             user.isCurrentUser = topObj.getBoolean("isMyProfile")
@@ -149,19 +151,15 @@ class ProfilePage : MyAppCompatActivity() {
         }
     }
 
-    private fun follow(follow: Boolean)
-    {
-        val message : Int
-        val method : Int
-        val increaseVar : Int
-        if (follow)
-        {
+    private fun follow(follow: Boolean) {
+        val message: Int
+        val method: Int
+        val increaseVar: Int
+        if (follow) {
             method = Request.Method.POST
             increaseVar = 1
             message = R.string.is_followed
-        }
-
-        else {
+        } else {
             method = Request.Method.DELETE
             increaseVar = -1
             message = R.string.is_no_more_followed
@@ -197,8 +195,7 @@ class ProfilePage : MyAppCompatActivity() {
         return true
     }
 
-    private fun setLayoutOrientation(orientation: Int)
-    {
+    private fun setLayoutOrientation(orientation: Int) {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rootView.orientation = LinearLayout.HORIZONTAL
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -207,17 +204,20 @@ class ProfilePage : MyAppCompatActivity() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-    super.onConfigurationChanged(newConfig)
+        super.onConfigurationChanged(newConfig)
         setLayoutOrientation(newConfig.orientation)
-    // Checks the orientation of the screen
-}
+        // Checks the orientation of the screen
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        APIRequest.JSONrequest(this, Request.Method.GET,
-                APIUrl.BASE_URL + APIUrl.INFO_USER + user.userName,
+        val map = HashMap<String, String>()
+        map.put("userName", user.userName)
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+
+        APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->
             val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
             val info = topObj.getJSONObject("info")

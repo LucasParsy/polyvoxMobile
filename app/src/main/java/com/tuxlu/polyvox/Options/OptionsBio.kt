@@ -12,6 +12,7 @@ import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import org.json.JSONObject
+import java.util.HashMap
 
 /**
  * Created by tuxlu on 29/11/17.
@@ -37,8 +38,12 @@ class OptionsBio : MyAppCompatActivity() {
 
         LoadingUtils.StartLoadingView(rootView, this)
 
-         APIRequest.JSONrequest(this, Request.Method.GET,
-                    APIUrl.BASE_URL + APIUrl.INFO_USER + AuthUtils.getUsername(baseContext),
+
+        val map = HashMap<String, String>()
+        map.put("userName", AuthUtils.getUsername(baseContext))
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+
+        APIRequest.JSONrequest(this, Request.Method.GET, url,
                     true, null, { response ->
                 val topObj = response.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                 val info = topObj.getJSONObject("info")

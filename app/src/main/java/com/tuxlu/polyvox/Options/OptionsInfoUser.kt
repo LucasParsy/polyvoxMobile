@@ -8,6 +8,7 @@ import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.MyDateUtils
+import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
@@ -36,7 +37,10 @@ class OptionsInfoUser : MyAppCompatActivity() {
         mainView.visibility = View.INVISIBLE
         MyDateUtils.setDateSpinners(rootView, this)
 
-        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + AuthUtils.getUsername(baseContext)
+        val map = HashMap<String, String>()
+        map.put("userName", AuthUtils.getUsername(baseContext))
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 true, null, { current ->
             val topObj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)

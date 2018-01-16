@@ -12,11 +12,13 @@ import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkMail
 import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkPassword
+import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user_options_mail_pass.*
 
 import org.json.JSONObject
+import java.util.HashMap
 
 /**
  * Created by tuxlu on 29/12/17.
@@ -39,7 +41,10 @@ class OptionsMailPass : MyAppCompatActivity() {
             oldPasswordInput.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
         }
 
-        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + AuthUtils.getUsername(baseContext)
+        val map = HashMap<String, String>()
+        map.put("userName", AuthUtils.getUsername(baseContext))
+        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 true, null, { current ->
             val topObj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
