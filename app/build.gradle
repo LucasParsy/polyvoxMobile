@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'io.fabric'
+apply plugin: 'io.fabric'
 
 
 android {
@@ -46,19 +46,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-crash:11.0.4'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    /*
     //error log
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
-        transitive = true
+       transitive = true
     }
     compile 'com.google.firebase:firebase-core:11.8.0'
-    */
 
 
     compile 'com.android.support:appcompat-v7:27.0.2'
