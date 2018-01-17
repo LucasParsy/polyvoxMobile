@@ -15,7 +15,7 @@ android {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
         targetSdkVersion 27
-        versionName '0.3 super polish, rush en retard'
+        versionName '0.4 le chat est en liesse!'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr" //enlève ressources langages non supportés.
     }
@@ -30,13 +30,19 @@ android {
         }
 
         debug {
+            ext.enableCrashlytics = false
             debuggable true
             minifyEnabled false
         }
 
     }
+
     sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/Homepage'] } }
     productFlavors {
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -78,12 +84,15 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     kapt 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    //exo
+    //exo streaming lib
     compile 'com.google.android.exoplayer:exoplayer-core:r2.5.4'
     compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
     compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    //IRC lib
+    compile group: 'pircbot', name: 'pircbot', version: '1.5.0'
 
     //stupid little lib adding little icon to Toast
     compile 'com.github.GrenderG:Toasty:1.2.8'

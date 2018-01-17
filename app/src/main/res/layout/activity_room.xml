@@ -27,17 +27,17 @@
         android:visibility="visible">
 
         <android.support.design.widget.TabItem
-            android:id="@+id/RoomTabTextQueue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_queue"
-            android:visibility="visible" />
-
-        <android.support.design.widget.TabItem
             android:id="@+id/RoomTabTextChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tab_chat"
+            android:visibility="visible" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/RoomTabTextQueue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_queue"
             android:visibility="visible" />
 
         <android.support.design.widget.TabItem

@@ -5,6 +5,10 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.View;
@@ -25,7 +29,12 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
+import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,15 +47,19 @@ import butterknife.OnClick;
 
 public class Room extends AppCompatActivity {
 
+    private static final int[] tabTitles = {R.string.tab_chat, R.string.tab_queue, R.string.tab_files};
     private int id;
     private String title;
-    @BindView(R.id.videoPlayerLayout) protected FrameLayout videoPlayerLayout;
-    @BindView(R.id.videoPlayerView) protected SimpleExoPlayerView videoPlayerView;
+    @BindView(R.id.videoPlayerLayout)
+    protected FrameLayout videoPlayerLayout;
+    @BindView(R.id.videoPlayerView)
+    protected SimpleExoPlayerView videoPlayerView;
 
-    @BindView(R.id.player_button_fullscreen) protected AppCompatImageButton fullscreenButton;
+    @BindView(R.id.player_button_fullscreen)
+    protected AppCompatImageButton fullscreenButton;
 
     private SimpleExoPlayer player;
-
+    private IRCChat ircChat;
 
     protected void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
@@ -58,6 +71,22 @@ public class Room extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setVideoPlayer();
         onConfigurationChanged(this.getResources().getConfiguration());
+        String username = AuthUtils.getUsername(getApplicationContext());
+
+
+        Fragment roomChat = Fragment.instantiate(this, RoomChat.class.getName());
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        bundle.putString("title", title);
+        roomChat.setArguments(bundle);
+
+        List<Fragment> fragments = new ArrayList<Fragment>();
+        fragments.add(roomChat);
+        //todo: gérer autres fragments
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
+        ViewPager pager = ((ViewPager)findViewById(R.id.pager));
+        pager.setAdapter(adapter);
+        ((TabLayout)findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
     }
 
     private void setVideoPlayer() {
@@ -85,16 +114,16 @@ public class Room extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.player_button_share) public void shareStream(View v)
-    {
+    @OnClick(R.id.player_button_share)
+    public void shareStream(View v) {
         //Todo Un jour, si on devient riche, recoder tout le partage de fichiers pour faire un beau thème.
         String url = "https://polyvox.fr/stream/" + id;
-        String body = getString(R.string.share_stream_body)  +"\n" + title + "\n" + getString(R.string.join_me);
+        String body = getString(R.string.share_stream_body) + "\n" + title + "\n" + getString(R.string.join_me);
         UtilsTemp.shareContent(this, body, url);
     }
 
-    @OnClick(R.id.player_button_fullscreen) public void setScreenOrientation(View v)
-    {
+    @OnClick(R.id.player_button_fullscreen)
+    public void setScreenOrientation(View v) {
         // orientation ? portrait : landscape;
         boolean orientation = (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
         setRequestedOrientation(orientation ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -104,27 +133,24 @@ public class Room extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
-        if (config.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
+        if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            videoPlayerLayout.getLayoutParams().height = (int)getResources().getDimension(R.dimen.room_video_player_size);
+            videoPlayerLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.room_video_player_size);
             fullscreenButton.setImageResource(R.drawable.ic_fullscreen_expand_24dp);
         }
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE)
-        {
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             videoPlayerLayout.getLayoutParams().height = FrameLayout.LayoutParams.MATCH_PARENT;
             fullscreenButton.setImageResource(R.drawable.ic_fullscreen_skrink_24dp);
             //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    //WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            }
-    videoPlayerLayout.requestLayout();
+            //WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        videoPlayerLayout.requestLayout();
     }
 
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         player.setPlayWhenReady(false);
         setRequestedOrientation(this.getResources().getConfiguration().orientation);
@@ -137,8 +163,7 @@ public class Room extends AppCompatActivity {
         */
     }
 
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         player.setPlayWhenReady(true);
     }

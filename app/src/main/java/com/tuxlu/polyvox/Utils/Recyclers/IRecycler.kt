@@ -26,10 +26,10 @@ abstract class IRecycler<T: Any> : Fragment() {
     abstract val recycleId: Int
     abstract val requestObjectName : String
 
-    abstract val itemDecoration: RecyclerView.ItemDecoration
+    abstract val itemDecoration: RecyclerView.ItemDecoration?
     abstract val binder: ViewHolderBinder<T>
 
-    private var adapter: Adapter<T>? = null
+    protected var adapter: Adapter<T>? = null
 
     abstract fun fillDataObject(json: JSONObject): T
     abstract fun setLayoutManager(): RecyclerView.LayoutManager
@@ -50,7 +50,8 @@ abstract class IRecycler<T: Any> : Fragment() {
 
 
         val layoutManager = setLayoutManager()
-        recycler.addItemDecoration(itemDecoration)
+        if (itemDecoration != null)
+            recycler.addItemDecoration(itemDecoration)
         recycler.layoutManager = layoutManager
 
         adapter = Adapter(context!!, ArrayList(), layoutObjectId, binder)
