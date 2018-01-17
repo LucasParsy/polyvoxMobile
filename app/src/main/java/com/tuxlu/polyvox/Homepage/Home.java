@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.leakcanary.LeakCanary;
+import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
@@ -68,6 +69,13 @@ public class Home extends AppCompatActivity {
         //LeakCanary.install(this.getApplication());
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
+        //disables crash reporting on debug builds:
+        //see https://medium.com/@trionkidnapper/disabling-crashlytics-crash-reporting-fabric-on-debug-builds-aee6fdc34a57
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build();
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
 
         List<Fragment> fragments = new Vector<>();
 

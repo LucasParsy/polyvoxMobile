@@ -41,7 +41,7 @@ public class IRCChat {
 
             this.setName("polyvox_test");
             this.setLogin("polyvox_test");
-            this.setVerbose(true);
+            this.setVerbose(false);
             try {
                 this.connect("irc.chat.twitch.tv", 6667, "oauth:pln7gksdq9ty1x8a645uv7zfbknqqp");
             } catch (Exception e) {
@@ -57,23 +57,23 @@ public class IRCChat {
         @Override
         public void onMessage(String channel, String sender,
                               String login, String hostname, String message) {
-            //if (channel != chan)
-            //return;
+
+            if (!chan.isEmpty() && !channel.equals(chan))
+                return;
+            if (channel.isEmpty())
+                chan = channel;
+
             RoomChatResult res = new RoomChatResult(sender, message);
             messages.add(res);
         }
 
         @Override
         public void onJoin(String channel, String sender, String login, String hostname) {
-            String myName = this.getName();
-            if (login.equals(myName)) { // It's me!
-                chan = channel;
-            }
         }
 
         @Override
         protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason) {
-            if (recipientNick == this.getNick())
+            if (recipientNick.equals(this.getNick()))
                 banned = true;
         }
 
