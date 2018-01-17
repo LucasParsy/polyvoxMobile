@@ -34,9 +34,20 @@
         android:layout_marginRight="10dp">
 
         <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/player_button_chat"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            app:srcCompat="@android:drawable/stat_notify_chat" />
+
+        <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_fullscreen"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
             android:background="#00000000"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_fullscreen_expand_24dp" />

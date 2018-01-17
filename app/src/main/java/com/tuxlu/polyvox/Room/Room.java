@@ -11,10 +11,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.androidanimations.library.sliders.SlideOutRightAnimator;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
@@ -31,6 +37,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
+import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import java.util.ArrayList;
@@ -58,8 +65,22 @@ public class Room extends AppCompatActivity {
     @BindView(R.id.player_button_fullscreen)
     protected AppCompatImageButton fullscreenButton;
 
+    @BindView(R.id.rootView)
+    protected LinearLayout rootView;
+
+    @BindView(R.id.chatLayout)
+    protected LinearLayout chatLayout;
+    int chatVisibilityStatus = View.VISIBLE;
+
+    @BindView(R.id.player_button_chat)
+    protected AppCompatImageButton chatVisibilityButton;
+
+
+
     private SimpleExoPlayer player;
     private IRCChat ircChat;
+
+    private float width;
 
     protected void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
@@ -70,6 +91,12 @@ public class Room extends AppCompatActivity {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setVideoPlayer();
+
+        Configuration config = this.getResources().getConfiguration();
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        width = (config.orientation == Configuration.ORIENTATION_PORTRAIT) ?  displayMetrics.heightPixels : displayMetrics.widthPixels;
+        //width /= displayMetrics.density;
+
         onConfigurationChanged(this.getResources().getConfiguration());
         String username = AuthUtils.getUsername(getApplicationContext());
 
@@ -129,6 +156,35 @@ public class Room extends AppCompatActivity {
         setRequestedOrientation(orientation ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
+    @OnClick(R.id.player_button_chat)
+    public void setChatVisibility(View v) {
+        int animWidth;
+
+        if (chatVisibilityStatus == View.VISIBLE)
+        {
+            chatVisibilityStatus = View.GONE;
+            chatLayout.setVisibility(View.GONE);
+            videoPlayerLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+            chatVisibilityButton.setImageResource(android.R.drawable.stat_notify_chat);
+            animWidth = (int)(width);
+        }
+        else
+        {
+            chatVisibilityStatus = View.VISIBLE;
+            chatLayout.setVisibility(View.VISIBLE);
+            //todo: find better icons for this button
+            chatVisibilityButton.setImageResource(android.R.drawable.ic_menu_revert);
+            animWidth = (int)(width - (width * 0.3));
+        }
+        ResizeWidthAnimation anim = new ResizeWidthAnimation(videoPlayerLayout, animWidth);
+        anim.setDuration(300);
+        videoPlayerLayout.startAnimation(anim);
+
+        //OU ANCIENNE MÉTHODE, SANS ANIM:
+        //videoPlayerLayout.getLayoutParams().width = animWidth;
+    }
+
+
 
     @Override
     public void onConfigurationChanged(Configuration config) {
@@ -136,18 +192,30 @@ public class Room extends AppCompatActivity {
         if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+
+            chatVisibilityButton.setVisibility(View.GONE);
+            rootView.setOrientation(LinearLayout.VERTICAL);
+            chatLayout.setVisibility(View.VISIBLE);
+            chatLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            chatLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+
             videoPlayerLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.room_video_player_size);
+            videoPlayerLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             fullscreenButton.setImageResource(R.drawable.ic_fullscreen_expand_24dp);
         }
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            videoPlayerLayout.getLayoutParams().height = FrameLayout.LayoutParams.MATCH_PARENT;
+
+            chatVisibilityButton.setVisibility(View.VISIBLE);
+            rootView.setOrientation(LinearLayout.HORIZONTAL);
+            chatLayout.setVisibility(chatVisibilityStatus);
+
+            videoPlayerLayout.getLayoutParams().height = FrameLayout.LayoutParams.WRAP_CONTENT;
+            videoPlayerLayout.getLayoutParams().width = (int)(width - (width * 0.3));
             fullscreenButton.setImageResource(R.drawable.ic_fullscreen_skrink_24dp);
-            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            //WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        videoPlayerLayout.requestLayout();
+        rootView.requestLayout();
     }
 
     protected void onPause() {

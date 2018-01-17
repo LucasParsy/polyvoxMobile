@@ -187,9 +187,8 @@ class ProfilePage : MyAppCompatActivity() {
         toolbarIcon.setOnMenuItemClickListener {
             if (user.isCurrentUser)
                 logout(this)
-            else {
+            else
                 follow(!user.following)
-            }
             true
         }
         return true
