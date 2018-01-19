@@ -8,13 +8,46 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/player_top_buttons_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_gravity="top|right"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:background="@color/PolyvoxMainColor"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/player_button_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="#00000000"
+            app:srcCompat="?android:attr/homeAsUpIndicator" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/player_room_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:text="Le droit de vote des femmes" />
+
+            <TextView
+                android:id="@+id/player_room_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                tools:text="ou la décadence d'une nation" />
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_share"
@@ -80,7 +113,7 @@
 
                 <Button
                     android:id="@+id/reportButton"
-                    style="@android:style/Widget.Material.Button"
+                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
@@ -90,6 +123,7 @@
 
                 <Button
                     android:id="@+id/commentButton"
+                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginRight="5dp"
@@ -174,7 +208,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:visibility="gone"></LinearLayout>
+            android:visibility="gone">
+        </LinearLayout>
 
     </LinearLayout>
 

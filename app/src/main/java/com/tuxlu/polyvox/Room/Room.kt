@@ -14,6 +14,8 @@ import android.widget.RatingBar
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.dash.DashMediaSource
@@ -98,6 +100,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         }
 
         showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png")
+
+        player_room_title.text = title
+        player_room_subtitle.text = "sous-titre"
     }
 
     private fun setVideoPlayer() {
@@ -226,7 +231,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         videoPlayerView!!.controllerHideOnTouch = false
         videoPlayerView!!.controllerShowTimeoutMs = 500000000;
         player_bottom_buttons_bar.visibility = View.GONE
-        player_bottom_rate_speaker.visibility = View.VISIBLE
+        commentBarLayout.visibility = View.GONE
+        ratingBarLayout.visibility = View.VISIBLE
+        //player_bottom_rate_speaker.visibility = View.VISIBLE
+        YoYo.with(Techniques.SlideInUp).duration(300).playOn(player_bottom_rate_speaker)
         infoUserName.text = user
         GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
     }
@@ -255,13 +263,13 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             return;
         }
         reportButton.visibility = View.VISIBLE;
-        commentBarLayout.visibility = View.GONE
         player_bottom_buttons_bar.visibility = View.VISIBLE
-        ratingBarLayout.visibility = View.VISIBLE
-        player_bottom_rate_speaker.visibility = View.GONE
+        YoYo.with(Techniques.SlideOutDown).duration(300).playOn(player_bottom_rate_speaker)
+        //player_bottom_rate_speaker.visibility = View.GONE
         videoPlayerView!!.controllerHideOnTouch = true
         videoPlayerView!!.controllerShowTimeoutMs = 5000;
         currentRatedSpeaker = null
+
     }
 
     private fun setFragmentArgument(frag: CommentReportBase)
@@ -285,6 +293,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         setFragmentArgument(frag)
         frag.show(fragmentManager, getString(R.string.send_comment))
     }
+
+    @OnClick(R.id.player_button_back)
+    fun onClose(v: View) {
+        finish();
+    }
+
 
     override fun dialogDismiss() {closeUserRating(reportButton) }
 

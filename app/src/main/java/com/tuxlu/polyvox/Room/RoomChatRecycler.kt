@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
 import org.json.JSONObject
 import java.util.*
+
 
 /**
  * Created by tuxlu on 12/11/17.
@@ -35,9 +38,14 @@ open class RoomChatBinder : ViewHolderBinder<RoomChatResult> {
 
     override fun bind(holder: Adapter.ViewHolder<RoomChatResult>, item: RoomChatResult) {
         val rand = Random(item.username.hashCode().toLong())
-        holder.v.findViewById<TextView>(R.id.name).text = item.username
-        holder.v.findViewById<TextView>(R.id.name).setTextColor(colors[rand.nextInt(colors.size)])
-        holder.v.findViewById<TextView>(R.id.message).text = item.message
+        val message = "<b><font color='" + colors[rand.nextInt(colors.size)] + "'>" + item.username + "</font></b>:" + item.message
+
+        val result: Spanned
+        result = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+            Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
+        else
+            Html.fromHtml(message)
+        holder.v.findViewById<TextView>(R.id.message).text = result
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<RoomChatResult>, data: MutableList<RoomChatResult>) {
