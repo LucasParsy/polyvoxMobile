@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 public class AuthUtils {
 
+    public static final int AUTH_REQUEST_CODE = 2816;
 
     public static void logout(final Context context)
     {

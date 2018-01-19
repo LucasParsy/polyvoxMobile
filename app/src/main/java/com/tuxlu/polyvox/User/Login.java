@@ -97,9 +97,8 @@ public class Login extends AccountAuthenticatorActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        //setResult(RESULT_OK); si utilisation startActivityForResult()
+                        setResult(RESULT_OK); //si utilisation startActivityForResult()
                         button.setText(getString(R.string.login_connect));
-
                         finish();
                     }
                 }, new Response.ErrorListener() {

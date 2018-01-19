@@ -72,10 +72,12 @@ public class Home extends AppCompatActivity {
 
         //disables crash reporting on debug builds:
         //see https://medium.com/@trionkidnapper/disabling-crashlytics-crash-reporting-fabric-on-debug-builds-aee6fdc34a57
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+
                 .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        Fabric.with(this, crashlyticsKit);
 
         List<Fragment> fragments = new Vector<>();
 
@@ -193,4 +195,13 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AuthUtils.AUTH_REQUEST_CODE && resultCode == Activity.RESULT_OK)
+            this.recreate();
+    }
+
+
 }

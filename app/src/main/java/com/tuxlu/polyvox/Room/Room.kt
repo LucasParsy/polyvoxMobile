@@ -1,5 +1,7 @@
 package com.tuxlu.polyvox.Room
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.net.Uri
@@ -299,6 +301,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         finish();
     }
 
+    //reloads page when logging
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AuthUtils.AUTH_REQUEST_CODE && resultCode == Activity.RESULT_OK)
+            this.recreate();
+    }
 
     override fun dialogDismiss() {closeUserRating(reportButton) }
 

@@ -62,12 +62,11 @@ public class APIRequest {
                                    final Response.ErrorListener errorListener) {
         if (!checkConnection(context, usesApi))
             return;
-        AsyncTask.execute(new Runnable() { @Override public void run() {
+        AsyncTask.execute(() -> {
                 final String token = usesApi ? AuthUtils.getToken(context) : null;
                 APIJsonObjectRequest jsObjRequest = new APIJsonObjectRequest(method, url, body, listener, errorListener, token, context);
                 addRequestToQueue(context, usesApi, jsObjRequest);
-            }
-        });
+            });
     }
 
 
@@ -100,7 +99,11 @@ public class APIRequest {
         Intent intent = new Intent(context, Login.class);
         if (!(context instanceof Activity))
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+
+        if (context instanceof Activity)
+            ((Activity)context).startActivityForResult(intent, AuthUtils.AUTH_REQUEST_CODE);
+        else
+            context.startActivity(intent);
     }
 
 
