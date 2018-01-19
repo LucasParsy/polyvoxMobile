@@ -158,6 +158,16 @@
     <string name="send">envoyer</string>
     <string name="size">taille: \u0020</string>
 
+    <string name="rate_user_text_start">qu\'avez vous pensé de  \u0020 </string>
+    <string name="rate_user_text_end">?:</string>
+    <string name="send_comment">laisser un commentaire</string>
+    <string name="send_comment_for">laisser un commentaire pour</string>
+    <string name="report">signaler</string>
+    <string name="report_sentence">signaler le comportement de</string>
+    <string name="description_required">Description (requis)</string>
+    <string name="report_error_params">veuillez fournir une raison et une description du problème</string>
+
+
     <string name="year">Année</string>
     <string name="day">Jour</string>
     <string-array name="months_spinner">
@@ -176,6 +186,13 @@
         <item>Décembre</item>
     </string-array>
 
+    <string-array name="report_reason_spinner">
+        <item>Raison (requis)</item>
+        <item>Caractère haineux</item>
+        <item>Nudité ou violence</item>
+        <item>Harcèlement</item>
+        <item>Autre</item>
+    </string-array>
 
 
 

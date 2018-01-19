@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,8 +13,8 @@
         android:layout_gravity="top|right"
         android:layout_marginBottom="0dp"
         android:layout_marginEnd="5dp"
-        android:orientation="horizontal"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_share"
@@ -24,14 +25,170 @@
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/player_bottom_rate_speaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/lighterter_gray"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/lighterter_gray"
+                android:clickable="false"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="0.2"
+                app:cardBackgroundColor="@color/lighterter_gray"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
+                tools:cardElevation="0dp">
+
+
+                <ImageView
+                    android:id="@+id/infoUserPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/commentBarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/reportButton"
+                    style="@android:style/Widget.Material.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:backgroundTint="#99cc0000"
+                    android:text="@string/report"
+                    tools:text="signaler" />
+
+                <Button
+                    android:id="@+id/commentButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/send_comment"
+                    android:textSize="12sp"
+                    tools:text="laisser un commentaire svp " />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ratingBarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/rate_user_text_start"
+                        android:textSize="15sp"
+                        tools:text="qu'avez vous pensé de " />
+
+                    <TextView
+                        android:id="@+id/infoUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tools:text="tuxlu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/rate_user_text_end"
+                        android:textSize="15sp"
+                        tools:text="?:" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatRatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/customRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:numStars="5"
+                    android:scaleX=".8"
+                    android:scaleY=".8"
+                    android:stepSize="0.5"
+                    android:theme="@style/customRatingBar" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/closeButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_cross" />
+
+        </LinearLayout>
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/comment_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:visibility="gone"></LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/player_bottom_buttons_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal"
-        android:layout_marginRight="10dp">
+        android:visibility="visible">
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_chat"

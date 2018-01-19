@@ -18,7 +18,6 @@
     </style>
 
     <style name="AppTheme.coloredButton" parent="android:style/Widget.Button">
-        <item name="android:layout_margin">0dip</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@color/PolyvoxMainColor</item>
@@ -60,6 +59,13 @@
     <style name="AppTheme.ColoredButton.Transparent" parent="@style/AppTheme.coloredButton">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/PolyvoxMainColorTransparent</item>
+    </style>
+
+
+    <style name="customRatingBar"
+        parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/warm_grey</item>
+        <item name="colorControlActivated">@color/PolyvoxMainColor</item>
     </style>
 
 </resources>

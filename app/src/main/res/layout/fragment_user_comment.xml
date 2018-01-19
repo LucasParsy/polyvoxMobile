@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minWidth="800dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <ImageView
+        android:id="@+id/infoUserPicture"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_account_circle_black_24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_comment_for"
+        tools:text="laisser un commentaire pour" />
+
+    <TextView
+        android:id="@+id/infoUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        tools:text="tuxlu" />
+
+    <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_border_textview"
+            android:lines="4"
+            android:maxLines="6"
+            android:minLines="4" />
+    </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+    <Button
+        android:id="@+id/sendButton"
+        style="@style/AppTheme.coloredButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exo_media_button_height"
+        android:layout_margin="20dp"
+        android:text="@string/send"
+        android:visibility="visible" />
+
+</LinearLayout>
+
