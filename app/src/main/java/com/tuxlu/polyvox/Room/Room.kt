@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -63,6 +64,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var ratingValue = -1f
     private var hasRated = false
 
+    //handler just for delaying user rating test...
+    private var handler : Handler? = null
+    private val runnable : Runnable = Runnable{ showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png")};
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val b = intent.extras!!
         id = b.getInt("id")
@@ -105,7 +111,8 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             hasRated = true
         }
 
-        showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png")
+        handler = Handler()
+        handler!!.postDelayed(runnable, 9000)
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
@@ -230,13 +237,20 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player!!.playWhenReady = true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler?.removeCallbacks(runnable)
+    }
+
 
     private fun showUserRating(user: String, imageUrl: String) {
         currentRatedSpeaker = user
         currentRatedSpeakerUrl = imageUrl;
         videoPlayerView!!.controllerHideOnTouch = false
         videoPlayerView!!.controllerShowTimeoutMs = 500000000;
+        videoPlayerView!!.showController()
         player_bottom_buttons_bar.visibility = View.GONE
+        player_bottom_rate_speaker.visibility = View.VISIBLE
         commentBarLayout.visibility = View.GONE
         ratingBarLayout.visibility = View.VISIBLE
         //player_bottom_rate_speaker.visibility = View.VISIBLE
