@@ -1,13 +1,17 @@
 package com.tuxlu.polyvox.Utils
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.widget.ImageButton
 import com.android.volley.DefaultRetryPolicy
@@ -86,7 +90,10 @@ class Fileloader {
 
 
         @JvmStatic
-        private fun downloadFile(url: String, context: Context) {
+        private fun downloadFile(url: String, context: Activity) {
+
+            if (!UtilsTemp.checkPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                return;
             val req = VolleyFileDownloader(Request.Method.GET, url, Response.Listener { response ->
                 val file = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/",
                         response.first)

@@ -27,12 +27,14 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles fileTree('proguard').asList().toArray()
+            manifestPlaceholders = [firebaseStatus:"true"]
         }
 
         debug {
             debuggable true
             minifyEnabled false
             buildConfigField 'Boolean', 'enableCrashlytics', 'false'
+            manifestPlaceholders = [firebaseStatus:"false"]
         }
 
     }

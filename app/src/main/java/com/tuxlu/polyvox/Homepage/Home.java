@@ -70,15 +70,6 @@ public class Home extends AppCompatActivity {
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
-        //disables crash reporting on debug builds:
-        //see https://medium.com/@trionkidnapper/disabling-crashlytics-crash-reporting-fabric-on-debug-builds-aee6fdc34a57
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-
-                .build();
-        Fabric.with(this, crashlyticsKit);
-
         List<Fragment> fragments = new Vector<>();
 
         fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //discover

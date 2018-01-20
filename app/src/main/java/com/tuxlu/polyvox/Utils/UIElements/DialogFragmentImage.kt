@@ -4,6 +4,7 @@ package com.tuxlu.polyvox.Utils.UIElements
  * Created by tuxlu on 06/01/18.
  */
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -40,6 +41,7 @@ class DialogFragmentImage : DialogFragmentBase() {
             val draw: BitmapDrawable = image.drawable as BitmapDrawable
             val bitmap = draw.bitmap
             file = downloadImage(bitmap, name, this.activity)
+            if (file != null)
             keepFile = true
         })
 
@@ -48,7 +50,9 @@ class DialogFragmentImage : DialogFragmentBase() {
         return layout
     }
 
-    private fun downloadImage(image: Bitmap, name: String, context: Context, showToast: Boolean = true): File {
+    private fun downloadImage(image: Bitmap, name: String, context: Context, showToast: Boolean = true): File? {
+        if (!UtilsTemp.checkPermission(this.activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            return null;
         val file = UtilsTemp.getPath(name)
         val bos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 0, bos)

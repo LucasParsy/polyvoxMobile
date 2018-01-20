@@ -4,6 +4,7 @@ package com.tuxlu.polyvox.Utils.UIElements
  * Created by tuxlu on 06/01/18.
  */
 
+import android.Manifest
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.view.ViewPager
@@ -30,7 +31,7 @@ import es.voghdev.pdfviewpager.library.PDFViewPager
 public class DialogFragmentPDF() : DialogFragmentBase()   {
 
     private lateinit var layout: View;
-    private lateinit var pdfViewPager: PDFViewPager;
+    private var pdfViewPager: PDFViewPager? = null;
     private var keepFile : Boolean = false
     private var file : File? = null
 
@@ -53,13 +54,18 @@ public class DialogFragmentPDF() : DialogFragmentBase()   {
     }
 
     private fun downloadPDF(url: String) {
+        if (!UtilsTemp.checkPermission(this.activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            dismiss()
+            return;
+        }
+
         val req = VolleyFileDownloader(Request.Method.GET, url, Response.Listener { response ->
             name = response.first
 
             val path = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/")
             file = File(path, name)
             pdfViewPager = PDFViewPager(this.activity, file!!.absolutePath)
-            layout.findViewById<ViewPager>(R.id.pager).adapter = pdfViewPager.adapter
+            layout.findViewById<ViewPager>(R.id.pager).adapter = pdfViewPager!!.adapter
             LoadingUtils.EndLoadingView(layout)
         }, Response.ErrorListener { _ ->
             UtilsTemp.showToast(activity, getString(R.string.download_error), ToastType.ERROR)
@@ -74,7 +80,7 @@ public class DialogFragmentPDF() : DialogFragmentBase()   {
     override fun onStop() {
         super.onStop()
         if (pdfViewPager != null)
-            (pdfViewPager.adapter as PDFPagerAdapter).close()
+            (pdfViewPager!!.adapter as PDFPagerAdapter).close()
         if (!keepFile && file != null)
             file!!.delete()
     }

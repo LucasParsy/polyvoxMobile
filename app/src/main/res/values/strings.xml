@@ -167,6 +167,7 @@
     <string name="description_required">Description (requis)</string>
     <string name="report_error_params">veuillez fournir une raison et une description du problème</string>
 
+    <string name="accept_permission">acceptez cette permission pour utiliser cette fonctionnalité</string>
 
     <string name="year">Année</string>
     <string name="day">Jour</string>

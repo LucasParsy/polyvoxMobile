@@ -1,15 +1,18 @@
 package com.tuxlu.polyvox.Utils
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
@@ -101,6 +104,21 @@ class UtilsTemp {
                 val imm: InputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
                 imm.hideSoftInputFromWindow(view.windowToken, 0);
             }
+        }
+
+
+        @JvmStatic
+        fun checkPermission(context: Activity, perm: String) : Boolean {
+            val permissionCheck = ContextCompat.checkSelfPermission(context, perm)
+
+            if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(context, perm)) {
+                    UtilsTemp.showToast(context, context.getString(R.string.accept_permission))
+                }
+                ActivityCompat.requestPermissions(context, arrayOf(perm), 729)
+            return false;
+            }
+            return true;
         }
 
 
