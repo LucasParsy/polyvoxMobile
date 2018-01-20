@@ -35,6 +35,7 @@ public class DummyAPIServer {
     private JSONObject chatMessages;
     private JSONObject chatMessages2;
     private JSONObject chatMessageUpdate;
+    private JSONObject fileList;
     private boolean messageUpdated = false;
     int userNum = 43;
 
@@ -47,6 +48,7 @@ public class DummyAPIServer {
             chatMessages = fileToJSON(R.raw.chat_messages, context);
             chatMessages2 = fileToJSON(R.raw.chat_messages2, context);
             chatMessageUpdate = fileToJSON(R.raw.chat_messages_new, context);
+            fileList = fileToJSON(R.raw.files_list, context);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,6 +113,7 @@ public class DummyAPIServer {
             case APIUrl.CREATE_ACCOUNT:  return createAccountRequest(body);
             case APIUrl.INFO_ROOM:  return infoRoomAndUserRequest(body, roomList, "rooms");
             case APIUrl.INFO_USER:  return infoRoomAndUserRequest(body, userList, "users");
+            case APIUrl.ROOM_FILE_LIST:  return makeHttpResponse(fileList, 200);
         }
         return makeHttpResponse(new JSONObject(), 404);
     }

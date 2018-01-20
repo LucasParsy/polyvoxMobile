@@ -81,6 +81,8 @@ public class APIUrl {
     public static final String CHAT_PARAM = "page";
     public static final String CHAT_UPDATE = "chat/update/";
 
+    public static final String ROOM_FILE_LIST = "room/files";
+
     public static final String CHAT_SEND_PARAM1 = "message";
 
     private APIUrl(){}

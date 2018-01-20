@@ -1,0 +1,55 @@
+{
+  "message": "ok",
+  "data": [
+    {
+      "userName": "tuxlu",
+      "url": "https://polyvox.fr/public/img/tuxlu42.png",
+      "files": [
+        {
+          "name": "document1.pdf",
+          "type": "pdf",
+          "url": "http://www.pdf995.com/samples/pdf.pdf",
+          "size": 20807296
+        },
+        {
+          "name": "rapport.xls",
+          "type": "xls",
+          "url": "https://www.cmu.edu/blackboard/files/evaluate/tests-example.xls",
+          "size": 485058
+        }
+      ]
+    },
+    {
+      "userName": "Morsay",
+      "url": "https://i.ytimg.com/vi/uoarvMjyKj4/maxresdefault.jpg",
+      "files": [
+        {
+          "name": "morsay.jpg",
+          "type": "image",
+          "url": "https://i.ytimg.com/vi/YLxpm4h1Qks/hqdefault.jpg",
+          "size": 20807296
+        }
+      ]
+    },
+    {
+      "userName": "MrConnard",
+      "url": "https://i.ytimg.com/vi/eLIhAYUqTFY/maxresdefault.jpg",
+      "files": [
+        {
+          "name": "why.png",
+          "type": "image",
+          "url": "https://pre00.deviantart.net/0e6e/th/pre/f/2017/062/1/5/analyse_de_pubs___misterjday_m__connard_06_by_ixygrec-db12ezj.png",
+          "size": 20807296
+        },
+        {
+          "name": "rapport2.xls",
+          "type": "xls",
+          "url": "https://www.cmu.edu/blackboard/files/evaluate/tests-example.xls",
+          "size": 20807296
+        }
+
+      ]
+    }
+
+  ]
+}

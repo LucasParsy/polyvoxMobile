@@ -20,14 +20,14 @@ import kotlin.collections.ArrayList
 
 abstract class IRecycler<T: Any> : Fragment() {
 
-    private var saveJArray: JSONArray = JSONArray()
+    protected var saveJArray: JSONArray = JSONArray()
     abstract val layoutListId: Int
     abstract val layoutObjectId: Int
     abstract val recycleId: Int
     abstract val requestObjectName : String
 
     abstract val itemDecoration: RecyclerView.ItemDecoration?
-    abstract val binder: ViewHolderBinder<T>
+    abstract val binder:  ViewHolderBinder<T>?
 
     protected var adapter: Adapter<T>? = null
 
@@ -35,8 +35,8 @@ abstract class IRecycler<T: Any> : Fragment() {
     abstract fun setLayoutManager(): RecyclerView.LayoutManager
 
     lateinit var rootView : View
-    private var noResView : View? = null
-    private var isNoResViewVisible : Boolean = true
+    protected var noResView : View? = null
+    protected var isNoResViewVisible : Boolean = true
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +54,7 @@ abstract class IRecycler<T: Any> : Fragment() {
             recycler.addItemDecoration(itemDecoration)
         recycler.layoutManager = layoutManager
 
-        adapter = Adapter(context!!, ArrayList(), layoutObjectId, binder)
+        adapter = Adapter(context!!, ArrayList(), layoutObjectId, binder!!)
         recycler.adapter = adapter
         return rootView
     }
@@ -64,7 +64,7 @@ abstract class IRecycler<T: Any> : Fragment() {
         isNoResViewVisible = nvis
     }
 
-    fun add(data: JSONArray, replace: Boolean=false)
+    protected fun getAddData(data: JSONArray, replace: Boolean) : MutableList<T>
     {
         if (replace)
             saveJArray = data
@@ -82,7 +82,12 @@ abstract class IRecycler<T: Any> : Fragment() {
             else
                 noResView!!.visibility = View.INVISIBLE
         }
+        return list
+    }
 
+    open fun add(data: JSONArray, replace: Boolean=false)
+    {
+        val list = getAddData(data, replace)
         if (replace || list.size == 0)
             adapter?.clear()
         if (list.size != 0)
@@ -90,13 +95,13 @@ abstract class IRecycler<T: Any> : Fragment() {
         adapter?.notifyDataSetChanged()
     }
 
-    fun clear()
+    open fun clear()
     {
         adapter?.clear()
         adapter?.notifyDataSetChanged()
     }
 
-    private fun parseJSON(jArray: JSONArray): MutableList<T> {
+    protected fun parseJSON(jArray: JSONArray): MutableList<T> {
         val data = ArrayList<T>()
         if (jArray.length() == 0)
             return data

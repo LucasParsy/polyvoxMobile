@@ -53,6 +53,7 @@ public class HurlWithDummyStack extends HurlStack {
     public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
             throws IOException, AuthFailureError {
         if (request.getUrl().startsWith(APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS) ||
+                request.getUrl().startsWith(APIUrl.BASE_URL + APIUrl.ROOM_FILE_LIST) ||
                 request.getUrl().startsWith(APIUrl.FAKE_BASE_URL))
             try {
                 return dummy.dummyRequest(request, additionalHeaders);

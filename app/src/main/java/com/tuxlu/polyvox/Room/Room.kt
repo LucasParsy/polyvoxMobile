@@ -87,8 +87,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         bundle.putString("title", title)
         roomChat.arguments = bundle
 
+        val filelist = Fragment.instantiate(this, FLRecycler::class.java.name)
+
+
         val fragments = ArrayList<Fragment>()
         fragments.add(roomChat)
+        fragments.add(filelist)
         //todo: gérer autres fragments
         val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
@@ -313,7 +317,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     companion object {
 
-        private val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_queue, R.string.tab_files)
+        private val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
     }
 
 

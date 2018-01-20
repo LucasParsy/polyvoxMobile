@@ -61,7 +61,7 @@ class Fileloader {
         }
 
         @JvmStatic
-        private fun getType(ntype: String, url: String): String {
+        public fun getType(ntype: String, url: String): String {
             if (!ntype.isBlank())
                 return ntype;
             var type = "";
