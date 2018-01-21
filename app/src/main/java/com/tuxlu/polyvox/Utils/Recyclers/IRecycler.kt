@@ -45,7 +45,7 @@ abstract class IRecycler<T: Any> : Fragment() {
         rootView = inflater.inflate(layoutListId, container, false)
         LoadingUtils.EndLoadingView(rootView)
         noResView = rootView.findViewById<View>(R.id.noResultsLayout)
-        val recycler = rootView.findViewById<View>(recycleId) as RecyclerView
+        val recycler = rootView.findViewById<RecyclerView>(recycleId)
         recycler.setHasFixedSize(true)
 
 

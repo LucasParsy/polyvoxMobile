@@ -23,8 +23,8 @@ interface ViewHolderBinder<T: Any> {
     }*/
 }
 
-class Adapter<T: Any>(private  val context : Context,
-                      private val data: MutableList<T>,
+open class Adapter<T: Any>(private  val context : Context,
+                      protected val data: MutableList<T>,
                       private val layout: Int,
                       private val binder : ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
 
@@ -60,10 +60,8 @@ class Adapter<T: Any>(private  val context : Context,
     }
 
     fun add(ndata :List<T>){
-        val size = data.size - 1
         data += ndata
-        notifyItemRangeInserted(size, size + ndata.size)
-
+        notifyItemInserted(data.size -1)
     }
 
     override fun getItemCount(): Int = data.size

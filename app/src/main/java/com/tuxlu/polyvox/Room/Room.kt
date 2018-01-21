@@ -93,16 +93,25 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         bundle.putString("title", title)
         roomChat.arguments = bundle
 
+
         val filelist = Fragment.instantiate(this, FLRecycler::class.java.name)
+
+
+        val bundle2 = Bundle()
+        bundle2.putInt("timeLimit", 300) //todo: récupérer avec infos de la room, ici défaut 5 mins
+        val waitlist = Fragment.instantiate(this, RoomWaitlist::class.java.name)
+        waitlist.arguments = bundle2
 
 
         val fragments = ArrayList<Fragment>()
         fragments.add(roomChat)
         fragments.add(filelist)
-        //todo: gérer autres fragments
+        fragments.add(waitlist)
         val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
+        pager.offscreenPageLimit = 3
         tabLayoutHome.setupWithViewPager(pager)
+
 
 
         ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { _, v, _ ->
