@@ -69,7 +69,7 @@ class OptionsBio : MyAppCompatActivity() {
 
         val body = JSONObject()
         body.put(APIUrl.UPDATE_INF0_BIO, bio)
-        APIRequest.JSONrequest(this, Request.Method.POST,
+        APIRequest.JSONrequest(this, Request.Method.PUT,
                 APIUrl.BASE_URL + APIUrl.UPDATE_INF0, true, body, { _ ->
             UtilsTemp.showToast(this, getString(R.string.bio_updated))
         }, null)

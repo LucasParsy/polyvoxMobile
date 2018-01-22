@@ -74,7 +74,7 @@ class OptionsInfoUser : MyAppCompatActivity() {
         body.put(APIUrl.INFO_LASTNAME, name.text)
         body.put(APIUrl.REGISTER_PARAM4, birthday)
 
-        APIRequest.JSONrequest(this, Request.Method.POST,
+        APIRequest.JSONrequest(this, Request.Method.PUT,
                 APIUrl.BASE_URL + APIUrl.UPDATE_INF0, true, body, { _ ->
             UtilsTemp.showToast(this, getString(R.string.user_info_updated))
         }, null)

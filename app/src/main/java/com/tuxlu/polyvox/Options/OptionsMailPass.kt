@@ -72,7 +72,7 @@ class OptionsMailPass : MyAppCompatActivity() {
         body.put("password", passwordInput.text.toString())
         body.put("oldPassword", oldPasswordInput.text.toString())
 
-        APIRequest.JSONrequest(this, Request.Method.POST, APIUrl.BASE_URL + APIUrl.UPDATE_USER, true, body, { _ ->
+        APIRequest.JSONrequest(this, Request.Method.PUT, APIUrl.BASE_URL + APIUrl.UPDATE_USER, true, body, { _ ->
             UtilsTemp.showToast(this, getString(R.string.user_info_updated), ToastType.SUCCESS)
         }, {error ->  if (error.networkResponse != null && error.networkResponse.statusCode == 422)
             UtilsTemp.showToast(this, getString(R.string.new_incorrect_credentials), ToastType.ERROR)
