@@ -37,6 +37,16 @@
   public *;
 }
 
+#for AboutLibraries lib autodetection
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
+
+#use this to be more optimized, but must add libs by hand.
+#-keepclasseswithmembers class **.R$* {
+#    public static final int define_*;
+#}
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.

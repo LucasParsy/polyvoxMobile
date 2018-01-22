@@ -173,6 +173,10 @@
 
     <string name="accept_permission">acceptez cette permission pour utiliser cette fonctionnalité</string>
 
+    <string name="licence_and_credits">Licenses et Crédits</string>
+
+
+
     <string name="year">Année</string>
     <string name="day">Jour</string>
     <string-array name="months_spinner">

@@ -143,6 +143,36 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/buttonCredits"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="creditsClick"
+                android:text="@string/licence_and_credits"
+                android:textAlignment="textStart"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:foregroundGravity="center"
+                android:scaleX="-1"
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/buttonDeco"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -164,7 +194,6 @@
                 android:scaleX="-1"
                 app:srcCompat="?attr/actionModeCloseDrawable" />
         </LinearLayout>
-
 
     </LinearLayout>
 

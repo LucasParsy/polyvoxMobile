@@ -1,2 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="aboutLibraries_description_showIcon">true</string>
+    <string name="aboutLibraries_description_showVersion">true</string>
+    <string name="aboutLibraries_description_text">
+        <![CDATA[
+    Vous aussi, donnez votre avis!
+]]>
+
+
+</string>
+    <string name="aboutLibraries_description_special1_name">Développeurs</string>
+    <string name="aboutLibraries_description_special1_text">
+        <![CDATA[
+            <b>application mobile:</b><br>
+            &emsp;Lucas Parsy</b>
+            <br><br>
+            <b>site Polyvox.fr:</b><br>
+            &emsp;Simon Desplat <br>
+            &emsp;Vincent Ganivet <br>
+            &emsp;Étienne Jeanmat <br>
+            &emsp;Marian Gappa <br>
+            &emsp;Hippolyte Quief <br>
+            &emsp;Pierre Rebut <br>
+            &emsp;Charles Samier
+]]>
+    </string>
+
+    <string name="aboutLibraries_description_special2_name">Changelog</string>
+    <string name="aboutLibraries_description_special2_text">
+        <![CDATA[
+       <i>&quot;on fait comme si ça marchait&quot;</i> <br><br>
+
+    Première version avec toutes les fonctionnalités de l\'application mobile,
+    mais toutes les routes de l\'API ne sont pas encore implémentées (voire créees)
+]]>
+    </string>
+
+
+</resources>

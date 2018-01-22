@@ -42,9 +42,14 @@ class Options : MyAppCompatActivity() {
         startActivity(Intent(baseContext, OptionsMailPass::class.java))
     }
 
-
-    fun decoClick(v: View)
+    fun creditsClick(v: View)
     {
-        AuthUtils.logout(this)
+        val colorMain = resources.getColor(R.color.PolyvoxMainColor)
+        LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT).
+                withActivityColor(Colors(colorMain, colorMain)).
+                withActivityTitle(resources.getString(R.string.licence_and_credits)).
+                start(this)
+        //todo: add all the libs that are not detected... one day...
     }
+
 }

@@ -9,16 +9,15 @@ import com.tuxlu.polyvox.User.Register
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
-import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkMail
 import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkPassword
 import com.tuxlu.polyvox.Utils.NetworkUtils
+import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_user_options_mail_pass.*
-
 import org.json.JSONObject
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by tuxlu on 29/12/17.
