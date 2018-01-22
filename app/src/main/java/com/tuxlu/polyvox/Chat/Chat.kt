@@ -51,9 +51,9 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         friendAuthor = Author(name, friendUrl)
 
         val myName = AuthUtils.getUsername(this);
-        var imageUrl = AuthUtils.getPictureUrl(this)
+        var imageUrl : String = AuthUtils.getPictureUrl(this)
         if (UtilsTemp.isStringEmpty(imageUrl))
-            imageUrl = null
+            imageUrl = ""
         myAuthor = Author(myName, imageUrl)
 
 
