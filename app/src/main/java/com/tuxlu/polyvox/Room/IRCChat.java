@@ -1,7 +1,5 @@
 package com.tuxlu.polyvox.Room;
 
-import android.util.Log;
-
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;

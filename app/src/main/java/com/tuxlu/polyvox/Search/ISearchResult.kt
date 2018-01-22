@@ -5,11 +5,8 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
 import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.R

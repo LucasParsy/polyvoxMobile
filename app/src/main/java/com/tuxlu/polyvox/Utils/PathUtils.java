@@ -1,6 +1,5 @@
 package com.tuxlu.polyvox.Utils;
 
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;

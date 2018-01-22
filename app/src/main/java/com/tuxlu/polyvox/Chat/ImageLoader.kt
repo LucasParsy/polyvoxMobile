@@ -2,7 +2,6 @@ package com.tuxlu.polyvox.Chat
 
 import android.content.Context
 import android.widget.ImageView
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 

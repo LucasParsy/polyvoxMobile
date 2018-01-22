@@ -1,7 +1,5 @@
 package com.tuxlu.polyvox;
 
-import android.content.ContentResolver;
-
 import org.junit.Test;
 
 import java.net.URLConnection;

@@ -5,11 +5,9 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import com.android.volley.*
 import com.tuxlu.polyvox.R
-
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import org.json.JSONObject
-
-import java.util.HashMap
+import java.util.*
 
 
 /**

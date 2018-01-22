@@ -15,17 +15,14 @@ import android.widget.ImageButton
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
-
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyFileDownloader
 import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UtilsTemp
+import es.voghdev.pdfviewpager.library.PDFViewPager
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 import java.io.File
-import es.voghdev.pdfviewpager.library.PDFViewPager
-
-
 
 
 public class DialogFragmentPDF() : DialogFragmentBase()   {

@@ -19,6 +19,14 @@ buildscript {
     }
 }
 
+/*
+//delete all unused dependencies
+plugins {
+    id 'nebula.lint' version '7.4.0'
+}
+gradleLint.rules = ['all-dependency']
+*/
+
 allprojects {
     repositories {
         google()

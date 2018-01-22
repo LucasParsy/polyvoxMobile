@@ -5,7 +5,6 @@ import android.content.Context;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Header;
 import com.android.volley.toolbox.HttpResponse;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.API.APIUrl;

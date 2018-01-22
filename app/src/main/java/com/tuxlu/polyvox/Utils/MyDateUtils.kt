@@ -8,10 +8,7 @@ import android.widget.TextView
 import com.tuxlu.polyvox.R
 import java.text.SimpleDateFormat
 import java.util.*
-
-import java.util.Calendar.DATE
-import java.util.Calendar.MONTH
-import java.util.Calendar.YEAR
+import java.util.Calendar.*
 
 /**
  * Created by tuxlu on 25/11/17.

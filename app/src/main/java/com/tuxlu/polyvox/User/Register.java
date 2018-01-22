@@ -1,7 +1,5 @@
 package com.tuxlu.polyvox.User;
 
-import java.text.SimpleDateFormat;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +17,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
+import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
-import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
+import com.tuxlu.polyvox.Utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkMail;

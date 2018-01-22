@@ -6,12 +6,11 @@ import com.android.volley.Request
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
-import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.InputFieldsVerifier.checkMail
+import com.tuxlu.polyvox.Utils.ToastType
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_login_password_forgot.*
-
 import org.json.JSONObject
 
 /**

@@ -11,7 +11,6 @@ import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import kotlin.collections.ArrayList
 
 /**
  * Created by tuxlu on 12/11/17.

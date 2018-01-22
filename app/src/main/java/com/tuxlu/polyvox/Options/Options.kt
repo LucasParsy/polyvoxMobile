@@ -3,8 +3,10 @@ package com.tuxlu.polyvox.Options
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
+import com.mikepenz.aboutlibraries.util.Colors
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 
 @Suppress("UNUSED_PARAMETER")

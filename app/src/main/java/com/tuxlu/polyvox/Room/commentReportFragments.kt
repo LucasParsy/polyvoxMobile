@@ -1,12 +1,10 @@
 package com.tuxlu.polyvox.Room
 
-import android.app.Activity
 import android.app.DialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp

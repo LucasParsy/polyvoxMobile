@@ -1,17 +1,17 @@
 package com.tuxlu.polyvox.Utils.Auth
 
-import com.android.volley.ParseError
-import com.android.volley.toolbox.HttpHeaderParser
-import org.json.JSONObject
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
 import com.android.volley.NetworkResponse
+import com.android.volley.ParseError
 import com.android.volley.Response
+import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import org.json.JSONObject
 import java.nio.charset.Charset
 
 

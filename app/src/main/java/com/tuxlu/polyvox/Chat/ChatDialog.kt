@@ -3,7 +3,6 @@ package com.tuxlu.polyvox.Chat
 import com.stfalcon.chatkit.commons.models.IDialog
 import com.stfalcon.chatkit.commons.models.IMessage
 import com.stfalcon.chatkit.commons.models.IUser
-import com.stfalcon.chatkit.messages.MessagesList
 import java.util.*
 
 /**

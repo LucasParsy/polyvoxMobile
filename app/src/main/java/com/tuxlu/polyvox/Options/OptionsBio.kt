@@ -5,14 +5,15 @@ import android.support.design.widget.TextInputEditText
 import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.*
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import org.json.JSONObject
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by tuxlu on 29/11/17.

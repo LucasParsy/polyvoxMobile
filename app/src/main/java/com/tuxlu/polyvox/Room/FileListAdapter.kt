@@ -1,12 +1,8 @@
 package com.tuxlu.polyvox.Room
 
 import android.app.Activity
-import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,25 +10,14 @@ import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.VolleyError
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
-import com.thoughtbot.expandablerecyclerview.models.ExpandableList
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
-import com.tuxlu.polyvox.Homepage.DiscoverBinder
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Fileloader
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
-import com.tuxlu.polyvox.Utils.Recyclers.Adapter
-import com.tuxlu.polyvox.Utils.Recyclers.IRequestRecycler
-import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
-import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 
 
 /**
