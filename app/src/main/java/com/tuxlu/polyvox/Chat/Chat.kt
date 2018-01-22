@@ -39,6 +39,8 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     private var pagesLoaded = 1
     private var sentList = ArrayList<String>()
 
+    private val handler = Handler()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +79,6 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         input.setInputListener(this)
         onLoadMore(1, 42)
 
-        val handler = Handler()
         val delay: Long = 10000 //10 seconds
         handler.postDelayed(object : Runnable {
             override fun run() {
@@ -204,4 +205,8 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             updateMessages()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
 }

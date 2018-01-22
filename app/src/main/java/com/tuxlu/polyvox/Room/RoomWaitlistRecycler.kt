@@ -20,6 +20,7 @@ import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
 import org.json.JSONObject
 import java.util.*
+import kotlin.concurrent.timer
 
 
 /**
@@ -191,6 +192,15 @@ class RoomWaitlistAdapter(nContext: Context,
             data[position].timer!!.cancel()
     }
 
+    fun deleteTimers()
+    {
+        for (item in data) {
+            if (item.timer != null) {
+                item.timer!!.cancel()
+                item.timer = null
+            }
+        }
+    }
 }
 
 
@@ -248,4 +258,8 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
 
     override fun setLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
 
+    override fun onDestroy() {
+        super.onDestroy()
+        (adapter as RoomWaitlistAdapter?)?.deleteTimers()
+    }
 }
