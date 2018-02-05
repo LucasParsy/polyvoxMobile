@@ -1,5 +1,6 @@
 package com.tuxlu.polyvox.Options
 
+import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -88,6 +89,17 @@ class OptionsPicture : MyAppCompatActivity() {
             addProfilePicButton.text = getString(R.string.profile_picture_add)
             currentprofilePic.setImageDrawable(newProfilePic.drawable)
             UtilsTemp.showToast(this, getString(R.string.user_info_updated), ToastType.SUCCESS)
+
+            val am = AccountManager.get(this)
+            val picUrl = am.getUserData(am.accounts[0], "picture")
+            if (!picUrl.isNullOrBlank())
+                return@Multipartequest
+            APIRequest.JSONrequest(this, Request.Method.POST, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER, true, null,
+                    { jsonResponse ->
+                        val npicUrl = jsonResponse.getJSONObject("data").getString("picture")
+                        am.setUserData(am.accounts[0], "picture", npicUrl)
+                    }, null)
+
         }, null)
         //send request
         //si bon
