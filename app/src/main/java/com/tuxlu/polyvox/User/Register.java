@@ -17,11 +17,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
+import com.tuxlu.polyvox.Utils.ToastType;
+import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,14 +139,14 @@ public class Register extends AppCompatActivity {
         button.setText(getString(R.string.register_sending));
 
 
-        JsonObjectRequest jsObjRequest = new AuthRequest(getApplicationContext(), mailText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
+        JsonObjectRequest jsObjRequest = new APIRequest.APIJsonObjectRequest(Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
 
                         button.setText(getString(R.string.create_account));
-                        endActivity(mailText, passText);
+                        endActivity(mailText);
                         //la réponse
                     }
                 },
@@ -166,8 +169,7 @@ public class Register extends AppCompatActivity {
                             ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.no_network));
                         }
                     }
-                }
-        );
+                }, null, this.getApplicationContext());
         VHttp.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
 
@@ -187,10 +189,13 @@ public class Register extends AppCompatActivity {
      */
     }
 
-    private void endActivity(String mail, String pass) {
+    private void endActivity(String mail) {
+        /*
         Intent intent = new Intent(this, RegisterSuccessful.class);
         intent.putExtra("mail", mail);
         startActivity(intent);
+        */
+        UtilsTemp.showToast(this, getResources().getString(R.string.account_created), ToastType.SUCCESS);
         finish();
     }
 

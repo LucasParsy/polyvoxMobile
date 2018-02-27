@@ -33,6 +33,7 @@
     <string name="login_connection_problem">Problèmes de connexion?</string>
     <string name="login_create_prompt">Pas encore rejoint la communauté?</string>
     <string name="login_create_account">Créer un compte</string>
+    <string name="account_created">votre compte a été crée, vous pouvez vous connecter!</string>
     <string name="login_incorrect_credentials">E-mail ou mot de passe incorrect</string>
     <string name="new_incorrect_credentials">nouvel E-mail ou mot de passe actuel incorrects</string>
 

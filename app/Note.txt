@@ -1,3 +1,21 @@
+0 = {Header@6211} "Header[name=Access-Control-Allow-Credentials,value=true]"
+1 = {Header@6212} "Header[name=Access-Control-Allow-Headers,value=content-type]"
+2 = {Header@6216} "Header[name=Access-Control-Allow-Methods,value=GET, POST, PUT, OPTIONS, DELETE]"
+3 = {Header@6217} "Header[name=Access-Control-Allow-Origin,value=https://polyvox.fr]"
+4 = {Header@6218} "Header[name=Connection,value=keep-alive]"
+5 = {Header@6219} "Header[name=Content-Length,value=53]"
+6 = {Header@6220} "Header[name=Content-Type,value=application/json; charset=utf-8]"
+7 = {Header@6221} "Header[name=Date,value=Mon, 22 Jan 2018 00:48:58 GMT]"
+8 = {Header@6222} "Header[name=ETag,value=W/"35-ZGVjImlvqhE5tUh9wqgskDF776E"]"
+9 = {Header@6223} "Header[name=Server,value=nginx/1.10.3]"
+10 = {Header@6224} "Header[name=X-Android-Received-Millis,value=1516582138322]"
+11 = {Header@6225} "Header[name=X-Android-Response-Source,value=NETWORK 404]"
+12 = {Header@6226} "Header[name=X-Android-Selected-Protocol,value=http/1.1]"
+13 = {Header@6227} "Header[name=X-Android-Sent-Millis,value=1516582138291]"
+14 = {Header@6228} "Header[name=X-Powered-By,value=Express]"
+
+
+
 changer mode de recherche dans Page d'acceuil:
 
 décommenter XML dans res/menu/menu_home
@@ -19,3 +37,7 @@ Image
 Page Web
 
 non: Son, Video, GIF
+
+
+Ajouter vérification nom et prénom dans OptionsInfoUser:
+lastName must be between 2 and 128 characters in length

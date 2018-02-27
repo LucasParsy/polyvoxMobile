@@ -7,6 +7,7 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils.logout
 import com.tuxlu.polyvox.Utils.UIElements.MyAppCompatActivity
 
 @Suppress("UNUSED_PARAMETER")
@@ -40,6 +41,11 @@ class Options : MyAppCompatActivity() {
     fun mailClick(v: View)
     {
         startActivity(Intent(baseContext, OptionsMailPass::class.java))
+    }
+
+    fun decoClick(v: View)
+    {
+        logout(this)
     }
 
     fun creditsClick(v: View)

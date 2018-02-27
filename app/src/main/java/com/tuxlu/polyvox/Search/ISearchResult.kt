@@ -69,7 +69,9 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
                         val usersFragment =  adapter?.getItem(0) as SearchUserRecycler
-                        usersFragment.add(result.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
+                        val dataObj = result.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
+                        if (dataObj.has(APIUrl.SEARCH_USER))
+                            usersFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_USER), true)
                     }
                     //todo: gérer autres fragments
                 }, null)

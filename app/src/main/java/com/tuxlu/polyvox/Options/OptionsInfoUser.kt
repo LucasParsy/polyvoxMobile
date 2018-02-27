@@ -70,6 +70,8 @@ class OptionsInfoUser : MyAppCompatActivity() {
         val ft = SimpleDateFormat("yyyy-MM-dd")
         val birthday = ft.format(date)
         val body = JSONObject()
+        //todo: vérifier Firstname et Lastname soient compris entre 2 et 128 caractères
+
         body.put(APIUrl.INFO_FIRSTNAME, surname.text)
         body.put(APIUrl.INFO_LASTNAME, name.text)
         body.put(APIUrl.REGISTER_PARAM4, birthday)

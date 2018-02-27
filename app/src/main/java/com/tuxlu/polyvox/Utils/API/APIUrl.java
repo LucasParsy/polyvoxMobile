@@ -59,6 +59,7 @@ public class APIUrl {
 
     public static final String SEARCH = "search";
     public static final String SEARCH_PARAM1 = "query";
+    public static final String SEARCH_USER = "users";
     public static final String SEARCH_USER_JSONOBJECT = "data";
     public static final String SEARCH_USER_NAME = "userName";
     public static final String SEARCH_USER_IMAGE_URL = "picture";
