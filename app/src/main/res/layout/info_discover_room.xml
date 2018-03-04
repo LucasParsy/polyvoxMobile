@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_logo_carrey" />
 
     <LinearLayout
         android:layout_width="match_parent"

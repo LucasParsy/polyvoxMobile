@@ -14,7 +14,7 @@ public class APIUrl {
 
     public static final String INFO_CURRENT_USER = "users/currentUser";
 
-    public static final String DISCOVER_ROOMS = "discoverRoom";
+    public static final String DISCOVER_ROOMS = "room";
     public static final String SEARCH_ROOMS = "searchRoom";
 
     public static final String CREATE_ACCOUNT = "createAccount";

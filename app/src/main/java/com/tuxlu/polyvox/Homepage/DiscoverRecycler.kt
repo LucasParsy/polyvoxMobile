@@ -17,6 +17,7 @@ import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRequestRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -27,8 +28,8 @@ import org.json.JSONObject
 
 data class DiscoverBox(var name: String ="",
                        var imageUrl: String ="",
-                       var viewers: Int = -1,
-                       var roomID: Int = -1)
+                       var token: String ="",
+                       var viewers: Int = 0)
 
 
 class SpaceItemDecoration : RecyclerView.ItemDecoration() {
@@ -52,7 +53,8 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
         holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = (item.viewers.toString())
 
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-        GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(image)
+        if (!UtilsTemp.isStringEmpty(item.imageUrl))
+            GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_logo_carrey).into(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<DiscoverBox>, data: MutableList<DiscoverBox>)
@@ -62,7 +64,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
 
             val intent = Intent(context, Room::class.java)
 
-            intent.putExtra("token", "black")
+            intent.putExtra("token", data[holder.adapterPosition].token)
             intent.putExtra("title", data[holder.adapterPosition].name)
             context.startActivity(intent)
         }
@@ -79,7 +81,7 @@ open class DiscoverRecycler : IRequestRecycler<DiscoverBox>()
     override val requestUrl : String = APIUrl.DISCOVER_ROOMS
     override val requestBody: JSONObject = JSONObject()
     override val usesAPI : Boolean = false
-    override val requestObjectName : String = "rooms"
+    override val requestObjectName : String = "data"
 
     override val binder = DiscoverBinder()
     override val itemDecoration= SpaceItemDecoration()
@@ -94,10 +96,10 @@ open class DiscoverRecycler : IRequestRecycler<DiscoverBox>()
     {
         val rb = DiscoverBox()
         try {
-            rb.name = json.getString("title")
-            rb.imageUrl = json.getString("picture")
-            rb.viewers = json.getInt("viewers")
-            rb.roomID = json.getInt("roomID")
+            rb.name = json.getString("name")
+            rb.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
+            rb.viewers = json.getJSONArray("waitList").length()
+            rb.token = json.getString("token")
         } catch (e: JSONException) {
             e.printStackTrace()
         }

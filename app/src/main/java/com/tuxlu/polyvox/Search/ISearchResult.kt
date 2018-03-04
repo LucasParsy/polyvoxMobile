@@ -30,7 +30,7 @@ abstract class ISearchResult : AppCompatActivity() {
 todo: qui inclut plusieurs fragment DONC Différent type des deux autres, exception, galère, chiant.
 */
 
-    private val tabTitles = intArrayOf(R.string.users, R.string.tab_friends, R.string.tab_chat)
+    private val tabTitles = intArrayOf(R.string.users, R.string.rooms, R.string.tab_chat)
     internal var adapter: PagerAdapter? = null
     //lateinit private var roomFragment: SearchRoomRecycler
     //lateinit private var globalFragment: GlobalSearchFragment
@@ -69,9 +69,12 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
                         val usersFragment =  adapter?.getItem(0) as SearchUserRecycler
+                        val roomFragment =  adapter?.getItem(1) as SearchRoomRecycler
                         val dataObj = result.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                         if (dataObj.has(APIUrl.SEARCH_USER))
                             usersFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_USER), true)
+                        if (dataObj.has(APIUrl.SEARCH_ROOM_JSONOBJECT))
+                            roomFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_ROOM_JSONOBJECT), true)
                     }
                     //todo: gérer autres fragments
                 }, null)
@@ -84,9 +87,11 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         if (savedInstanceState != null) {
             //val frags = supportFragmentManager.fragments
             fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment0"))
+            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment1"))
             adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         } else {
             fragments.add(Fragment.instantiate(this, SearchUserRecycler::class.java.name))
+            fragments.add(Fragment.instantiate(this, SearchRoomRecycler::class.java.name))
             //todo: gérer autres fragments
             adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         }
@@ -104,6 +109,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         supportFragmentManager.putFragment(outState, "SearchFragment0", adapter?.getItem(0))
+        supportFragmentManager.putFragment(outState, "SearchFragment1", adapter?.getItem(1))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
