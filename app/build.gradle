@@ -87,7 +87,8 @@ dependencies {
 
     //exo streaming lib
     compile 'com.google.android.exoplayer:exoplayer-core:r2.5.4'
-    compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
+    compile 'com.google.android.exoplayer:exoplayer-hls:r2.5.4'
+    //compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
     compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

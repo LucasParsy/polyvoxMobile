@@ -62,7 +62,7 @@ open class DiscoverBinder : ViewHolderBinder<DiscoverBox> {
 
             val intent = Intent(context, Room::class.java)
 
-            intent.putExtra("id", data[holder.adapterPosition].roomID)
+            intent.putExtra("token", "black")
             intent.putExtra("title", data[holder.adapterPosition].name)
             context.startActivity(intent)
         }

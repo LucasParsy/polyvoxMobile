@@ -21,14 +21,18 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.dash.DashMediaSource
-import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
+import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory
+import com.google.android.exoplayer2.source.hls.HlsDataSourceFactory
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
+//import com.google.android.exoplayer2.source.dash.DashMediaSource
+//import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
@@ -36,6 +40,7 @@ import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.exo_stream_playback_control.*
+import java.net.URI
 import java.util.*
 
 
@@ -71,12 +76,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val b = intent.extras!!
-        id = b.getInt("id")
         title = b.getString("title")
+        val token = b.getString("token")
         setContentView(R.layout.activity_room)
         ButterKnife.bind(this)
         super.onCreate(savedInstanceState)
-        setVideoPlayer()
+        setVideoPlayer(token)
 
         val config = this.resources.configuration
         val displayMetrics = resources.displayMetrics
@@ -127,20 +132,23 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_room_subtitle.text = "sous-titre"
     }
 
-    private fun setVideoPlayer() {
+    private fun setVideoPlayer(token: String) {
         val context = baseContext
         //Uri videoUrl = Uri.parse(APIUrl.BASE_URL + APIUrl.VIDEO_STREAM + "/" + id);
         //Uri videoUrl = Uri.parse("http://www-itec.uni-klu.ac.at/ftp/datasets/DASHDataset2014/BigBuckBunny/2sec/BigBuckBunny_2s_simple_2014_05_09.mpd");
         //Uri videoUrl = Uri.parse("http://vm2.dashif.org/livesim-dev/periods_60/xlink_30/insertad_3/testpic_2s/Manifest.mpd");
-        val videoUrl = Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
-
-
+        var videoUrl : Uri = if (token == "black")
+            Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
+        else
+            Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
         val bandwidthMeter = DefaultBandwidthMeter()
         val dataSourceFactory = DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
         // This is the MediaSource representing the media to be played.
-        val videoSource = DashMediaSource(videoUrl, dataSourceFactory,
-                DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
+        val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
+                 null, null)
+        //val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
+                //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
         val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
         val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
         player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)

@@ -61,6 +61,7 @@ public class APIUrl {
     public static final String SEARCH_PARAM1 = "query";
     public static final String SEARCH_USER = "users";
     public static final String SEARCH_USER_JSONOBJECT = "data";
+    public static final String SEARCH_ROOM_JSONOBJECT = "rooms";
     public static final String SEARCH_USER_NAME = "userName";
     public static final String SEARCH_USER_IMAGE_URL = "picture";
 
@@ -83,6 +84,8 @@ public class APIUrl {
     public static final String CHAT_UPDATE = "chat/update/";
 
     public static final String ROOM_FILE_LIST = "room/files";
+    public static final String ROOM = "room/";
+    public static final String ROOM_STREAM_SUFFIX = "/stream.m3u8";
 
     public static final String CHAT_SEND_PARAM1 = "message";
 
