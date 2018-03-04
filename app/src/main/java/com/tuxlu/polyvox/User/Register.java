@@ -153,20 +153,27 @@ public class Register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        TextInputLayout mail =  findViewById(R.id.RegisterEmailLayout);
+                        TextInputLayout id =  findViewById(R.id.RegisterIDLayout);
+                        findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
                         button.setText(getString(R.string.create_account));
                         if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE)
                         {
                             String errData = new String(error.networkResponse.data);
-                            if (errData.contains(APIUrl.REGISTER_MAIL_ERROR))
-                                ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.register_mail_already_used));
+                            id.clearFocus();
+                            if (errData.contains(APIUrl.REGISTER_MAIL_ERROR)) {
+                                findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
+                                mail.setError(getString(R.string.register_mail_already_used));
+                            }
                             else if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
-                                ((TextInputLayout) findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.register_ID_already_used));
+                                id.setError(getString(R.string.register_ID_already_used));
                             else
-                                ((TextInputLayout)findViewById(R.id.RegisterIDLayout)).setError(getString(R.string.unknown_error));
+                                id.setError(getString(R.string.unknown_error));
                         }
                         else {
                             NetworkUtils.checkNetworkError(getApplicationContext(), error);
-                            ((TextInputLayout) findViewById(R.id.RegisterEmailLayout)).setError(getString(R.string.no_network));
+                            findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
+                            id.setError(getString(R.string.no_network));
                         }
                     }
                 }, null, this.getApplicationContext());

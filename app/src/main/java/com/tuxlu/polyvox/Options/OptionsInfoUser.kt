@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.android.volley.Request
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.User.Register
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
@@ -30,7 +31,6 @@ class OptionsInfoUser : MyAppCompatActivity() {
         LoadingUtils.EndLoadingView(rootView)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_options_info_user)
@@ -48,6 +48,9 @@ class OptionsInfoUser : MyAppCompatActivity() {
             surname.setText(info.getString("firstName"))
             name.setText(info.getString("lastName"))
 
+            name.onFocusChangeListener = Register.RegisterHintFocus(nameHint, NameLayout)
+            surname.onFocusChangeListener = Register.RegisterHintFocus(surnameHint, SurnameLayout)
+
             val date = info.getString("birthday")
             MyDateUtils.setSpinnersToDate(date, "yyyy-MM-dd", rootView)
             showLayout()
@@ -58,19 +61,19 @@ class OptionsInfoUser : MyAppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun buttonClick(v: View)
     {
-
-/*
-        if (!surname.text.matches("REGEX".toRegex())) {
-            SurnameLayout.error = getString(R.string.INVALID_SURNAME)
+        if (!surname.text.matches("^[a-zA-Z].{2,128}$".toRegex())) {
+            SurnameLayout.error = getString(R.string.info_user_hint_bottom)
             return
         }
-*/
+        if (!name.text.matches("^[a-zA-Z].{2,128}$".toRegex())) {
+            NameLayout.error = getString(R.string.info_user_hint_bottom)
+            return
+        }
 
         val date : Date? = MyDateUtils.checkDate(rootView, getString(R.string.register_dob_error)) ?: return
         val ft = SimpleDateFormat("yyyy-MM-dd")
         val birthday = ft.format(date)
         val body = JSONObject()
-        //todo: vérifier Firstname et Lastname soient compris entre 2 et 128 caractères
 
         body.put(APIUrl.INFO_FIRSTNAME, surname.text)
         body.put(APIUrl.INFO_LASTNAME, name.text)

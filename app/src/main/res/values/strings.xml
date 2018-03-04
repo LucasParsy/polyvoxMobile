@@ -50,6 +50,7 @@
     <string name="register_mail_hint_bottom">Votre email ne sera jamais divulgué.</string>
     <string name="register_username_hint_bottom">6 caractères minimum, composé uniquement de lettres et chiffres</string>
     <string name="register_password_hint_bottom">entre 8 et 128 caractères, avec 1 majuscule et 1 chiffre au minimum</string>
+    <string name="info_user_hint_bottom">entre 2 et 128 caractères alphabétiques</string>
 
     <string name="yes">Oui</string>
     <string name="no">Non</string>
