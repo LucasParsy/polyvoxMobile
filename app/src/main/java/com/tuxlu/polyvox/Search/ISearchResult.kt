@@ -30,7 +30,7 @@ abstract class ISearchResult : AppCompatActivity() {
 todo: qui inclut plusieurs fragment DONC Différent type des deux autres, exception, galère, chiant.
 */
 
-    private val tabTitles = intArrayOf(R.string.users, R.string.rooms, R.string.tab_chat)
+    private val tabTitles = intArrayOf(R.string.top, R.string.rooms, R.string.users)
     internal var adapter: PagerAdapter? = null
     //lateinit private var roomFragment: SearchRoomRecycler
     //lateinit private var globalFragment: GlobalSearchFragment
@@ -40,7 +40,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         super.onCreate(savedInstanceState)
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         setContentView(R.layout.activity_search)
-        instanciateFragments(savedInstanceState)
+        instantiateFragments(savedInstanceState)
         setupSearchView()
     }
 
@@ -62,19 +62,22 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
 
     fun search(query: String) {
         val map = HashMap<String, String>()
-        map.put(APIUrl.SEARCH_PARAM1, query)
+        map[APIUrl.SEARCH_PARAM1] = query
         val url = NetworkUtils.getParametrizedUrl(APIUrl.SEARCH, map)
         APIRequest.JSONrequest(this, Request.Method.GET, url, false, null,
                 { result ->
                     if (result.has(APIUrl.SEARCH_USER_JSONOBJECT))
                     {
-                        val usersFragment =  adapter?.getItem(0) as SearchUserRecycler
+                        val summaryFragment =  adapter?.getItem(0) as SearchSummary
                         val roomFragment =  adapter?.getItem(1) as SearchRoomRecycler
+                        val usersFragment =  adapter?.getItem(2) as SearchUserRecycler
+
                         val dataObj = result.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
                         if (dataObj.has(APIUrl.SEARCH_USER))
                             usersFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_USER), true)
                         if (dataObj.has(APIUrl.SEARCH_ROOM_JSONOBJECT))
                             roomFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_ROOM_JSONOBJECT), true)
+                        summaryFragment.add(dataObj)
                     }
                     //todo: gérer autres fragments
                 }, null)
@@ -82,21 +85,24 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
 
 
 
-    private fun instanciateFragments(savedInstanceState: Bundle?) {
+    private fun instantiateFragments(savedInstanceState: Bundle?) {
         val fragments = mutableListOf<Fragment>()
         if (savedInstanceState != null) {
             //val frags = supportFragmentManager.fragments
             fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment0"))
             fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment1"))
+            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment2"))
             adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         } else {
-            fragments.add(Fragment.instantiate(this, SearchUserRecycler::class.java.name))
+
+            fragments.add(Fragment.instantiate(this, SearchSummary::class.java.name))
             fragments.add(Fragment.instantiate(this, SearchRoomRecycler::class.java.name))
-            //todo: gérer autres fragments
+            fragments.add(Fragment.instantiate(this, SearchUserRecycler::class.java.name))
             adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         }
 
         pager.adapter = adapter
+        pager.offscreenPageLimit = 3
         tabLayoutSearch.setupWithViewPager(pager)
     }
 
@@ -110,6 +116,7 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
         super.onSaveInstanceState(outState)
         supportFragmentManager.putFragment(outState, "SearchFragment0", adapter?.getItem(0))
         supportFragmentManager.putFragment(outState, "SearchFragment1", adapter?.getItem(1))
+        supportFragmentManager.putFragment(outState, "SearchFragment2", adapter?.getItem(2))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

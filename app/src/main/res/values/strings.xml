@@ -95,7 +95,9 @@
 
 
     <string name="users">Utilisateurs</string>
-    <string name="rooms">Salons de discussion</string>
+    <string name="rooms">Salons</string>
+    <string name="rooms_long">Salons de discussion</string>
+    <string name="top">Top</string>
 
     <string name="no_search_result">Aucun résultat</string>
     <string name="no_search_result_details">La recherche n\'a pas donnée de résultats\nVeuillez essayer une autre requete.</string>

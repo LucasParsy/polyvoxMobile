@@ -58,21 +58,21 @@
                     android:id="@+id/TabTextDiscover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/users"
+                    android:text="@string/top"
                     android:visibility="visible" />
 
                 <android.support.design.widget.TabItem
-                    android:id="@+id/TabTextFriends"
+                    android:id="@+id/TabTextRooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rooms"
                     android:visibility="visible" />
 
                 <android.support.design.widget.TabItem
-                    android:id="@+id/TabTextChat"
+                    android:id="@+id/TabTextUsers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tab_chat"
+                    android:text="@string/users"
                     android:visibility="visible" />
             </android.support.design.widget.TabLayout>
 
