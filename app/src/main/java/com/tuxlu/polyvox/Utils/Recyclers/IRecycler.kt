@@ -39,6 +39,8 @@ abstract class IRecycler<T: Any> : Fragment() {
 
     public fun setLoadingStatus(status: Boolean)
     {
+        if (!::rootView.isInitialized)
+            return
         if (status)
             LoadingUtils.StartLoadingView(rootView, context)
         else
@@ -93,13 +95,14 @@ abstract class IRecycler<T: Any> : Fragment() {
 
     open fun add(data: JSONArray, replace: Boolean=false)
     {
-        LoadingUtils.EndLoadingView(rootView)
         val list = getAddData(data, replace)
         if (replace || list.size == 0)
             adapter?.clear()
         if (list.size != 0)
             adapter?.add(parseJSON(data))
         adapter?.notifyDataSetChanged()
+        if (::rootView.isInitialized)
+            LoadingUtils.EndLoadingView(rootView)
     }
 
     open fun clear()
