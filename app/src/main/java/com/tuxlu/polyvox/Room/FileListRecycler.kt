@@ -47,8 +47,8 @@ open class FLRecycler : IRequestRecycler<FlUser>() {
         recycler.setHasFixedSize(true)
         val layoutManager = setLayoutManager()
         recycler.layoutManager = layoutManager
-        LoadingUtils.StartLoadingView(view, context)
-        request(requestUrl, requestBody, true, view)
+        LoadingUtils.StartLoadingView(rootView, context)
+        request(requestUrl, requestBody, true, rootView)
         return rootView
     }
 
