@@ -37,12 +37,19 @@ abstract class IRecycler<T: Any> : Fragment() {
     protected var noResView : View? = null
     protected var isNoResViewVisible : Boolean = true
 
+    public fun setLoadingStatus(status: Boolean)
+    {
+        if (status)
+            LoadingUtils.StartLoadingView(rootView, context)
+        else
+            LoadingUtils.EndLoadingView(rootView)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         rootView = inflater.inflate(layoutListId, container, false)
-        LoadingUtils.EndLoadingView(rootView)
+        //LoadingUtils.EndLoadingView(rootView)
         noResView = rootView.findViewById<View>(R.id.noResultsLayout)
         val recycler = rootView.findViewById<RecyclerView>(recycleId)
         recycler.setHasFixedSize(true)
@@ -86,6 +93,7 @@ abstract class IRecycler<T: Any> : Fragment() {
 
     open fun add(data: JSONArray, replace: Boolean=false)
     {
+        LoadingUtils.EndLoadingView(rootView)
         val list = getAddData(data, replace)
         if (replace || list.size == 0)
             adapter?.clear()

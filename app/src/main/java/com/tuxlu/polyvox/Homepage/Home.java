@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,17 +18,22 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Search.DiscoverRoomRecycler;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
+import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
+
+import org.json.JSONException;
 
 import java.util.List;
 import java.util.Vector;
@@ -38,8 +44,11 @@ import butterknife.ButterKnife;
 
 public class Home extends AppCompatActivity {
 
+    private DiscoverRoomRecycler discover;
     private ImageView profileImage = null;
+    private Boolean infoLoaded = false;
     private static final String TAG = "Home";
+    Handler handler = new Handler();
     PagerAdapter adapter;
     @BindView(R.id.pager)
     ViewPager pager;
@@ -61,15 +70,40 @@ public class Home extends AppCompatActivity {
 
         List<Fragment> fragments = new Vector<>();
 
-        fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //discover
-        fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
+        discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
+        fragments.add(discover); //discover
+        //fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
         fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
-        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_friends, R.string.tab_chat};
-
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
 
         ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
+        updateDiscover();
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (!infoLoaded && NetworkUtils.isConnected(discover.getContext()))
+                    updateDiscover();
+                else
+                    handler.postDelayed(this, 3000);
+            }
+        }, 6000);
+
+    }
+
+    private void updateDiscover() {
+        handler.postDelayed(() -> discover.setLoadingStatus(true), 500);
+
+        APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS, false, null,
+                response -> {
+                    try {
+                        infoLoaded = true;
+                        discover.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true);
+                    } catch (JSONException ignored) {
+                    }
+                }
+                , null);
     }
 
     private void configToolbar() {
@@ -94,7 +128,7 @@ public class Home extends AppCompatActivity {
         String imageUrl = AuthUtils.getPictureUrl(context);
         if (!UtilsTemp.isStringEmpty(imageUrl))
             GlideApp.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image);
-            //placeholder(R.drawable.ic_account_circle_black_24dp)
+        //placeholder(R.drawable.ic_account_circle_black_24dp)
     }
 
     private void startProfileIntent() {
@@ -131,17 +165,17 @@ public class Home extends AppCompatActivity {
             }
         });
 
-    //For search in different activity
-    final Context that = this;
+        //For search in different activity
+        final Context that = this;
         searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
 
-    {
-        @Override
-        public boolean onMenuItemClick (MenuItem menuItem){
-        startActivity(new Intent(that, SearchResultsActivity.class));
-        return true;
-    }
-    });
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                startActivity(new Intent(that, SearchResultsActivity.class));
+                return true;
+            }
+        });
 
 
         /*
@@ -160,13 +194,19 @@ public class Home extends AppCompatActivity {
         */
 
         return true;
-}
+    }
+
+    @Override
+    public void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         if (profileImage != null)
-        setUserIcon(profileImage);
+            setUserIcon(profileImage);
     }
 
 
@@ -177,7 +217,8 @@ public class Home extends AppCompatActivity {
     }
 
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AuthUtils.AUTH_REQUEST_CODE && resultCode == Activity.RESULT_OK)
             this.recreate();
