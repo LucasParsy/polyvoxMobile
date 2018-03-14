@@ -29,10 +29,10 @@
     <string name="aboutLibraries_description_special2_name">Changelog</string>
     <string name="aboutLibraries_description_special2_text">
         <![CDATA[
-       <i>&quot;on fait comme si ça marchait&quot;</i> <br><br>
+       <i>&quot;Elle est pas belle l\'UI?&quot;</i> <br><br>
 
-    Première version avec toutes les fonctionnalités de l\'application mobile,
-    mais toutes les routes de l\'API ne sont pas encore implémentées (voire créees)
+    Toujours pas la moitié des fonctionnalités implémentées,
+    mais regardez, c\'est super joli!
 ]]>
     </string>
 
