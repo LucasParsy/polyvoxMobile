@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/infoRoomLayout"
     android:layout_width="match_parent"
     android:layout_height="96dp"
-    android:id="@+id/infoRoomLayout"
+    android:background="@android:color/white"
     android:padding="10dp">
 
     <FrameLayout
@@ -64,10 +65,12 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_view" />
+            android:src="@drawable/eye"
+            app:srcCompat="@drawable/eye" />
 
         <TextView
             android:id="@+id/infoRoomViewers"

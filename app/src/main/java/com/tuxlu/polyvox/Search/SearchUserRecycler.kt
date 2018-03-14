@@ -53,9 +53,8 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
     }
 }
 
-class LinearItemDecoration : RecyclerView.ItemDecoration() {
+class LinearItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDecoration() {
 
-    private val spaceHeight = 2
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
                                 state: RecyclerView.State?) {
@@ -73,7 +72,7 @@ class SearchUserRecycler : IRecycler<UserSearchResult>() {
     override val requestObjectName : String = APIUrl.SEARCH_USER_JSONOBJECT
 
     override val binder = UserSearchBinder()
-    override val itemDecoration= LinearItemDecoration()
+    override val itemDecoration= LinearItemDecoration(2)
 
 
 

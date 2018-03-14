@@ -1,102 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/infoRoomLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="1dp"
+    android:layout_marginRight="1dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <com.tuxlu.polyvox.Utils.UIElements.SquareImageView
+    <ImageView
         android:id="@+id/infoRoomPicture"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_logo_carrey" />
+        android:src="@drawable/default_room_picture1"
+        app:srcCompat="@drawable/default_room_picture1" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
+        android:layout_height="65dp"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.75">
+        <android.support.v7.widget.CardView
+            android:id="@+id/view2"
+            android:layout_width="30dp"
+
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:clickable="false"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="30"
+            android:visibility="gone"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            tools:cardElevation="0dp">>
+
+            <ImageView
+                android:id="@+id/ProfileIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_account_circle_black_24dp"
+                app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/infoRoomName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="2"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textColor="@android:color/black" />
+                android:lines="2"
+                android:textColor="@android:color/black"
+                tools:text="Le droit de vote des femmes, ou la décadence d'une nation" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/infoRoomSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="#EIP #Test #tag" />
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.20">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.3">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/eye"
+                    app:srcCompat="@drawable/eye" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/white"
-                        android:contentDescription="viewer icon"
-                        app:srcCompat="@android:drawable/ic_menu_view" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.7">
-
-                    <TextView
-                        android:id="@+id/infoRoomViewers"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="bottom"
-                        android:background="@android:color/white"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="5dp"
-                        android:textColor="@android:color/black" />
-
-                </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/infoRoomViewers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="42"
+                    tools:text="42" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/megaphone"
+                    app:srcCompat="@drawable/megaphone" />
+
+                <TextView
+                    android:id="@+id/infoRoomSpeakers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="41"
+                    tools:text="41" />
+            </LinearLayout>
+        </LinearLayout>
+
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
