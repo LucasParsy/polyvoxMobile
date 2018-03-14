@@ -18,6 +18,7 @@ import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONObject
 import java.util.*
 
@@ -229,7 +230,7 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
         itemAnimator.moveDuration = 1000
         itemAnimator.changeDuration = 500
         recycler.itemAnimator = itemAnimator
-
+        LoadingUtils.EndLoadingView(rootView)
         return res;
     }
 
