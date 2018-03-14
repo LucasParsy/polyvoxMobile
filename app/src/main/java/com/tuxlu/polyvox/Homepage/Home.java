@@ -38,9 +38,6 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.Vector;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class Home extends AppCompatActivity {
 
@@ -50,7 +47,6 @@ public class Home extends AppCompatActivity {
     private static final String TAG = "Home";
     Handler handler = new Handler();
     PagerAdapter adapter;
-    @BindView(R.id.pager)
     ViewPager pager;
 
     @Override
@@ -58,7 +54,6 @@ public class Home extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
         configToolbar();
         //leaks verification, in debug builds only.
 
@@ -75,6 +70,7 @@ public class Home extends AppCompatActivity {
         //fragments.add(Fragment.instantiate(this, DiscoverRecycler.class.getName())); //amis
         fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
         int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
+        pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
 

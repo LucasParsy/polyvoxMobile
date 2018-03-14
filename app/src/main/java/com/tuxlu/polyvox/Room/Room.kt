@@ -1,10 +1,11 @@
 package com.tuxlu.polyvox.Room
 
+//import com.google.android.exoplayer2.source.dash.DashMediaSource
+//import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -15,20 +16,13 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RatingBar
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.android.volley.Request
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory
-import com.google.android.exoplayer2.source.hls.HlsDataSourceFactory
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
-//import com.google.android.exoplayer2.source.dash.DashMediaSource
-//import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
@@ -39,14 +33,12 @@ import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
-import com.tuxlu.polyvox.Utils.NetworkUtils
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
 import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.exo_stream_playback_control.*
 import org.json.JSONObject
-import java.net.URI
 import java.util.*
 
 
@@ -59,7 +51,7 @@ interface DialogFragmentInterface {
     fun dialogDismiss()
 }
 
-enum class RatingType {NONE, POSITIVE, NEGATIVE }
+enum class RatingType { NONE, POSITIVE, NEGATIVE }
 
 class Room : AppCompatActivity(), DialogFragmentInterface {
     private var token: String = "";
@@ -76,8 +68,8 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     //private var ratingValue = -1f
 
     //handler just for delaying user rating test...
-    private var handler : Handler? = null
-    private val runnable : Runnable = Runnable{ showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png")};
+    private var handler: Handler? = null
+    private val runnable: Runnable = Runnable { showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png") };
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +77,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         title = b.getString("title")
         token = b.getString("token")
         setContentView(R.layout.activity_room)
-        ButterKnife.bind(this)
         super.onCreate(savedInstanceState)
         setVideoPlayer(token)
 
@@ -146,16 +137,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_room_subtitle.text = "sous-titre"
     }
 
-    private fun commonRatingListener(button: ImageView, invertButton : ImageView, type: RatingType, color: Int)
-    {
-        if (ratingValue!= type)
-        {
+    private fun commonRatingListener(button: ImageView, invertButton: ImageView, type: RatingType, color: Int) {
+        if (ratingValue != type) {
             ratingValue = type
             button.setColorFilter(resources.getColor(color))
             invertButton.setColorFilter(resources.getColor(android.R.color.darker_gray))
-        }
-        else
-        {
+        } else {
             ratingValue = RatingType.NONE
             button.setColorFilter(resources.getColor(android.R.color.darker_gray))
         }
@@ -170,7 +157,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //Uri videoUrl = Uri.parse(APIUrl.BASE_URL + APIUrl.VIDEO_STREAM + "/" + id);
         //Uri videoUrl = Uri.parse("http://www-itec.uni-klu.ac.at/ftp/datasets/DASHDataset2014/BigBuckBunny/2sec/BigBuckBunny_2s_simple_2014_05_09.mpd");
         //Uri videoUrl = Uri.parse("http://vm2.dashif.org/livesim-dev/periods_60/xlink_30/insertad_3/testpic_2s/Manifest.mpd");
-        var videoUrl : Uri = if (token == "black")
+        var videoUrl: Uri = if (token == "black")
             Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
         else
             Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
@@ -178,10 +165,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         val dataSourceFactory = DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
         // This is the MediaSource representing the media to be played.
-        val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
-                 null, null)
+        val videoSource = HlsMediaSource(videoUrl, dataSourceFactory,
+                null, null)
         //val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
-                //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
+        //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
         val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
         val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
         player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
@@ -190,23 +177,31 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         videoPlayerView!!.player = player
         player!!.playWhenReady = true
 
+        setClicklisteners()
     }
 
-    @OnClick(R.id.player_button_share)
+    private fun setClicklisteners() {
+        player_button_share.setOnClickListener({ v -> shareStream(v) })
+        player_button_fullscreen.setOnClickListener({ v -> setScreenOrientation(v) })
+        player_button_chat.setOnClickListener({ v -> setChatVisibility(v) })
+        closeButton.setOnClickListener({ v -> closeUserRating(v) })
+        reportButton.setOnClickListener({ v -> reportUser(v) })
+        commentButton.setOnClickListener({ v -> commentUserRating(v) })
+        player_button_back.setOnClickListener({ _ -> finish() })
+    }
+
     fun shareStream(v: View) {
         val url = "https://polyvox.fr/stream/$token"
         val body = getString(R.string.share_stream_body) + "\n" + title + "\n" + getString(R.string.join_me)
         UtilsTemp.shareContent(this, body, url)
     }
 
-    @OnClick(R.id.player_button_fullscreen)
     fun setScreenOrientation(v: View) {
         // orientation ? portrait : landscape;
         val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
         requestedOrientation = if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
-    @OnClick(R.id.player_button_chat)
     fun setChatVisibility(v: View) {
         val animWidth: Int
 
@@ -309,7 +304,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
     }
 
-    @OnClick(R.id.closeButton)
     fun closeUserRating(v: View) {
         if (ratingValue != RatingType.NONE) {
             /*
@@ -324,7 +318,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             }, null)
             */
 
-            val url = APIUrl.BASE_URL + APIUrl.ROOM  + token + APIUrl.ROOM_VOTE
+            val url = APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_VOTE
             var voteValue = if (ratingValue == RatingType.POSITIVE)
                 "poceBlo"
             else
@@ -343,7 +337,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             else
                 reportButton.visibility = View.VISIBLE
             //if (ratingValue <= 2.5)
-                //reportButton.visibility = View.GONE
+            //reportButton.visibility = View.GONE
             ratingValue = RatingType.NONE
             return;
         }
@@ -357,32 +351,25 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     }
 
-    private fun setFragmentArgument(frag: CommentReportBase)
-    {
+    private fun setFragmentArgument(frag: CommentReportBase) {
         val bundle = Bundle()
         bundle.putString("name", currentRatedSpeaker)
         bundle.putString("url", currentRatedSpeakerUrl)
         frag.arguments = bundle
     }
 
-    @OnClick(R.id.reportButton)
     fun reportUser(v: View) {
         val frag = UserReportFragment()
         setFragmentArgument(frag)
         frag.show(fragmentManager, getString(R.string.report))
     }
 
-    @OnClick(R.id.commentButton)
     fun commentUserRating(v: View) {
         val frag = UserCommentFragment()
         setFragmentArgument(frag)
         frag.show(fragmentManager, getString(R.string.send_comment))
     }
 
-    @OnClick(R.id.player_button_back)
-    fun onClose(v: View) {
-        finish();
-    }
 
     //reloads page when logging
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -391,7 +378,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             this.recreate();
     }
 
-    override fun dialogDismiss() {closeUserRating(reportButton) }
+    override fun dialogDismiss() {
+        closeUserRating(reportButton)
+    }
 
 
     companion object {
