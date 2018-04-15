@@ -1,5 +1,6 @@
 package com.tuxlu.polyvox.Utils.Auth;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,6 +24,16 @@ import org.json.JSONObject;
 public class AuthUtils {
 
     public static final int AUTH_REQUEST_CODE = 2816;
+
+    public static Account getAppAccount(final Context context, final AccountManager am)
+    {
+        return am.getAccountsByType(context.getString(R.string.account_type))[0];
+    }
+
+    public static boolean hasAccount(final Context context, final AccountManager am)
+    {
+        return ((am.getAccountsByType(context.getString(R.string.account_type))).length != 0);
+    }
 
     public static void logout(final Context context)
     {
@@ -50,37 +61,37 @@ public class AuthUtils {
     public static void removeAccountLogout(Context context) {
         AccountManager am = AccountManager.get(context);
         if (android.os.Build.VERSION.SDK_INT >= 22) {
-            am.removeAccountExplicitly(am.getAccounts()[0]);
+            am.removeAccountExplicitly(getAppAccount(context, am));
         } else {
-            am.removeAccount(am.getAccounts()[0], null, null);
+            am.removeAccount(getAppAccount(context, am), null, null);
         }
     }
 
     public static String getUsername(Context context)
     {
         AccountManager am = AccountManager.get(context);
-        if (am.getAccounts().length == 0)
+        if (hasAccount(context, am))
             return "";
-        return am.getUserData(am.getAccounts()[0], "name");
+        return am.getUserData(getAppAccount(context, am), "name");
     }
 
     public static String getPictureUrl(Context context)
     {
         AccountManager am = AccountManager.get(context);
-        if (am.getAccounts().length == 0)
+        if (hasAccount(context, am))
             return "";
-        return am.getUserData(am.getAccounts()[0], "picture");
+        return am.getUserData(getAppAccount(context, am), "picture");
     }
 
 
     public static String getToken(Context context) {
         AccountManager am = AccountManager.get(context);
         //should'nt happen
-        if (am.getAccounts().length == 0)
+        if (hasAccount(context, am))
             return null;
         Bundle res;
         try {
-            res = am.getAuthToken(am.getAccounts()[0],
+            res = am.getAuthToken(getAppAccount(context, am),
                     context.getString(R.string.account_type), null, false, null, null).getResult();
         } catch (Exception e) {
             e.printStackTrace();
