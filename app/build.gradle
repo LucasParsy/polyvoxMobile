@@ -8,7 +8,7 @@ apply plugin: 'io.fabric'
 android {
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
     compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.tuxlu.polyvox"
@@ -54,60 +54,60 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     //error log
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
        transitive = true
     }
-    compile 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
 
 
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:design:27.0.2'
-    compile 'com.android.support:support-v4:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:design:27.0.2'
+    implementation 'com.android.support:support-v4:27.0.2'
     implementation 'com.android.support:cardview-v7:27.0.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     //network
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.android.volley:volley:1.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.android.volley:volley:1.1.0'
 
     //network image loading
-    compile 'com.github.bumptech.glide:glide:4.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
 
     //debug and tools
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     //exo streaming lib
-    compile 'com.google.android.exoplayer:exoplayer-core:r2.5.4'
-    compile 'com.google.android.exoplayer:exoplayer-hls:r2.5.4'
-    //compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
-    compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.5.4'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.5.4'
+    //implementation 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
+    testApi 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //IRC lib
-    compile group: 'pircbot', name: 'pircbot', version: '1.5.0'
+    implementation group: 'pircbot', name: 'pircbot', version: '1.5.0'
 
     //stupid little lib adding little icon to Toast
-    compile 'com.github.GrenderG:Toasty:1.2.8'
+    implementation 'com.github.GrenderG:Toasty:1.2.8'
 
     //animations lib
-    compile 'com.daimajia.easing:library:2.0@aar'
-    compile 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     //pdf viewer for API 21+
-    compile 'es.voghdev.pdfviewpager:library:1.0.3'
+    implementation 'es.voghdev.pdfviewpager:library:1.0.3'
     //messaging UI
-    compile 'com.github.stfalcon:chatkit:0.2.2'
+    implementation 'com.github.stfalcon:chatkit:0.2.2'
 
     //Expandable RecyclerView
-    compile 'com.thoughtbot:expandablerecyclerview:1.3'
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
 
     //credit library
     implementation('com.mikepenz:aboutlibraries:6.0.2@aar') {
