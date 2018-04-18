@@ -29,10 +29,9 @@
     <string name="aboutLibraries_description_special2_name">Changelog</string>
     <string name="aboutLibraries_description_special2_text">
         <![CDATA[
-       <i>&quot;Elle est pas belle l\'UI?&quot;</i> <br><br>
+       <i>&quot;Ajout d\'une petite side feature&quot;</i> <br><br>
 
-    Toujours pas la moitié des fonctionnalités implémentées,
-    mais regardez, c\'est super joli!
+        Le streaming fonctionne sur l\'appli!
 ]]>
     </string>
 

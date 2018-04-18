@@ -76,7 +76,7 @@ public class AuthUtils {
         return am.getUserData(getAppAccount(context, am), "name");
     }
 
-    public static String getPictureUrl(Context context)
+    public static String getPictureUrl(final Context context)
     {
         AccountManager am = AccountManager.get(context);
         if (!hasAccount(context, am))
@@ -85,7 +85,7 @@ public class AuthUtils {
         return str;
     }
 
-    public static void setPictureUrl(Context context, String url)
+    public static void setPictureUrl(final Context context, String url)
     {
         AccountManager am = AccountManager.get(context);
         if (!hasAccount(context, am))

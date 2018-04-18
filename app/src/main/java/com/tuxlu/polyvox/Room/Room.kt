@@ -67,8 +67,13 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var ratingValue = RatingType.NONE
     //private var ratingValue = -1f
 
+
+    private var manifestHandler : Handler = Handler()
+    private val manifestRunnable: Runnable = Runnable { getManifest() };
+    private var streamUrl: String = ""
+
     //handler just for delaying user rating test...
-    private var handler: Handler? = null
+    private var handler: Handler = Handler()
     private val runnable: Runnable = Runnable { showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png") };
 
 
@@ -78,7 +83,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         token = b.getString("token")
         setContentView(R.layout.activity_room)
         super.onCreate(savedInstanceState)
-        setVideoPlayer(token)
+        manifestHandler.post(manifestRunnable)
+        //setVideoPlayer(token)
+        setClicklisteners()
+
 
         val config = this.resources.configuration
         val displayMetrics = resources.displayMetrics
@@ -130,11 +138,23 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         }
         */
 
-        handler = Handler()
-        handler!!.postDelayed(runnable, 9000)
+        handler.postDelayed(runnable, 9000)
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
+    }
+
+    private fun getManifest()
+    {
+        APIRequest.JSONrequest(baseContext, Request.Method.GET,
+                APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
+            val nUrl = response.getJSONObject("data").getString("videosData");
+            if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl)
+                setVideoPlayer(nUrl)
+            manifestHandler.postDelayed(manifestRunnable, 2000)
+        },
+                { manifestHandler.postDelayed(manifestRunnable, 2000)
+        })
     }
 
     private fun commonRatingListener(button: ImageView, invertButton: ImageView, type: RatingType, color: Int) {
@@ -160,7 +180,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         var videoUrl: Uri = if (token == "black")
             Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
         else
-            Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
+            Uri.parse(token);
+            //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
+        streamUrl = token;
         val bandwidthMeter = DefaultBandwidthMeter()
         val dataSourceFactory = DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
@@ -176,8 +198,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player!!.prepare(videoSource)
         videoPlayerView!!.player = player
         player!!.playWhenReady = true
-
-        setClicklisteners()
     }
 
     private fun setClicklisteners() {
@@ -266,7 +286,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onPause() {
         super.onPause()
-        player!!.playWhenReady = false
+        player?.playWhenReady = false
         requestedOrientation = this.resources.configuration.orientation
 
         /*
@@ -279,12 +299,13 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onResume() {
         super.onResume()
-        player!!.playWhenReady = true
+        player?.playWhenReady = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler?.removeCallbacks(runnable)
+        manifestHandler.removeCallbacks(manifestRunnable)
+        handler.removeCallbacks(runnable)
     }
 
 

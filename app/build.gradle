@@ -14,7 +14,7 @@ android {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
         targetSdkVersion 27
-        versionName '0.55'
+        versionName '0.60'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr" //enlève ressources langages non supportés.
     }

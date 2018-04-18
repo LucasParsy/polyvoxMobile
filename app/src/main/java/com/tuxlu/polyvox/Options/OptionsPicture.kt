@@ -1,6 +1,5 @@
 package com.tuxlu.polyvox.Options
 
-import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
