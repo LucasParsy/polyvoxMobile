@@ -61,6 +61,8 @@ public class AuthUtils {
 
     public static void removeAccountLogout(Context context) {
         AccountManager am = AccountManager.get(context);
+        if (!hasAccount(context, am))
+            return;
         if (android.os.Build.VERSION.SDK_INT >= 22) {
             am.removeAccountExplicitly(getAppAccount(context, am));
         } else {

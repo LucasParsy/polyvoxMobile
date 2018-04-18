@@ -73,6 +73,8 @@ class RoomWaitlist : Fragment() {
                 , 9000)
 
 
+        //todo: crashs, but may be unused in the future
+        /*
         hanDummyList.postDelayed({
             //frag.waitUser("JMLP")
             //showInfo("JMLP" + getString(R.string.waited_turn))
@@ -81,7 +83,7 @@ class RoomWaitlist : Fragment() {
             showInfo("JMLP" + getString(R.string.left_waitlist))
         }
                 , 23000)
-
+        */
 
         hanDummyList.postDelayed({
             //frag.waitUser("JMLP")

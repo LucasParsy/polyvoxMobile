@@ -20,6 +20,8 @@ import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.crashlytics.android.Crashlytics;
+import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.DiscoverRoomRecycler;
@@ -37,6 +39,8 @@ import org.json.JSONException;
 
 import java.util.List;
 import java.util.Vector;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class Home extends AppCompatActivity {
@@ -60,6 +64,9 @@ public class Home extends AppCompatActivity {
         //todo: reactivate leak check
         //if (LeakCanary.isInAnalyzerProcess(this)) {return;}
         //LeakCanary.install(this.getApplication());
+
+        if (!BuildConfig.DEBUG)
+            Fabric.with(this, new Crashlytics());
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
