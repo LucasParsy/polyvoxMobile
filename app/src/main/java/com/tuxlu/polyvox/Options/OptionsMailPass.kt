@@ -40,9 +40,8 @@ class OptionsMailPass : MyAppCompatActivity() {
             oldPasswordInput.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
         }
 
-        val map = HashMap<String, String>()
-        map.put("userName", AuthUtils.getUsername(baseContext))
-        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+        val userName = AuthUtils.getUsername(baseContext)
+        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;
 
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 true, null, { current ->

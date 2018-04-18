@@ -32,7 +32,8 @@ public class AuthUtils {
 
     public static boolean hasAccount(final Context context, final AccountManager am)
     {
-        return ((am.getAccountsByType(context.getString(R.string.account_type))).length != 0);
+        Account[] accs = am.getAccountsByType(context.getString(R.string.account_type));
+        return (accs.length != 0);
     }
 
     public static void logout(final Context context)
@@ -70,7 +71,7 @@ public class AuthUtils {
     public static String getUsername(Context context)
     {
         AccountManager am = AccountManager.get(context);
-        if (hasAccount(context, am))
+        if (!hasAccount(context, am))
             return "";
         return am.getUserData(getAppAccount(context, am), "name");
     }

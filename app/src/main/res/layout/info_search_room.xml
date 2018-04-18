@@ -80,6 +80,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
+            android:text="42"
             android:textAlignment="center"
             android:textColor="@android:color/darker_gray"
             android:textSize="13sp"

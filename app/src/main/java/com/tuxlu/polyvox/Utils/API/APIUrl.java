@@ -12,7 +12,7 @@ public class APIUrl {
     public static final String FAKE_BASE_URL = SCHEME + "://" + "apo.polyvox.fr" + "/";
     public static final String FAKE_CHAT_NAME = "/bobby";
 
-    public static final String INFO_CURRENT_USER = "users/currentUser";
+    public static final String INFO_CURRENT_USER = "auth";
 
     public static final String DISCOVER_ROOMS = "room";
     public static final String SEARCH_ROOMS = "searchRoom";
@@ -20,6 +20,7 @@ public class APIUrl {
     public static final String CREATE_ACCOUNT = "createAccount";
     public static final String INFO_ROOM = "infoRoom";
     public static final String INFO_USER = "users/";
+    public static final String INFO_USER_SUFF = "/about";
     public static final String VIDEO_STREAM = "video";
     public static final String COOKIE_HEADER_RECEIVE = "set-cookie";
     public static final String COOKIE_HEADER = "Cookie";
@@ -31,7 +32,7 @@ public class APIUrl {
     public static final Integer TOKEN_DENIED_CODE = 401;
     public static final Integer USER_NOT_VALIDATED = 403;
 
-    public static final String LOGIN = "users/login";
+    public static final String LOGIN = "auth/login";
     public static final String LOGIN_PARAM1 = "email";
     public static final String LOGIN_PARAM2 = "password";
     public static final Integer LOGIN_INVALID_USER_CODE = 404;
@@ -70,12 +71,12 @@ public class APIUrl {
     public static final String INFO_FIRSTNAME = "firstName";
     public static final String INFO_LASTNAME = "lastName";
 
-    public static final String LOGOUT = "users/logout";
+    public static final String LOGOUT = "auth/logout";
 
     public static final String SEND_PICTURE = "users/upload/picture";
 
-    public static final String FORGOT_PASSWORD = "users/forgotPassword";
-    public static final String RESET_PASSWORD = "users/resetPassword";
+    public static final String FORGOT_PASSWORD = "auth/forgotPassword";
+    public static final String RESET_PASSWORD = "auth/resetPassword";
     public static final String UPDATE_USER = "users/updateUser";
 
     public static final String LIST_USERS_CHAT = "chat/list";

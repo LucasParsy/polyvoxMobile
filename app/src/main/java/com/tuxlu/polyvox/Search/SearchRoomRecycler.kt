@@ -45,7 +45,7 @@ open class RoomSearchBinder : ViewHolderBinder<RoomSearchResult> {
             holder.v.visibility = View.GONE;
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomSubject).text = item.tags
-        holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = item.viewers.toString()
+        //holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = item.viewers.toString() //not anymore
 
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
@@ -87,7 +87,7 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
             //res.active = false;
             res.name = json.getString("name")
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
-            res.viewers = json.getJSONArray("waitList").length()
+            //res.viewers = json.getJSONArray("waitList").length() //not anymore
             var tagString = "";
             val tags = json.getJSONArray("tags")
             for (i in 0 until tags.length()) {

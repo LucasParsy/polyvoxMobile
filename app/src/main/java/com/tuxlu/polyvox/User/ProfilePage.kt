@@ -54,9 +54,7 @@ class ProfilePage : MyAppCompatActivity() {
         connected = APIRequest.isAPIConnected(this)
 
         val userName = intent.getStringExtra("name")
-        val map = HashMap<String, String>()
-        map.put("userName", userName)
-        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;
 
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->
@@ -212,9 +210,8 @@ class ProfilePage : MyAppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val map = HashMap<String, String>()
-        map.put("userName", user.userName)
-        val url = NetworkUtils.getParametrizedUrl(APIUrl.INFO_USER, map)
+        val userName = AuthUtils.getUsername(baseContext)
+        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;
 
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->
