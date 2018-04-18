@@ -90,14 +90,17 @@ class OptionsPicture : MyAppCompatActivity() {
             currentprofilePic.setImageDrawable(newProfilePic.drawable)
             UtilsTemp.showToast(this, getString(R.string.user_info_updated), ToastType.SUCCESS)
 
-            val am = AccountManager.get(this)
-            val picUrl = am.getUserData(am.accounts[0], "picture")
-            if (!picUrl.isNullOrBlank())
+            currentprofilePicText.text = resources.getString(R.string.profile_picture_current)
+            currentprofilePic.visibility = View.VISIBLE
+            currentprofilePic.setImageBitmap(bm);
+
+            val picUrl = AuthUtils.getPictureUrl(baseContext)
+            if (!UtilsTemp.isStringEmpty(picUrl))
                 return@Multipartequest
-            APIRequest.JSONrequest(this, Request.Method.POST, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER, true, null,
+            APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER, true, null,
                     { jsonResponse ->
                         val npicUrl = jsonResponse.getJSONObject("data").getString("picture")
-                        am.setUserData(am.accounts[0], "picture", npicUrl)
+                        AuthUtils.setPictureUrl(baseContext, npicUrl)
                     }, null)
 
         }, null)

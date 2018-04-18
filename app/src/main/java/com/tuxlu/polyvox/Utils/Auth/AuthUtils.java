@@ -79,16 +79,25 @@ public class AuthUtils {
     public static String getPictureUrl(Context context)
     {
         AccountManager am = AccountManager.get(context);
-        if (hasAccount(context, am))
+        if (!hasAccount(context, am))
             return "";
-        return am.getUserData(getAppAccount(context, am), "picture");
+        String str = am.getUserData(getAppAccount(context, am), "picture");
+        return str;
     }
 
+    public static void setPictureUrl(Context context, String url)
+    {
+        AccountManager am = AccountManager.get(context);
+        if (!hasAccount(context, am))
+            return;
+        Account acc = getAppAccount(context, am);
+        am.setUserData(acc, "picture", url);
+    }
 
     public static String getToken(Context context) {
         AccountManager am = AccountManager.get(context);
         //should'nt happen
-        if (hasAccount(context, am))
+        if (!hasAccount(context, am))
             return null;
         Bundle res;
         try {
