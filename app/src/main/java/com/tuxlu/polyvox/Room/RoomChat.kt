@@ -16,7 +16,7 @@ import java.util.*
 class RoomChat : Fragment(), MessageInput.InputListener {
 
     lateinit var rootView: View
-    lateinit var chat: IRCChat
+    lateinit var chat: CustomChat
     lateinit var frag: RoomChatRecycler
     var username: String? = null
 
@@ -24,10 +24,12 @@ class RoomChat : Fragment(), MessageInput.InputListener {
         val message = input.toString()
         chat.sendMessage(message);
 
+        /*
         //twitch does not send again your message, you have to put it yourself.
         val list = ArrayList<RoomChatResult>()
         list.add(RoomChatResult(username!!, message))
         frag.update(list)
+        */
         return true
     }
 
@@ -39,7 +41,7 @@ class RoomChat : Fragment(), MessageInput.InputListener {
 
         username = arguments?.getString("username")
         val title = arguments?.getString("title")
-        chat = IRCChat(username, title)
+        chat = CustomChat(username!!, title!!)
         rootView.findViewById<MessageInput>(R.id.input).setInputListener(this)
 
 
@@ -49,7 +51,7 @@ class RoomChat : Fragment(), MessageInput.InputListener {
         val delay = 2000 //2 seconds
         handler.postDelayed(object : Runnable {
             override fun run() {
-                frag.update(chat.messages)
+                frag.update(chat.getMessages())
                 handler.postDelayed(this, delay.toLong())
             }
         }, 0)

@@ -92,7 +92,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
         val bundle = Bundle()
         bundle.putString("username", username)
-        bundle.putString("title", title)
+        bundle.putString("title", token)
         roomChat.arguments = bundle
 
 

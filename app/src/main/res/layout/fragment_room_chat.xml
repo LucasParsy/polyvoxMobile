@@ -8,9 +8,12 @@
 
     <FrameLayout
         android:id="@+id/roomChatLayout"
-        android:layout_above="@+id/input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <View
         android:id="@+id/separator"
