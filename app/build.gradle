@@ -53,7 +53,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -88,7 +88,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-hls:r2.5.4'
     //implementation 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
     implementation 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
-    testApi 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //IRC lib
