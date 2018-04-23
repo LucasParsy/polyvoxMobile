@@ -137,21 +137,29 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             Uri.parse(token);
             //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
         streamUrl = token;
-        val bandwidthMeter = DefaultBandwidthMeter()
-        val dataSourceFactory = DefaultDataSourceFactory(context,
-                Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
-        // This is the MediaSource representing the media to be played.
+
+        if (player == null) {
+            val bandwidthMeter = DefaultBandwidthMeter()
+            dataSourceFactory = DefaultDataSourceFactory(context,
+                    Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
+            // This is the MediaSource representing the media to be played.
+            //val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
+            //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
+            val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
+            val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
+            player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
+            videoPlayerView!!.player = player
+        }
         val videoSource = HlsMediaSource(videoUrl, dataSourceFactory,
                 null, null)
-        //val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
-        //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
-        val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
-        val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-        player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
-
         player!!.prepare(videoSource)
-        videoPlayerView!!.player = player
         player!!.playWhenReady = true
+    }
+
+    public fun stopPlayer()
+    {
+        if (player != null)
+            player!!.stop()
     }
 
     private fun setClicklisteners() {
