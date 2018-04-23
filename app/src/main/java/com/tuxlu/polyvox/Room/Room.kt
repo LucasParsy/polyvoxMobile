@@ -14,12 +14,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.LinearLayout
 import com.android.volley.Request
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -32,13 +28,11 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
-import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
 import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.exo_stream_playback_control.*
-import org.json.JSONObject
 import java.util.*
 
 
@@ -46,12 +40,6 @@ import java.util.*
  * Created by tuxlu on 16/09/17.
  */
 
-interface DialogFragmentInterface {
-    // you can define any parameter as per your requirement
-    fun dialogDismiss()
-}
-
-enum class RatingType { NONE, POSITIVE, NEGATIVE }
 
 class Room : AppCompatActivity(), DialogFragmentInterface {
     private var token: String = "";
@@ -60,21 +48,15 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var chatVisibilityStatus = View.VISIBLE
 
     private var player: SimpleExoPlayer? = null
+    private lateinit var dataSourceFactory: DefaultDataSourceFactory;
 
     private var width: Int = 0
-    private var currentRatedSpeaker: String? = null
-    private var currentRatedSpeakerUrl: String? = null
-    private var ratingValue = RatingType.NONE
-    //private var ratingValue = -1f
-
 
     private var manifestHandler : Handler = Handler()
     private val manifestRunnable: Runnable = Runnable { getManifest() };
     private var streamUrl: String = ""
 
-    //handler just for delaying user rating test...
-    private var handler: Handler = Handler()
-    private val runnable: Runnable = Runnable { showUserRating("tuxlu", "https://polyvox.fr/public/img/tuxlu42.png") };
+    private lateinit var userRate: UserRating
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +67,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         super.onCreate(savedInstanceState)
         manifestHandler.post(manifestRunnable)
         //setVideoPlayer(token)
+        userRate = UserRating(this, token)
         setClicklisteners()
 
 
@@ -123,32 +106,17 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         tabLayoutHome.setupWithViewPager(pager)
 
 
-        votePositiveButton.setOnClickListener { _ ->
-            commonRatingListener(votePositiveButton, voteNegativeButton, RatingType.POSITIVE, R.color.cornflower_blue_two)
-        }
-        voteNegativeButton.setOnClickListener { _ ->
-            commonRatingListener(voteNegativeButton, votePositiveButton, RatingType.NEGATIVE, android.R.color.holo_red_light)
-        }
-
-        /*
-        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { _, v, _ ->
-            ratingValue = v
-            closeButton!!.setImageResource(R.drawable.checkmark_valid)
-            hasRated = true
-        }
-        */
-
-        handler.postDelayed(runnable, 9000)
-
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
+        userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
     }
 
     private fun getManifest()
     {
         APIRequest.JSONrequest(baseContext, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
-            val nUrl = response.getJSONObject("data").getString("videosData");
+            val data  = response.getJSONObject("data")
+            val nUrl = data.getString("videosData");
             if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl)
                 setVideoPlayer(nUrl)
             manifestHandler.postDelayed(manifestRunnable, 2000)
@@ -157,20 +125,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         })
     }
 
-    private fun commonRatingListener(button: ImageView, invertButton: ImageView, type: RatingType, color: Int) {
-        if (ratingValue != type) {
-            ratingValue = type
-            button.setColorFilter(resources.getColor(color))
-            invertButton.setColorFilter(resources.getColor(android.R.color.darker_gray))
-        } else {
-            ratingValue = RatingType.NONE
-            button.setColorFilter(resources.getColor(android.R.color.darker_gray))
-        }
-        if (ratingValue != RatingType.NONE)
-            closeButton!!.setImageResource(R.drawable.checkmark_valid)
-        else
-            closeButton!!.setImageResource(R.drawable.grey_cross)
-    }
 
     private fun setVideoPlayer(token: String) {
         val context = baseContext
@@ -204,9 +158,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_button_share.setOnClickListener({ v -> shareStream(v) })
         player_button_fullscreen.setOnClickListener({ v -> setScreenOrientation(v) })
         player_button_chat.setOnClickListener({ v -> setChatVisibility(v) })
-        closeButton.setOnClickListener({ v -> closeUserRating(v) })
-        reportButton.setOnClickListener({ v -> reportUser(v) })
-        commentButton.setOnClickListener({ v -> commentUserRating(v) })
         player_button_back.setOnClickListener({ _ -> finish() })
     }
 
@@ -214,12 +165,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         val url = "https://polyvox.fr/stream/$token"
         val body = getString(R.string.share_stream_body) + "\n" + title + "\n" + getString(R.string.join_me)
         UtilsTemp.shareContent(this, body, url)
-    }
-
-    fun setScreenOrientation(v: View) {
-        // orientation ? portrait : landscape;
-        val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-        requestedOrientation = if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
     fun setChatVisibility(v: View) {
@@ -252,6 +197,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //chat apparait alors en surimpression sur le stream
     }
 
+    fun setScreenOrientation(v: View) {
+        // orientation ? portrait : landscape;
+        val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        requestedOrientation = if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
 
     override fun onConfigurationChanged(config: Configuration) {
         super.onConfigurationChanged(config)
@@ -305,92 +255,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     override fun onDestroy() {
         super.onDestroy()
         manifestHandler.removeCallbacks(manifestRunnable)
-        handler.removeCallbacks(runnable)
     }
-
-
-    private fun showUserRating(user: String, imageUrl: String) {
-        currentRatedSpeaker = user
-        currentRatedSpeakerUrl = imageUrl;
-        videoPlayerView!!.controllerHideOnTouch = false
-        videoPlayerView!!.controllerShowTimeoutMs = 500000000;
-        videoPlayerView!!.showController()
-        player_bottom_buttons_bar.visibility = View.GONE
-        player_bottom_rate_speaker.visibility = View.VISIBLE
-        commentBarLayout.visibility = View.GONE
-        ratingBarLayout.visibility = View.VISIBLE
-        //player_bottom_rate_speaker.visibility = View.VISIBLE
-        YoYo.with(Techniques.SlideInUp).duration(300).playOn(player_bottom_rate_speaker)
-        infoUserName.text = user
-        GlideApp.with(this).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
-    }
-
-    fun closeUserRating(v: View) {
-        if (ratingValue != RatingType.NONE) {
-            /*
-            val reasonText = reasonSpinner.selectedItem.toString()
-            val body = JSONObject()
-            body.put(APIUrl.UPDATE_INF0_BIO, name)
-            body.put(???, reasonText)
-            body.put(???, input.text)
-            APIRequest.JSONrequest(this, Request.Method.POST,
-            APIUrl.BASE_URL + APIUrl.???, true, body, { _ ->
-                UtilsTemp.showToast(this, getString(R.string.???))
-            }, null)
-            */
-
-            val url = APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_VOTE
-            var voteValue = if (ratingValue == RatingType.POSITIVE)
-                "poceBlo"
-            else
-                "poceRoge"
-            val body = JSONObject()
-            body.put("vote", voteValue)
-            APIRequest.JSONrequest(this, Request.Method.PUT, url,
-                    true, body, { _ -> }, null)
-
-
-            closeButton!!.setImageResource(R.drawable.grey_cross)
-            ratingBarLayout.visibility = View.GONE
-            commentBarLayout.visibility = View.VISIBLE
-            if (ratingValue == RatingType.POSITIVE)
-                reportButton.visibility = View.GONE
-            else
-                reportButton.visibility = View.VISIBLE
-            //if (ratingValue <= 2.5)
-            //reportButton.visibility = View.GONE
-            ratingValue = RatingType.NONE
-            return;
-        }
-        reportButton.visibility = View.VISIBLE;
-        player_bottom_buttons_bar.visibility = View.VISIBLE
-        YoYo.with(Techniques.SlideOutDown).duration(300).playOn(player_bottom_rate_speaker)
-        //player_bottom_rate_speaker.visibility = View.GONE
-        videoPlayerView!!.controllerHideOnTouch = true
-        videoPlayerView!!.controllerShowTimeoutMs = 5000;
-        currentRatedSpeaker = null
-
-    }
-
-    private fun setFragmentArgument(frag: CommentReportBase) {
-        val bundle = Bundle()
-        bundle.putString("name", currentRatedSpeaker)
-        bundle.putString("url", currentRatedSpeakerUrl)
-        frag.arguments = bundle
-    }
-
-    fun reportUser(v: View) {
-        val frag = UserReportFragment()
-        setFragmentArgument(frag)
-        frag.show(fragmentManager, getString(R.string.report))
-    }
-
-    fun commentUserRating(v: View) {
-        val frag = UserCommentFragment()
-        setFragmentArgument(frag)
-        frag.show(fragmentManager, getString(R.string.send_comment))
-    }
-
 
     //reloads page when logging
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -400,7 +265,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     }
 
     override fun dialogDismiss() {
-        closeUserRating(reportButton)
+        userRate.closeUserRating(reportButton)
     }
 
 
