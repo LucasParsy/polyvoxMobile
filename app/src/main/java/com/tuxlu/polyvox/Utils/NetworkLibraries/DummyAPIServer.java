@@ -53,19 +53,19 @@ public class DummyAPIServer {
         }
     }
 
-    private JSONObject fileToJSON(int id, Context context) throws JSONException {
+    public static JSONObject fileToJSON(int id, Context context) throws JSONException {
         InputStream is = context.getResources().openRawResource(id);
-        String jsonString = "";
+        StringBuilder jsonString = new StringBuilder();
         String line;
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while ((line = reader.readLine()) != null)
-                jsonString += line;
+                jsonString.append(line);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new JSONObject(jsonString);
+        return new JSONObject(jsonString.toString());
     }
 
     public HttpResponse dummyRequest(com.android.volley.Request<?> request,

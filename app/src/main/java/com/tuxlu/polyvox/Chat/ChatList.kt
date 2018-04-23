@@ -41,7 +41,7 @@ class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialog
 
         val url = APIUrl.FAKE_BASE_URL + APIUrl.LIST_USERS_CHAT
         APIRequest.JSONrequest(activity, Request.Method.GET, url,
-                true, null, { current ->
+                false, null, { current ->
             LoadingUtils.EndLoadingView(view)
             val topObj = current.getJSONObject(APIUrl.SEARCH_USER_JSONOBJECT)
             val usersArray = topObj.getJSONArray("users")
