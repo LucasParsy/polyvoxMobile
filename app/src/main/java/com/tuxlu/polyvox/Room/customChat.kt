@@ -9,10 +9,10 @@ import java.lang.Exception
 import java.net.URI
 import java.util.ArrayList
 
-class CustomChat(val username: String, private val channel: String): WebSocketClient.Listener
+class CustomChat(private val channel: String, private val token : String): WebSocketClient.Listener
 {
     private var messages: MutableList<RoomChatResult> = ArrayList()
-    private val socket = WebSocketClient(URI(APIUrl.CHAT_URL), this)
+    private val socket = WebSocketClient(URI(APIUrl.CHAT_URL), this, token)
 
 
     fun addSingleMessage(obj: JSONObject)
@@ -24,7 +24,7 @@ class CustomChat(val username: String, private val channel: String): WebSocketCl
     }
 
     override fun onMessage(text: String) {
-        if (text.isNullOrBlank())
+        if (text.isBlank())
             return
         if (text[0] == '[')
         {

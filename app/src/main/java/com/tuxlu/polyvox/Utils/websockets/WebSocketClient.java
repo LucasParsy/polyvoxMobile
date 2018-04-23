@@ -44,6 +44,8 @@ public class WebSocketClient {
     private HybiParser mParser;
 
     private final Object mSendLock = new Object();
+    private String cookie;
+
 
     private static TrustManager[] sTrustManagers;
 
@@ -51,11 +53,13 @@ public class WebSocketClient {
         sTrustManagers = tm;
     }
 
-    public WebSocketClient(URI uri, Listener listener) { //List<BasicNameValuePair> extraHeaders (as param)
-        mURI          = uri;
+    public WebSocketClient(URI uri, Listener listener, String nCookie) { //List<BasicNameValuePair> extraHeaders (as param)
+        mURI = uri;
         mListener = listener;
         //mExtraHeaders = extraHeaders;
-        mParser       = new HybiParser(this);
+        mParser = new HybiParser(this);
+        cookie = nCookie;
+
 
         HandlerThread mHandlerThread = new HandlerThread("websocket-thread");
         mHandlerThread.start();
@@ -94,6 +98,8 @@ public class WebSocketClient {
                     out.print("GET " + path + " HTTP/1.1\r\n");
                     out.print("Upgrade: websocket\r\n");
                     out.print("Connection: Upgrade\r\n");
+                    if (!cookie.isEmpty())
+                        out.print("Cookie: " + cookie + "\r\n");
                     out.print("Host: " + mURI.getHost() + "\r\n");
                     out.print("Origin: " + origin.toString() + "\r\n");
                     out.print("Sec-WebSocket-Key: " + secret + "\r\n");
