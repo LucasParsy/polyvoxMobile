@@ -108,7 +108,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
-        userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
+        //userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
     }
 
     private fun getManifest()

@@ -30,13 +30,13 @@ import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
+import com.tuxlu.polyvox.Utils.NetworkLibraries.DummyAPIServer;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Vector;
 
@@ -96,7 +96,19 @@ public class Home extends AppCompatActivity {
     }
 
     private void updateDiscover() {
-        handler.postDelayed(() -> discover.setLoadingStatus(true), 500);
+
+
+        handler.postDelayed(() -> {
+                    //discover.setLoadingStatus(true);
+                    try {
+                        discover.add(DummyAPIServer.fileToJSON(R.raw.rooms, this.getBaseContext()).getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), false);
+                        infoLoaded = true;
+                    }
+                    catch (Exception e) { /*never happens, and then what?*/ }
+                }
+                , 500);
+        //todo: remove these lines, debug for no network, uncomment lower line
+
 
         APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS, false, null,
                 response -> {
