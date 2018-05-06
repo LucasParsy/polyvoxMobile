@@ -57,7 +57,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var streamUrl: String = ""
 
     private lateinit var userRate: UserRating
+    private lateinit var streaming: Streaming
 
+    private var acting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val b = intent.extras!!
@@ -68,6 +70,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         manifestHandler.post(manifestRunnable)
         //setVideoPlayer(token)
         userRate = UserRating(this, token)
+        streaming = Streaming(this, token)
         setClicklisteners()
 
 
@@ -167,6 +170,29 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_button_fullscreen.setOnClickListener({ v -> setScreenOrientation(v) })
         player_button_chat.setOnClickListener({ v -> setChatVisibility(v) })
         player_button_back.setOnClickListener({ _ -> finish() })
+
+
+
+
+        recordButton.setOnClickListener { _ ->
+            if (!acting) {
+                if (!streaming.start())
+                    acting = !acting //streaming fails, not acting. it's debug.
+            }
+            else
+                streaming.stop()
+            acting = !acting
+            if (acting)
+                recordButton.text = "Arreter"
+            else
+                recordButton.text = "Test Camera"
+        }
+
+
+
+
+
+
     }
 
     fun shareStream(v: View) {
