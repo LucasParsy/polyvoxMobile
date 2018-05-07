@@ -11,6 +11,8 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.tuxlu.polyvox.R
 import kotlinx.android.synthetic.main.fragment_room_waitlist.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 /**
@@ -24,10 +26,16 @@ class RoomWaitlist : Fragment() {
     private var handler: Handler = Handler()
     private val runnable: Runnable = Runnable { YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText) };
 
-    private var hanDummyList: Handler = Handler()
+    private var oldJSon = "";
+    private var currentSpeaker = "";
+    private var nextSpeaker = "";
+    private var waiters = ArrayList<String>()
 
+    private var firstUpdate = true;
 
     fun showInfo(text: String) {
+        if (firstUpdate)
+            return
         notificationText.text = text;
         notificationText.visibility = View.VISIBLE
         YoYo.with(Techniques.SlideInUp).duration(300).playOn(notificationText)
@@ -48,11 +56,83 @@ class RoomWaitlist : Fragment() {
         fragmentManager!!.beginTransaction().add(R.id.roomWaitlistLayout, frag).commit()
 
         rootView.findViewById<TextView>(R.id.notificationText).setOnClickListener { onNotificationClick() }
-        startDummyWaitlist()
-
         return rootView;
     }
 
+    fun update(data: JSONObject) {
+        val waitlist = data.getJSONArray("waitlist")
+        val jsonSpeaker = data.getJSONObject("speaker").getJSONObject("info")
+        val speakerInfo = RoomWaitlistResult(jsonSpeaker.getString("userName"),
+                jsonSpeaker.getString("picture"), 0, RoomWaitlistStatus.STREAMER)
+
+        val jStr = waitlist.toString()
+        if (oldJSon == jStr)
+            return;
+        oldJSon = jStr
+
+        checkNewUsers(waitlist, speakerInfo)
+        //checkDeleteUsers(waitlist, speakerInfo)
+        //checkWaitUser(waitlist, speakerInfo)
+
+        if (nextSpeaker == speakerInfo.username)
+        {
+            frag.moveDownSpeaker()
+            currentSpeaker = speakerInfo.username;
+            nextSpeaker = ""
+            if (waitlist.length() > 0)
+                nextSpeaker = waitlist.getJSONObject(0).getString("userName")
+        }
+
+        firstUpdate = false;
+        /*
+            frag.deleteUser(name)
+            frag.waitUser(name)
+            //always check for the "nextSpeaker" change!
+        */
+    }
+    private fun checkNewUsers(waitlist: JSONArray, speakerInfo: RoomWaitlistResult) {
+        val speakerName = speakerInfo.username
+
+        if (speakerName != currentSpeaker && !waiters.contains(speakerName)) {
+            currentSpeaker = speakerName
+            frag.addUser(speakerInfo)
+            waiters.add(speakerName)
+            showInfo(speakerName + getString(R.string.joined_waitlist))
+        }
+
+        for (i in 0..waitlist.length()) {
+            val name = waitlist.getJSONObject(i).getString("userName")
+            val url = waitlist.getJSONObject(i).getString("picture")
+
+            if (!waiters.contains(name)) {
+                frag.addUser(RoomWaitlistResult(name, url))
+                waiters.add(name)
+                showInfo(name + getString(R.string.joined_waitlist))
+
+                if (nextSpeaker == "")
+                    nextSpeaker = speakerName
+            }
+        }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    public fun onNotificationClick()
+    {
+        YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText)
+        handler.removeCallbacksAndMessages(null)
+    }
+
+
+    /*
     private fun startDummyHandlers() {
         hanDummyList.postDelayed(object : Runnable {
             override fun run() {
@@ -109,22 +189,5 @@ class RoomWaitlist : Fragment() {
 
 
     }
-
-    override fun onStop() {
-        super.onStop()
-        handler.removeCallbacksAndMessages(null)
-        hanDummyList.removeCallbacksAndMessages(null)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        startDummyHandlers()
-    }
-
-    public fun onNotificationClick()
-    {
-        YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText)
-        handler.removeCallbacksAndMessages(null)
-    }
-
+    */
 }

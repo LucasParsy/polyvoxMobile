@@ -57,7 +57,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var streamUrl: String = ""
 
     private lateinit var userRate: UserRating
-
+    private lateinit var waitlist : RoomWaitlist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val b = intent.extras!!
@@ -92,7 +92,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
         val bundle2 = Bundle()
         bundle2.putInt("timeLimit", 300) //todo: récupérer avec infos de la room, ici défaut 5 mins
-        val waitlist = Fragment.instantiate(this, RoomWaitlist::class.java.name)
+        waitlist = Fragment.instantiate(this, RoomWaitlist::class.java.name) as RoomWaitlist
         waitlist.arguments = bundle2
 
 
@@ -116,6 +116,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         APIRequest.JSONrequest(baseContext, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
             val data  = response.getJSONObject("data")
+            waitlist.update(data);
             val nUrl = data.getString("videosData");
             if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl)
                 setVideoPlayer(nUrl)

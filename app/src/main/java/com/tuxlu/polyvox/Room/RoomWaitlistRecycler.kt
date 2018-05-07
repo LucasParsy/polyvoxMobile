@@ -241,9 +241,9 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
 
     fun moveDownSpeaker() = (adapter as RoomWaitlistAdapter?)?.moveDownSpeaker()
 
-    fun startTimer(position: Int) = (adapter as RoomWaitlistAdapter?)?.startTimer(position)
+    private fun startTimer(position: Int) = (adapter as RoomWaitlistAdapter?)?.startTimer(position)
 
-    fun stopTimer(position: Int) = (adapter as RoomWaitlistAdapter?)?.stopTimer(position)
+    private fun stopTimer(position: Int) = (adapter as RoomWaitlistAdapter?)?.stopTimer(position)
 
     fun addUser(user: RoomWaitlistResult) = (adapter as RoomWaitlistAdapter?)?.addUser(user)
 
