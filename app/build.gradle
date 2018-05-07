@@ -100,7 +100,7 @@ dependencies {
     //pdf viewer for API 21+
     implementation 'es.voghdev.pdfviewpager:library:1.0.3'
     //messaging UI
-    implementation 'com.github.stfalcon:chatkit:0.2.2'
+    implementation 'com.github.LucasParsy:ChatKit:0.2.26'
 
     //Expandable RecyclerView
     implementation 'com.thoughtbot:expandablerecyclerview:1.3'
