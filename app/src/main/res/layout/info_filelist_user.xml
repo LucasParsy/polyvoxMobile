@@ -59,7 +59,7 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:tint="@color/about_libraries_dividerDark_openSource_dark"
-        app:srcCompat="@drawable/exo_controls_play" />
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24px" />
 
 
 </RelativeLayout>

@@ -67,21 +67,19 @@ open class FlUserBinder(val v: View) : GroupViewHolder(v) {
         GlideApp.with(v.context).load(group.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
-    fun rotateIcon(from: Float, to: Float) {
-        val rotate = RotateAnimation(from, to, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
-        rotate.fillAfter = true
-        v.findViewById<ImageView>(R.id.fileListArrow).animation = rotate
+    fun rotateIcon(from: Float) {
+        val arrow  = v.findViewById<ImageView>(R.id.fileListArrow)
+        arrow.animate().rotation(from)
     }
 
     override fun collapse() {
         super.collapse()
-        rotateIcon(180f, 360f)
+        rotateIcon(0f)
     }
 
     override fun expand() {
         super.expand()
-        rotateIcon(360f, 180f)
+        rotateIcon(90f)
     }
 }
 
