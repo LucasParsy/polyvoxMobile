@@ -30,6 +30,14 @@ public class AuthUtils {
         return am.getAccountsByType(context.getString(R.string.account_type))[0];
     }
 
+
+    public static boolean hasAccount(final Context context)
+    {
+        AccountManager am = AccountManager.get(context);
+        return hasAccount(context, am);
+    }
+
+
     public static boolean hasAccount(final Context context, final AccountManager am)
     {
         Account[] accs = am.getAccountsByType(context.getString(R.string.account_type));

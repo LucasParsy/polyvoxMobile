@@ -37,11 +37,6 @@ import java.util.Map;
 
 public class APIRequest {
 
-    public static boolean isAPIConnected(Context context) {
-        AccountManager am = AccountManager.get(context);
-        Account[] accounts = am.getAccounts();
-        return (accounts.length != 0);
-    }
 
     public static boolean checkConnection(Context context, boolean usesApi) {
         if (!NetworkUtils.isConnected(context)) {
@@ -49,7 +44,7 @@ public class APIRequest {
             return false;
         }
 
-        if (usesApi && !isAPIConnected(context)) {
+        if (usesApi && !AuthUtils.hasAccount(context)) {
             startLoginActivity(context);
             return false;
         }

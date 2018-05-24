@@ -51,7 +51,7 @@ class ProfilePage : MyAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         setLayoutOrientation(resources.configuration.orientation)
-        connected = APIRequest.isAPIConnected(this)
+        connected = AuthUtils.hasAccount(this)
 
         val userName = intent.getStringExtra("name")
         val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;

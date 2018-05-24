@@ -138,7 +138,7 @@ public class Home extends AppCompatActivity {
 
     void setUserIcon(final ImageView image) {
         final Context context = getBaseContext();
-        if (!APIRequest.isAPIConnected(context))
+        if (!AuthUtils.hasAccount(context))
             return;
         String imageUrl = AuthUtils.getPictureUrl(context);
         if (!UtilsTemp.isStringEmpty(imageUrl))
@@ -172,7 +172,7 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 if (clicked)
                     return;
-                if (!APIRequest.isAPIConnected(getApplicationContext())) {
+                if (!AuthUtils.hasAccount(getApplicationContext())) {
                     APIRequest.startLoginActivity(activity);
                     return;
                 }

@@ -61,6 +61,8 @@ class RoomWaitlist : Fragment() {
     }
 
     fun update(data: JSONObject) {
+        if (data.isNull("speaker"))
+            return
         val jsonSpeaker = data.getJSONObject("speaker")
         val speakerTime = timeLimit - jsonSpeaker.getInt("countdownTimer")
         val jsonSpeakerInfo = jsonSpeaker.getJSONObject("info")
