@@ -32,8 +32,9 @@ class RoomWaitlist : Fragment() {
     private var waiters = ArrayList<String>()
 
     private var firstUpdate = true;
+    private var timeLimit = 0
 
-    fun showInfo(text: String) {
+    private fun showInfo(text: String) {
         if (firstUpdate)
             return
         notificationText.text = text;
@@ -48,7 +49,7 @@ class RoomWaitlist : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_room_waitlist, container, false)
 
 
-        val timeLimit = arguments?.getInt("timeLimit")
+        timeLimit = arguments?.getInt("timeLimit")!!
         val bundle = Bundle()
         bundle.putInt("timeLimit", timeLimit!!)
         frag = RoomWaitlistRecycler()
@@ -60,11 +61,25 @@ class RoomWaitlist : Fragment() {
     }
 
     fun update(data: JSONObject) {
-        val waitlist = data.getJSONArray("waitlist")
-        val jsonSpeaker = data.getJSONObject("speaker").getJSONObject("info")
-        val speakerInfo = RoomWaitlistResult(jsonSpeaker.getString("userName"),
-                jsonSpeaker.getString("picture"), 0, RoomWaitlistStatus.STREAMER)
+        val jsonSpeaker = data.getJSONObject("speaker")
+        val speakerTime = timeLimit - jsonSpeaker.getInt("countdownTimer")
+        val jsonSpeakerInfo = jsonSpeaker.getJSONObject("info")
 
+        val speakerInfo = RoomWaitlistResult(jsonSpeakerInfo.getString("userName"),
+                jsonSpeakerInfo.getString("picture"), speakerTime, RoomWaitlistStatus.STREAMER)
+
+
+        val list = ArrayList<RoomWaitlistResult>()
+        list.add(speakerInfo)
+
+        val waitlist = data.getJSONArray("waitlist")
+        for (i in 0..waitlist.length()) {
+            val name = waitlist.getJSONObject(i).getString("userName")
+            val url = waitlist.getJSONObject(i).getString("picture")
+            list.add(RoomWaitlistResult(name, url))
+        }
+        frag.update(list, true)
+        /*
         val jStr = waitlist.toString()
         if (oldJSon == jStr)
             return;
@@ -74,8 +89,7 @@ class RoomWaitlist : Fragment() {
         //checkDeleteUsers(waitlist, speakerInfo)
         //checkWaitUser(waitlist, speakerInfo)
 
-        if (nextSpeaker == speakerInfo.username)
-        {
+        if (nextSpeaker == speakerInfo.username) {
             frag.moveDownSpeaker()
             currentSpeaker = speakerInfo.username;
             nextSpeaker = ""
@@ -89,7 +103,9 @@ class RoomWaitlist : Fragment() {
             frag.waitUser(name)
             //always check for the "nextSpeaker" change!
         */
+        */
     }
+
     private fun checkNewUsers(waitlist: JSONArray, speakerInfo: RoomWaitlistResult) {
         val speakerName = speakerInfo.username
 
@@ -125,8 +141,7 @@ class RoomWaitlist : Fragment() {
         super.onStart()
     }
 
-    public fun onNotificationClick()
-    {
+    public fun onNotificationClick() {
         YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText)
         handler.removeCallbacksAndMessages(null)
     }

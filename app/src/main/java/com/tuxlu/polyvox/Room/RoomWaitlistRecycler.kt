@@ -234,7 +234,9 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
         return res;
     }
 
-    fun update(data: List<RoomWaitlistResult>) {
+    fun update(data: List<RoomWaitlistResult>, clear : Boolean= false) {
+        if (clear)
+            adapter?.clear(false)
         adapter?.add(data)
         adapter?.notifyDataSetChanged()
     }

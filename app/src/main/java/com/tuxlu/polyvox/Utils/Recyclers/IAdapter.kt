@@ -11,7 +11,7 @@ import android.view.ViewGroup
  * Created by tuxlu on 14/11/17.
  */
 
-interface ViewHolderBinder<T: Any> {
+interface ViewHolderBinder<T : Any> {
     fun bind(holder: Adapter.ViewHolder<T>, item: T)
     fun setClickListener(holder: Adapter.ViewHolder<T>, data: MutableList<T>)
 /*    {
@@ -23,13 +23,13 @@ interface ViewHolderBinder<T: Any> {
     }*/
 }
 
-open class Adapter<T: Any>(private  val context : Context,
-                      protected val data: MutableList<T>,
-                      private val layout: Int,
-                      private val binder : ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
+open class Adapter<T : Any>(private val context: Context,
+                            protected val data: MutableList<T>,
+                            private val layout: Int,
+                            private val binder: ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
 
 
-    class ViewHolder<T: Any> (val v: View, private val binder : ViewHolderBinder<T>) : RecyclerView.ViewHolder(v) {
+    class ViewHolder<T : Any>(val v: View, private val binder: ViewHolderBinder<T>) : RecyclerView.ViewHolder(v) {
 
         fun bind(item: T) {
             binder.bind(this, item)
@@ -53,15 +53,16 @@ open class Adapter<T: Any>(private  val context : Context,
         holder.setClickListener(data)
     }
 
-    fun clear() {
+    fun clear(notify: Boolean = true) {
         val size = data.size
         data.clear()
-        notifyItemRangeRemoved(0, size)
+        if (notify)
+            notifyItemRangeRemoved(0, size)
     }
 
-    fun add(ndata :List<T>){
+    fun add(ndata: List<T>) {
         data += ndata
-        notifyItemInserted(data.size -1)
+        notifyItemInserted(data.size - 1)
     }
 
     override fun getItemCount(): Int = data.size
