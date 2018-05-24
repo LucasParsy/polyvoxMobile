@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.User.ProfilePage
@@ -24,24 +23,24 @@ import org.json.JSONObject
  * Created by tuxlu on 12/11/17.
  */
 
-data class UserSearchResult(var name: String ="",
-                       var imageUrl: String ="")
+data class UserSearchResult(var name: String = "",
+                            var imageUrl: String = "",
+                            var roomName: String = "",
+                            var roomUrl: String = "")
 
 
 open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
 
-    override fun bind(holder: Adapter.ViewHolder<UserSearchResult>, item: UserSearchResult)
-    {
+    override fun bind(holder: Adapter.ViewHolder<UserSearchResult>, item: UserSearchResult) {
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.name
         val image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
             GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
-    override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>)
-    {
+    override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>) {
         val context = holder.v.context
-        val clickListener = View.OnClickListener {_ ->
+        val clickListener = View.OnClickListener { _ ->
 
             val intent = Intent(context, ProfilePage::class.java)
             val b = Bundle()
@@ -63,25 +62,31 @@ class LinearItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDeco
 }
 
 
-
-class SearchUserRecycler : IRecycler<UserSearchResult>() {
+open class SearchUserRecycler : IRecycler<UserSearchResult>() {
 
     override val layoutListId: Int = R.layout.fragment_recycler_view
     override val layoutObjectId: Int = R.layout.info_search_user
     override val recycleId: Int = R.id.recycleView
-    override val requestObjectName : String = APIUrl.SEARCH_USER_JSONOBJECT
+    override val requestObjectName: String = APIUrl.SEARCH_USER_JSONOBJECT
 
     override val binder = UserSearchBinder()
-    override val itemDecoration= LinearItemDecoration(2)
+    override val itemDecoration = LinearItemDecoration(2)
 
 
-
-    override fun fillDataObject(json: JSONObject): UserSearchResult
-    {
+    override fun fillDataObject(json: JSONObject): UserSearchResult {
         val res = UserSearchResult()
         try {
-            res.name = json.getString(APIUrl.SEARCH_USER_NAME)
-            res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
+            var userInfo = json
+            if (json.has("user"))
+                userInfo = json.getJSONObject("user")
+            res.name = userInfo.getString(APIUrl.SEARCH_USER_NAME)
+            res.imageUrl = userInfo.getString(APIUrl.SEARCH_USER_IMAGE_URL)
+
+            if (!json.isNull("room")) {
+                val userRoom = json.getJSONObject("room")
+                res.roomName = userRoom.getString("name")
+                res.roomUrl = userRoom.getString("token")
+            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }

@@ -12,7 +12,7 @@ import com.android.volley.Request
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Options.Options
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Search.SearchUserRecycler
+import com.tuxlu.polyvox.Search.FollowerUserRecycler
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
@@ -73,7 +73,7 @@ class ProfilePage : MyAppCompatActivity() {
 
     private fun checkFollowed(followersData: JSONArray) {
         for (i in 0..(followersData.length() - 1)) {
-            val item = followersData.getJSONObject(i)
+            val item = followersData.getJSONObject(i).getJSONObject("user")
             if (item.getString("userName") == AuthUtils.getUsername(baseContext)) {
                 user.following = true
                 break
@@ -84,8 +84,8 @@ class ProfilePage : MyAppCompatActivity() {
     private fun setupViewPager(obj: JSONObject) {
         val adapter: PagerAdapter
         val followersData: JSONArray = obj.getJSONArray("followers")
-        val followers = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
-        val followed = Fragment.instantiate(this, SearchUserRecycler::class.java.name) as SearchUserRecycler
+        val followers = Fragment.instantiate(this, FollowerUserRecycler::class.java.name) as FollowerUserRecycler
+        val followed = Fragment.instantiate(this, FollowerUserRecycler::class.java.name) as FollowerUserRecycler
 
         followers.setNoResViewVisibility(false)
         followed.setNoResViewVisibility(false)
@@ -104,8 +104,8 @@ class ProfilePage : MyAppCompatActivity() {
         if (connected && !user.isCurrentUser)
             checkFollowed(followersData)
 
-        (fragments[0] as SearchUserRecycler).add(followersData)
-        (fragments[1] as SearchUserRecycler).add(obj.getJSONArray("followed"))
+        (fragments[0] as FollowerUserRecycler).add(followersData)
+        (fragments[1] as FollowerUserRecycler).add(obj.getJSONArray("followed"))
         setupPage()
     }
 
