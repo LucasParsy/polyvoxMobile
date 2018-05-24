@@ -13,6 +13,7 @@ import android.os.Environment
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -222,6 +223,14 @@ class UtilsTemp {
             // Check which request we're responding to
                         if (requestCode == REQUESTCODENUMBER) {
         */
+
+        @JvmStatic
+        fun dpToPixels(dp: Int, context: Context): Int
+        {
+            return (dp *(context.resources.displayMetrics.xdpi/ DisplayMetrics.DENSITY_DEFAULT)).toInt()
+        }
+
+
         @JvmStatic
         fun bitmapToFile(myBmp: Bitmap, filename: String, context: Context) {
             val f = File(context.cacheDir, filename + ".png")

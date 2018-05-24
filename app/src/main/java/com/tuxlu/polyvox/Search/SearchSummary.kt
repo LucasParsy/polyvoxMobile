@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.UtilsTemp.Companion.dpToPixels
 import kotlinx.android.synthetic.main.fragment_search_all.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -69,11 +70,6 @@ class SearchSummary : Fragment() {
         return res
     }
 
-    private fun dpToPixels(dp: Int): Int
-    {
-       return (dp *(resources.displayMetrics.xdpi/ DisplayMetrics.DENSITY_DEFAULT)).toInt()
-    }
-
     private fun setUserHeight()
     {
         val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, userHeight)
@@ -88,7 +84,7 @@ class SearchSummary : Fragment() {
         if (obj.getJSONArray(APIUrl.SEARCH_ROOM_JSONOBJECT).length() != 0) {
             roomsView.visibility = View.VISIBLE
             val rooms = reduceJSONArray(obj.getJSONArray(APIUrl.SEARCH_ROOM_JSONOBJECT))
-            roomHeight = dpToPixels(rooms.length() * (96 + 20) + 40)
+            roomHeight = dpToPixels(rooms.length() * (96 + 20) + 40, context!!)
             rFrag.add(rooms, true)
         } else
             roomsView.visibility = View.GONE
@@ -96,7 +92,7 @@ class SearchSummary : Fragment() {
         if (obj.getJSONArray(APIUrl.SEARCH_USER).length() != 0) {
             usersView.visibility = View.VISIBLE
             val users = reduceJSONArray(obj.getJSONArray(APIUrl.SEARCH_USER))
-            userHeight = dpToPixels(users.length() * (70 + 12) + 40)
+            userHeight = dpToPixels(users.length() * (70 + 12) + 40, context!!)
             uFrag.add(users, true)
         } else
             usersView.visibility = View.GONE

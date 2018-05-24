@@ -47,9 +47,6 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         setContentView(R.layout.activity_private_chat)
         val name = intent.getStringExtra("name")
         var friendUrl = intent.getStringExtra("url")
-        if (UtilsTemp.isStringEmpty(friendUrl)) {
-            friendUrl = null
-        }
         friendAuthor = Author(name, friendUrl)
 
         val myName = AuthUtils.getUsername(this);
