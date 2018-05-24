@@ -1,12 +1,12 @@
 package com.tuxlu.polyvox.Utils
 
 import android.Manifest
-import android.app.Activity
-import android.app.Dialog
+import android.app.*
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.content.FileProvider
@@ -49,10 +49,10 @@ class Fileloader {
                 name = getUrlLastSegment(url)
             var type = getType(ntype, url)
 
-            var newFragment: android.app.Fragment? = null
+            var newFragment: Fragment? = null
             newFragment = if (type.startsWith("image"))
                 DialogFragmentImage()
-            else if (type == "application/pdf" && android.os.Build.VERSION.SDK_INT >= 21)
+            else if (type == "application/pdf" && Build.VERSION.SDK_INT >= 21)
                 DialogFragmentPDF()
             else if (type == "text/html")
                 DialogFragmentWebview()
@@ -121,14 +121,14 @@ class Fileloader {
         }
 
         @JvmStatic
-        private fun startFragment(name: String, url: String, act: Activity, frag: android.app.Fragment) {
-            val fragmentManager: android.app.FragmentManager = act.fragmentManager
+        private fun startFragment(name: String, url: String, act: Activity, frag: Fragment) {
+            val fragmentManager: FragmentManager = act.fragmentManager
             val bundle = Bundle()
             bundle.putString("url", url)
             bundle.putString("name", name)
             frag.arguments = bundle
             val transaction = fragmentManager.beginTransaction()
-            transaction.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.add(android.R.id.content, frag).addToBackStack(null).commit()
         }
 

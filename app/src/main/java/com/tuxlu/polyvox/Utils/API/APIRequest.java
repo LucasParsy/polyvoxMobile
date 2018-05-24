@@ -65,7 +65,7 @@ public class APIRequest {
         AsyncTask.execute(() -> {
                 final String token = usesApi ? AuthUtils.getToken(context) : null;
                 APIJsonObjectRequest jsObjRequest = new APIJsonObjectRequest(method, url, body, listener, errorListener, token, context);
-                addRequestToQueue(context, usesApi, jsObjRequest);
+                addRequestToQueue(context, jsObjRequest);
             });
     }
 
@@ -80,13 +80,13 @@ public class APIRequest {
         AsyncTask.execute(new Runnable() { @Override public void run() {
                 final String token = usesApi ? AuthUtils.getToken(context) : null;
                 VolleyMultipartRequest request = new VolleyMultipartRequest(method, url, body, listener, errorListener, token, context);
-                addRequestToQueue(context, usesApi, request);
+                addRequestToQueue(context, request);
             }
         });
     }
 
 
-    public static void addRequestToQueue(final Context context, final boolean usesApi, final APIJsonObjectRequest request) {
+    public static void addRequestToQueue(final Context context, final APIJsonObjectRequest request) {
         //avoid timeout
         request.setRetryPolicy(new DefaultRetryPolicy(
                 15000,
