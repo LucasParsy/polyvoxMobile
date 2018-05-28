@@ -52,12 +52,13 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     private var width: Int = 0
 
-    private var manifestHandler : Handler = Handler()
+    private var manifestHandler: Handler = Handler()
     private val manifestRunnable: Runnable = Runnable { getManifest() };
     private var streamUrl: String = ""
 
-    private lateinit var userRate: UserRating
-    private lateinit var waitlist : RoomWaitlist
+    public lateinit var userRate: UserRating
+    private lateinit var waitlist: RoomWaitlist
+    private lateinit var fileList: FLRecycler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val b = intent.extras!!
@@ -88,18 +89,18 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         roomChat.arguments = bundle
 
 
-        val filelist = Fragment.instantiate(this, FLRecycler::class.java.name)
+        fileList = Fragment.instantiate(this, FLRecycler::class.java.name) as FLRecycler
 
 
         val bundle2 = Bundle()
-        bundle2.putInt("timeLimit", 300) //todo: récupérer avec infos de la room, ici défaut 5 mins
+        bundle2.putString("token", token)
         waitlist = Fragment.instantiate(this, RoomWaitlist::class.java.name) as RoomWaitlist
         waitlist.arguments = bundle2
 
 
         val fragments = ArrayList<Fragment>()
         fragments.add(roomChat)
-        fragments.add(filelist)
+        fragments.add(fileList)
         fragments.add(waitlist)
         val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
@@ -109,22 +110,30 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
-        //userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
     }
 
-    private fun getManifest()
-    {
+    private fun getManifest() {
         APIRequest.JSONrequest(baseContext, Request.Method.GET,
                 APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
-            val data  = response.getJSONObject("data")
-            waitlist.update(data);
+            val data = response.getJSONObject("data")
+            try {
+                waitlist.update(data);
+                fileList.add(data, true)
+            } catch (e: Exception) {
+            }
+
+
+            //userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
+
+
             val nUrl = data.getString("videosData");
             if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl)
                 setVideoPlayer(nUrl)
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
-                { manifestHandler.postDelayed(manifestRunnable, 2000)
-        })
+                {
+                    manifestHandler.postDelayed(manifestRunnable, 2000)
+                })
     }
 
 
@@ -137,7 +146,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
         else
             Uri.parse(token);
-            //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
+        //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
         streamUrl = token;
 
         if (player == null) {
@@ -158,8 +167,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player!!.playWhenReady = true
     }
 
-    public fun stopPlayer()
-    {
+    public fun stopPlayer() {
         if (player != null)
             player!!.stop()
     }

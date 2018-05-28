@@ -64,7 +64,10 @@ open class FlUserBinder(val v: View) : GroupViewHolder(v) {
     fun setData(group: FlUser) {
         v.findViewById<TextView>(R.id.infoUserName).text = group.username
         val image = v.findViewById<ImageView>(R.id.infoUserPicture)
-        GlideApp.with(v.context).load(group.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
+        if (group.url.isBlank())
+            v.findViewById<View>(R.id.view2).visibility = View.INVISIBLE
+        else
+            GlideApp.with(v.context).load(group.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
     }
 
     fun rotateIcon(from: Float) {

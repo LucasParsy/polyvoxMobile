@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.android.volley.VolleyError
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.IRequestRecycler
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONArray
@@ -20,14 +21,11 @@ import org.json.JSONObject
 /**
  * Created by tuxlu on 19/01/18.
  */
-open class FLRecycler : IRequestRecycler<FlUser>() {
+open class FLRecycler : IRecycler<FlUser>() {
 
     override val layoutListId: Int = R.layout.fragment_recycler_view
     override val recycleId: Int = R.id.recycleView
 
-    override val requestUrl: String = APIUrl.ROOM_FILE_LIST
-    override val requestBody: JSONObject = JSONObject()
-    override val usesAPI: Boolean = false
     override val requestObjectName: String = "data"
 
     //unused params
@@ -48,27 +46,25 @@ open class FLRecycler : IRequestRecycler<FlUser>() {
         val layoutManager = setLayoutManager()
         recycler.layoutManager = layoutManager
         LoadingUtils.StartLoadingView(rootView, context)
-        request(requestUrl, requestBody, true, rootView)
         return rootView
     }
 
 
-    override fun errorListener(error: VolleyError) {
-        Log.wtf(tag, error)
-    }
 
     override fun fillDataObject(json: JSONObject): FlUser {
         try {
-            val name = json.getString("userName")
-            val imageUrl = json.getString("url")
+            val name = "documents" //getString(R.string.tab_files)
+            val imageUrl = ""
+            //val name = json.getString("userName")
+            //val imageUrl = json.getString("url")
             val list: ArrayList<FlFile> = arrayListOf()
 
-            val jsonList = json.getJSONArray("files")
+            val jsonList = json.getJSONArray("fileUploadList")
             var file: JSONObject;
             for (i in 0 until jsonList.length()) {
                 file = jsonList.getJSONObject(i)
-                list.add(FlFile(file.getString("name"),
-                        file.getString("url"),
+                list.add(FlFile(file.getString("filename"),
+                        file.getString("path"),
                         file.getInt("size")))
             }
             return FlUser(name, imageUrl, list)
@@ -78,13 +74,16 @@ open class FLRecycler : IRequestRecycler<FlUser>() {
         return FlUser("", "", arrayListOf());
     }
 
-    override fun add(data: JSONArray, replace: Boolean)
+    fun add(data: JSONObject, replace: Boolean)
     {
-        val list = getAddData(data, replace)
+        //todo: redo everything without parent/child recycler if not used.
+        val list = ArrayList<FlUser>()
+        list.add(fillDataObject(data))
+
         if (replace || list.size == 0)
             recycler.adapter = null
         if (list.size != 0) {
-            val adapter = FilelistAdapter(parseJSON(data), activity!!)
+            val adapter = FilelistAdapter(list, activity!!)
             for (i in adapter.groups.size - 1 downTo 0) {
                 if (!adapter.isGroupExpanded(adapter.groups[i]));
                     adapter.toggleGroup(adapter.groups[i])
