@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,14 +40,17 @@ data class RoomWaitlistResult(var username: String = "",
                               var timer: CountDownTimer? = null)
 
 
-open class RoomWaitlistBinder(val timeLimit: Int) : ViewHolderBinder<RoomWaitlistResult> {
+open class RoomWaitlistBinder() : ViewHolderBinder<RoomWaitlistResult> {
 
+    var timeLimit: Int = 0
     private lateinit var timeText: TextView
 
-    private fun secondToText(seconds: Int): String {
+    private fun secondToText(nSeconds: Int, isLenght: Boolean = false): String {
+        var seconds = nSeconds
+        if (!isLenght)
+            seconds = timeLimit - nSeconds
         return (String.format("%02d:%02d", seconds / 60, seconds % 60))
     }
-
 
     override fun bind(holder: Adapter.ViewHolder<RoomWaitlistResult>, item: RoomWaitlistResult) {
         //Log.wtf("WAITLISTBIND", "binded " + item.username + " " + item.status)
@@ -73,28 +77,36 @@ open class RoomWaitlistBinder(val timeLimit: Int) : ViewHolderBinder<RoomWaitlis
         if (item.status == RoomWaitlistStatus.STREAMER) {
             statIcon.setImageResource(R.drawable.speaker)
             holder.v.findViewById<TextView>(R.id.timePassed).visibility = View.VISIBLE
-            holder.v.findViewById<TextView>(R.id.timeLimit).visibility = View.VISIBLE
-
-            holder.v.findViewById<TextView>(R.id.timeLimit).text = "/" + secondToText(timeLimit)
+            if (timeLimit > 0) {
+                holder.v.findViewById<TextView>(R.id.timeLimit).visibility = View.VISIBLE
+                holder.v.findViewById<TextView>(R.id.timeLimit).text = "/" + secondToText(timeLimit, true)
+            }
             timeText = holder.v.findViewById<TextView>(R.id.timePassed)
             timeText.text = secondToText(item.time)
-            if (item.timer == null) {
-                item.timer = object : CountDownTimer(timeLimit.toLong() * 1000, 1000) {
 
-                    override fun onTick(millisUntilFinished: Long) {
-                        timeText.text = secondToText(item.time)
-                        item.time++
-                    }
+            if (item.timer != null) {
+                item.timer!!.onFinish()
+                item.timer!!.cancel()
+            }
+            item.timer = null
 
-                    override fun onFinish() {
-                        //dunno if it will be used
-                    }
+            /*
+            item.timer = object : CountDownTimer(timeLimit.toLong() * 1000, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    timeText.text = secondToText(item.time)
+                    item.time--
+                }
+
+                override fun onFinish() {
+                    //dunno if it will be used
                 }
             }
             item.timer!!.start()
+        */
         } else {
             if (item.timer != null)
-                item.timer!!.cancel()
+                item.timer!!.onFinish()
             holder.v.findViewById<TextView>(R.id.timePassed).visibility = View.INVISIBLE
             holder.v.findViewById<TextView>(R.id.timeLimit).visibility = View.INVISIBLE
         }
@@ -157,8 +169,7 @@ class RoomWaitlistAdapter(nContext: Context,
             Collections.swap(data, pos, pos + 1)
             notifyItemMoved(pos, pos + 1)
             notifyItemChanged(pos + 1)
-        }
-        else
+        } else
             notifyItemChanged(pos)
     }
 
@@ -192,8 +203,7 @@ class RoomWaitlistAdapter(nContext: Context,
             data[position].timer!!.cancel()
     }
 
-    fun deleteTimers()
-    {
+    fun deleteTimers() {
         for (item in data) {
             if (item.timer != null) {
                 item.timer!!.cancel()
@@ -215,8 +225,7 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
     override val itemDecoration = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val timeLimit = arguments?.getInt("timeLimit")
-        binder = RoomWaitlistBinder(timeLimit!!)
+        binder = RoomWaitlistBinder()
 
         val res = super.onCreateView(inflater, container, savedInstanceState)
 
@@ -234,7 +243,11 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
         return res;
     }
 
-    fun update(data: List<RoomWaitlistResult>, clear : Boolean= false) {
+    fun setTimeLimit(nLimit: Int) {
+        binder.timeLimit = nLimit
+    }
+
+    fun update(data: List<RoomWaitlistResult>, clear: Boolean = false) {
         if (clear)
             adapter?.clear(false)
         adapter?.add(data)

@@ -7,9 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonRequest
+import com.android.volley.toolbox.Volley
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
 import kotlinx.android.synthetic.main.fragment_room_waitlist.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -27,12 +32,12 @@ class RoomWaitlist : Fragment() {
     private val runnable: Runnable = Runnable { YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText) };
 
     private var oldJSon = "";
-    private var currentSpeaker = "";
+    private var token = ""
+    private var currentSpeaker: RoomWaitlistResult? = null;
     private var nextSpeaker = "";
     private var waiters = ArrayList<String>()
 
     private var firstUpdate = true;
-    private var timeLimit = 0
 
     private fun showInfo(text: String) {
         if (firstUpdate)
@@ -49,33 +54,62 @@ class RoomWaitlist : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_room_waitlist, container, false)
 
 
-        timeLimit = arguments?.getInt("timeLimit")!!
-        val bundle = Bundle()
-        bundle.putInt("timeLimit", timeLimit!!)
+        token = arguments?.getString("token")!!
         frag = RoomWaitlistRecycler()
-        frag.arguments = bundle
         fragmentManager!!.beginTransaction().add(R.id.roomWaitlistLayout, frag).commit()
 
         rootView.findViewById<TextView>(R.id.notificationText).setOnClickListener { onNotificationClick() }
+        settimeLimit()
         return rootView;
     }
 
+    fun settimeLimit() {
+        APIRequest.JSONrequest(context, Request.Method.GET,
+                APIUrl.BASE_URL + APIUrl.ROOM + token, false, null,
+                { response ->
+                    val dataName = APIUrl.SEARCH_USER_JSONOBJECT
+                    val speakerDurname = "speakerMaxDuration"
+
+                    if (response.has(dataName)) {
+                        val data = response.getJSONObject(dataName)
+                        if (data.has(speakerDurname)) {
+                            val duration = data.getInt(speakerDurname)
+                            frag.setTimeLimit(duration)
+                        }
+                    }
+                }, null)
+    }
+
+    private fun showRating(newSpeaker: RoomWaitlistResult?) {
+        if (activity is Room)
+            (activity as Room).userRate.showUserRating(currentSpeaker!!.username, currentSpeaker!!.url)
+        currentSpeaker = newSpeaker
+    }
+
     fun update(data: JSONObject) {
-        if (data.isNull("speaker"))
-            return
-        val jsonSpeaker = data.getJSONObject("speaker")
-        val speakerTime = timeLimit - jsonSpeaker.getInt("countdownTimer")
-        val jsonSpeakerInfo = jsonSpeaker.getJSONObject("info")
-
-        val speakerInfo = RoomWaitlistResult(jsonSpeakerInfo.getString("userName"),
-                jsonSpeakerInfo.getString("picture"), speakerTime, RoomWaitlistStatus.STREAMER)
-
-
         val list = ArrayList<RoomWaitlistResult>()
-        list.add(speakerInfo)
 
-        val waitlist = data.getJSONArray("waitlist")
-        for (i in 0..waitlist.length()) {
+        if (data.isNull("speaker")) {
+            if (currentSpeaker != null)
+                showRating(null)
+        } else {
+            val jsonSpeaker = data.getJSONObject("speaker")
+            val speakerTime = jsonSpeaker.getInt("countdownValue")
+            val jsonSpeakerInfo = jsonSpeaker.getJSONObject("info")
+
+            val speakerInfo = RoomWaitlistResult(jsonSpeakerInfo.getString("userName"),
+                    jsonSpeakerInfo.getString("picture"), speakerTime, RoomWaitlistStatus.STREAMER)
+
+            if (currentSpeaker != null) {
+                if (speakerInfo.username != currentSpeaker!!.username)
+                    showRating(speakerInfo)
+            }
+            currentSpeaker = speakerInfo;
+            list.add(speakerInfo)
+        }
+
+        val waitlist = data.getJSONArray("waitList")
+        for (i in 0 until waitlist.length()) {
             val name = waitlist.getJSONObject(i).getString("userName")
             val url = waitlist.getJSONObject(i).getString("picture")
             list.add(RoomWaitlistResult(name, url))
@@ -111,8 +145,8 @@ class RoomWaitlist : Fragment() {
     private fun checkNewUsers(waitlist: JSONArray, speakerInfo: RoomWaitlistResult) {
         val speakerName = speakerInfo.username
 
-        if (speakerName != currentSpeaker && !waiters.contains(speakerName)) {
-            currentSpeaker = speakerName
+        if (speakerName != currentSpeaker?.username && !waiters.contains(speakerName)) {
+            currentSpeaker = RoomWaitlistResult(speakerName, speakerInfo.url, speakerInfo.time, speakerInfo.status)
             frag.addUser(speakerInfo)
             waiters.add(speakerName)
             showInfo(speakerName + getString(R.string.joined_waitlist))
