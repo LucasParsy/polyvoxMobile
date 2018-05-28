@@ -63,6 +63,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         val b = intent.extras!!
         title = b.getString("title")
         token = b.getString("token")
+        token = b.getString("token")
         setContentView(R.layout.activity_room)
         super.onCreate(savedInstanceState)
         manifestHandler.post(manifestRunnable)

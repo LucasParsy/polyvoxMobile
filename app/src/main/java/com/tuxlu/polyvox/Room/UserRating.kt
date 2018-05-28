@@ -1,6 +1,7 @@
 package com.tuxlu.polyvox.Room
 
 import android.app.Activity
+import android.app.FragmentManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -127,27 +128,41 @@ class UserRating(private val act: Activity, private val token: String) {
         //player_bottom_rate_speaker.visibility = View.GONE
         act.videoPlayerView!!.controllerHideOnTouch = true
         act.videoPlayerView!!.controllerShowTimeoutMs = 5000;
-    }
 
+        act.votePositiveButton.clearColorFilter()
+        act.votePositiveButton.clearColorFilter()
+    }
 
 
     private fun setFragmentArgument(frag: CommentReportBase) {
         val bundle = Bundle()
         bundle.putString("name", currentUser.name)
         bundle.putString("url", currentUser.url)
+        bundle.putString("token", token)
         frag.arguments = bundle
     }
 
-    private fun reportUser(v: View) {
-        val frag = UserReportFragment()
-        setFragmentArgument(frag)
-        frag.show(act.fragmentManager, act.getString(R.string.report))
+    public fun reportUser(v: View) {
+        Companion.reportUser(currentUser.name, currentUser.url, token, act.fragmentManager, act.getString(R.string.report))
     }
 
     private fun commentUserRating(v: View) {
         val frag = UserCommentFragment()
         setFragmentArgument(frag)
         frag.show(act.fragmentManager, act.getString(R.string.send_comment))
+    }
+
+    companion object {
+        public fun reportUser(name: String, url: String, token:String, fragmentManager: FragmentManager, message: String)
+        {
+            val frag = UserReportFragment()
+            val bundle = Bundle()
+            bundle.putString("name", name)
+            bundle.putString("url", url)
+            bundle.putString("token", token)
+            frag.arguments = bundle
+            frag.show(fragmentManager, message)
+        }
     }
 
 

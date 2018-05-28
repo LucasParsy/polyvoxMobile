@@ -89,7 +89,9 @@ public class APIUrl {
     public static final String ROOM_FILE_LIST = "room/files";
     public static final String ROOM = "room/";
     public static final String ROOM_MANIFEST = "/manifest";
-    public static final String ROOM_VOTE = "vote";
+    public static final String ROOM_VOTE = "/vote";
+    public static final String REPORT = "report";
+
     public static final String ROOM_STREAM_SUFFIX = "/stream.m3u8";
 
     public static final String CHAT_SEND_PARAM1 = "message";

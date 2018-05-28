@@ -92,7 +92,7 @@
         a bien été vérifiée!</string>
     <string name="mail_verified_description">Vous pouvez maintenant pleinement profiter de l\'expérience Polyvox.</string>
     <string name="back_home">Retourner à la page d\'acceuil</string>
-
+    <string name="banned">Vous avez été banni de Polyvox</string>
 
     <string name="users">Utilisateurs</string>
     <string name="rooms">Salons</string>
@@ -167,6 +167,8 @@
     <string name="send_comment">laisser un commentaire</string>
     <string name="send_comment_for">laisser un commentaire pour</string>
     <string name="report">signaler</string>
+    <string name="user_reported">l\'utilisateur %1$s a bien été signalé</string>
+
     <string name="report_sentence">signaler le comportement de</string>
     <string name="description_required">Description (requis)</string>
     <string name="report_error_params">veuillez fournir une raison et une description du problème</string>
