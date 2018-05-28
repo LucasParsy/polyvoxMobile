@@ -23,6 +23,7 @@ import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VolleyMultipartRequest;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
+import com.tuxlu.polyvox.Utils.ToastType;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONObject;
@@ -108,44 +109,46 @@ public class APIRequest {
         public APIJsonObjectRequest(int method, String url, JSONObject jsonRequest,
                                     Response.Listener<JSONObject> listener, final Response.ErrorListener errorListener, String nToken, final Context context) {
 
-            super(method, url, jsonRequest, listener, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (error.networkResponse != null) {
-                        if (error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
-                            AuthUtils.removeAccountLogout(context);
-                            startLoginActivity(context);
-                            UtilsTemp.showToast(context, context.getString(R.string.logout_been));
-                            return;
-                        }
-                        if (error.networkResponse.statusCode == APIUrl.USER_NOT_VALIDATED) {
-                            AlertDialog.Builder build = new AlertDialog.Builder(context);
-                            build.setTitle(context.getString(R.string.not_verified_title))
-                                    .setMessage(context.getString(R.string.not_verified_message))
-                                    .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            NetworkUtils.sendMail(context);
-                                        }
-                                    })
-                                    .setNegativeButton(context.getString(R.string.not_verified_nope), null)
-                                    .show();
-                        }
+            super(method, url, jsonRequest, listener, error -> {
+                if (error.networkResponse != null) {
+                    if (error.networkResponse.statusCode == APIUrl.TOKEN_DENIED_CODE) {
+                        AuthUtils.removeAccountLogout(context);
+                        startLoginActivity(context);
+                        UtilsTemp.showToast(context, context.getString(R.string.logout_been));
+                        return;
                     }
-                    NetworkUtils.checkNetworkError(context, error);
-
-                    if (BuildConfig.DEBUG) {
-                        error.printStackTrace();
-                        if (error.networkResponse != null) {
-                            NetworkResponse resp = error.networkResponse;
-                            String data = new String(resp.data);
-                            Log.wtf("NETWORK", "code = " + resp.statusCode +
-                                    "\n data=" + data);
-                        }
+                    if (error.networkResponse.statusCode == 418) {
+                        AuthUtils.removeAccountLogout(context);
+                        UtilsTemp.showToast(context, context.getString(R.string.banned), ToastType.ERROR);
+                        return;
                     }
-
-                    if (errorListener != null)
-                        errorListener.onErrorResponse(error);
+                    if (error.networkResponse.statusCode == APIUrl.USER_NOT_VALIDATED) {
+                        AlertDialog.Builder build = new AlertDialog.Builder(context);
+                        build.setTitle(context.getString(R.string.not_verified_title))
+                                .setMessage(context.getString(R.string.not_verified_message))
+                                .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        NetworkUtils.sendMail(context);
+                                    }
+                                })
+                                .setNegativeButton(context.getString(R.string.not_verified_nope), null)
+                                .show();
+                    }
                 }
+                NetworkUtils.checkNetworkError(context, error);
+
+                if (BuildConfig.DEBUG) {
+                    error.printStackTrace();
+                    if (error.networkResponse != null) {
+                        NetworkResponse resp = error.networkResponse;
+                        String data = new String(resp.data);
+                        Log.wtf("NETWORK", "code = " + resp.statusCode +
+                                "\n data=" + data);
+                    }
+                }
+
+                if (errorListener != null)
+                    errorListener.onErrorResponse(error);
             });
             token = nToken;
         }
