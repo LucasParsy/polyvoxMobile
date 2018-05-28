@@ -3,4 +3,7 @@
     <integer name="homepage_rooms_row_number">1</integer>
     <integer name="homepage_rooms_columns_number">3</integer>
     <dimen name="room_video_player_size">220dp</dimen>
+    <dimen name="info_user_current_room">220dp</dimen>
+    <dimen name="info_user_current_textview_width">130dp</dimen>
+    <dimen name="info_user_current_room_textsize">10sp</dimen>
 </resources>
