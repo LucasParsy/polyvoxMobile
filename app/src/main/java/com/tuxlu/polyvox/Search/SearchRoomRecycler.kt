@@ -31,27 +31,29 @@ data class RoomSearchResult(var active: Boolean = true,
                             var imageUrl: String = "",
                             var tags: String = "",
                             var token: String = "",
-                            var viewers: Int = 0)
+                            var speakers: String = "")
 
 
 open class RoomSearchBinder : ViewHolderBinder<RoomSearchResult> {
 
     private val random = SecureRandom()
-    private val defaultPictures = intArrayOf(R.drawable.default_room_picture1, R.drawable.default_room_picture2,
-        R.drawable.default_room_picture3, R.drawable.default_room_picture4)
+    //private val defaultPictures = intArrayOf(R.drawable.default_room_picture1, R.drawable.default_room_picture2,
+        //R.drawable.default_room_picture3, R.drawable.default_room_picture4)
+    private val defaultPictures = intArrayOf(R.drawable.logo_grey)
 
     override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
         if (!item.active)
             holder.v.visibility = View.GONE;
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomSubject).text = item.tags
-        //holder.v.findViewById<TextView>(R.id.infoRoomViewers).text = item.viewers.toString() //not anymore
+        holder.v.findViewById<TextView>(R.id.infoRoomSpeakers).text = item.speakers.toString()
 
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
+        //random.nextInt(4)
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
-            GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(defaultPictures[random.nextInt(4)]).into(image)
-        else
-            image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
+            GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(defaultPictures[0]).into(image)
+        //else
+            //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<RoomSearchResult>, data: MutableList<RoomSearchResult>) {
@@ -87,6 +89,7 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
             //res.active = false;
             res.name = json.getString("name")
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
+            res.speakers = json.getString("nbActors") //todo: Why?
             //res.viewers = json.getJSONArray("waitList").length() //not anymore
             var tagString = "";
             val tags = json.getJSONArray("tags")

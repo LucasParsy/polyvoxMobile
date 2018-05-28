@@ -69,23 +69,21 @@
             android:layout_gravity="center"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:src="@drawable/eye"
-            app:srcCompat="@drawable/eye" />
+            android:src="@drawable/megaphone"
+            app:srcCompat="@drawable/megaphone" />
 
         <TextView
-            android:id="@+id/infoRoomViewers"
+            android:id="@+id/infoRoomSpeakers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="42"
             android:textAlignment="center"
             android:textColor="@android:color/darker_gray"
             android:textSize="13sp"
             tools:text="42" />
     </LinearLayout>
-
 
 </RelativeLayout>

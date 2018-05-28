@@ -59,9 +59,9 @@
         android:layout_toRightOf="@+id/view2"
         android:layout_toStartOf="@id/chatButton"
         android:orientation="horizontal"
-        android:paddingRight="10dp"
         android:paddingEnd="10dp"
-        android:visibility="visible"
+        android:paddingRight="10dp"
+        android:visibility="invisible"
         tools:ignore="RtlSymmetry">
 
         <ImageView
@@ -113,7 +113,7 @@
         android:scaleY="1.2"
         android:src="@android:drawable/stat_notify_chat"
         android:tint="@color/PolyvoxMainColor"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

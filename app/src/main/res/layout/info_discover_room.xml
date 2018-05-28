@@ -21,8 +21,8 @@
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="fitXY"
-        android:src="@drawable/default_room_picture1"
-        app:srcCompat="@drawable/default_room_picture1" />
+        android:src="@drawable/logo_grey"
+        app:srcCompat="@drawable/logo_grey" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,7 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -130,7 +131,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="41"
                     tools:text="41" />
             </LinearLayout>
         </LinearLayout>

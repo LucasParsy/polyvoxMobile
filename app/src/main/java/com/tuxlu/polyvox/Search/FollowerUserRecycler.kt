@@ -35,6 +35,7 @@ open class FollowerUserBinder : UserSearchBinder() {
                 holder.v.context.startActivity(intent)
             }
         }
+        /*
         val button = holder.v.findViewById<ImageButton>(R.id.chatButton)
         button.visibility = View.VISIBLE
         button.setOnClickListener {
@@ -45,6 +46,7 @@ open class FollowerUserBinder : UserSearchBinder() {
             intent.putExtras(b)
             holder.v.context.startActivity(intent)
         }
+        */
     }
 }
 

@@ -66,7 +66,7 @@ class CustomChat(private val channel: String, private val token : String): WebSo
 
     fun sendMessage(message: String)
     {
-        socket.send(message)
+        socket.send("/broadcast $message")
     }
 
 }
