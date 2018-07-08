@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,10 +13,53 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/room_video_player_size">
 
+        <FrameLayout
+            android:id="@+id/roomWaitingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:visibility="visible">
+
+
+            <!--android:paddingTop="50dp"-->
+
+            <ImageView
+                android:id="@+id/roomWaitingPicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                tools:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/roomWaitingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/PolyvoxMainColorDark"
+                android:gravity="center_vertical"
+                android:paddingEnd="25dp"
+                android:paddingStart="25dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:text="Le droit de vote des femmes" />
+
+            <ProgressBar
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                android:indeterminate="true"
+                android:theme="@style/AppTheme" />
+
+        </FrameLayout>
+
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/videoPlayerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:controller_layout_id="@layout/exo_stream_playback_control"
             app:resize_mode="fill" />
 

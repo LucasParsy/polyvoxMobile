@@ -30,7 +30,6 @@ import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
-import com.tuxlu.polyvox.Utils.NetworkLibraries.DummyAPIServer;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;

@@ -47,8 +47,11 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 tools:text="ou la décadence d'une nation" />
         </LinearLayout>
+
+
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_share"

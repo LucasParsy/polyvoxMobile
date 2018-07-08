@@ -12,7 +12,8 @@
         android:id="@+id/room_search_image_frame"
         android:layout_width="110dp"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/infoRoomPicture"

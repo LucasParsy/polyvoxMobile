@@ -110,7 +110,7 @@
         </activity>
 
         <activity android:name="com.tuxlu.polyvox.Room.Room"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize">
         </activity>
 

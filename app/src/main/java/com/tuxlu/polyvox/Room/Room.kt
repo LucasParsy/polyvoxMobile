@@ -6,21 +6,29 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.android.volley.Request
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -28,6 +36,7 @@ import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
+import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
 import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation
 import com.tuxlu.polyvox.Utils.UtilsTemp
@@ -61,9 +70,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private lateinit var fileList: FLRecycler
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportPostponeEnterTransition();
+
         val b = intent.extras!!
         title = b.getString("title")
-        token = b.getString("token")
+        val imageUrl = b.getString("imageUrl")
         token = b.getString("token")
         setContentView(R.layout.activity_room)
         super.onCreate(savedInstanceState)
@@ -71,7 +82,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //setVideoPlayer(token)
         userRate = UserRating(this, token)
         setClicklisteners()
-
 
         val config = this.resources.configuration
         val displayMetrics = resources.displayMetrics
@@ -81,6 +91,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         onConfigurationChanged(this.resources.configuration)
         val username = AuthUtils.getUsername(applicationContext)
 
+        setTransition(title!!, imageUrl)
 
         val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
         val bundle = Bundle()
@@ -127,8 +138,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
 
             val nUrl = data.getString("videosData");
-            if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl)
+            if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl) {
+                videoPlayerView.visibility = View.VISIBLE
                 setVideoPlayer(nUrl)
+            }
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
                 {
@@ -165,6 +178,59 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
                 null, null)
         player!!.prepare(videoSource)
         player!!.playWhenReady = true
+
+        val listener = object : Player.EventListener {
+            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {}
+            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {}
+            override fun onPlayerError(error: ExoPlaybackException?) {}
+            override fun onLoadingChanged(isLoading: Boolean) {}
+            override fun onPositionDiscontinuity() {}
+            override fun onRepeatModeChanged(repeatMode: Int) {}
+            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {}
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+
+                if (playWhenReady && playbackState == Player.STATE_READY) {//playing {
+                    videoPlayerView.visibility = View.VISIBLE
+                    roomWaitingLayout.visibility = View.INVISIBLE
+                } else if (playWhenReady) //buffering
+                {
+
+                } else {
+                    videoPlayerView.visibility = View.INVISIBLE
+                    roomWaitingLayout.visibility = View.VISIBLE
+
+                }
+            }
+        }
+        player!!.addListener(listener)
+    }
+
+    private fun setTransition(title: String, imageUrl: String)
+    {
+        roomWaitingTitle.text = title
+        ViewCompat.setTransitionName(roomWaitingPicture, title);
+        if (!UtilsTemp.isStringEmpty(imageUrl)) {
+            GlideApp.with(this)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .dontAnimate()
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onResourceReady(resource: Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            supportStartPostponedEnterTransition();
+                            return false;
+                        }
+
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            supportStartPostponedEnterTransition();
+                            return false;
+                        }
+                    })
+                    .into(roomWaitingPicture)
+        } else {
+            roomWaitingPicture.setImageDrawable(resources.getDrawable(R.drawable.logo_grey))
+            roomWaitingPicture.scaleType = ImageView.ScaleType.CENTER_CROP
+            supportStartPostponedEnterTransition()
+        }
     }
 
     public fun stopPlayer() {
@@ -185,7 +251,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         UtilsTemp.shareContent(this, body, url)
     }
 
-    fun setChatVisibility(v: View) {
+    private fun setChatVisibility(v: View) {
         val animWidth: Int
 
         if (chatVisibilityStatus == View.VISIBLE) {
@@ -245,7 +311,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             rootView!!.orientation = LinearLayout.HORIZONTAL
             chatLayout!!.visibility = chatVisibilityStatus
 
-            videoPlayerLayout!!.layoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT
+            videoPlayerLayout!!.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
             videoPlayerLayout!!.layoutParams.width = (width - width * 0.3).toInt()
             player_button_fullscreen!!.setImageResource(R.drawable.ic_fullscreen_skrink_24dp)
         }
@@ -263,6 +329,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         position = player.getCurrentPosition(); //ici, dans onPause
         player.seekTo(position); // dans OnResume
         */
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        videoPlayerView.visibility = View.GONE
     }
 
     override fun onResume() {
