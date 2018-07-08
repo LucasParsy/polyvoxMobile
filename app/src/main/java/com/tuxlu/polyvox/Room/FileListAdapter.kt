@@ -26,17 +26,17 @@ import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 
 data class FlFile(var name: String = "",
                   var url: String = "",
-                  var size: Int) : Parcelable {
+                  var size: String) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
-            parcel.readInt()) {
+            parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(url)
-        parcel.writeInt(size)
+        parcel.writeString(size)
     }
 
     override fun describeContents(): Int {

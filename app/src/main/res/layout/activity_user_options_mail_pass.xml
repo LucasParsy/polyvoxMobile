@@ -1,129 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/LayoutLoginActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:visibility="visible"
-        tools:context=".User.Login">
-
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/LayoutLoginActivity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mail_hint" />
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:visibility="visible"
+            tools:context=".User.Login">
 
-
-        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
-            android:id="@+id/mailLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/mailInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_border_textview"
-                android:inputType="textEmailAddress"
-                android:maxLines="1">
-            </android.support.design.widget.TextInputEditText>
-
-        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
-
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/password_new" />
-
-
-        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
-            android:id="@+id/passwordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/passwordInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp"
-                android:background="@drawable/rectangle_border_textview"
-                android:inputType="textPassword"
-                android:maxLines="1">
-            </android.support.design.widget.TextInputEditText>
 
             <TextView
-                android:id="@+id/passHint"
-                style="@style/AppTheme.RegisterHint"
-                android:text="@string/register_password_hint_bottom"
-                android:textSize="11sp" />
-
-        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
-
-        <TextView
-            android:id="@+id/old_password_prompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0"
-            android:paddingBottom="15dp"
-            android:text="@string/security_confirm_pass"
-            android:textAlignment="center"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/password_actual" />
-
-
-        <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
-            android:id="@+id/oldPasswordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
-
-            <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/oldPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp"
-                android:background="@drawable/rectangle_border_textview"
-                android:inputType="textPassword"
-                android:maxLines="1" />
+                android:text="@string/mail_hint" />
 
-        </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
 
-        <Button
-            android:id="@+id/button"
-            style="@style/AppTheme.coloredButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/exo_media_button_height"
-            android:onClick="buttonClick"
-            android:text="@string/update"
-            android:visibility="visible" />
+            <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+                android:id="@+id/mailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
 
-    </LinearLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/mailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"></android.support.design.widget.TextInputEditText>
 
-</LinearLayout>
+            </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/password_new" />
+
+
+            <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+                android:id="@+id/passwordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textPassword"
+                    android:maxLines="1"></android.support.design.widget.TextInputEditText>
+
+                <TextView
+                    android:id="@+id/passHint"
+                    style="@style/AppTheme.RegisterHint"
+                    android:text="@string/register_password_hint_bottom"
+                    android:textSize="11sp" />
+
+            </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+            <TextView
+                android:id="@+id/old_password_prompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="0"
+                android:paddingBottom="15dp"
+                android:text="@string/security_confirm_pass"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/password_actual" />
+
+
+            <com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout
+                android:id="@+id/oldPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <!-- 1 line under: android:drawableStart="@android:drawable/ic_lock_idle_lock" -->
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/oldPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
+                    android:background="@drawable/rectangle_border_textview"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+            </com.tuxlu.polyvox.Utils.UIElements.NoChangingBackgroundTextInputLayout>
+
+            <Button
+                android:id="@+id/button"
+                style="@style/AppTheme.coloredButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exo_media_button_height"
+                android:layout_marginBottom="10dp"
+                android:onClick="buttonClick"
+                android:text="@string/update"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>

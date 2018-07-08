@@ -65,7 +65,7 @@ open class FLRecycler : IRecycler<FlUser>() {
                 file = jsonList.getJSONObject(i)
                 list.add(FlFile(file.getString("filename"),
                         file.getString("path"),
-                        file.getInt("size")))
+                        file.getString("size")))
             }
             return FlUser(name, imageUrl, list)
         } catch (e: JSONException) {
