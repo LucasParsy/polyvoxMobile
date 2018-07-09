@@ -20,6 +20,8 @@ class RoomChat : Fragment(), MessageInput.InputListener {
     lateinit var rootView: View
     lateinit var chat: CustomChat
     lateinit var frag: RoomChatRecycler
+    val handler = Handler()
+
 
     override fun onSubmit(input: CharSequence?): Boolean {
         val message = input.toString()
@@ -50,7 +52,6 @@ class RoomChat : Fragment(), MessageInput.InputListener {
 
         frag = RoomChatRecycler()
         fragmentManager!!.beginTransaction().add(R.id.roomChatLayout, frag).commit()
-        val handler = Handler()
         val delay = 2000 //2 seconds
 
         AsyncTask.execute {
@@ -74,4 +75,10 @@ class RoomChat : Fragment(), MessageInput.InputListener {
         }
         chat = CustomChat(title, token)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null);
+    }
+
 }

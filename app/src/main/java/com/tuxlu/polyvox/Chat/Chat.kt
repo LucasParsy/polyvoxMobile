@@ -116,7 +116,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     }
 
     override fun onLoadMore(page: Int, totalItemsCount: Int) {
-        if (!shouldLoadMore)
+        if (!shouldLoadMore || !AuthUtils.hasAccount(this))
             return
         //val url = APIUrl.BASE_URL + APIUrl.CHAT + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT + APIUrl.FAKE_CHAT_NAME
