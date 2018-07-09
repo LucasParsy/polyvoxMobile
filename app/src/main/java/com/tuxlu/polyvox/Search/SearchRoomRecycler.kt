@@ -25,6 +25,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.android.volley.Request
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Utils.API.APIRequest
 
 
@@ -60,8 +61,11 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
         ViewCompat.setTransitionName(image, item.name);
 
         //random.nextInt(4)
-        if (!UtilsTemp.isStringEmpty(item.imageUrl))
+        if (!UtilsTemp.isStringEmpty(item.imageUrl)) {
             GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(defaultPictures[0]).into(image)
+        }
+        else
+            GlideApp.with(holder.v.context).clear(image);
         //else
             //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
     }
