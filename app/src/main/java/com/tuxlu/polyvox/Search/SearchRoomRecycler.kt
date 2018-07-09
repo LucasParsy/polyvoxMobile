@@ -21,8 +21,11 @@ import org.json.JSONObject
 import android.support.v4.view.ViewCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentActivity
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.android.volley.Request
+import com.tuxlu.polyvox.Utils.API.APIRequest
 
 
 /**
@@ -128,7 +131,45 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
 
 class DiscoverRoomRecycler : SearchRoomRecycler() {
     override val layoutObjectId: Int = R.layout.info_discover_room
+    override val layoutListId: Int = R.layout.fragment_recycler_view_refreshable
+
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout;
 
     override fun setLayoutManager(): RecyclerView.LayoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
+
+
+    fun updateRooms()
+    {
+        /*
+        handler.postDelayed(() -> {
+                    //discover.setLoadingStatus(true);
+                    try {
+                        discover.add(DummyAPIServer.fileToJSON(R.raw.rooms, this.getBaseContext()).getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), false);
+                        infoLoaded = true;
+                    }
+                    catch (Exception e) {  } //never happens
+                }
+                , 500);
+        //remove these lines, debug for no network, uncomment lower line
+        */
+
+
+        APIRequest.JSONrequest(rootView.context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS, false, null,
+                { response ->
+                    try {
+                        this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
+                        swipeRefreshLayout.isRefreshing = false;
+                    } catch (ignored: JSONException) {
+                    }
+                }, { swipeRefreshLayout.isRefreshing = false; })
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootview =  super.onCreateView(inflater, container, savedInstanceState)
+        swipeRefreshLayout = rootview!!.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener { updateRooms() }
+        updateRooms()
+        return rootView
+    }
 }

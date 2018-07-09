@@ -73,52 +73,25 @@ public class Home extends AppCompatActivity {
 
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
         fragments.add(discover); //discover
-        //fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
-        //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
-        int[] tabTitles = new int[]{R.string.tab_discover};
+        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
+        //int[] tabTitles = new int[]{R.string.tab_discover};
         pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
 
         ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
-        updateDiscover();
 
+        /*
         handler.postDelayed(new Runnable() {
             public void run() {
-                if (!infoLoaded && NetworkUtils.isConnected(discover.getContext()))
-                    updateDiscover();
+                if (!infoLoaded && NetworkUtils.isConnected(discover.requireContext()))
+                    discover.updateRooms();
                 else
                     handler.postDelayed(this, 3000);
             }
         }, 6000);
-
-    }
-
-    private void updateDiscover() {
-
-
-        /*
-        handler.postDelayed(() -> {
-                    //discover.setLoadingStatus(true);
-                    try {
-                        discover.add(DummyAPIServer.fileToJSON(R.raw.rooms, this.getBaseContext()).getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), false);
-                        infoLoaded = true;
-                    }
-                    catch (Exception e) {  } //never happens
-                }
-                , 500);
-        //remove these lines, debug for no network, uncomment lower line
         */
-
-        APIRequest.JSONrequest(this, Request.Method.GET, APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS, false, null,
-                response -> {
-                    try {
-                        infoLoaded = true;
-                        discover.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true);
-                    } catch (JSONException ignored) {
-                    }
-                }
-                , null);
     }
 
     private void configToolbar() {
