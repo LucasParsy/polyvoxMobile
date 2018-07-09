@@ -24,6 +24,7 @@ import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.ToastType;
+import com.tuxlu.polyvox.Utils.UIElements.SimpleWebView;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONException;
@@ -182,18 +183,16 @@ public class Register extends AppCompatActivity {
 
 
     public void onCGUButtonClick(View v) {
+       /*
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.util_dialog_cgu);
         dialog.setTitle(getResources().getString(R.string.CGU));
         dialog.show();
-
-
-    /*
+        */
         Intent webIntent = new Intent(this, SimpleWebView.class);
         webIntent.putExtra("title", R.string.CGU);
         webIntent.putExtra("url", APIUrl.CGU);
         startActivity(webIntent);
-     */
     }
 
     private void endActivity(String mail) {

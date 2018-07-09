@@ -3,7 +3,7 @@
     <string name="account_type">Polyvox</string>
 
     <string name="share_stream_body">Je suis un débat sur Polyvox:</string>
-    <string name="join_me">rejoignez moi!</string>
+    <string name="join_me">Rejoignez moi!</string>
     <string name="share_with">Partager avec:</string>
 
     <string name="search">Rechercher</string>
@@ -17,10 +17,8 @@
     <string name="tab_files">Documents</string>
     <string name="network_settings">Paramètres réseau</string>
     <string name="no_network">Problème de réseau</string>
-    <string name="no_wifi_home">Erreur de réseau.\n
-        Veuillez vérifier vos paramètres internet</string>
-    <string name="no_server">l\'application Polyox n\'est pas disponible actuellement.\n
-        Veuillez réessayer plus tard.</string>
+    <string name="no_wifi_home">Erreur de réseau.  Veuillez vérifier vos paramètres internet</string>
+    <string name="no_server">l\'application Polyox n\'est pas disponible actuellement.  Veuillez réessayer plus tard.</string>
     <string name="username_hint">Identifiant</string>
     <string name="mail_hint">E-mail</string>
     <string name="date_hint">Date de naissance (13 ans minimum)</string>
@@ -54,17 +52,17 @@
 
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="maybe_i_dont_know">Can you repeat the question? YOU\'RE NOT THE BOSS OF ME NOW</string>
+    <string name="maybe_i_dont_know" translatable="false">Can you repeat the question? YOU\'RE NOT THE BOSS OF ME NOW</string>
 
     <string name="register_mail_error">Email non valide.</string>
     <string name="register_username_error">Nom d\'utilisateur invalide.</string>
     <string name="register_dob_error">L\'utilisateur doit avoir 13 ans au minimum.</string>
-    <string name="register_password_error">Mot de passe invalide</string>
+    <string name="register_password_error">Mot de passe invalide.</string>
     <string name="register_confirm_password_error">Mot de passe different.</string>
     <string name="register_cgu_error">Veuillez accepter les conditions d\'utilisation.</string>
 
-    <string name="register_mail_already_used">L\'adresse e-mail est déjà utilisée</string>
-    <string name="register_ID_already_used">Ce nom d\'utilisateur est déjà pris</string>
+    <string name="register_mail_already_used">L\'adresse e-mail est déjà utilisée.</string>
+    <string name="register_ID_already_used">Ce nom d\'utilisateur est déjà pris.</string>
 
     <string name="join">rejoindre</string>
     <string name="followers">followers</string>
@@ -86,8 +84,7 @@
     <string name="not_verified_nope">Je vais le retrouver</string>
     <string name="confirmation_mail_sent_short">L\'e-mail de confirmation a bien été envoyé</string>
     <string name="confirmation_mail_sent1">Un e-mail de confirmation a été envoyé à l\'adresse:</string>
-    <string name="confirmation_mail_sent2">Consultez votre boite mail pour valider votre compte\n
-        et profiter pleinement de l\'expérience Polyvox</string>
+    <string name="confirmation_mail_sent2">Consultez votre boite mail pour valider votre compte  et profiter pleinement de l\'expérience Polyvox</string>
     <string name="mail_verified">Votre adresse e-mail\n
         a bien été vérifiée!</string>
     <string name="mail_verified_description">Vous pouvez maintenant pleinement profiter de l\'expérience Polyvox.</string>
@@ -111,7 +108,7 @@
     <string name="mail">e-mail</string>
     <string name="mail_and_pass">e-mail &amp; mot de passe</string>
 
-    <string name="bio_hint">présentez vous!</string>
+    <string name="bio_hint">Présentez vous!</string>
     <string name="bio_updated">la biographie a bien été mise à jour</string>
     <string name="bio_too_long">la biographie est trop longue (500 caractères max)</string>
 
@@ -141,9 +138,7 @@
     <string name="passwords_not_identical">les mots de passes ne sont pas identiques</string>
     <string name="confirm_password_hint_bottom">retapez votre mot de passe</string>
 
-    <string name="security_confirm_pass">Pour des raisons de sécurité,\n
-        veuillez renseigner votre mot de passe actuel\n
-        pour modifier vos informations.</string>
+    <string name="security_confirm_pass">Pour des raisons de sécurité,  veuillez renseigner votre mot de passe actuel  pour modifier vos informations.</string>
     <string name="password_actual">Mot de passe actuel</string>
     <string name="password_new">Nouveau mot de passe</string>
 
@@ -163,7 +158,7 @@
     <string name="size">taille: \u0020</string>
 
     <string name="rate_user_text_start">qu\'avez vous pensé de  \u0020 </string>
-    <string name="rate_user_text_end">?:</string>
+    <string name="rate_user_text_end" translatable="false">\?:</string>
     <string name="send_comment">laisser un commentaire</string>
     <string name="send_comment_for">laisser un commentaire pour</string>
     <string name="report">signaler</string>
@@ -171,7 +166,7 @@
 
     <string name="report_sentence">signaler le comportement de</string>
     <string name="description_required">Description (requis)</string>
-    <string name="report_error_params">veuillez fournir une raison et une description du problème</string>
+    <string name="report_error_params">veuillez fournir une raison et une description du problème.</string>
 
     <string name="left_waitlist"> \u0020 a quitté la file d\'attente</string>
     <string name="waited_turn"> \u0020 a passé son tour</string>
@@ -211,29 +206,14 @@
 
 
 
-    <string name="CGU_Text">
- "THE BEER-WARE LICENSE" (Revision 42.2):\n
- &lt;lucas.parsy@epitech.eu> wrote this file.\n
- As long as you retain this notice\n
- you can do whatever you want with this stuff.\n
- If we meet some day,\n
- and you think this stuff is worth it,\n
- you can buy me a beer in return.\n
- Lucas Parsy
-    </string>
+    <string name="CGU_Text" translatable="false">THE BEER-WARE LICENSE (Revision 42.2):  lucas.parsy@epitech.eu wrote this file.  As long as you retain this notice  you can do whatever you want with this stuff.  If we meet some day,  and you think this stuff is worth it,  you can buy me a beer in return.  Lucas Parsy</string>
 
     <string name="bio_empty">Cet utilisateur n\'a pas encore rempli sa biographie.</string>
 
-    <string name="bio_bidon">
- Je suis un passionné de l\'univers vidéoludique\n
- Fan de l\'objectivité totale de Julien C,\n
- Je veux discuter des choix des lootbox dans le dernier CallOfStarFifa.\n
- à bientot pour partager ensemble notre passion commune…\n
- Le jeu vidéo!
- </string>
+    <string name="bio_bidon" translatable="false">Je suis un passionné de l\'univers vidéoludique  Fan de l\'objectivité totale de Julien C,  Je veux discuter des choix des lootbox dans le dernier CallOfStarFifa.  à bientot pour partager ensemble notre passion commune…  Le jeu vidéo!</string>
 
 
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         \"Material is the metaphor.\n\n\"
 
         \"A material metaphor is the unifying theory of a rationalized space and a system of motion.\"
@@ -322,5 +302,5 @@
         \"For example, position the FAB to one side of stream of a cards so the FAB won’t interfere \"
         \"when a user tries to pick up one of cards.\n\n\"
     </string>
-    <string name="transition_room">transition_room</string>
+    <string name="transition_room" translatable="false">transition_room</string>
 </resources>

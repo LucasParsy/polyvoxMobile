@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Polyvox</string>
+    <string name="aboutLibraries_description_special1_name">Developers</string>
+    <string name="aboutLibraries_description_special2_name">Changelog</string>
+    <string name="account_type">Polyvox</string>
+    <string name="share_stream_body">I\'m in a debate on Polyvox:</string>
+    <string name="join_me">Join me!</string>
+    <string name="share_with">Share with:</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="search_hint">Topic, theme…</string>
+    <string name="action_settings">Settings</string>
+    <string name="tab_discover">Broadcasts</string>
+    <string name="tab_friends">Friends</string>
+    <string name="tab_chat">Chat</string>
+    <string name="aboutLibraries_description_text">"<![CDATA[     You too, give your point of view! ]]>   "</string>
+    <string name="aboutLibraries_description_special1_text">"<![CDATA[             <b>mobile app:</b><br>             &emsp;Lucas Parsy</b>             <br><br>             <b>Polyvox.fr website:</b><br>             &emsp;Simon Desplat <br>             &emsp;Vincent Ganivet <br>             &emsp;Étienne Jeanmat <br>             &emsp;Marian Gappa <br>             &emsp;Hippolyte Quief <br>             &emsp;Pierre Rebut <br>             &emsp;Charles Samier ]]>     "</string>
+    <string name="aboutLibraries_description_special2_text">"         <![CDATA[        <i>&quot;Hello everybody, and welcome to this new app&quot;</i> <br><br> The first version of Polyvox on the Play Store! ]]>     "</string>
+    <string name="tab_queue">Waitlist</string>
+    <string name="tab_files">Documents</string>
+    <string name="network_settings">Networks settings</string>
+    <string name="no_network">Network issues</string>
+    <string name="no_wifi_home">Network issue. please check your network settings.</string>
+    <string name="no_server">The Polyvox app is momentarily unavailable. Please try again later.</string>
+    <string name="username_hint">Username</string>
+    <string name="mail_hint">E-mail</string>
+    <string name="date_hint">Birthday (13 years minimum)</string>
+    <string name="password_hint">Password</string>
+    <string name="login_title">Login</string>
+    <string name="login_prompt_message">Login!</string>
+    <string name="login_or">or</string>
+    <string name="login_connect">Login</string>
+    <string name="login_connect_waiting">Login…</string>
+    <string name="login_connection_problem">login issues?</string>
+    <string name="login_create_prompt">didn\'t joined the community yet?</string>
+    <string name="login_create_account">Create an account</string>
+    <string name="account_created">Your account has been created, you can login!</string>
+    <string name="login_incorrect_credentials">Incorrect E-mail or password</string>
+    <string name="new_incorrect_credentials">Incorrect new E-mail or password</string>
+    <string name="logout">Logout</string>
+    <string name="logout_confirm">Do you want to logout of the Polyvox app?</string>
+    <string name="logout_been">You have been succesfully logged out.</string>
+    <string name="unknown_error">Unexpected error.</string>
+    <string name="create_account">Register</string>
+    <string name="register_sending">Sending…</string>
+    <string name="CGU_accept_start">Accept the</string>
+    <string name="CGU">Terms of Service</string>
+    <string name="register_mail_hint_bottom">your email will never be disclosed.</string>
+    <string name="register_username_hint_bottom">6 characters minimum, alphanumeric only.</string>
+    <string name="register_password_hint_bottom">between 8 and 128 characters, with 1 uppercase letter and 1 digit minimum.</string>
+    <string name="info_user_hint_bottom">between 2 and 128 alphabetic characters</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="register_mail_error">invalid E-mail.</string>
+    <string name="register_username_error">invalid username.</string>
+    <string name="register_dob_error">the user needs to be aged 13 minimum.</string>
+    <string name="register_password_error">invalid password.</string>
+    <string name="register_confirm_password_error">2 differents passwords.</string>
+    <string name="register_cgu_error">Please accept the Terms of Service.</string>
+    <string name="register_mail_already_used">this E-mail is already used.</string>
+    <string name="register_ID_already_used">this username is already used.</string>
+    <string name="join">join</string>
+    <string name="followers">followers</string>
+    <string name="followed">followed</string>
+    <string name="follow">follow</string>
+    <string name="unfollow">unfollow</string>
+    <string name="user">User</string>
+    <string name="is_followed">is followed</string>
+    <string name="is_no_more_followed">isn\'t followed anymore</string>
+    <string name="modify_profile">update the profile</string>
+    <string name="update">update</string>
+    <string name="welcome">Welcome!</string>
+    <string name="not_verified_title">Unverified account</string>
+    <string name="not_verified_message">please verify your acount to access this feature.</string>
+    <string name="not_verified_resend">Send it again</string>
+    <string name="not_verified_nope">I\'ll find it</string>
+    <string name="confirmation_mail_sent_short">The confimation E-mail has been sent.</string>
+    <string name="confirmation_mail_sent1">a confimation E-mail has been sent at this adress:</string>
+    <string name="confirmation_mail_sent2">Check your mailbox to validate your account and fully enjoy the Polyvox experience</string>
+    <string name="mail_verified">Your E-mail address has been successfully verified!</string>
+    <string name="mail_verified_description">You can now fully enjoy the Polyvox experience.</string>
+    <string name="back_home">Go back to the homepage.</string>
+    <string name="banned">You have been banned from Polyvox.</string>
+    <string name="users">Users</string>
+    <string name="rooms">Rooms</string>
+    <string name="rooms_long">talk rooms</string>
+    <string name="top">Top</string>
+    <string name="no_search_result">No results</string>
+    <string name="no_search_result_details">this search gave no results. Please try another request.</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="description">description</string>
+    <string name="photo">picture</string>
+    <string name="user_info">user info</string>
+    <string name="mail">E-mail</string>
+    <string name="mail_and_pass">E-mail &amp; password</string>
+    <string name="bio_hint">introduce yourself!</string>
+    <string name="bio_empty">This user hasn\'t written his bio yet.</string>
+    <string name="day">Day</string>
+    <string name="year">Year</string>
+    <string name="licence_and_credits">licences and Credits</string>
+    <string name="accept_permission">Accept this permission to use this feature.</string>
+    <string name="joined_waitlist">has joined the waitlist.</string>
+    <string name="waited_turn">has skipped his turn</string>
+    <string name="left_waitlist">left the waitlist</string>
+    <string name="report_error_params">please give a reason and a description of the problem.</string>
+    <string name="description_required">Description (required)</string>
+    <string name="report_sentence">Report the behavior of</string>
+    <string name="user_reported">user %1$s has been reported</string>
+    <string name="report">report</string>
+    <string name="send_comment">leave a comment</string>
+    <string name="send_comment_for">leave a comment for</string>
+    <string name="rate_user_text_start">what did you think of</string>
+    <string name="size">size:</string>
+    <string name="send">send</string>
+    <string name="file">file</string>
+    <string name="add_file">add a file</string>
+    <string name="enter_message_hint">enter a message</string>
+    <string name="no_friends_subtext">add friends by searching their profile on Polyvox!</string>
+    <string name="no_friends">no contacts yet</string>
+    <string name="open_with">Open with:</string>
+    <string name="discovered">I discovered this on Polyvox:</string>
+    <string name="download_error">download failed</string>
+    <string name="downloaded">has been saved on the device</string>
+    <string name="password_new">New password</string>
+    <string name="password_actual">Current password</string>
+    <string name="security_confirm_pass">for security reasons, please input your current password to modify these informations.</string>
+    <string name="confirm_password_hint_bottom">retype your password</string>
+    <string name="passwords_not_identical">passwords are not identicals</string>
+    <string name="confirm_password">confirm your password</string>
+    <string name="change_password_prompt">you can give a new password</string>
+    <string name="change_password">change password</string>
+    <string name="invalid_link">the link you opened seems invalid</string>
+    <string name="password_changed">the password has been changed, you can now login.</string>
+    <string name="mail_sent">the E-mail has been correctly sent</string>
+    <string name="send_mail">send the E-mail.</string>
+    <string name="forgot_password_prompt">please give your E-mail to receive a password change link.</string>
+    <string name="forgot_password">forgot password</string>
+    <string name="file_invalid">an error occured with this file</string>
+    <string name="profile_picture_invalid">an error occured with this picture</string>
+    <string name="profile_picture_apply">use this picture</string>
+    <string name="profile_picture_change">change picture</string>
+    <string name="profile_picture_add">add a profile picture</string>
+    <string name="profile_picture_new">new profile picture</string>
+    <string name="bio_updated">the bio has been updated</string>
+    <string name="bio_too_long">the bio is too long (500 characters max)</string>
+    <string name="user_info_updated">the informations have been updated</string>
+    <string name="profile_picture_current">current profile picture</string>
+    <string name="profile_picture_no">you don\'t have a profile picture yet. add one!</string>
+
+    <string-array name="months_spinner">
+        <item>Month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="report_reason_spinner">
+        <item>Reason (required)</item>
+        <item>hatefulness</item>
+        <item>Nudity or violence</item>
+        <item>Bullying</item>
+        <item>Other</item>
+    </string-array>
+
+
+</resources>

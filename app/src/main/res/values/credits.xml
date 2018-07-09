@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="aboutLibraries_description_showIcon">true</string>
-    <string name="aboutLibraries_description_showVersion">true</string>
-    <string name="aboutLibraries_description_text">
-        <![CDATA[
-    Vous aussi, donnez votre avis!
-]]>
-
-
-</string>
+    <string name="aboutLibraries_description_showIcon" translatable="false">true</string>
+    <string name="aboutLibraries_description_showVersion" translatable="false">true</string>
+    <string name="aboutLibraries_description_text">"<![CDATA[     Vous aussi, donnez votre avis! ]]>   "</string>
     <string name="aboutLibraries_description_special1_name">Développeurs</string>
     <string name="aboutLibraries_description_special1_text">
         <![CDATA[
