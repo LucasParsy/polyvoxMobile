@@ -42,10 +42,12 @@
                 android:paddingStart="25dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                android:visibility="invisible"
+                tools:visibility="visible"
                 tools:text="Le droit de vote des femmes" />
 
             <ProgressBar
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                style="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

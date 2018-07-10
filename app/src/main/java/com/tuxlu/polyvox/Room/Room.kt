@@ -23,6 +23,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -191,18 +193,28 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
                 if (playWhenReady && playbackState == Player.STATE_READY) {//playing {
                     videoPlayerView.visibility = View.VISIBLE
+                    bufferingProgress.visibility = View.INVISIBLE
                     roomWaitingLayout.visibility = View.INVISIBLE
                 } else if (playWhenReady) //buffering
                 {
-
+                    bufferingProgress.visibility = View.VISIBLE
                 } else {
                     videoPlayerView.visibility = View.INVISIBLE
                     roomWaitingLayout.visibility = View.VISIBLE
-
                 }
             }
         }
         player!!.addListener(listener)
+    }
+
+    private fun transitionCallback(): Boolean
+    {
+        supportStartPostponedEnterTransition();
+        manifestHandler.postDelayed({
+            roomWaitingTitle.visibility = View.VISIBLE
+            YoYo.with(Techniques.SlideInDown).duration(300).playOn(roomWaitingTitle)
+        }, 500)
+        return false
     }
 
     private fun setTransition(title: String, imageUrl: String)
@@ -216,20 +228,18 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
                     .dontAnimate()
                     .listener(object : RequestListener<Drawable> {
                         override fun onResourceReady(resource: Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            supportStartPostponedEnterTransition();
-                            return false;
+                            return transitionCallback()
                         }
 
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            supportStartPostponedEnterTransition();
-                            return false;
+                            return transitionCallback()
                         }
                     })
                     .into(roomWaitingPicture)
         } else {
             roomWaitingPicture.setImageDrawable(resources.getDrawable(R.drawable.logo_grey))
             roomWaitingPicture.scaleType = ImageView.ScaleType.CENTER_CROP
-            supportStartPostponedEnterTransition()
+            transitionCallback()
         }
     }
 
@@ -239,10 +249,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     }
 
     private fun setClicklisteners() {
-        player_button_share.setOnClickListener({ v -> shareStream(v) })
-        player_button_fullscreen.setOnClickListener({ v -> setScreenOrientation(v) })
-        player_button_chat.setOnClickListener({ v -> setChatVisibility(v) })
-        player_button_back.setOnClickListener({ _ -> finish() })
+        player_button_share.setOnClickListener { v -> shareStream(v) }
+        player_button_fullscreen.setOnClickListener { v -> setScreenOrientation(v) }
+        player_button_chat.setOnClickListener { v -> setChatVisibility(v) }
+        player_button_back.setOnClickListener { _ -> finish() }
     }
 
     fun shareStream(v: View) {
@@ -343,7 +353,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        manifestHandler.removeCallbacks(manifestRunnable)
+        manifestHandler.removeCallbacksAndMessages(null)
     }
 
     //reloads page when logging
