@@ -56,6 +56,7 @@ class Options : MyAppCompatActivity() {
                 withActivityTitle(resources.getString(R.string.licence_and_credits)).
                 start(this)
         //todo: add all the libs that are not detected... one day...
+        // .withFields(R.string.class.getFields()) //manual lib detection line
     }
 
 }

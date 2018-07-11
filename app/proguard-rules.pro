@@ -43,6 +43,12 @@
     <fields>;
 }
 
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** wtf(...);
+}
+
 #use this to be more optimized, but must add libs by hand.
 #-keepclasseswithmembers class **.R$* {
 #    public static final int define_*;

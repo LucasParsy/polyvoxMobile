@@ -73,9 +73,10 @@ public class Home extends AppCompatActivity {
 
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
         fragments.add(discover); //discover
-        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
-        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
-        //int[] tabTitles = new int[]{R.string.tab_discover};
+        //TODO: disable this tab for the Playstore release
+        //fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
+        //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
+        int[] tabTitles = new int[]{R.string.tab_discover};
         pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
