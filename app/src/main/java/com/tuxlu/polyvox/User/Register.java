@@ -133,7 +133,6 @@ public class Register extends AppCompatActivity {
             req.put(APIUrl.REGISTER_PARAM4, textDate);
             req.put(APIUrl.REGISTER_PARAM5, true);
         } catch (JSONException e) {
-            Log.wtf("Register", e);
             return;
         }
 

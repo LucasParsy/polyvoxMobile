@@ -20,6 +20,7 @@ import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.Recyclers.IRecycler
 import com.tuxlu.polyvox.Utils.Recyclers.ViewHolderBinder
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import org.json.JSONObject
 import java.util.*
 
@@ -56,8 +57,11 @@ open class RoomWaitlistBinder() : ViewHolderBinder<RoomWaitlistResult> {
         //Log.wtf("WAITLISTBIND", "binded " + item.username + " " + item.status)
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.username
         val image = holder.v.findViewById<ImageView>(R.id.infoUserPicture)
-        GlideApp.with(holder.v.context).load(item.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
-
+        if (!UtilsTemp.isStringEmpty(item.url))
+            GlideApp.with(holder.v.context).load(item.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
+        else {
+            GlideApp.with(holder.v.context).clear(image)
+        }
         val statIcon = holder.v.findViewById<ImageView>(R.id.statusIcon)
 
         holder.v.findViewById<TextView>(R.id.timePassed).visibility = View.INVISIBLE

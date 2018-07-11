@@ -40,7 +40,8 @@ open abstract class CommentReportBase : DialogFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         infoUserName.text = name;
-        GlideApp.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
+        if (!UtilsTemp.isStringEmpty(url))
+            GlideApp.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
         sendButton.setOnClickListener { _: View -> buttonClick() }
     }
 

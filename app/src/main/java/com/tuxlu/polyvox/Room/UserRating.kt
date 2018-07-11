@@ -14,6 +14,7 @@ import com.tuxlu.polyvox.R.id.closeButton
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
+import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.exo_stream_playback_control.*
 import org.json.JSONObject
@@ -64,7 +65,8 @@ class UserRating(private val act: Activity, private val token: String) {
         //player_bottom_rate_speaker.visibility = View.VISIBLE
         YoYo.with(Techniques.SlideInUp).duration(300).playOn(act.player_bottom_rate_speaker)
         act.infoUserName.text = currentUser.name
-        GlideApp.with(act).load(currentUser.url).diskCacheStrategy(DiskCacheStrategy.NONE).into(act.infoUserPicture)
+        if (!UtilsTemp.isStringEmpty(currentUser.url))
+            GlideApp.with(act).load(currentUser.url).diskCacheStrategy(DiskCacheStrategy.NONE).into(act.infoUserPicture)
         currentUser = nUser
     }
 

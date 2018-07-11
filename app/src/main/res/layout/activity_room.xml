@@ -65,6 +65,16 @@
             app:controller_layout_id="@layout/exo_stream_playback_control"
             app:resize_mode="fill" />
 
+        <ProgressBar
+            android:id="@+id/bufferingProgress"
+            style="@style/AppTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="visible" />
+
+
     </FrameLayout>
 
     <LinearLayout

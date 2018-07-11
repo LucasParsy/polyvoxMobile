@@ -55,9 +55,7 @@ public class HurlWithDummyStack extends HurlStack {
                 request.getUrl().startsWith(APIUrl.FAKE_BASE_URL))
             try {
                 return dummy.dummyRequest(request, additionalHeaders);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.wtf("HurlwithDymmyStack", e.getCause());
+            } catch (Exception ignored) {
             }
         return super.executeRequest(request, additionalHeaders);
     }

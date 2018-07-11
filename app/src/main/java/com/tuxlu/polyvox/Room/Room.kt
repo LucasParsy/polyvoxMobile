@@ -255,7 +255,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_button_back.setOnClickListener { _ -> finish() }
     }
 
-    fun shareStream(v: View) {
+    private fun shareStream(v: View) {
         val url = "https://polyvox.fr/stream/$token"
         val body = getString(R.string.share_stream_body) + "\n" + title + "\n" + getString(R.string.join_me)
         UtilsTemp.shareContent(this, body, url)
@@ -291,7 +291,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //chat apparait alors en surimpression sur le stream
     }
 
-    fun setScreenOrientation(v: View) {
+    private fun setScreenOrientation(v: View) {
         // orientation ? portrait : landscape;
         val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
         requestedOrientation = if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

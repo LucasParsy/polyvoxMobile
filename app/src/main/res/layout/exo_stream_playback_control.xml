@@ -6,16 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ProgressBar
-        android:id="@+id/bufferingProgress"
-        style="@style/AppTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="invisible" />
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/player_top_buttons_bar"
         android:layout_width="match_parent"
@@ -59,7 +49,6 @@
                 android:visibility="gone"
                 tools:text="ou la décadence d'une nation" />
         </LinearLayout>
-
 
 
         <android.support.v7.widget.AppCompatImageButton
