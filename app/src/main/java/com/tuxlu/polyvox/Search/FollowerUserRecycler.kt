@@ -31,6 +31,7 @@ open class FollowerUserBinder : UserSearchBinder() {
                 val b = Bundle()
                 b.putString("title", item.name)
                 b.putString("token", item.roomUrl)
+                b.putString("imageUrl", "")
                 intent.putExtras(b)
                 holder.v.context.startActivity(intent)
             }
