@@ -111,7 +111,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             sentList.add(message.id)
             adapter.addToStart(message, true)
         }
-                , { _ -> })
+                , null)
         return true;
     }
 
