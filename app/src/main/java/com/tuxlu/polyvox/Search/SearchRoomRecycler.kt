@@ -27,6 +27,8 @@ import android.view.ViewGroup
 import com.android.volley.Request
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIRequest.checkConnection
+import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 
 
 /**
@@ -143,7 +145,7 @@ class DiscoverRoomRecycler : SearchRoomRecycler() {
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
 
 
-    fun updateRooms()
+    private fun updateRooms()
     {
         /*
         handler.postDelayed(() -> {
@@ -164,14 +166,19 @@ class DiscoverRoomRecycler : SearchRoomRecycler() {
                     try {
                         this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
                         swipeRefreshLayout.isRefreshing = false;
+                        LoadingUtils.EndLoadingView(rootView)
                     } catch (ignored: JSONException) {
                     }
                 }, { swipeRefreshLayout.isRefreshing = false; })
+
+        if (!checkConnection(context, false))
+            swipeRefreshLayout.isRefreshing = false;
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootview =  super.onCreateView(inflater, container, savedInstanceState)
-        swipeRefreshLayout = rootview!!.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        rootView =  super.onCreateView(inflater, container, savedInstanceState)!!
+        LoadingUtils.StartLoadingView(rootView, context)
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener { updateRooms() }
         updateRooms()
         return rootView
