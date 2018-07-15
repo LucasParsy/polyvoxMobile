@@ -207,8 +207,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player!!.addListener(listener)
     }
 
-    private fun transitionCallback(): Boolean
-    {
+    private fun transitionCallback(): Boolean {
         supportStartPostponedEnterTransition();
         manifestHandler.postDelayed({
             roomWaitingTitle.visibility = View.VISIBLE
@@ -217,8 +216,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         return false
     }
 
-    private fun setTransition(title: String, imageUrl: String)
-    {
+    private fun setTransition(title: String, imageUrl: String) {
         roomWaitingTitle.text = title
         ViewCompat.setTransitionName(roomWaitingPicture, title);
         if (!UtilsTemp.isStringEmpty(imageUrl)) {
@@ -294,6 +292,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private fun setScreenOrientation(v: View) {
         // orientation ? portrait : landscape;
         val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
+        if (orientation) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         requestedOrientation = if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
@@ -331,8 +334,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     override fun onPause() {
         super.onPause()
         player?.playWhenReady = false
-        requestedOrientation = this.resources.configuration.orientation
-
+        //requestedOrientation = this.resources.configuration.orientation
         /*
         pour vidéo enregistrée:
         private long position; //dans classe

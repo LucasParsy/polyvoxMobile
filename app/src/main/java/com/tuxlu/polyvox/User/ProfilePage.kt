@@ -118,7 +118,7 @@ class ProfilePage : MyAppCompatActivity() {
         else
             ProfileBio.text = getString(R.string.bio_empty)
 
-        if (!UtilsTemp.isStringEmpty(user.picture))
+        if (!UtilsTemp.isStringEmpty(user.picture) && !this.isFinishing)
             GlideApp.with(this).load(user.picture).diskCacheStrategy(DiskCacheStrategy.NONE).into(ProfileIcon)
         else
             ProfileIcon.setImageResource(R.drawable.ic_account_circle_white_24dp)
