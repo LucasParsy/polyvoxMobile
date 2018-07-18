@@ -116,6 +116,7 @@
     <string name="send">send</string>
     <string name="file">file</string>
     <string name="add_file">add a file</string>
+    <string name="wait_room_start">Waiting room start</string>
     <string name="enter_message_hint">enter a message</string>
     <string name="no_friends_subtext">add friends by searching their profile on Polyvox!</string>
     <string name="no_friends">no contacts yet</string>

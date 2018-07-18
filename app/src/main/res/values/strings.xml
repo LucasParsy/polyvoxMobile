@@ -151,6 +151,7 @@
     <string name="no_friends">Pas encore de contacts</string>
     <string name="no_friends_subtext">Ajoutez des amis en cherchant leur profil sur Polyvox!</string>
 
+    <string name="wait_room_start">En attente du lancement de la salle</string>
     <string name="enter_message_hint">écrivez un message</string>
     <string name="add_file">ajouter un fichier</string>
     <string name="file">fichier</string>

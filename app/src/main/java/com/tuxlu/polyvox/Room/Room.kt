@@ -74,6 +74,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         supportPostponeEnterTransition();
 
+    private var firstManifest = true
+    private val mInterstitialAd = InterstitialAd(this);
+
+
         val b = intent.extras!!
         title = b.getString("title")
         val imageUrl = b.getString("imageUrl")
@@ -132,6 +136,14 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             try {
                 waitlist.update(data);
                 fileList.add(data, true)
+                if (firstManifest) {
+                    firstManifest = false
+                    if (UtilsTemp.isStringEmpty(data.getString("speaker"))) {
+                        loadingRoomProgress.visibility = View.GONE
+                        bufferingProgress.visibility = View.INVISIBLE
+                        manifestHandler.postDelayed({ waitingText.visibility = View.VISIBLE }, 1000)
+                    }
+                }
             } catch (e: Exception) {
             }
 

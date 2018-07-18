@@ -43,10 +43,11 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:visibility="invisible"
-                tools:visibility="visible"
-                tools:text="Le droit de vote des femmes" />
+                tools:text="Le droit de vote des femmes"
+                tools:visibility="visible" />
 
             <ProgressBar
+                android:id="@+id/loadingRoomProgress"
                 style="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,6 +55,21 @@
                 android:foregroundGravity="center"
                 android:indeterminate="true"
                 android:theme="@style/AppTheme" />
+
+            <TextView
+                android:id="@+id/waitingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/rectangle_white_border"
+                android:padding="5dp"
+                android:text="@string/wait_room_start"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textIsSelectable="false"
+                tools:visibility="visible"
+                android:visibility="invisible"
+                android:textSize="18sp" />
 
         </FrameLayout>
 
@@ -71,8 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true"
-            android:visibility="visible" />
+            android:indeterminate="true" />
 
 
     </FrameLayout>
