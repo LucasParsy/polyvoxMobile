@@ -34,6 +34,9 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
@@ -71,11 +74,21 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private lateinit var waitlist: RoomWaitlist
     private lateinit var fileList: FLRecycler
 
+    private var firstManifest = true
+    private val mInterstitialAd = InterstitialAd(this);
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         supportPostponeEnterTransition();
 
-    private var firstManifest = true
-    private val mInterstitialAd = InterstitialAd(this);
+        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        //mInterstitialAd.adUnitId = "ca-app-pub-4121964947351781/9439952508" //vrai
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
 
 
         val b = intent.extras!!
@@ -127,6 +140,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
+    }
+
+    fun showAd() {
+        if (mInterstitialAd.isLoaded)
+            mInterstitialAd.show()
     }
 
     private fun getManifest() {

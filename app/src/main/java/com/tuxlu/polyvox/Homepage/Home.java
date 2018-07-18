@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.MobileAds;
 import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
@@ -63,6 +64,10 @@ public class Home extends AppCompatActivity {
         //todo: reactivate leak check
         //if (LeakCanary.isInAnalyzerProcess(this)) {return;}
         //LeakCanary.install(this.getApplication());
+
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); //test
+        //MobileAds.initialize(this, "ca-app-pub-4121964947351781~9215757073"); //true
+
 
         if (!BuildConfig.DEBUG)
             Fabric.with(this, new Crashlytics());

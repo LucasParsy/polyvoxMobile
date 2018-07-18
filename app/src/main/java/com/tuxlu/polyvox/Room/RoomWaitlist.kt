@@ -81,8 +81,10 @@ class RoomWaitlist : Fragment() {
     }
 
     private fun showRating(newSpeaker: RoomWaitlistResult?) {
-        if (activity is Room)
+        if (activity is Room) {
+            (activity as Room).showAd()
             (activity as Room).userRate.showUserRating(currentSpeaker!!.username, currentSpeaker!!.url)
+        }
         currentSpeaker = newSpeaker
     }
 
