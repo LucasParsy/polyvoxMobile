@@ -47,8 +47,6 @@ class ForgotReset : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun buttonClick(v: View) {
-
-
         if (!checkPassword(passwordLayout, this))
             return
         val password = passwordInput.text.toString()

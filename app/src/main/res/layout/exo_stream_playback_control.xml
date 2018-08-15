@@ -56,7 +56,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="#00000000"
-            app:srcCompat="@android:drawable/ic_menu_share" />
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_share_black_48dp" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -261,8 +262,9 @@
             android:layout_marginRight="10dp"
             android:background="#00000000"
             android:scaleType="fitXY"
+            android:tint="@android:color/white"
             android:visibility="visible"
-            app:srcCompat="@android:drawable/stat_notify_chat" />
+            app:srcCompat="@drawable/ic_forum_black_48dp" />
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/player_button_fullscreen"

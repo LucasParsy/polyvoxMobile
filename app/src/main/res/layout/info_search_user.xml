@@ -111,7 +111,7 @@
         android:padding="10dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:src="@android:drawable/stat_notify_chat"
+        android:src="@drawable/ic_forum_black_48dp"
         android:tint="@color/PolyvoxMainColor"
         android:visibility="invisible" />
 

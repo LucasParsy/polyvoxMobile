@@ -26,7 +26,8 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@android:drawable/stat_sys_download" />
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_file_download_black_48dp" />
 
     <ImageButton
         android:id="@+id/share"
@@ -34,6 +35,7 @@
         android:layout_height="50dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_share_black_48dp" />
 
 </android.widget.LinearLayout>
