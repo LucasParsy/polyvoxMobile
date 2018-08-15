@@ -6,6 +6,9 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -136,7 +139,11 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         pager.adapter = adapter
         pager.offscreenPageLimit = 3
         tabLayoutHome.setupWithViewPager(pager)
-
+        for (i in 0..2) {
+            val tab = tabLayoutHome.getTabAt(i);
+            tab!!.setIcon(tabIcons[i])
+            tab.icon!!.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
+        }
 
         player_room_title.text = title
         player_room_subtitle.text = "sous-titre"
@@ -345,6 +352,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             videoPlayerLayout!!.layoutParams.height = resources.getDimension(R.dimen.room_video_player_size).toInt()
             videoPlayerLayout!!.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
             player_button_fullscreen!!.setImageResource(R.drawable.ic_fullscreen_expand_24dp)
+
+            for (i in 0..2)
+                tabLayoutHome.getTabAt(i)!!.text = getString(tabTitles[i])
         }
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
@@ -357,6 +367,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             videoPlayerLayout!!.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
             videoPlayerLayout!!.layoutParams.width = (width - width * 0.3).toInt()
             player_button_fullscreen!!.setImageResource(R.drawable.ic_fullscreen_skrink_24dp)
+
+            for (i in 0..2)
+                tabLayoutHome.getTabAt(i)!!.text = ""
         }
         rootView!!.requestLayout()
     }
@@ -403,6 +416,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     companion object {
 
         private val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
+        private val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_light, R.drawable.ic_mic_black_48dp)
     }
 
 

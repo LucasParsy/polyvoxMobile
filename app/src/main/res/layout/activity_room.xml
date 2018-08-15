@@ -111,6 +111,7 @@
                 android:id="@+id/RoomTabTextChat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:icon="@drawable/ic_forum_black_48dp"
                 android:text="@string/tab_chat"
                 android:visibility="visible" />
 
@@ -118,14 +119,16 @@
                 android:id="@+id/RoomTabTextQueue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_queue"
+                android:icon="@drawable/document_light"
+                android:text="@string/tab_files"
                 android:visibility="visible" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/RoomTabTextFiles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_files"
+                android:icon="@drawable/ic_mic_black_48dp"
+                android:text="@string/tab_queue"
                 android:visibility="visible" />
         </android.support.design.widget.TabLayout>
 
