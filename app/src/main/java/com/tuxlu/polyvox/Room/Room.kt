@@ -64,8 +64,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     private var chatVisibilityStatus = View.VISIBLE
 
-    private var player: SimpleExoPlayer? = null
-    private lateinit var dataSourceFactory: DefaultDataSourceFactory;
 
     private var width: Int = 0
 
@@ -79,21 +77,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     private var firstManifest = true
     private val mInterstitialAd = InterstitialAd(this);
+    private var streaming = Streaming()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportPostponeEnterTransition();
-
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
-        //mInterstitialAd.adUnitId = "ca-app-pub-4121964947351781/9439952508" //vrai
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-            }
-        }
-
-
+        setupAd()
         val b = intent.extras!!
         title = b.getString("title")
         val imageUrl = b.getString("imageUrl")
@@ -149,6 +138,19 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         player_room_subtitle.text = "sous-titre"
     }
 
+    private fun setupAd()
+    {
+        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        //mInterstitialAd.adUnitId = "ca-app-pub-4121964947351781/9439952508" //vrai
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
+
+    }
+
     fun showAd() {
         if (mInterstitialAd.isLoaded)
             mInterstitialAd.show()
@@ -177,71 +179,12 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
 
             val nUrl = data.getString("videosData");
-            if (!UtilsTemp.isStringEmpty(nUrl) && nUrl != streamUrl) {
-                videoPlayerView.visibility = View.VISIBLE
-                setVideoPlayer(nUrl)
-            }
+            streaming.setVideoPlayer(token, nUrl, this)
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
                 {
                     manifestHandler.postDelayed(manifestRunnable, 2000)
                 })
-    }
-
-
-    private fun setVideoPlayer(token: String) {
-        val context = baseContext
-        //Uri videoUrl = Uri.parse(APIUrl.BASE_URL + APIUrl.VIDEO_STREAM + "/" + id);
-        //Uri videoUrl = Uri.parse("http://www-itec.uni-klu.ac.at/ftp/datasets/DASHDataset2014/BigBuckBunny/2sec/BigBuckBunny_2s_simple_2014_05_09.mpd");
-        //Uri videoUrl = Uri.parse("http://vm2.dashif.org/livesim-dev/periods_60/xlink_30/insertad_3/testpic_2s/Manifest.mpd");
-        var videoUrl: Uri = if (token == "black")
-            Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
-        else
-            Uri.parse(token);
-        //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
-        streamUrl = token;
-
-        if (player == null) {
-            val bandwidthMeter = DefaultBandwidthMeter()
-            dataSourceFactory = DefaultDataSourceFactory(context,
-                    Util.getUserAgent(context, resources.getString(R.string.app_name)), bandwidthMeter)
-            // This is the MediaSource representing the media to be played.
-            //val videoSource =  HlsMediaSource(videoUrl, dataSourceFactory,
-            //DefaultDashChunkSource.Factory(dataSourceFactory), null, null)
-            val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
-            val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-            player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
-            videoPlayerView!!.player = player
-        }
-        val videoSource = HlsMediaSource(videoUrl, dataSourceFactory,
-                null, null)
-        player!!.prepare(videoSource)
-        player!!.playWhenReady = true
-
-        val listener = object : Player.EventListener {
-            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {}
-            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {}
-            override fun onPlayerError(error: ExoPlaybackException?) {}
-            override fun onLoadingChanged(isLoading: Boolean) {}
-            override fun onPositionDiscontinuity() {}
-            override fun onRepeatModeChanged(repeatMode: Int) {}
-            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {}
-            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-
-                if (playWhenReady && playbackState == Player.STATE_READY) {//playing {
-                    videoPlayerView.visibility = View.VISIBLE
-                    bufferingProgress.visibility = View.INVISIBLE
-                    roomWaitingLayout.visibility = View.INVISIBLE
-                } else if (playWhenReady) //buffering
-                {
-                    bufferingProgress.visibility = View.VISIBLE
-                } else {
-                    videoPlayerView.visibility = View.INVISIBLE
-                    roomWaitingLayout.visibility = View.VISIBLE
-                }
-            }
-        }
-        player!!.addListener(listener)
     }
 
     private fun transitionCallback(): Boolean {
@@ -276,11 +219,6 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             roomWaitingPicture.scaleType = ImageView.ScaleType.CENTER_CROP
             transitionCallback()
         }
-    }
-
-    public fun stopPlayer() {
-        if (player != null)
-            player!!.stop()
     }
 
     private fun setClicklisteners() {
@@ -376,7 +314,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onPause() {
         super.onPause()
-        player?.playWhenReady = false
+        streaming.setPlayOnReady(false)
         //requestedOrientation = this.resources.configuration.orientation
         /*
         pour vidéo enregistrée:
@@ -393,7 +331,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onResume() {
         super.onResume()
-        player?.playWhenReady = true
+        streaming.setPlayOnReady(true)
     }
 
     override fun onDestroy() {
