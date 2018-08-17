@@ -54,7 +54,7 @@ class ProfilePage : MyAppCompatActivity() {
         connected = AuthUtils.hasAccount(this)
 
         val userName = intent.getStringExtra("name")
-        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;
+        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF
 
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->
@@ -211,7 +211,7 @@ class ProfilePage : MyAppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         val userName = AuthUtils.getUsername(baseContext)
-        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF;
+        val url = APIUrl.BASE_URL + APIUrl.INFO_USER + userName + APIUrl.INFO_USER_SUFF
 
         APIRequest.JSONrequest(this, Request.Method.GET, url,
                 connected, null, { response ->

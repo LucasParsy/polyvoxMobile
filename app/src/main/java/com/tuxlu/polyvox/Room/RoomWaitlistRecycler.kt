@@ -41,7 +41,7 @@ data class RoomWaitlistResult(var username: String = "",
                               var timer: CountDownTimer? = null)
 
 
-open class RoomWaitlistBinder() : ViewHolderBinder<RoomWaitlistResult> {
+open class RoomWaitlistBinder : ViewHolderBinder<RoomWaitlistResult> {
 
     var timeLimit: Int = 0
     private lateinit var timeText: TextView
@@ -119,7 +119,7 @@ open class RoomWaitlistBinder() : ViewHolderBinder<RoomWaitlistResult> {
     override fun setClickListener(holder: Adapter.ViewHolder<RoomWaitlistResult>, data: MutableList<RoomWaitlistResult>) {
         val rootView = holder.v.findViewById<View>(R.id.infoRoomLayout)
         if (rootView.hasOnClickListeners())
-            return;
+            return
         //rootView.setOnClickListener { 1+1 }
         //i dunno, what can you do here?
     }
@@ -143,10 +143,10 @@ class RoomWaitlistAdapter(nContext: Context,
         if (pos == -1)
             return
 
-        data.removeAt(pos);
-        recycler.removeViewAt(pos);
-        notifyItemRemoved(pos);
-        notifyItemRangeChanged(pos, data.size);
+        data.removeAt(pos)
+        recycler.removeViewAt(pos)
+        notifyItemRemoved(pos)
+        notifyItemRangeChanged(pos, data.size)
         if (pos < data.size)
             if (pos == 0)
                 data[pos].status = RoomWaitlistStatus.STREAMER
@@ -182,7 +182,7 @@ class RoomWaitlistAdapter(nContext: Context,
             return
         data[0].status = RoomWaitlistStatus.NONE
         notifyItemChanged(0)
-        Collections.rotate(data, -1);
+        Collections.rotate(data, -1)
         notifyItemMoved(0, data.size - 1)
         data[0].status = RoomWaitlistStatus.STREAMER
         notifyItemChanged(0)
@@ -244,7 +244,7 @@ class RoomWaitlistRecycler : IRecycler<RoomWaitlistResult>() {
         itemAnimator.changeDuration = 500
         recycler.itemAnimator = itemAnimator
         LoadingUtils.EndLoadingView(rootView)
-        return res;
+        return res
     }
 
     fun setTimeLimit(nLimit: Int) {

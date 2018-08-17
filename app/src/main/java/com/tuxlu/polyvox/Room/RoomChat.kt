@@ -25,7 +25,7 @@ class RoomChat : Fragment(), MessageInput.InputListener {
 
     override fun onSubmit(input: CharSequence?): Boolean {
         val message = input.toString()
-        chat.sendMessage(message);
+        chat.sendMessage(message)
 
         /*
         //twitch does not send again your message, you have to put it yourself.
@@ -40,7 +40,7 @@ class RoomChat : Fragment(), MessageInput.InputListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_room_chat, container, false)
-        return rootView;
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,7 +78,7 @@ class RoomChat : Fragment(), MessageInput.InputListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacksAndMessages(null);
+        handler.removeCallbacksAndMessages(null)
     }
 
 }

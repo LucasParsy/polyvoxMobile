@@ -41,7 +41,7 @@ public abstract class DialogFragmentBase extends DialogFragment {
         if (getActivity() instanceof MyAppCompatActivity) {
             oldName = actionBar.getTitle().toString();
             actionBar.setTitle(name);
-            ((View) toolbar).setVisibility(View.GONE);
+            toolbar.setVisibility(View.GONE);
             return rootView;
         }
 

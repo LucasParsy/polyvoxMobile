@@ -49,7 +49,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         var friendUrl = intent.getStringExtra("url")
         friendAuthor = Author(name, friendUrl)
 
-        val myName = AuthUtils.getUsername(this);
+        val myName = AuthUtils.getUsername(this)
         var imageUrl : String = AuthUtils.getPictureUrl(this)
         if (UtilsTemp.isStringEmpty(imageUrl))
             imageUrl = ""
@@ -112,7 +112,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             adapter.addToStart(message, true)
         }
                 , null)
-        return true;
+        return true
     }
 
     override fun onLoadMore(page: Int, totalItemsCount: Int) {
@@ -162,14 +162,14 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         //todo: verify if should flip condition with real API
         val messagesArray = topObj.getJSONArray("messages")
         for (i in 0..(messagesArray.length() - 1)) {
-            val elem = messagesArray.getJSONObject(i);
+            val elem = messagesArray.getJSONObject(i)
             val type = elem.getString("type")
 
             var text = ""
             if (type != "image") //todo: verify if File has title or not in final API
                 text = elem.getString("text")
 
-            var author = myAuthor;
+            var author = myAuthor
             if (!elem.getBoolean("isMe"))
                 author = friendAuthor
 
@@ -177,7 +177,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             val date: Date = ft.parse(elem.getString("date"))
 
 
-            var url: String? = null;
+            var url: String? = null
             if (type == "image" || type == "file")
                 url = elem.getString("url")
             if (type == "file") {

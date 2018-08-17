@@ -34,7 +34,7 @@ class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialog
         val view = inflater.inflate(R.layout.fragment_private_chat_list, container, false)
 
         val dialogsListAdapter= DialogsListAdapter<ChatDialog>(ImageLoader(this.activity!!))
-        dialogsListAdapter.setOnDialogClickListener(this);
+        dialogsListAdapter.setOnDialogClickListener(this)
         view.findViewById<DialogsList>(R.id.dialogsList).setAdapter(dialogsListAdapter)
 
         var list = ArrayList<ChatDialog>()

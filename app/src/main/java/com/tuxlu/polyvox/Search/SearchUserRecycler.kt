@@ -37,7 +37,7 @@ open class UserSearchBinder : ViewHolderBinder<UserSearchResult> {
         if (!UtilsTemp.isStringEmpty(item.imageUrl))
             GlideApp.with(holder.v.context).load(item.imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
         else
-            GlideApp.with(holder.v.context).clear(image);
+            GlideApp.with(holder.v.context).clear(image)
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<UserSearchResult>, data: MutableList<UserSearchResult>) {

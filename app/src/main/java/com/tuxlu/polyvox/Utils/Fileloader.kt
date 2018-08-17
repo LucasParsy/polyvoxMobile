@@ -37,7 +37,7 @@ class Fileloader {
         fun getUrlLastSegment(url: String): String {
             var name = ""
             name = url.trimEnd('/')
-            val start: Int = name.lastIndexOf("/") + 1;
+            val start: Int = name.lastIndexOf("/") + 1
             name = name.substring(start)
             return name
         }
@@ -62,13 +62,12 @@ class Fileloader {
         }
 
         @JvmStatic
-        public fun getType(ntype: String, url: String): String {
+        fun getType(ntype: String, url: String): String {
             if (!ntype.isBlank())
-                return ntype;
-            var type = "";
-            type = URLConnection.guessContentTypeFromName(url);
-            if (type == null);
-            val filename: Int = url.lastIndexOf("/");
+                return ntype
+            var type = ""
+            type = URLConnection.guessContentTypeFromName(url)
+            val filename: Int = url.lastIndexOf("/")
             if (url.indexOf('.', filename) == -1)
                 type = "text/html"
             return type
@@ -90,7 +89,7 @@ class Fileloader {
         private fun downloadFile(url: String, context: Activity) {
 
             if (!UtilsTemp.checkPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                return;
+                return
             val req = VolleyFileDownloader(Request.Method.GET, url, Response.Listener { response ->
                 val file = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/",
                         response.first)

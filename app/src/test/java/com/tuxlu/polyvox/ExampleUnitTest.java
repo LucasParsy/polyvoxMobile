@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
+    public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
 
     @Test
-    public void substring_manip() throws Exception {
+    public void substring_manip() {
         String name ="";
         String extension = "";
         String disposition = "attachment; filename=\"NAME\"";
@@ -55,7 +55,7 @@ public class ExampleUnitTest {
 
 
     @Test
-    public void guessContentType_tester() throws Exception {
+    public void guessContentType_tester() {
 
         String mime = "";
         mime =URLConnection.guessContentTypeFromName("https://jeuxvideo.com/news");

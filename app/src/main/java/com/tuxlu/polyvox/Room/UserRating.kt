@@ -48,7 +48,7 @@ class UserRating(private val act: Activity, private val token: String) {
         }
     }
 
-    public fun showUserRating(user: String, imageUrl: String) {
+    fun showUserRating(user: String, imageUrl: String) {
         val nUser = UserInfo(user, imageUrl)
         if (currentUser.name.isBlank()) {
             currentUser = nUser
@@ -56,7 +56,7 @@ class UserRating(private val act: Activity, private val token: String) {
         }
 
         act.videoPlayerView!!.controllerHideOnTouch = false
-        act.videoPlayerView!!.controllerShowTimeoutMs = 500000000;
+        act.videoPlayerView!!.controllerShowTimeoutMs = 500000000
         act.videoPlayerView!!.showController()
         act.player_bottom_buttons_bar.visibility = View.GONE
         act.player_bottom_rate_speaker.visibility = View.VISIBLE
@@ -87,7 +87,7 @@ class UserRating(private val act: Activity, private val token: String) {
     }
 
 
-    public fun closeUserRating(v: View) {
+    fun closeUserRating(v: View) {
         if (ratingValue != RatingType.NONE) {
             /*
             val reasonText = reasonSpinner.selectedItem.toString()
@@ -122,14 +122,14 @@ class UserRating(private val act: Activity, private val token: String) {
             //if (ratingValue <= 2.5)
             //reportButton.visibility = View.GONE
             ratingValue = RatingType.NONE
-            return;
+            return
         }
-        act.reportButton.visibility = View.VISIBLE;
+        act.reportButton.visibility = View.VISIBLE
         act.player_bottom_buttons_bar.visibility = View.VISIBLE
         YoYo.with(Techniques.SlideOutDown).duration(300).playOn(act.player_bottom_rate_speaker)
         //player_bottom_rate_speaker.visibility = View.GONE
         act.videoPlayerView!!.controllerHideOnTouch = true
-        act.videoPlayerView!!.controllerShowTimeoutMs = 5000;
+        act.videoPlayerView!!.controllerShowTimeoutMs = 5000
 
         act.votePositiveButton.clearColorFilter()
         act.votePositiveButton.clearColorFilter()
@@ -144,7 +144,7 @@ class UserRating(private val act: Activity, private val token: String) {
         frag.arguments = bundle
     }
 
-    public fun reportUser(v: View) {
+    fun reportUser(v: View) {
         Companion.reportUser(currentUser.name, currentUser.url, token, act.fragmentManager, act.getString(R.string.report))
     }
 
@@ -155,7 +155,7 @@ class UserRating(private val act: Activity, private val token: String) {
     }
 
     companion object {
-        public fun reportUser(name: String, url: String, token:String, fragmentManager: FragmentManager, message: String)
+        fun reportUser(name: String, url: String, token:String, fragmentManager: FragmentManager, message: String)
         {
             val frag = UserReportFragment()
             val bundle = Bundle()

@@ -18,12 +18,12 @@ import kotlinx.android.synthetic.main.activity_room.*
 class Streaming {
     private var streamUrl: String = ""
     private var player: SimpleExoPlayer? = null
-    private lateinit var dataSourceFactory: DefaultDataSourceFactory;
+    private lateinit var dataSourceFactory: DefaultDataSourceFactory
 
 
-    public fun setVideoPlayer(token: String, nUrl: String, act: Room) {
+    fun setVideoPlayer(token: String, nUrl: String, act: Room) {
         if (UtilsTemp.isStringEmpty(nUrl) || nUrl == streamUrl)
-            return;
+            return
 
         act.videoPlayerView.visibility = View.VISIBLE
         val context = act.baseContext
@@ -33,9 +33,9 @@ class Streaming {
         var videoUrl: Uri = if (token == "black")
             Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
         else
-            Uri.parse(token);
+            Uri.parse(token)
         //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
-        streamUrl = token;
+        streamUrl = token
 
         if (player == null) {
             val bandwidthMeter = DefaultBandwidthMeter()
@@ -80,11 +80,11 @@ class Streaming {
         player!!.addListener(listener)
     }
 
-    public fun stopPlayer() {
+    fun stopPlayer() {
         player?.stop()
     }
 
-    public fun setPlayOnReady(boolean: Boolean) {
+    fun setPlayOnReady(boolean: Boolean) {
         player?.playWhenReady = boolean
     }
 }

@@ -32,7 +32,7 @@ private var fileName: String = ""
 private var type: String = ""
 private var byte: ByteArray? = null
 private var hasSent = false
-private lateinit var url : String;
+private lateinit var url : String
 
 class FileChooser: Fragment()
 {
@@ -91,7 +91,7 @@ class FileChooser: Fragment()
         fChooserTypeView.visibility = View.VISIBLE
         fChooserFileView.visibility = View.GONE
         try{
-            (activity as OnCloseListener).onClose(hasSent);
+            (activity as OnCloseListener).onClose(hasSent)
         }catch (cce : ClassCastException) {
         }
         hasSent = false
@@ -134,7 +134,8 @@ class FileChooser: Fragment()
             fChooserFileView.visibility = View.VISIBLE
         }
     }
-    public interface OnCloseListener {
-        public fun onClose(hasSent: Boolean);
+
+    interface OnCloseListener {
+        fun onClose(hasSent: Boolean)
     }
 }

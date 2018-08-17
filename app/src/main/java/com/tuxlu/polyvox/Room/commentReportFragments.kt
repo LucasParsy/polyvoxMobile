@@ -27,9 +27,9 @@ open abstract class CommentReportBase : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        name = arguments.getString("name");
-        url = arguments.getString("url");
-        token = arguments.getString("token");
+        name = arguments.getString("name")
+        url = arguments.getString("url")
+        token = arguments.getString("token")
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,13 +39,13 @@ open abstract class CommentReportBase : DialogFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        infoUserName.text = name;
+        infoUserName.text = name
         if (!UtilsTemp.isStringEmpty(url))
             GlideApp.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.NONE).into(infoUserPicture)
         sendButton.setOnClickListener { _: View -> buttonClick() }
     }
 
-    abstract fun buttonClick();
+    abstract fun buttonClick()
 }
 
 class UserCommentFragment : CommentReportBase() {
@@ -53,7 +53,7 @@ class UserCommentFragment : CommentReportBase() {
 
     override fun buttonClick() {
         if (input.text.isNullOrBlank())
-            return;
+            return
 
         /*
         val reasonText = reasonSpinner.selectedItem.toString()
@@ -80,7 +80,7 @@ class UserReportFragment : CommentReportBase() {
     override fun buttonClick() {
         if (input.text.isNullOrBlank() || reasonSpinner.selectedItemPosition == 0) {
             reportErrorText.visibility = View.VISIBLE
-            return;
+            return
         }
 
 

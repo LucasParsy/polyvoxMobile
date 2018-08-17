@@ -29,20 +29,20 @@ class RoomWaitlist : Fragment() {
     private lateinit var frag: RoomWaitlistRecycler
 
     private var handler: Handler = Handler()
-    private val runnable: Runnable = Runnable { YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText) };
+    private val runnable: Runnable = Runnable { YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText) }
 
-    private var oldJSon = "";
+    private var oldJSon = ""
     private var token = ""
-    private var currentSpeaker: RoomWaitlistResult? = null;
-    private var nextSpeaker = "";
+    private var currentSpeaker: RoomWaitlistResult? = null
+    private var nextSpeaker = ""
     private var waiters = ArrayList<String>()
 
-    private var firstUpdate = true;
+    private var firstUpdate = true
 
     private fun showInfo(text: String) {
         if (firstUpdate)
             return
-        notificationText.text = text;
+        notificationText.text = text
         notificationText.visibility = View.VISIBLE
         YoYo.with(Techniques.SlideInUp).duration(300).playOn(notificationText)
         handler.removeCallbacks(null)
@@ -60,7 +60,7 @@ class RoomWaitlist : Fragment() {
 
         rootView.findViewById<TextView>(R.id.notificationText).setOnClickListener { onNotificationClick() }
         settimeLimit()
-        return rootView;
+        return rootView
     }
 
     fun settimeLimit() {
@@ -106,7 +106,7 @@ class RoomWaitlist : Fragment() {
                 if (speakerInfo.username != currentSpeaker!!.username)
                     showRating(speakerInfo)
             }
-            currentSpeaker = speakerInfo;
+            currentSpeaker = speakerInfo
             list.add(speakerInfo)
         }
 
@@ -175,11 +175,7 @@ class RoomWaitlist : Fragment() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    public fun onNotificationClick() {
+    fun onNotificationClick() {
         YoYo.with(Techniques.SlideOutDown).duration(300).playOn(notificationText)
         handler.removeCallbacksAndMessages(null)
     }

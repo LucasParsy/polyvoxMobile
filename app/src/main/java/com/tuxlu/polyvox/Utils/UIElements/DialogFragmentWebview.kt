@@ -14,7 +14,7 @@ import android.widget.ImageButton
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.UtilsTemp
 
-class DialogFragmentWebview() : DialogFragmentBase() {
+class DialogFragmentWebview : DialogFragmentBase() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -29,7 +29,7 @@ class DialogFragmentWebview() : DialogFragmentBase() {
         val webView = layout.findViewById<WebView>(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
-        var nUrl = url;
+        var nUrl = url
         webView.loadUrl(nUrl)
         return layout
     }

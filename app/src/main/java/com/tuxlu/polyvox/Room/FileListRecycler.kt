@@ -30,10 +30,10 @@ open class FLRecycler : IRecycler<FlUser>() {
 
     //unused params
     override val layoutObjectId: Int = R.layout.info_discover_room
-    override val binder = null;
+    override val binder = null
     override val itemDecoration = null
 
-    private lateinit var recycler: RecyclerView;
+    private lateinit var recycler: RecyclerView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +60,7 @@ open class FLRecycler : IRecycler<FlUser>() {
             val list: ArrayList<FlFile> = arrayListOf()
 
             val jsonList = json.getJSONArray("fileUploadList")
-            var file: JSONObject;
+            var file: JSONObject
             for (i in 0 until jsonList.length()) {
                 file = jsonList.getJSONObject(i)
                 list.add(FlFile(file.getString("filename"),
@@ -71,7 +71,7 @@ open class FLRecycler : IRecycler<FlUser>() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return FlUser("", "", arrayListOf());
+        return FlUser("", "", arrayListOf())
     }
 
     fun add(data: JSONObject, replace: Boolean)
@@ -85,8 +85,8 @@ open class FLRecycler : IRecycler<FlUser>() {
         if (list.size != 0) {
             val adapter = FilelistAdapter(list, activity!!)
             for (i in adapter.groups.size - 1 downTo 0) {
-                if (!adapter.isGroupExpanded(adapter.groups[i]));
-                    adapter.toggleGroup(adapter.groups[i])
+                if (!adapter.isGroupExpanded(adapter.groups[i]))
+                adapter.toggleGroup(adapter.groups[i])
             }
             recycler.adapter = adapter
         }

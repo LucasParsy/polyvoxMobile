@@ -54,10 +54,10 @@ class UtilsTemp {
             val path = File(Environment.getExternalStorageDirectory().toString() + "/Download/Polyvox/")
             path.mkdirs() // creates needed dirs
             var file = File(path, name + extension)
-            var num = 1;
+            var num = 1
             while (file.exists()) {
                 file = File(path, "$name($num)$extension")
-                num++;
+                num++
             }
             return file
         }
@@ -99,10 +99,10 @@ class UtilsTemp {
         //todo: move theses function in more appropriate file
         @JvmStatic
         fun hideKeyboard(act: Activity) {
-            val view = act.currentFocus;
+            val view = act.currentFocus
             if (view != null) {
-                val imm: InputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-                imm.hideSoftInputFromWindow(view.windowToken, 0);
+                val imm: InputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
 
@@ -116,9 +116,9 @@ class UtilsTemp {
                     UtilsTemp.showToast(context, context.getString(R.string.accept_permission))
                 }
                 ActivityCompat.requestPermissions(context, arrayOf(perm), 729)
-            return false;
+            return false
             }
-            return true;
+            return true
         }
 
 

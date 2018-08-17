@@ -23,9 +23,9 @@ import java.io.File
 class DialogFragmentImage : DialogFragmentBase() {
 
     lateinit var image: ImageView
-    private lateinit var layout: View;
+    private lateinit var layout: View
     private var keepFile: Boolean = false
-    private var file: File? = null;
+    private var file: File? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -52,7 +52,7 @@ class DialogFragmentImage : DialogFragmentBase() {
 
     private fun downloadImage(image: Bitmap, name: String, context: Context, showToast: Boolean = true): File? {
         if (!UtilsTemp.checkPermission(this.activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            return null;
+            return null
         val file = UtilsTemp.getPath(name)
         val bos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 0, bos)

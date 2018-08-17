@@ -69,7 +69,7 @@ public class DummyAPIServer {
     }
 
     public HttpResponse dummyRequest(com.android.volley.Request<?> request,
-                                     Map<String, String> additionalHeaders) throws AuthFailureError, JSONException {
+                                     Map<String, String> additionalHeaders) throws JSONException {
         String url = request.getUrl();
         JSONObject body = null;
         url = url.substring(APIUrl.BASE_URL.length());

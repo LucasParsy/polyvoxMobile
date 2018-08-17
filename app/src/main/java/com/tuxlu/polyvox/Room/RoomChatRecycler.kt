@@ -35,7 +35,7 @@ open class RoomChatBinder : ViewHolderBinder<RoomChatResult> {
             Color.parseColor("#d91ae0"),
             Color.parseColor("#f48c30"),
             Color.parseColor("#c42929"),
-            Color.parseColor("#2b9921"));
+            Color.parseColor("#2b9921"))
 
     override fun bind(holder: Adapter.ViewHolder<RoomChatResult>, item: RoomChatResult) {
         val rand = Random(item.username.hashCode().toLong())
@@ -67,8 +67,8 @@ class RoomChatRecycler : IRecycler<RoomChatResult>() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val res = super.onCreateView(inflater, container, savedInstanceState)
-        res!!.findViewById<View>(R.id.recycleView)?.setBackgroundColor(context?.resources!!.getColor(R.color.white));
-        return res;
+        res!!.findViewById<View>(R.id.recycleView)?.setBackgroundColor(context?.resources!!.getColor(R.color.white))
+        return res
     }
 
 

@@ -91,7 +91,7 @@ class OptionsPicture : MyAppCompatActivity() {
 
             currentprofilePicText.text = resources.getString(R.string.profile_picture_current)
             currentprofilePic.visibility = View.VISIBLE
-            currentprofilePic.setImageBitmap(bm);
+            currentprofilePic.setImageBitmap(bm)
 
             val picUrl = AuthUtils.getPictureUrl(baseContext)
             if (!UtilsTemp.isStringEmpty(picUrl))

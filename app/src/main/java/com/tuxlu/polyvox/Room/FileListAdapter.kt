@@ -30,8 +30,7 @@ data class FlFile(var name: String = "",
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
@@ -66,7 +65,7 @@ open class FlUserBinder(val v: View) : GroupViewHolder(v) {
         val image = v.findViewById<ImageView>(R.id.infoUserPicture)
         if (group.url.isBlank()) {
             v.findViewById<View>(R.id.view2).visibility = View.INVISIBLE
-            GlideApp.with(v.context).clear(image);
+            GlideApp.with(v.context).clear(image)
         }
         else
             GlideApp.with(v.context).load(group.url).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.ic_account_circle_black_24dp).into(image)
@@ -107,7 +106,7 @@ open class FlFileBinder(val v: View) : ChildViewHolder(v) {
 
 class FilelistAdapter(groups: List<FlUser>, private val act: Activity) : ExpandableRecyclerViewAdapter<FlUserBinder, FlFileBinder>(groups) {
 
-    var data = groups;
+    var data = groups
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): FlUserBinder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.info_filelist_user, parent, false)
@@ -121,10 +120,10 @@ class FilelistAdapter(groups: List<FlUser>, private val act: Activity) : Expanda
 
     override fun onBindChildViewHolder(holder: FlFileBinder, flatPosition: Int, group: ExpandableGroup<*>,
                                        childIndex: Int) {
-        val data = (group as FlUser).items[childIndex];
+        val data = (group as FlUser).items[childIndex]
         holder.setData(data)
         holder.v.findViewById<View>(R.id.rootView).setOnClickListener {
-            Fileloader.openFile(data.name, data.url, "", act);
+            Fileloader.openFile(data.name, data.url, "", act)
         }
     }
 

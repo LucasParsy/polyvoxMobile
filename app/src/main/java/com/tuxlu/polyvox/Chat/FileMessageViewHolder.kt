@@ -23,7 +23,7 @@ class FileContentChecker : MessageHolders.ContentChecker<ChatMessage> {
     }
 
     companion object {
-        public val CONTENT_TYPE_FILE: Byte = 1
+        val CONTENT_TYPE_FILE: Byte = 1
 
         fun messageHolderOnBind(message: ChatMessage, itemView: View) {
             itemView.findViewById<TextView>(R.id.ckDocumentName).text = message.text

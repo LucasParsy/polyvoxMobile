@@ -37,7 +37,7 @@ abstract class IRecycler<T: Any> : Fragment() {
     protected var noResView : View? = null
     protected var isNoResViewVisible : Boolean = true
 
-    public fun setLoadingStatus(status: Boolean)
+    fun setLoadingStatus(status: Boolean)
     {
         if (!::rootView.isInitialized)
             return

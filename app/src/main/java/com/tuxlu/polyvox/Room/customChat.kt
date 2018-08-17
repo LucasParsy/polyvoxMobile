@@ -37,7 +37,7 @@ class CustomChat(private val channel: String, private val token : String): WebSo
     }
 
     override fun onMessage(data: ByteArray) {
-        onMessage(String(data));
+        onMessage(String(data))
     }
 
     override fun onDisconnect(code: Int, reason: String?) {

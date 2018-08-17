@@ -86,7 +86,7 @@ public class Register extends AppCompatActivity {
         TextView CGUHint = findViewById(R.id.CGUButton);
         Boolean CGUAccepted = ((CheckBox) findViewById(R.id.CGUCheck)).isChecked();
 
-        if (!checkMail(((TextInputLayout)findViewById(R.id.RegisterEmailLayout)), this))
+        if (!checkMail(findViewById(R.id.RegisterEmailLayout), this))
             return null;
 
         if (!IDText.matches("^[a-zA-Z0-9].{5,}$")) {
@@ -95,7 +95,7 @@ public class Register extends AppCompatActivity {
             return null;
         }
 
-        if (!checkPassword(((TextInputLayout)findViewById(R.id.passwordLayout)), this))
+        if (!checkPassword(findViewById(R.id.passwordLayout), this))
             return null;
 
         if (!CGUAccepted) {

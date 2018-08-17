@@ -52,7 +52,7 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
 
     override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
         if (!item.active)
-            holder.v.visibility = View.GONE;
+            holder.v.visibility = View.GONE
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomSubject).text = item.tags
         holder.v.findViewById<TextView>(R.id.infoRoomSpeakers).text = item.speakers.toString()
@@ -60,14 +60,14 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
 
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
 
-        ViewCompat.setTransitionName(image, item.name);
+        ViewCompat.setTransitionName(image, item.name)
 
         //random.nextInt(4)
         if (!UtilsTemp.isStringEmpty(item.imageUrl)) {
             GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(defaultPictures[0]).into(image)
         }
         else
-            GlideApp.with(holder.v.context).clear(image);
+            GlideApp.with(holder.v.context).clear(image)
         //else
             //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
     }
@@ -115,14 +115,14 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
             res.speakers = json.getString("nbActors") //todo: Why?
             //res.viewers = json.getJSONArray("waitList").length() //not anymore
-            var tagString = "";
+            var tagString = ""
             val tags = json.getJSONArray("tags")
             for (i in 0 until tags.length()) {
-                tagString += (tags[i]);
-                tagString += " ";
+                tagString += (tags[i])
+                tagString += " "
             }
-            tagString = tagString.trim();
-            res.tags = tagString;
+            tagString = tagString.trim()
+            res.tags = tagString
             res.token = json.getString("token")
 
         } catch (e: JSONException) {
@@ -139,7 +139,7 @@ class DiscoverRoomRecycler : SearchRoomRecycler() {
     override val layoutObjectId: Int = R.layout.info_discover_room
     override val layoutListId: Int = R.layout.fragment_recycler_view_refreshable
 
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout;
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun setLayoutManager(): RecyclerView.LayoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
@@ -165,14 +165,14 @@ class DiscoverRoomRecycler : SearchRoomRecycler() {
                 { response ->
                     try {
                         this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
-                        swipeRefreshLayout.isRefreshing = false;
+                        swipeRefreshLayout.isRefreshing = false
                         LoadingUtils.EndLoadingView(rootView)
                     } catch (ignored: JSONException) {
                     }
                 }, { swipeRefreshLayout.isRefreshing = false; })
 
         if (!checkConnection(context, false))
-            swipeRefreshLayout.isRefreshing = false;
+            swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

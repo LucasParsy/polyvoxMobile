@@ -60,7 +60,7 @@ import java.util.*
 
 
 class Room : AppCompatActivity(), DialogFragmentInterface {
-    private var token: String = "";
+    private var token: String = ""
     private var title: String? = null
 
     private var chatVisibilityStatus = View.VISIBLE
@@ -69,20 +69,20 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var width: Int = 0
 
     private var manifestHandler: Handler = Handler()
-    private val manifestRunnable: Runnable = Runnable { getManifest() };
+    private val manifestRunnable: Runnable = Runnable { getManifest() }
     private var streamUrl: String = ""
 
-    public lateinit var userRate: UserRating
+    lateinit var userRate: UserRating
     private lateinit var waitlist: RoomWaitlist
     private lateinit var fileList: FLRecycler
 
     private var firstManifest = true
-    private val mInterstitialAd = InterstitialAd(this);
+    private val mInterstitialAd = InterstitialAd(this)
     private var streaming = Streaming()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportPostponeEnterTransition();
+        supportPostponeEnterTransition()
         setupAd()
         val b = intent.extras!!
         title = b.getString("title")
@@ -130,7 +130,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         pager.offscreenPageLimit = 3
         tabLayoutHome.setupWithViewPager(pager)
         for (i in 0..2) {
-            val tab = tabLayoutHome.getTabAt(i);
+            val tab = tabLayoutHome.getTabAt(i)
             tab!!.setIcon(tabIcons[i])
             tab.icon!!.setColorFilter(ContextCompat.getColor(this, R.color.cornflower_blue_two_24), PorterDuff.Mode.SRC_ATOP)
         }
@@ -162,7 +162,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
                 APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
             val data = response.getJSONObject("data")
             try {
-                waitlist.update(data);
+                waitlist.update(data)
                 fileList.add(data, true)
                 if (firstManifest) {
                     firstManifest = false
@@ -179,7 +179,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             //userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
 
 
-            val nUrl = data.getString("videosData");
+            val nUrl = data.getString("videosData")
             streaming.setVideoPlayer(token, nUrl, this)
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
@@ -189,7 +189,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     }
 
     private fun transitionCallback(): Boolean {
-        supportStartPostponedEnterTransition();
+        supportStartPostponedEnterTransition()
         manifestHandler.postDelayed({
             roomWaitingTitle.visibility = View.VISIBLE
             YoYo.with(Techniques.SlideInDown).duration(300).playOn(roomWaitingTitle)
@@ -199,7 +199,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     private fun setTransition(title: String, imageUrl: String) {
         roomWaitingTitle.text = title
-        ViewCompat.setTransitionName(roomWaitingPicture, title);
+        ViewCompat.setTransitionName(roomWaitingPicture, title)
         if (!UtilsTemp.isStringEmpty(imageUrl)) {
             GlideApp.with(this)
                     .load(imageUrl)
@@ -344,7 +344,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AuthUtils.AUTH_REQUEST_CODE && resultCode == Activity.RESULT_OK)
-            this.recreate();
+            this.recreate()
     }
 
     override fun dialogDismiss() {

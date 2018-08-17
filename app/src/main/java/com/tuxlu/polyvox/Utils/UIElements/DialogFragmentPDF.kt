@@ -25,14 +25,14 @@ import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 import java.io.File
 
 
-public class DialogFragmentPDF() : DialogFragmentBase()   {
+class DialogFragmentPDF : DialogFragmentBase()   {
 
-    private lateinit var layout: View;
-    private var pdfViewPager: PDFViewPager? = null;
+    private lateinit var layout: View
+    private var pdfViewPager: PDFViewPager? = null
     private var keepFile : Boolean = false
     private var file : File? = null
 
-    public override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
         layout = setupLayout(inflater, container, R.layout.util_file_pdf)
@@ -53,7 +53,7 @@ public class DialogFragmentPDF() : DialogFragmentBase()   {
     private fun downloadPDF(url: String) {
         if (!UtilsTemp.checkPermission(this.activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             dismiss()
-            return;
+            return
         }
 
         val req = VolleyFileDownloader(Request.Method.GET, url, Response.Listener { response ->
