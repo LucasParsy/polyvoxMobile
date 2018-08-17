@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -131,7 +132,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         for (i in 0..2) {
             val tab = tabLayoutHome.getTabAt(i);
             tab!!.setIcon(tabIcons[i])
-            tab.icon!!.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
+            tab.icon!!.setColorFilter(ContextCompat.getColor(this, R.color.cornflower_blue_two_24), PorterDuff.Mode.SRC_ATOP)
         }
 
         player_room_title.text = title

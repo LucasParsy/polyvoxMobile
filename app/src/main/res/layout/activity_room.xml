@@ -105,7 +105,8 @@
             android:id="@+id/tabLayoutHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:visibility="visible"
+            app:tabTextAppearance="@style/Tab.Room">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/RoomTabTextChat"

@@ -69,4 +69,7 @@
         <item name="colorControlActivated">@color/PolyvoxMainColor</item>
     </style>
 
+    <style name="Tab.Room" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+    </style>
 </resources>
