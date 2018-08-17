@@ -7,13 +7,14 @@ apply plugin: 'io.fabric'
 
 android {
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.tuxlu.polyvox"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
+        multiDexEnabled true
         versionName '0.70'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr" //enlève ressources langages non supportés.
@@ -56,7 +57,7 @@ dependencies {
     })
 
     //error log
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
        transitive = true
     }
 
@@ -75,18 +76,18 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
 
     //network image loading
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    kapt 'com.github.bumptech.glide:compiler:4.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
 
     //debug and tools
-    debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
 
     //exo streaming lib
-    implementation 'com.google.android.exoplayer:exoplayer-core:r2.5.4'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.5.4'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.2'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.2'
     //implementation 'com.google.android.exoplayer:exoplayer-dash:r2.5.4'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.5.4'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.2'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -94,14 +95,14 @@ dependencies {
     //implementation group: 'pircbot', name: 'pircbot', version: '1.5.0'
 
     //stupid little lib adding little icon to Toast
-    implementation 'com.github.GrenderG:Toasty:1.2.8'
+    implementation 'com.github.GrenderG:Toasty:1.3.0'
 
     //animations lib
-    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     //pdf viewer for API 21+
-    implementation 'es.voghdev.pdfviewpager:library:1.0.3'
+    implementation 'es.voghdev.pdfviewpager:library:1.0.4'
     //messaging UI
     implementation 'com.github.LucasParsy:ChatKit:0.2.26'
 
@@ -115,6 +116,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:27.1.1"
     implementation "com.android.support:support-annotations:27.1.1"
 
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 //apply plugin: 'com.google.gms.google-services'

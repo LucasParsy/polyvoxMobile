@@ -49,19 +49,13 @@ class Streaming {
             player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
             act.videoPlayerView!!.player = player
         }
-        val videoSource = HlsMediaSource(videoUrl, dataSourceFactory,
-                null, null)
+        val videoSource = HlsMediaSource.Factory(dataSourceFactory)
+                .setAllowChunklessPreparation(true)
+                .createMediaSource(videoUrl)
         player!!.prepare(videoSource)
         player!!.playWhenReady = true
 
-        val listener = object : Player.EventListener {
-            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {}
-            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {}
-            override fun onPlayerError(error: ExoPlaybackException?) {}
-            override fun onLoadingChanged(isLoading: Boolean) {}
-            override fun onPositionDiscontinuity() {}
-            override fun onRepeatModeChanged(repeatMode: Int) {}
-            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {}
+        val listener = object : Player.DefaultEventListener() {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
 
                 if (playWhenReady && playbackState == Player.STATE_READY) {//playing {

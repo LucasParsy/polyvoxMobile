@@ -355,7 +355,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     companion object {
 
         private val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
-        private val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_light, R.drawable.ic_mic_black_48dp)
+        private val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_black, R.drawable.ic_mic_black_48dp)
     }
 
 

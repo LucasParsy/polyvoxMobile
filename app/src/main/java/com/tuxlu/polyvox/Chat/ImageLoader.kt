@@ -12,7 +12,7 @@ import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 
 class ImageLoader(val context: Context): ImageLoader {
     override fun loadImage(imageView: ImageView?, url: String?) {
-        GlideApp.with(context).load(url).into(imageView)
+        GlideApp.with(context).load(url).into(imageView!!)
         //GlideApp.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView)
     }
 }
