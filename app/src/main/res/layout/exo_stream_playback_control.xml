@@ -58,6 +58,14 @@
             android:background="#00000000"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_share_black_48dp" />
+
+        <android.support.v7.app.MediaRouteButton
+            android:id="@+id/media_route_button"
+            android:mediaRouteTypes="user"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tuxlu.polyvox">
 
-    <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+    <meta-data
+        android:name="firebase_crashlytics_collection_enabled"
+        android:value="false" />
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -20,7 +23,7 @@
 
     <!-- Read-write pictures and documents -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
     <application
@@ -31,13 +34,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="com.google.android.exoplayer2.ext.cast.DefaultCastOptionsProvider" />
+
         <service
             android:name=".Utils.Auth.AuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            <meta-data android:name="android.accounts.AccountAuthenticator"
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
 
@@ -55,8 +63,8 @@
         <activity
             android:name="com.tuxlu.polyvox.Homepage.Home"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,10 +78,10 @@
         </activity>
 
 
-        <activity android:name="com.tuxlu.polyvox.Search.SearchResultsActivity"
+        <activity
+            android:name="com.tuxlu.polyvox.Search.SearchResultsActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -85,89 +93,97 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-            <activity android:name="com.tuxlu.polyvox.User.Login"
-                android:theme="@style/AppTheme"
-                android:screenOrientation="portrait"
-                android:label="@string/login_title">
-            </activity>
-
-        <activity android:name="com.tuxlu.polyvox.User.Register"
-            android:theme="@style/AppTheme"
+        <activity
+            android:name="com.tuxlu.polyvox.User.Login"
+            android:label="@string/login_title"
             android:screenOrientation="portrait"
-            android:label="@string/create_account" >
-            </activity>
+            android:theme="@style/AppTheme"></activity>
 
-        <activity android:name="com.tuxlu.polyvox.User.RegisterSuccessful"
-            android:theme="@style/AppTheme"
+        <activity
+            android:name="com.tuxlu.polyvox.User.Register"
+            android:label="@string/create_account"
             android:screenOrientation="portrait"
-            android:label="@string/welcome" >
-        </activity>
+            android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name="com.tuxlu.polyvox.User.RegisterSuccessful"
+            android:label="@string/welcome"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"></activity>
 
 
-        <activity android:name="com.tuxlu.polyvox.Utils.UIElements.SimpleWebView"
-            android:theme="@style/AppTheme"
-            android:label="ChangedByCode">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Utils.UIElements.SimpleWebView"
+            android:label="ChangedByCode"
+            android:theme="@style/AppTheme"></activity>
 
-        <activity android:name="com.tuxlu.polyvox.Room.Room"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Room.Room"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name="com.tuxlu.polyvox.User.ProfilePage"
-            android:configChanges="orientation">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.User.ProfilePage"
+            android:configChanges="orientation" />
 
-        <activity android:name="com.tuxlu.polyvox.Options.Options"
-            android:label="Paramètres">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Options.Options"
+            android:label="Paramètres" />
 
-        <activity android:name="com.tuxlu.polyvox.Options.OptionsBio"
-            android:label="Biographie">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Options.OptionsBio"
+            android:label="Biographie"></activity>
 
-        <activity android:name="com.tuxlu.polyvox.Options.OptionsInfoUser"
-            android:label="Informations personnelles">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Options.OptionsInfoUser"
+            android:label="Informations personnelles"></activity>
 
-        <activity android:name="com.tuxlu.polyvox.Options.OptionsPicture"
-            android:label="Photo de profil">
-        </activity>
+        <activity
+            android:name="com.tuxlu.polyvox.Options.OptionsPicture"
+            android:label="Photo de profil"></activity>
 
-        <activity android:name=".Options.OptionsMailPass"
-            android:label="@string/mail_and_pass">
-        </activity>
+        <activity
+            android:name=".Options.OptionsMailPass"
+            android:label="@string/mail_and_pass"></activity>
 
 
-        <activity android:name=".User.ForgotPassword"
-            android:label="Mot de passe oublié"/>
+        <activity
+            android:name=".User.ForgotPassword"
+            android:label="Mot de passe oublié" />
 
         <activity
             android:name="com.tuxlu.polyvox.User.ForgotReset"
-            android:label="Nouveau mot de passe" >
+            android:label="Nouveau mot de passe">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
+
+                <data
                     android:host="polyvox.fr"
-                    android:pathPrefix="/reset-password"/>
+                    android:pathPrefix="/reset-password"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
         <activity
             android:name="com.tuxlu.polyvox.User.MailValidated"
-            android:label="Valider l'adresse mail" >
+            android:label="Valider l'adresse mail">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
+
+                <data
                     android:host="api.polyvox.fr"
-                    android:pathPrefix="/users/verify"/>
-                <data android:scheme="https"
+                    android:pathPrefix="/users/verify"
+                    android:scheme="http" />
+                <data
                     android:host="api.polyvox.fr"
-                    android:pathPrefix="/users/verify"/>
+                    android:pathPrefix="/users/verify"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity android:name=".Chat.Chat" />

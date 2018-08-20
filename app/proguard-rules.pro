@@ -49,6 +49,10 @@
     public static *** wtf(...);
 }
 
+-keep class android.support.v7.app.MediaRouteActionProvider {
+  *;
+}
+
 #use this to be more optimized, but must add libs by hand.
 #-keepclasseswithmembers class **.R$* {
 #    public static final int define_*;

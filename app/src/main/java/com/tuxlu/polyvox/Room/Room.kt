@@ -41,6 +41,7 @@ import com.google.android.exoplayer2.util.Util
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.cast.framework.CastContext
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
@@ -61,7 +62,8 @@ import java.util.*
 
 class Room : AppCompatActivity(), DialogFragmentInterface {
     private var token: String = ""
-    private var title: String? = null
+    private var title: String = ""
+    private var imageUrl: String = ""
 
     private var chatVisibilityStatus = View.VISIBLE
 
@@ -79,15 +81,16 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     private var firstManifest = true
     private val mInterstitialAd = InterstitialAd(this)
     private var streaming = Streaming()
-
+    private lateinit var castContext: CastContext
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportPostponeEnterTransition()
         setupAd()
+        castContext = CastContext.getSharedInstance(this);
         val b = intent.extras!!
-        title = b.getString("title")
-        val imageUrl = b.getString("imageUrl")
-        token = b.getString("token")
+        title = b.getString("title")!!
+        imageUrl = b.getString("imageUrl")!!
+        token = b.getString("token")!!
         setContentView(R.layout.activity_room)
         super.onCreate(savedInstanceState)
         manifestHandler.post(manifestRunnable)
@@ -180,7 +183,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
 
             val nUrl = data.getString("videosData")
-            streaming.setVideoPlayer(token, nUrl, this)
+            streaming.setVideoPlayer(token, nUrl, title, imageUrl, castContext, this)
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
                 {

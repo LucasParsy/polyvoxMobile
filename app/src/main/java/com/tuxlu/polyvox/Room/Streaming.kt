@@ -11,17 +11,31 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import com.google.android.gms.cast.framework.CastButtonFactory
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
+import kotlinx.android.synthetic.main.exo_stream_playback_control.*
+import com.google.android.gms.cast.MediaQueueItem
+import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.gms.cast.MediaInfo
+import com.google.android.gms.cast.MediaMetadata
+import com.google.android.gms.common.images.WebImage
+import com.google.android.gms.cast.MediaMetadata.MEDIA_TYPE_MOVIE
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ext.cast.CastPlayer
+import com.google.android.gms.cast.framework.CastContext
+import com.google.android.gms.cast.framework.CastState
+import com.google.android.gms.cast.framework.CastStateListener
+
 
 class Streaming {
     private var streamUrl: String = ""
     private var player: SimpleExoPlayer? = null
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
+    private lateinit var castPlayer: CastPlayer
 
-
-    fun setVideoPlayer(token: String, nUrl: String, act: Room) {
+    fun setVideoPlayer(token: String, nUrl: String, title: String, imageUrl: String, castContext: CastContext, act: Room) {
         if (UtilsTemp.isStringEmpty(nUrl) || nUrl == streamUrl)
             return
 
@@ -38,6 +52,22 @@ class Streaming {
         streamUrl = token
 
         if (player == null) {
+            CastButtonFactory.setUpMediaRouteButton(act, act.media_route_button);
+            castSetup(title, imageUrl, videoUrl.toString(), castContext)
+
+
+            if (castContext.castState != CastState.NO_DEVICES_AVAILABLE)
+                act.media_route_button.visibility = View.VISIBLE;
+            castContext.addCastStateListener { state ->
+                if (state == CastState.NO_DEVICES_AVAILABLE)
+                    act.media_route_button.visibility = View.GONE
+                else {
+                    if (act.media_route_button.visibility == View.GONE)
+                        act.media_route_button.visibility = View.VISIBLE
+                }
+            }
+
+
             val bandwidthMeter = DefaultBandwidthMeter()
             dataSourceFactory = DefaultDataSourceFactory(context,
                     Util.getUserAgent(context, act.resources.getString(R.string.app_name)), bandwidthMeter)
@@ -72,6 +102,30 @@ class Streaming {
             }
         }
         player!!.addListener(listener)
+    }
+
+    private fun castSetup(title: String, imageUrl: String, videoUrl: String, castContext: CastContext) {
+        //todo: verify that the url we set hasn't to be changed.
+        //for now, this method is only called once.
+        val movieMetadata = MediaMetadata(MEDIA_TYPE_MOVIE)
+        movieMetadata.putString(MediaMetadata.KEY_TITLE, title)
+        movieMetadata.addImage(WebImage(Uri.parse(imageUrl)))
+        val mediaInfo = MediaInfo.Builder(videoUrl)
+                .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+                .setContentType(MimeTypes.VIDEO_UNKNOWN)
+                .setMetadata(movieMetadata).build()
+//array of media sources
+        val mediaItems = arrayOf(MediaQueueItem.Builder(mediaInfo).build())
+        castPlayer = CastPlayer(castContext)
+        castPlayer.setSessionAvailabilityListener(object : CastPlayer.SessionAvailabilityListener {
+            override fun onCastSessionAvailable() {
+                castPlayer.loadItems(mediaItems, 0, 0, Player.REPEAT_MODE_OFF)
+            }
+
+            override fun onCastSessionUnavailable() {}
+        })
+
+        //todo: castPlayer.release() at end
     }
 
     fun stopPlayer() {
