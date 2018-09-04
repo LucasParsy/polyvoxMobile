@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.os.Build
@@ -23,6 +24,7 @@ import es.dmoral.toasty.Toasty
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 
 /**
  * Created by tuxlu on 28/11/17.
@@ -38,8 +40,16 @@ class UtilsTemp {
     companion object {
         //@ColorInt val color = Color.parseColor("#DBDBDB")
 
-
         @JvmStatic
+        fun getLocale(resources: Resources): Locale {
+            val locale : Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                resources.configuration.locales.get(0)
+            else
+                resources.configuration.locale;
+            return locale;
+        }
+
+            @JvmStatic
         fun getPath(nName: String): File {
 
             var extension: String = ""

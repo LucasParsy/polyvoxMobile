@@ -25,7 +25,9 @@ import com.google.android.gms.ads.MobileAds;
 import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Room.Room;
 import com.tuxlu.polyvox.Search.DiscoverRoomRecycler;
+import com.tuxlu.polyvox.Search.HistoricRoomRecycler;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
@@ -46,6 +48,8 @@ import io.fabric.sdk.android.Fabric;
 public class Home extends AppCompatActivity {
 
     private DiscoverRoomRecycler discover;
+    private HistoricRoomRecycler historic;
+
     private ImageView profileImage = null;
     private Boolean infoLoaded = false;
     private static final String TAG = "Home";
@@ -78,26 +82,22 @@ public class Home extends AppCompatActivity {
 
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
         fragments.add(discover); //discover
+
+        if (AuthUtils.hasAccount(this))
+        {
+            historic = (HistoricRoomRecycler) Fragment.instantiate(this, HistoricRoomRecycler.class.getName());
+            fragments.add(historic); //discover
+        }
+
         //TODO: disable this tab for the Playstore release
         //fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
         //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
-        int[] tabTitles = new int[]{R.string.tab_discover};
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic};
         pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
 
         ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
-
-        /*
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                if (!infoLoaded && NetworkUtils.isConnected(discover.requireContext()))
-                    discover.updateRooms();
-                else
-                    handler.postDelayed(this, 3000);
-            }
-        }, 6000);
-        */
     }
 
     private void configToolbar() {

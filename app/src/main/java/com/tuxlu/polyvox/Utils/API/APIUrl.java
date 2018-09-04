@@ -18,6 +18,7 @@ public class APIUrl {
 
     public static final String DISCOVER_ROOMS = "room";
     public static final String SEARCH_ROOMS = "searchRoom";
+    public static final String HISTORIC = "historic";
 
     public static final String CREATE_ACCOUNT = "createAccount";
     public static final String INFO_ROOM = "infoRoom";

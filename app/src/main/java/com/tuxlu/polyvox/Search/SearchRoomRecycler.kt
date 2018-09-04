@@ -24,11 +24,13 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.android.volley.Request
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIRequest.checkConnection
+import com.tuxlu.polyvox.Utils.MyDateUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import java.text.SimpleDateFormat
 
 
 /**
@@ -40,6 +42,7 @@ data class RoomSearchResult(var active: Boolean = true,
                             var imageUrl: String = "",
                             var tags: String = "",
                             var token: String = "",
+                            var date: String = "",
                             var speakers: String = "")
 
 
@@ -47,7 +50,7 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
 
     //private val random = SecureRandom()
     //private val defaultPictures = intArrayOf(R.drawable.default_room_picture1, R.drawable.default_room_picture2,
-        //R.drawable.default_room_picture3, R.drawable.default_room_picture4)
+    //R.drawable.default_room_picture3, R.drawable.default_room_picture4)
     private val defaultPictures = intArrayOf(R.drawable.logo_grey)
 
     override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
@@ -55,8 +58,8 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
             holder.v.visibility = View.GONE
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomSubject).text = item.tags
-        holder.v.findViewById<TextView>(R.id.infoRoomSpeakers).text = item.speakers.toString()
-
+        if (item.speakers.isNotEmpty())
+            holder.v.findViewById<TextView>(R.id.infoRoomSpeakers).text = item.speakers
 
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
 
@@ -65,11 +68,10 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
         //random.nextInt(4)
         if (!UtilsTemp.isStringEmpty(item.imageUrl)) {
             GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(defaultPictures[0]).into(image)
-        }
-        else
+        } else
             GlideApp.with(holder.v.context).clear(image)
         //else
-            //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
+        //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
     }
 
     override fun setClickListener(holder: Adapter.ViewHolder<RoomSearchResult>, data: MutableList<RoomSearchResult>) {
@@ -98,11 +100,12 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
     override val recycleId: Int = R.id.recycleView
     override val requestObjectName: String = APIUrl.SEARCH_USER_JSONOBJECT
 
-    override var binder : ViewHolderBinder<RoomSearchResult>? = null
+    override var binder: ViewHolderBinder<RoomSearchResult>? = null;
     override val itemDecoration = LinearItemDecoration(2)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binder = RoomSearchBinder(requireActivity())
+        if (binder == null)
+            binder = RoomSearchBinder(requireActivity())
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -113,7 +116,10 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
             //res.active = false;
             res.name = json.getString("name")
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
-            res.speakers = json.getString("nbActors") //todo: Why?
+            if (json.has("nbActors"))
+                res.speakers = json.getString("nbActors")
+            else
+                res.speakers = ""
             //res.viewers = json.getJSONArray("waitList").length() //not anymore
             var tagString = ""
             val tags = json.getJSONArray("tags")
@@ -135,33 +141,19 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
 
 }
 
-class DiscoverRoomRecycler : SearchRoomRecycler() {
+open class DiscoverRoomRecycler : SearchRoomRecycler() {
     override val layoutObjectId: Int = R.layout.info_discover_room
     override val layoutListId: Int = R.layout.fragment_recycler_view_refreshable
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    protected open val requestUrl = APIUrl.DISCOVER_ROOMS;
+    protected open val usesAPI = false;
 
     override fun setLayoutManager(): RecyclerView.LayoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
 
-
-    private fun updateRooms()
-    {
-        /*
-        handler.postDelayed(() -> {
-                    //discover.setLoadingStatus(true);
-                    try {
-                        discover.add(DummyAPIServer.fileToJSON(R.raw.rooms, this.getBaseContext()).getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), false);
-                        infoLoaded = true;
-                    }
-                    catch (Exception e) {  } //never happens
-                }
-                , 500);
-        //remove these lines, debug for no network, uncomment lower line
-        */
-
-
-        APIRequest.JSONrequest(rootView.context, Request.Method.GET, APIUrl.BASE_URL + APIUrl.DISCOVER_ROOMS, false, null,
+    private fun updateRooms() {
+        APIRequest.JSONrequest(rootView.context, Request.Method.GET, APIUrl.BASE_URL + requestUrl, usesAPI, null,
                 { response ->
                     try {
                         this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
@@ -176,11 +168,64 @@ class DiscoverRoomRecycler : SearchRoomRecycler() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView =  super.onCreateView(inflater, container, savedInstanceState)!!
+        rootView = super.onCreateView(inflater, container, savedInstanceState)!!
         LoadingUtils.StartLoadingView(rootView, context)
         swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener { updateRooms() }
         updateRooms()
         return rootView
     }
+}
+
+class HistoricRoomBinder(activity: FragmentActivity) : RoomSearchBinder(activity) {
+
+    override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
+        super.bind(holder, item)
+        holder.v.findViewById<LinearLayout>(R.id.layoutDate).visibility = View.VISIBLE
+        holder.v.findViewById<TextView>(R.id.infoRoomDate).text = item.date
+        holder.v.findViewById<ImageView>(R.id.logoSpeakers).visibility = View.INVISIBLE
+    }
+
+    override fun setClickListener(holder: Adapter.ViewHolder<RoomSearchResult>, data: MutableList<RoomSearchResult>) {
+        val context = holder.v.context
+        val clickListener = View.OnClickListener { _ ->
+
+            val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
+            val intent = Intent(context, Room::class.java)
+            val b = Bundle()
+            b.putString("title", data[holder.adapterPosition].name)
+            b.putString("token", data[holder.adapterPosition].token)
+            b.putString("imageUrl", data[holder.adapterPosition].imageUrl)
+            intent.putExtras(b)
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, ViewCompat.getTransitionName(image))
+            context.startActivity(intent, options.toBundle())
+        }
+        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
+    }
+}
+
+
+class HistoricRoomRecycler : DiscoverRoomRecycler() {
+    override val requestUrl = APIUrl.HISTORIC
+    override val usesAPI = true
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binder = HistoricRoomBinder(requireActivity())
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun fillDataObject(json: JSONObject): RoomSearchResult {
+        val res = super.fillDataObject(json)
+        try {
+            val dateString = json.getString("createdAt")
+            val parsedDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+                    UtilsTemp.getLocale(resources)).parse(dateString)
+            res.date = MyDateUtils.getPrettyDate(parsedDate, resources)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return res
+    }
+
 }
