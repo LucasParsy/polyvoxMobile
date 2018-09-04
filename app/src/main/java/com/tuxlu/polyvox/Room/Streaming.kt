@@ -47,9 +47,9 @@ class Streaming {
         var videoUrl: Uri = if (token == "black")
             Uri.parse("http://yt-dash-mse-test.commondatastorage.googleapis.com/media/feelings_vp9-20130806-manifest.mpd")
         else
-            Uri.parse(token)
+            Uri.parse(nUrl)
         //Uri.parse(APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_STREAM_SUFFIX);
-        streamUrl = token
+        streamUrl = nUrl
 
         if (player == null) {
             CastButtonFactory.setUpMediaRouteButton(act, act.media_route_button);

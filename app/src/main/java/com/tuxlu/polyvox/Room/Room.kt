@@ -219,7 +219,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
                     })
                     .into(roomWaitingPicture)
         } else {
-            roomWaitingPicture.setImageDrawable(resources.getDrawable(R.drawable.logo_grey))
+            roomWaitingPicture.setImageDrawable(ContextCompat.getDrawable(this.baseContext, R.drawable.logo_grey))
             roomWaitingPicture.scaleType = ImageView.ScaleType.CENTER_CROP
             transitionCallback()
         }
@@ -297,6 +297,9 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
             for (i in 0..2)
                 tabLayoutHome.getTabAt(i)!!.text = getString(tabTitles[i])
+
+            chatVisibilityStatus = View.VISIBLE
+            player_button_chat!!.setImageResource(android.R.drawable.ic_menu_revert)
         }
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
