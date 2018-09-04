@@ -1,3 +1,8 @@
+<!DOCTYPE resources [
+    <!ENTITY yesterday "hier">
+    ]>
+
+
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Polyvox</string>
     <string name="account_type">Polyvox</string>
@@ -13,6 +18,7 @@
     <string name="tab_discover">Diffusions</string>
     <string name="tab_friends">Amis</string>
     <string name="tab_chat">Chat</string>
+    <string name="tab_historic">Historique</string>
     <string name="tab_queue">File d\'attente</string>
     <string name="tab_files">Documents</string>
     <string name="network_settings">Paramètres réseau</string>
@@ -177,8 +183,14 @@
 
     <string name="licence_and_credits">Licenses et Crédits</string>
 
+    <string name="date_format_today">HH:mm</string>
+    <string name="date_format_yesterday">\'&yesterday;\', HH:mm</string>
+    <string name="date_format_current_week">EEEE, HH:mm</string>
+    <string name="date_format_current_year">d MMMM</string>
+    <string name="date_format_diff_year">d MMMM yyyy</string>
 
 
+    <string name="yesterday">hier</string>
     <string name="year">Année</string>
     <string name="day">Jour</string>
     <string-array name="months_spinner">

@@ -1,6 +1,7 @@
 package com.tuxlu.polyvox.Utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -9,12 +10,42 @@ import com.tuxlu.polyvox.R
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by tuxlu on 25/11/17.
  */
 
 object MyDateUtils {
+
+
+    @JvmStatic
+    fun getPrettyDate(date: Date, resources: Resources, currentDate: Date = Date()): String {
+        var pattern: Int;
+
+        val today = Calendar.getInstance()
+        val cDate = Calendar.getInstance()
+        today.time = currentDate
+        cDate.time = date
+
+        pattern = when {
+            today[Calendar.YEAR] != cDate[Calendar.YEAR] -> R.string.date_format_diff_year
+            today[Calendar.DAY_OF_YEAR] == cDate[Calendar.DAY_OF_YEAR] -> R.string.date_format_today
+            today[Calendar.DAY_OF_YEAR] == (cDate[Calendar.DAY_OF_YEAR] + 1) -> R.string.date_format_yesterday
+            today[Calendar.WEEK_OF_YEAR] == (cDate[Calendar.WEEK_OF_YEAR]) -> R.string.date_format_current_week
+            else -> R.string.date_format_current_year
+        }
+
+        return SimpleDateFormat(resources.getString(pattern), UtilsTemp.getLocale(resources)).format(date)
+    }
+
+
+    @JvmStatic
+    fun getDateDiff(date1: Date, date2: Date, timeUnit: TimeUnit): Long {
+        val diffInMillies = date2.time - date1.time
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS)
+    }
+
 
     @JvmStatic
     fun setSpinnersToDate(dateStr: String, format: String, root: View) {

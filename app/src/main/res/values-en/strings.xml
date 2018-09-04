@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY yesterday "yesterday">
+    ]>
+
 <resources>
     <string name="app_name">Polyvox</string>
     <string name="aboutLibraries_description_special1_name">Developers</string>
@@ -14,6 +19,7 @@
     <string name="tab_discover">Broadcasts</string>
     <string name="tab_friends">Friends</string>
     <string name="tab_chat">Chat</string>
+    <string name="tab_historic">Historic</string>
     <string name="aboutLibraries_description_text">"<![CDATA[     You too, give your point of view! ]]>   "</string>
     <string name="aboutLibraries_description_special1_text">"<![CDATA[             <b>mobile app:</b><br>             &emsp;Lucas Parsy</b>             <br><br>             <b>Polyvox.fr website:</b><br>             &emsp;Simon Desplat <br>             &emsp;Vincent Ganivet <br>             &emsp;Étienne Jeanmat <br>             &emsp;Marian Gappa <br>             &emsp;Hippolyte Quief <br>             &emsp;Pierre Rebut <br>             &emsp;Charles Samier ]]>     "</string>
     <string name="aboutLibraries_description_special2_text">"         <![CDATA[        <i>&quot;Hello everybody, and welcome to this new app&quot;</i> <br><br> The first version of Polyvox on the Play Store! ]]>     "</string>
@@ -99,6 +105,16 @@
     <string name="bio_empty">This user hasn\'t written his bio yet.</string>
     <string name="day">Day</string>
     <string name="year">Year</string>
+    <string name="yesterday">yesterday</string>
+
+    <!-- TODO: move this for en/US only, as in UK they use same notation as french-->
+    <string name="date_format_today">HH:mm</string>
+    <string name="date_format_yesterday">\'&yesterday;\', HH:mm</string>
+    <string name="date_format_current_week">EEEE, HH:mm</string>
+    <string name="date_format_current_year">MMMM d</string>
+    <string name="date_format_diff_year">MMMM d yyyy</string>
+
+
     <string name="licence_and_credits">licences and Credits</string>
     <string name="accept_permission">Accept this permission to use this feature.</string>
     <string name="joined_waitlist">has joined the waitlist.</string>
