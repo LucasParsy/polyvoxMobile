@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!DOCTYPE resources [
-    <!ENTITY yesterday "yesterday">
-    ]>
-
 <resources>
     <string name="app_name">Polyvox</string>
     <string name="aboutLibraries_description_special1_name">Developers</string>
@@ -109,7 +104,7 @@
 
     <!-- TODO: move this for en/US only, as in UK they use same notation as french-->
     <string name="date_format_today">HH:mm</string>
-    <string name="date_format_yesterday">\'&yesterday;\', HH:mm</string>
+    <string name="date_format_yesterday">\'yesterday\', HH:mm</string>
     <string name="date_format_current_week">EEEE, HH:mm</string>
     <string name="date_format_current_year">MMMM d</string>
     <string name="date_format_diff_year">MMMM d yyyy</string>

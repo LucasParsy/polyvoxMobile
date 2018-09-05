@@ -2,7 +2,6 @@ package com.tuxlu.polyvox.Search
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -21,16 +20,8 @@ import org.json.JSONObject
 import android.support.v4.view.ViewCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentActivity
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.android.volley.Request
-import com.tuxlu.polyvox.Utils.API.APIRequest
-import com.tuxlu.polyvox.Utils.API.APIRequest.checkConnection
-import com.tuxlu.polyvox.Utils.MyDateUtils
-import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
-import java.text.SimpleDateFormat
 
 
 /**
@@ -138,94 +129,5 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
     }
 
     override fun setLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
-
-}
-
-open class DiscoverRoomRecycler : SearchRoomRecycler() {
-    override val layoutObjectId: Int = R.layout.info_discover_room
-    override val layoutListId: Int = R.layout.fragment_recycler_view_refreshable
-
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    protected open val requestUrl = APIUrl.DISCOVER_ROOMS;
-    protected open val usesAPI = false;
-
-    override fun setLayoutManager(): RecyclerView.LayoutManager =
-            GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
-
-    private fun updateRooms() {
-        APIRequest.JSONrequest(rootView.context, Request.Method.GET, APIUrl.BASE_URL + requestUrl, usesAPI, null,
-                { response ->
-                    try {
-                        this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
-                        swipeRefreshLayout.isRefreshing = false
-                        LoadingUtils.EndLoadingView(rootView)
-                    } catch (ignored: JSONException) {
-                    }
-                }, { swipeRefreshLayout.isRefreshing = false; })
-
-        if (!checkConnection(context, false))
-            swipeRefreshLayout.isRefreshing = false
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = super.onCreateView(inflater, container, savedInstanceState)!!
-        LoadingUtils.StartLoadingView(rootView, context)
-        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout)
-        swipeRefreshLayout.setOnRefreshListener { updateRooms() }
-        updateRooms()
-        return rootView
-    }
-}
-
-class HistoricRoomBinder(activity: FragmentActivity) : RoomSearchBinder(activity) {
-
-    override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
-        super.bind(holder, item)
-        holder.v.findViewById<LinearLayout>(R.id.layoutDate).visibility = View.VISIBLE
-        holder.v.findViewById<TextView>(R.id.infoRoomDate).text = item.date
-        holder.v.findViewById<ImageView>(R.id.logoSpeakers).visibility = View.INVISIBLE
-    }
-
-    override fun setClickListener(holder: Adapter.ViewHolder<RoomSearchResult>, data: MutableList<RoomSearchResult>) {
-        val context = holder.v.context
-        val clickListener = View.OnClickListener { _ ->
-
-            val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-            val intent = Intent(context, Room::class.java)
-            val b = Bundle()
-            b.putString("title", data[holder.adapterPosition].name)
-            b.putString("token", data[holder.adapterPosition].token)
-            b.putString("imageUrl", data[holder.adapterPosition].imageUrl)
-            intent.putExtras(b)
-
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, ViewCompat.getTransitionName(image))
-            context.startActivity(intent, options.toBundle())
-        }
-        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
-    }
-}
-
-
-class HistoricRoomRecycler : DiscoverRoomRecycler() {
-    override val requestUrl = APIUrl.HISTORIC
-    override val usesAPI = true
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binder = HistoricRoomBinder(requireActivity())
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun fillDataObject(json: JSONObject): RoomSearchResult {
-        val res = super.fillDataObject(json)
-        try {
-            val dateString = json.getString("createdAt")
-            val parsedDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
-                    UtilsTemp.getLocale(resources)).parse(dateString)
-            res.date = MyDateUtils.getPrettyDate(parsedDate, resources)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        return res
-    }
 
 }

@@ -1,8 +1,3 @@
-<!DOCTYPE resources [
-    <!ENTITY yesterday "hier">
-    ]>
-
-
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Polyvox</string>
     <string name="account_type">Polyvox</string>
@@ -184,7 +179,7 @@
     <string name="licence_and_credits">Licenses et Crédits</string>
 
     <string name="date_format_today">HH:mm</string>
-    <string name="date_format_yesterday">\'&yesterday;\', HH:mm</string>
+    <string name="date_format_yesterday">\'hier\', HH:mm</string>
     <string name="date_format_current_week">EEEE, HH:mm</string>
     <string name="date_format_current_year">d MMMM</string>
     <string name="date_format_diff_year">d MMMM yyyy</string>
@@ -216,7 +211,6 @@
         <item>Harcèlement</item>
         <item>Autre</item>
     </string-array>
-
 
 
     <string name="CGU_Text" translatable="false">THE BEER-WARE LICENSE (Revision 42.2):  lucas.parsy@epitech.eu wrote this file.  As long as you retain this notice  you can do whatever you want with this stuff.  If we meet some day,  and you think this stuff is worth it,  you can buy me a beer in return.  Lucas Parsy</string>
