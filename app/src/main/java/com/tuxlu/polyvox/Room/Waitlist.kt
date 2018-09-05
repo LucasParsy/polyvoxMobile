@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.android.volley.Request
-import com.android.volley.toolbox.JsonRequest
-import com.android.volley.toolbox.Volley
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.tuxlu.polyvox.R
@@ -23,7 +21,7 @@ import org.json.JSONObject
 /**
  * Created by tuxlu on 17/01/18.
  */
-class RoomWaitlist : Fragment() {
+class Waitlist : Fragment() {
 
     lateinit var rootView: View
     private lateinit var frag: RoomWaitlistRecycler
@@ -81,9 +79,9 @@ class RoomWaitlist : Fragment() {
     }
 
     private fun showRating(newSpeaker: RoomWaitlistResult?) {
-        if (activity is Room) {
-            (activity as Room).showAd()
-            (activity as Room).userRate.showUserRating(currentSpeaker!!.username, currentSpeaker!!.url)
+        if (activity is RoomDirect) {
+            (activity as RoomDirect).showAd()
+            (activity as RoomDirect).userRate.showUserRating(currentSpeaker!!.username, currentSpeaker!!.url)
         }
         currentSpeaker = newSpeaker
     }

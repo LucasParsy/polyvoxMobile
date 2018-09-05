@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Room
+package com.tuxlu.polyvox.Room.Chat
 
 import android.os.AsyncTask
 import android.os.Bundle

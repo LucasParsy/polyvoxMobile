@@ -1,4 +1,4 @@
-package com.tuxlu.polyvox.Room
+package com.tuxlu.polyvox.Room.Chat
 
 import android.graphics.Color
 import android.os.Bundle
