@@ -1,16 +1,11 @@
 package com.tuxlu.polyvox.Room
 
-//import com.google.android.exoplayer2.source.dash.DashMediaSource
-//import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -22,29 +17,17 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.android.volley.Request
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.cast.framework.CastContext
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Utils.API.APIRequest
-import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Room.Chat.RoomChat
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter
@@ -52,7 +35,7 @@ import com.tuxlu.polyvox.Utils.UIElements.ResizeWidthAnimation
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.exo_stream_playback_control.*
-import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -60,42 +43,64 @@ import java.util.*
  */
 
 
-class Room : AppCompatActivity(), DialogFragmentInterface {
-    private var token: String = ""
-    private var title: String = ""
-    private var imageUrl: String = ""
+abstract class RoomBase : AppCompatActivity() {
+    protected var token: String = ""
+    protected var title: String = ""
+    protected var imageUrl: String = ""
+
+    protected lateinit var fileList: FLRecycler
+
+    protected lateinit var mInterstitialAd : InterstitialAd //setup this in child onCreate with InterstitialAd(this)
+    protected var streaming = Streaming()
+    protected lateinit var castContext: CastContext
+
+    protected open val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
+    protected open val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_black, R.drawable.ic_mic_black_48dp)
+
 
     private var chatVisibilityStatus = View.VISIBLE
-
-
     private var width: Int = 0
+    private var transitionHandler = Handler()
 
-    private var manifestHandler: Handler = Handler()
-    private val manifestRunnable: Runnable = Runnable { getManifest() }
-    private var streamUrl: String = ""
 
-    lateinit var userRate: UserRating
-    private lateinit var waitlist: RoomWaitlist
-    private lateinit var fileList: FLRecycler
+    fun getCommonFragments(username: String): ArrayList<Fragment>
+    {
+        val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
+        val bundle = Bundle()
+        bundle.putString("username", username)
+        bundle.putString("title", token)
+        roomChat.arguments = bundle
 
-    private var firstManifest = true
-    private val mInterstitialAd = InterstitialAd(this)
-    private var streaming = Streaming()
-    private lateinit var castContext: CastContext
+        fileList = Fragment.instantiate(this, FLRecycler::class.java.name) as FLRecycler
+
+        return arrayListOf(roomChat, fileList)
+    }
+
+    fun setUpFragments(fragments: ArrayList<Fragment>)
+    {
+        val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
+        pager.adapter = adapter
+        pager.offscreenPageLimit = 3
+        tabLayoutHome.setupWithViewPager(pager)
+        for (i in 0..(fragments.size - 1)) {
+            val tab = tabLayoutHome.getTabAt(i)
+            tab!!.setIcon(tabIcons[i])
+            tab.icon!!.setColorFilter(ContextCompat.getColor(this, R.color.cornflower_blue_two_24), PorterDuff.Mode.SRC_ATOP)
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportPostponeEnterTransition()
         setupAd()
-        castContext = CastContext.getSharedInstance(this);
+        castContext = CastContext.getSharedInstance(this)
         val b = intent.extras!!
         title = b.getString("title")!!
         imageUrl = b.getString("imageUrl")!!
         token = b.getString("token")!!
         setContentView(R.layout.activity_room)
         super.onCreate(savedInstanceState)
-        manifestHandler.post(manifestRunnable)
         //setVideoPlayer(token)
-        userRate = UserRating(this, token)
         setClicklisteners()
 
         val config = this.resources.configuration
@@ -104,42 +109,10 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //width /= displayMetrics.density;
 
         onConfigurationChanged(this.resources.configuration)
-        val username = AuthUtils.getUsername(applicationContext)
 
-        setTransition(title!!, imageUrl)
-
-        val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
-        val bundle = Bundle()
-        bundle.putString("username", username)
-        bundle.putString("title", token)
-        roomChat.arguments = bundle
-
-
-        fileList = Fragment.instantiate(this, FLRecycler::class.java.name) as FLRecycler
-
-
-        val bundle2 = Bundle()
-        bundle2.putString("token", token)
-        waitlist = Fragment.instantiate(this, RoomWaitlist::class.java.name) as RoomWaitlist
-        waitlist.arguments = bundle2
-
-
-        val fragments = ArrayList<Fragment>()
-        fragments.add(roomChat)
-        fragments.add(fileList)
-        fragments.add(waitlist)
-        val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
-        pager.adapter = adapter
-        pager.offscreenPageLimit = 3
-        tabLayoutHome.setupWithViewPager(pager)
-        for (i in 0..2) {
-            val tab = tabLayoutHome.getTabAt(i)
-            tab!!.setIcon(tabIcons[i])
-            tab.icon!!.setColorFilter(ContextCompat.getColor(this, R.color.cornflower_blue_two_24), PorterDuff.Mode.SRC_ATOP)
-        }
-
+        setTransition(title, imageUrl)
         player_room_title.text = title
-        player_room_subtitle.text = "sous-titre"
+        //player_room_subtitle.text = "sous-titre"
     }
 
     private fun setupAd()
@@ -158,42 +131,13 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     fun showAd() {
         if (mInterstitialAd.isLoaded)
             mInterstitialAd.show()
+        //todo: comment when sharing,ads are annoying...
     }
 
-    private fun getManifest() {
-        APIRequest.JSONrequest(baseContext, Request.Method.GET,
-                APIUrl.BASE_URL + APIUrl.ROOM + token + APIUrl.ROOM_MANIFEST, false, null, { response ->
-            val data = response.getJSONObject("data")
-            try {
-                waitlist.update(data)
-                fileList.add(data, true)
-                if (firstManifest) {
-                    firstManifest = false
-                    if (UtilsTemp.isStringEmpty(data.getString("speaker"))) {
-                        loadingRoomProgress.visibility = View.GONE
-                        bufferingProgress.visibility = View.INVISIBLE
-                        manifestHandler.postDelayed({ waitingText.visibility = View.VISIBLE }, 1000)
-                    }
-                }
-            } catch (e: Exception) {
-            }
-
-
-            //userRate.showUserRating("tuxlu42", "https://polyvox.fr/public/img/tuxlu42.png");
-
-
-            val nUrl = data.getString("videosData")
-            streaming.setVideoPlayer(token, nUrl, title, imageUrl, castContext, this)
-            manifestHandler.postDelayed(manifestRunnable, 2000)
-        },
-                {
-                    manifestHandler.postDelayed(manifestRunnable, 2000)
-                })
-    }
 
     private fun transitionCallback(): Boolean {
         supportStartPostponedEnterTransition()
-        manifestHandler.postDelayed({
+        transitionHandler.postDelayed({
             roomWaitingTitle.visibility = View.VISIBLE
             YoYo.with(Techniques.SlideInDown).duration(300).playOn(roomWaitingTitle)
         }, 500)
@@ -226,19 +170,19 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
     }
 
     private fun setClicklisteners() {
-        player_button_share.setOnClickListener { v -> shareStream(v) }
-        player_button_fullscreen.setOnClickListener { v -> setScreenOrientation(v) }
-        player_button_chat.setOnClickListener { v -> setChatVisibility(v) }
+        player_button_share.setOnClickListener { _ -> shareStream() }
+        player_button_fullscreen.setOnClickListener { _ -> setScreenOrientation() }
+        player_button_chat.setOnClickListener { _ -> setChatVisibility() }
         player_button_back.setOnClickListener { _ -> finish() }
     }
 
-    private fun shareStream(v: View) {
+    private fun shareStream() {
         val url = "https://polyvox.fr/stream/$token"
         val body = getString(R.string.share_stream_body) + "\n" + title + "\n" + getString(R.string.join_me)
         UtilsTemp.shareContent(this, body, url)
     }
 
-    private fun setChatVisibility(v: View) {
+    private fun setChatVisibility() {
         val animWidth: Int
 
         if (chatVisibilityStatus == View.VISIBLE) {
@@ -250,7 +194,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         } else {
             chatVisibilityStatus = View.VISIBLE
             chatLayout!!.visibility = View.VISIBLE
-            //todo: find better icons for this button
+            //todo: find better icon for this button
             player_button_chat!!.setImageResource(android.R.drawable.ic_menu_revert)
             animWidth = (width - width * 0.3).toInt()
         }
@@ -268,7 +212,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         //chat apparait alors en surimpression sur le stream
     }
 
-    private fun setScreenOrientation(v: View) {
+    private fun setScreenOrientation() {
         // orientation ? portrait : landscape;
         val orientation = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
@@ -295,7 +239,8 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             videoPlayerLayout!!.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
             player_button_fullscreen!!.setImageResource(R.drawable.ic_fullscreen_expand_24dp)
 
-            for (i in 0..2)
+
+            for (i in 0..(tabLayoutHome.tabCount - 1))
                 tabLayoutHome.getTabAt(i)!!.text = getString(tabTitles[i])
 
             chatVisibilityStatus = View.VISIBLE
@@ -313,7 +258,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
             videoPlayerLayout!!.layoutParams.width = (width - width * 0.3).toInt()
             player_button_fullscreen!!.setImageResource(R.drawable.ic_fullscreen_skrink_24dp)
 
-            for (i in 0..2)
+            for (i in 0..(tabLayoutHome.tabCount - 1))
                 tabLayoutHome.getTabAt(i)!!.text = ""
         }
         rootView!!.requestLayout()
@@ -343,7 +288,7 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        manifestHandler.removeCallbacksAndMessages(null)
+        transitionHandler.removeCallbacksAndMessages(null)
     }
 
     //reloads page when logging
@@ -352,17 +297,4 @@ class Room : AppCompatActivity(), DialogFragmentInterface {
         if (requestCode == AuthUtils.AUTH_REQUEST_CODE && resultCode == Activity.RESULT_OK)
             this.recreate()
     }
-
-    override fun dialogDismiss() {
-        userRate.closeUserRating(reportButton)
-    }
-
-
-    companion object {
-
-        private val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
-        private val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_black, R.drawable.ic_mic_black_48dp)
-    }
-
-
 }

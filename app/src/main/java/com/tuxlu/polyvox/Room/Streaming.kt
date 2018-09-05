@@ -3,11 +3,9 @@ package com.tuxlu.polyvox.Room
 import android.net.Uri
 import android.view.View
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -26,7 +24,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.cast.CastPlayer
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastState
-import com.google.android.gms.cast.framework.CastStateListener
+import java.util.*
 
 
 class Streaming {
@@ -35,7 +33,7 @@ class Streaming {
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
     private lateinit var castPlayer: CastPlayer
 
-    fun setVideoPlayer(token: String, nUrl: String, title: String, imageUrl: String, castContext: CastContext, act: Room) {
+    fun setVideoPlayer(token: String, nUrl: String, title: String, imageUrl: String, castContext: CastContext, act: RoomBase) {
         if (UtilsTemp.isStringEmpty(nUrl) || nUrl == streamUrl)
             return
 
@@ -87,7 +85,6 @@ class Streaming {
 
         val listener = object : Player.DefaultEventListener() {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-
                 if (playWhenReady && playbackState == Player.STATE_READY) {//playing {
                     act.videoPlayerView.visibility = View.VISIBLE
                     act.bufferingProgress.visibility = View.INVISIBLE

@@ -18,27 +18,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
 import com.tuxlu.polyvox.BuildConfig;
-import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
-import com.tuxlu.polyvox.Room.Room;
-import com.tuxlu.polyvox.Search.DiscoverRoomRecycler;
-import com.tuxlu.polyvox.Search.HistoricRoomRecycler;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
-import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
-import com.tuxlu.polyvox.Utils.NetworkUtils;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
-import org.json.JSONException;
 import java.util.List;
 import java.util.Vector;
 

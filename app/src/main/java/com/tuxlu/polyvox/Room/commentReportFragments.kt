@@ -66,8 +66,8 @@ class UserCommentFragment : CommentReportBase() {
             UtilsTemp.showToast(this, getString(R.string.???))
         }, null)
         */
-        if (activity is Room) {
-            val act: Room = activity as Room
+        if (activity is RoomDirect) {
+            val act: RoomDirect = activity as RoomDirect
             act.dialogDismiss()
         }
         dismiss()
@@ -95,8 +95,8 @@ class UserReportFragment : CommentReportBase() {
             UtilsTemp.showToast(context, context.getString(R.string.user_reported, name))
         }, null)
 
-        if (activity is Room) {
-            val act: Room = (activity as Room)
+        if (activity is RoomDirect) {
+            val act: RoomDirect = (activity as RoomDirect)
             act.dialogDismiss()
         }
         dismiss()

@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import com.tuxlu.polyvox.Chat.Chat
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Room.Room
+import com.tuxlu.polyvox.Room.RoomDirect
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
 import com.tuxlu.polyvox.Utils.UtilsTemp
-import okhttp3.internal.Util
-import org.w3c.dom.Text
 
 /**
  * Created by tuxlu on 12/11/17.
@@ -27,7 +24,7 @@ open class FollowerUserBinder : UserSearchBinder() {
             holder.v.findViewById<LinearLayout>(R.id.infoCurrentRoomView).visibility = View.VISIBLE
             holder.v.findViewById<TextView>(R.id.infoCurrentRoomText).text = item.roomName
             holder.v.findViewById<Button>(R.id.joinButton).setOnClickListener {
-                val intent = Intent(holder.v.context, Room::class.java)
+                val intent = Intent(holder.v.context, RoomDirect::class.java)
                 val b = Bundle()
                 b.putString("title", item.name)
                 b.putString("token", item.roomUrl)

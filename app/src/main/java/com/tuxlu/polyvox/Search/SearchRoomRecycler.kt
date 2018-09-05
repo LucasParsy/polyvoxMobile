@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Room.Room
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp
 import com.tuxlu.polyvox.Utils.Recyclers.Adapter
@@ -22,6 +21,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.tuxlu.polyvox.Room.RoomDirect
 
 
 /**
@@ -70,7 +70,7 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
         val clickListener = View.OnClickListener { _ ->
 
             val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-            val intent = Intent(context, Room::class.java)
+            val intent = Intent(context, RoomDirect::class.java)
             val b = Bundle()
             b.putString("title", data[holder.adapterPosition].name)
             b.putString("token", data[holder.adapterPosition].token)
