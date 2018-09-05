@@ -15,7 +15,6 @@ import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONException
 
-//todo: move these classes Elsewhere!
 open class DiscoverRoomRecycler : SearchRoomRecycler() {
     override val layoutObjectId: Int = R.layout.info_discover_room
     override val layoutListId: Int = R.layout.fragment_recycler_view_refreshable

@@ -300,7 +300,6 @@ public class HybiParser {
 
         } else if (opcode == OP_PONG) {
             String message = encode(payload);
-            // FIXME: Fire callback...
             Log.d(TAG, "Got pong! " + message);
         }
     }

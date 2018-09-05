@@ -26,10 +26,6 @@ import kotlinx.android.synthetic.main.activity_search.*
  */
 
 abstract class ISearchResult : AppCompatActivity() {
-/*todo: gérer multiples fragments, avec recherche room ET fragment "global",
-todo: qui inclut plusieurs fragment DONC Différent type des deux autres, exception, galère, chiant.
-*/
-
     private val tabTitles = intArrayOf(R.string.top, R.string.rooms, R.string.users)
     internal var adapter: PagerAdapter? = null
     //lateinit private var roomFragment: SearchRoomRecycler
@@ -79,7 +75,6 @@ todo: qui inclut plusieurs fragment DONC Différent type des deux autres, except
                             roomFragment.add(dataObj.getJSONArray(APIUrl.SEARCH_ROOM_JSONOBJECT), true)
                         summaryFragment.add(dataObj)
                     }
-                    //todo: gérer autres fragments
                 }, null)
     }
 
