@@ -21,7 +21,7 @@ import org.json.JSONObject
 
 abstract class IRequestRecycler<T : Any> : IRecycler<T>() {
 
-    abstract val requestUrl: String
+    abstract var requestUrl: String
     abstract val requestBody: JSONObject
     abstract val usesAPI: Boolean
 
@@ -36,13 +36,17 @@ abstract class IRequestRecycler<T : Any> : IRecycler<T>() {
         return view
     }
 
+    abstract fun setupData(data : JSONObject);
+
     internal fun request(url: String, body: JSONObject, append: Boolean, view: View? = null) {
         val eListen = Response.ErrorListener { error -> errorListener(error) }
         APIRequest.JSONrequest(context, Request.Method.GET, APIUrl.BASE_URL + url, usesAPI, body, Response.Listener<JSONObject> { response ->
 
             var jArray: JSONArray? = null
             try {
-                jArray = response.getJSONArray(requestObjectName)
+                val data  = response.getJSONObject("data")
+                setupData(data)
+                jArray = data.getJSONArray(requestObjectName)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }

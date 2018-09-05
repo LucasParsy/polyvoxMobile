@@ -12,7 +12,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.tuxlu.polyvox.R
-import com.tuxlu.polyvox.Room.Room
+import com.tuxlu.polyvox.Room.RoomBase
+import com.tuxlu.polyvox.Room.RoomHistoric
 import com.tuxlu.polyvox.Search.RoomSearchBinder
 import com.tuxlu.polyvox.Search.RoomSearchResult
 import com.tuxlu.polyvox.Utils.API.APIUrl
@@ -37,7 +38,7 @@ class HistoricRoomBinder(activity: FragmentActivity) : RoomSearchBinder(activity
         val clickListener = View.OnClickListener { _ ->
 
             val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
-            val intent = Intent(context, Room::class.java)
+            val intent = Intent(context, RoomHistoric::class.java)
             val b = Bundle()
             b.putString("title", data[holder.adapterPosition].name)
             b.putString("token", data[holder.adapterPosition].token)
