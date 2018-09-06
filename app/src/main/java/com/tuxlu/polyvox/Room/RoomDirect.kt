@@ -69,7 +69,7 @@ class RoomDirect : RoomBase(), DialogFragmentInterface {
 
 
             val nUrl = data.getString("videosData")
-            streaming.setVideoPlayer(token, nUrl, title, imageUrl, castContext, this)
+            streaming.setVideoPlayer(token, nUrl, this)
             manifestHandler.postDelayed(manifestRunnable, 2000)
         },
                 {

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.View
 import com.android.volley.Request
+import com.google.android.exoplayer2.Player
 import com.google.android.gms.ads.InterstitialAd
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
@@ -50,7 +51,12 @@ class RoomHistoric : RoomBase() {
 
     fun playStream(url: String)
     {
-        streaming.setVideoPlayer(token, url, title, imageUrl, castContext, this)
+        streaming.setVideoPlayer(token, url,this)
+    }
+
+    fun addStreamListener(listener: Player.EventListener)
+    {
+        streaming.addListener(listener)
     }
 
     override fun onDestroy() {

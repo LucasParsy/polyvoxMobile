@@ -51,8 +51,8 @@ abstract class RoomBase : AppCompatActivity() {
     protected lateinit var fileList: FLRecycler
 
     protected lateinit var mInterstitialAd : InterstitialAd //setup this in child onCreate with InterstitialAd(this)
-    protected var streaming = Streaming()
-    protected lateinit var castContext: CastContext
+    protected lateinit var streaming : Streaming
+    private lateinit var castContext: CastContext
 
     protected open val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
     protected open val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_black, R.drawable.ic_mic_black_48dp)
@@ -99,6 +99,7 @@ abstract class RoomBase : AppCompatActivity() {
         imageUrl = b.getString("imageUrl")!!
         token = b.getString("token")!!
         setContentView(R.layout.activity_room)
+        streaming = Streaming(this, castContext, title, imageUrl)
         super.onCreate(savedInstanceState)
         //setVideoPlayer(token)
         setClicklisteners()
