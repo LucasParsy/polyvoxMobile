@@ -54,9 +54,13 @@ object MyDateUtils {
         val date: Date = ft.parse(dateStr)
         val calendar = Calendar.getInstance()
         calendar.time = date
+        var userYear = calendar.get(Calendar.YEAR) + 1
+        if (userYear < 1902)
+            userYear = 1950
+
         root.findViewById<Spinner>(R.id.spinnerMonth).setSelection(calendar.get(Calendar.MONTH) + 1)
         root.findViewById<Spinner>(R.id.spinnerDays).setSelection(calendar.get(Calendar.DAY_OF_MONTH))
-        root.findViewById<Spinner>(R.id.spinnerYear).setSelection(currentYear - calendar.get(Calendar.YEAR) + 1)
+        root.findViewById<Spinner>(R.id.spinnerYear).setSelection(currentYear - userYear)
     }
 
 

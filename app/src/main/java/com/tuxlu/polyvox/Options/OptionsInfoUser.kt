@@ -57,7 +57,6 @@ class OptionsInfoUser : MyAppCompatActivity() {
 
     }
 
-    @Suppress("UNUSED_PARAMETER")
     fun buttonClick(v: View)
     {
         if (!surname.text.matches("^[a-zA-Z].{2,128}$".toRegex())) {
