@@ -17,6 +17,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.exoplayer2.Player
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
@@ -55,25 +56,6 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
         return (String.format("%02d:%02d", seconds / 60, seconds % 60))
     }
 
-    private fun setTimerStatus(nstatus: Boolean, item: HistoricListResult) {
-        if (nstatus == item.isPlaying)
-            return;
-        item.isPlaying = nstatus;
-        val vis = if (item.isPlaying)
-            View.VISIBLE
-        else
-            View.INVISIBLE
-
-        item.holder!!.v.findViewById<ImageView>(R.id.statusIcon).visibility = vis
-        item.holder!!.v.findViewById<TextView>(R.id.timePassed).visibility = vis
-        item.holder!!.v.findViewById<TextView>(R.id.timeLimit).visibility = vis
-
-        if (item.isPlaying)
-            item.timer!!.start()
-        else
-            item.timer!!.cancel()
-    }
-
     override fun bind(holder: Adapter.ViewHolder<HistoricListResult>, item: HistoricListResult) {
         item.holder = holder
         holder.v.findViewById<TextView>(R.id.infoUserName).text = item.username
@@ -95,12 +77,7 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
 
             override fun onFinish() {}
         }
-        setTimerStatus(false, item)
-    }
-
-    private fun playStream(item: HistoricListResult) {
-        act.playStream(item.streamUrl)
-        //act.showAd()
+        Companion.setTimerStatus(false, item)
     }
 
 
@@ -119,22 +96,56 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
 
             for (item in data)
                 if (item.isPlaying)
-                    setTimerStatus(false, item)
+                    Companion.setTimerStatus(false, item)
 
-            setTimerStatus(true, selItem)
+            Companion.setTimerStatus(true, selItem)
+            loadStreamUrl(selItem, context, token, act)
+        }
+
+        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
+
+
+    }
+
+    companion object {
+        @JvmStatic
+        fun playStream(item: HistoricListResult, activ: RoomHistoric) {
+            activ.playStream(item.streamUrl)
+            //act.showAd()
+        }
+
+        @JvmStatic
+        fun loadStreamUrl(selItem: HistoricListResult, context: Context, token: String, activ: RoomHistoric) {
+            //todo: move this method and playStream elsewhere (util?) as iit is used in Recyclerview directly.
             if (selItem.streamUrl.isEmpty()) {
                 APIRequest.JSONrequest(context, Request.Method.GET,
                         APIUrl.BASE_URL + APIUrl.HISTORIC + "/" + token + "/" + selItem.id
                         , true, null, Response.Listener<JSONObject> { response ->
                     selItem.streamUrl = response.getJSONObject("data").getString("videosData");
-                    playStream(selItem)
+                    playStream(selItem, activ)
                 }, null)
             } else
-                playStream(selItem)
+                playStream(selItem, activ)
         }
 
-        holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
+        fun setTimerStatus(nstatus: Boolean, item: HistoricListResult) {
+            if (nstatus == item.isPlaying)
+                return;
+            item.isPlaying = nstatus;
+            val vis = if (item.isPlaying)
+                View.VISIBLE
+            else
+                View.INVISIBLE
 
+            item.holder!!.v.findViewById<ImageView>(R.id.statusIcon).visibility = vis
+            item.holder!!.v.findViewById<TextView>(R.id.timePassed).visibility = vis
+            item.holder!!.v.findViewById<TextView>(R.id.timeLimit).visibility = vis
+
+            if (item.isPlaying)
+                item.timer!!.start()
+            else
+                item.timer!!.cancel()
+        }
 
     }
 }
@@ -178,6 +189,26 @@ class HistoricListRecycler : IRequestRecycler<HistoricListResult>() {
     override fun setupData(data: JSONObject) {
         binder.timeLimit = data.getInt("speakerMaxDuration")
         binder.act = activity as RoomHistoric
+
+        val listener = object : Player.DefaultEventListener() {
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+
+                if (playbackState == Player.STATE_ENDED) {
+                    val actors = adapter!!.getsData()
+                    for (i in 0 until actors.size) {
+                        if (actors[i].isPlaying) {
+                            HistoricListBinder.setTimerStatus(false, actors[i])
+                            if (i != actors.size - 1) {
+                                HistoricListBinder.setTimerStatus(true, actors[i + 1])
+                                HistoricListBinder.loadStreamUrl(actors[i + 1], context!!, token, binder.act)
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        binder.act.addStreamListener(listener)
     }
 
     override fun fillDataObject(json: JSONObject): HistoricListResult {

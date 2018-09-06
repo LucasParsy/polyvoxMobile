@@ -28,6 +28,7 @@ open class Adapter<T : Any>(private val context: Context,
                             private val layout: Int,
                             private val binder: ViewHolderBinder<T>) : RecyclerView.Adapter<Adapter.ViewHolder<T>>() {
 
+    fun getsData(): MutableList<T> = data
 
     class ViewHolder<T : Any>(val v: View, private val binder: ViewHolderBinder<T>) : RecyclerView.ViewHolder(v) {
 
