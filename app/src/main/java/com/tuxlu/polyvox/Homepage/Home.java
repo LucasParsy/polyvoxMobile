@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
+import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.BuildConfig;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;

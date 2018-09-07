@@ -11,6 +11,8 @@ import com.stfalcon.chatkit.messages.MessageInput
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import kotlinx.android.synthetic.main.fragment_room_chat.*
+import com.google.android.exoplayer2.offline.Downloader
+
 
 /**
  * Created by tuxlu on 17/01/18.
@@ -18,14 +20,14 @@ import kotlinx.android.synthetic.main.fragment_room_chat.*
 class RoomChat : Fragment(), MessageInput.InputListener {
 
     lateinit var rootView: View
-    lateinit var chat: CustomChat
+    var chat: CustomChat? = null
     lateinit var frag: RoomChatRecycler
     val handler = Handler()
 
 
     override fun onSubmit(input: CharSequence?): Boolean {
         val message = input.toString()
-        chat.sendMessage(message)
+        chat?.sendMessage(message)
 
         /*
         //twitch does not send again your message, you have to put it yourself.
@@ -54,22 +56,25 @@ class RoomChat : Fragment(), MessageInput.InputListener {
         fragmentManager!!.beginTransaction().add(R.id.roomChatLayout, frag).commit()
         val delay = 2000 //2 seconds
 
+        var token: String? = null
         AsyncTask.execute {
-            setupChat(title!!)
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-                    frag.update(chat.getMessages())
-                    handler.postDelayed(this, delay.toLong())
-                }
-            }, 0)
+            token = AuthUtils.getToken(context)
         }
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (chat == null)
+                    setupChat(title!!, token)
+
+                frag.update(chat!!.getMessages())
+                handler.postDelayed(this, delay.toLong())
+            }
+        }, 1500)
     }
 
-    fun setupChat(title: String)
-    {
-        var token = AuthUtils.getToken(context)
-        if (token == null)
-        {
+    fun setupChat(title: String, nToken: String?) {
+        var token = nToken
+        if (token == null) {
             token = ""
             input.visibility = View.GONE
         }
