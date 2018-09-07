@@ -50,6 +50,9 @@
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayoutSearch"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible">

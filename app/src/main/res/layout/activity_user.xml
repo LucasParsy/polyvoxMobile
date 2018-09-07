@@ -134,6 +134,10 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayoutHome"
             android:layout_width="match_parent"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:visibility="visible">

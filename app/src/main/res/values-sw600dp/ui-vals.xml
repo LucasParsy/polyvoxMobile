@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="homepage_rooms_row_number">2</integer>
+    <integer name="homepage_rooms_columns_number">3</integer>
+    <dimen name="room_video_player_size">400dp</dimen>
+    <dimen name="info_user_current_room">220dp</dimen>
+    <dimen name="info_user_current_textview_width">130dp</dimen>
+    <dimen name="info_user_current_room_textsize">10sp</dimen>
+</resources>
