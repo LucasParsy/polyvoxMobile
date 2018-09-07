@@ -9,6 +9,6 @@
     <color name="PolyvoxSecondColor">#ffa400</color>
     <color name="background_material_lighter">#fafafa</color>
     <color name="lighter_gray">#e3e3e3</color>
-    <color name="lighterter_gray">#f4f4f4</color>
+    <color name="lighterter_gray">#EFEEF1</color>
     <color name="transparent_grey">#50616161</color>
 </resources>
