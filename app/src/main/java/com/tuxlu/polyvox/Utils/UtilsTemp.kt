@@ -56,7 +56,7 @@ class UtilsTemp {
         @JvmStatic
         fun becomePremium(showNegativeReply: Boolean, context: Context) {
             val body = JSONObject()
-            body.put("to", "2018-09-15T15:57:40.700Z");
+            body.put("to", "2019-11-13T16:42:03.323Z");
             //todo:change this parameter, but I think it won't last, it's just debug.
 
             val build = AlertDialog.Builder(context)
@@ -66,7 +66,7 @@ class UtilsTemp {
 
             build.setPositiveButton(context.getString(R.string.subscribe)
             ) { _, _ ->
-                APIRequest.JSONrequest(context, Request.Method.POST, APIUrl.PREMIUM, true, body,
+                APIRequest.JSONrequest(context, Request.Method.POST, APIUrl.BASE_URL + APIUrl.PREMIUM, true, body,
                         { _ ->
                             AuthUtils.setPremiumStatus(context)
                             showToast(context, context.getString(R.string.premium_ok))
