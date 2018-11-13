@@ -167,6 +167,7 @@
     <string name="user_info_updated">the informations have been updated</string>
     <string name="profile_picture_current">current profile picture</string>
     <string name="profile_picture_no">you don\'t have a profile picture yet. add one!</string>
+    <string name="start_chatting">send message</string>
 
     <string-array name="months_spinner">
         <item>Month</item>

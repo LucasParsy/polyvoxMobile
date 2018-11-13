@@ -82,6 +82,25 @@ public class Home extends AppCompatActivity {
 
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
+/*
+        Intent intent = new Intent(this, RoomBase.class);
+        Bundle b = new Bundle();
+        b.putString("title", "test");
+        b.putString("token", "black");
+        b.putString("imageUrl", "https://avatars1.githubusercontent.com/u/1269214?s=88&v=4");
+        intent.putExtras(b);
+        this.startActivity(intent);
+*/
+        CustomChat.INSTANCE.setupSocket(this);
+
+        if (this.isTaskRoot() && AuthUtils.hasAccount(this.getBaseContext())) {
+            String url = APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER;
+            APIRequest.JSONrequest(this, Request.Method.GET, url,
+                    true, null, response -> {
+                    }, null);
+        }
+
+
         List<Fragment> fragments = new Vector<>();
 
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());

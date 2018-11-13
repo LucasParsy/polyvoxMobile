@@ -61,14 +61,15 @@ abstract class RoomBase : AppCompatActivity() {
     private var chatVisibilityStatus = View.VISIBLE
     private var width: Int = 0
     private var transitionHandler = Handler()
-
+    abstract var hasHistory: Boolean;
 
     fun getCommonFragments(username: String): ArrayList<Fragment>
     {
         val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
         val bundle = Bundle()
         bundle.putString("username", username)
-        bundle.putString("title", token)
+        bundle.putString("token", token)
+        bundle.putBoolean("history", hasHistory)
         roomChat.arguments = bundle
 
         fileList = Fragment.instantiate(this, FLRecycler::class.java.name) as FLRecycler

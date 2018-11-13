@@ -25,7 +25,8 @@ import java.util.*
  */
 
 data class RoomChatResult(var username: String = "",
-                          var message: String = "")
+                          var message: String = "",
+                          var timestamp: Long = 0)
 
 
 open class RoomChatBinder : ViewHolderBinder<RoomChatResult> {

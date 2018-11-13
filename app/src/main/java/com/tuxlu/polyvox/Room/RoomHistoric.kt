@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.exo_stream_playback_control.*
 
 
 class RoomHistoric : RoomBase() {
-
+    override var hasHistory: Boolean = true
     private var manifestHandler: Handler = Handler()
     private val manifestRunnable: Runnable = Runnable { }
 

@@ -1,7 +1,9 @@
 package com.tuxlu.polyvox.Chat
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +11,10 @@ import com.android.volley.Request
 import com.stfalcon.chatkit.dialogs.DialogsList
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Room.Chat.CustomChat
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import com.tuxlu.polyvox.Utils.UtilsTemp
 import java.text.SimpleDateFormat
@@ -19,7 +23,9 @@ import java.util.*
 /**
  * Created by tuxlu on 08/01/18.
  */
-class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialogClickListener<ChatDialog> {
+class ChatList : android.support.v4.app.Fragment(), DialogsListAdapter.OnDialogClickListener<ChatDialog> {
+    val handler = Handler()
+
     override fun onDialogClick(dialog: ChatDialog) {
         val intent = Intent(this.activity, Chat::class.java) //todo: replace with good fragment name
         val b = Bundle()
@@ -33,12 +39,28 @@ class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialog
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_private_chat_list, container, false)
 
-        val dialogsListAdapter= DialogsListAdapter<ChatDialog>(ImageLoader(this.activity!!))
+        val dialogsListAdapter = DialogsListAdapter<ChatDialog>(ImageLoader(this.activity!!))
         dialogsListAdapter.setOnDialogClickListener(this)
         view.findViewById<DialogsList>(R.id.dialogsList).setAdapter(dialogsListAdapter)
 
         var list = ArrayList<ChatDialog>()
+        CustomChat.requestListUsers()
 
+        handler.postDelayed({
+            LoadingUtils.EndLoadingView(view)
+            val users = CustomChat.getListUsers()
+            if (users.isEmpty()) {
+                view.findViewById<View>(R.id.noFriendsView).visibility = View.VISIBLE
+            } else {
+                for (elem in users)
+                    list.add(ChatDialog(elem, 0, null))
+                dialogsListAdapter.setItems(list)
+            }
+        }, 2500)
+
+
+/*
+        THIS WAS TOO BEAUTIFUL TO HAPPEN LIKE THIS.
         val url = APIUrl.FAKE_BASE_URL + APIUrl.LIST_USERS_CHAT
         APIRequest.JSONrequest(activity, Request.Method.GET, url,
                 false, null, { current ->
@@ -65,8 +87,14 @@ class ChatList : android.support.v4.app.Fragment() , DialogsListAdapter.OnDialog
             dialogsListAdapter.setItems(list)
         }, {_ -> LoadingUtils.EndLoadingView(view)
         })
-
+*/
         return view
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
 
 }

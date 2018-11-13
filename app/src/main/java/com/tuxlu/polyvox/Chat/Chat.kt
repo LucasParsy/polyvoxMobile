@@ -8,6 +8,7 @@ import com.stfalcon.chatkit.messages.MessageHolders
 import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessagesListAdapter
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Room.Chat.CustomChat
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils
@@ -38,19 +39,21 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     private var shouldLoadMore = true
     private var pagesLoaded = 1
     private var sentList = ArrayList<String>()
+    private var numberMessageReceived = 0
 
     private val handler = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_private_chat)
         val name = intent.getStringExtra("name")
         var friendUrl = intent.getStringExtra("url")
         friendAuthor = Author(name, friendUrl)
+        CustomChat.requestUserMessages(friendAuthor.username)
 
+        setContentView(R.layout.activity_private_chat)
         val myName = AuthUtils.getUsername(this)
-        var imageUrl : String = AuthUtils.getPictureUrl(this)
+        var imageUrl: String = AuthUtils.getPictureUrl(this)
         if (UtilsTemp.isStringEmpty(imageUrl))
             imageUrl = ""
         myAuthor = Author(myName, imageUrl)
@@ -75,8 +78,8 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         input.setAttachmentsListener(this)
         input.setInputListener(this)
         onLoadMore(1, 42)
-
-        val delay: Long = 10000 //10 seconds
+        LoadingUtils.EndLoadingView(rootView)
+        val delay: Long = 2000 //10 seconds
         handler.postDelayed(object : Runnable {
             override fun run() {
                 updateMessages()
@@ -102,6 +105,10 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
 
 
     override fun onSubmit(message: CharSequence): Boolean {
+
+        CustomChat.sendUserMessage(friendAuthor.username, message.toString())
+        return true
+        /*
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME
         APIRequest.JSONrequest(this, Request.Method.POST, url,
@@ -113,9 +120,12 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         }
                 , null)
         return true
+        */
     }
 
     override fun onLoadMore(page: Int, totalItemsCount: Int) {
+        return
+        /*
         if (!shouldLoadMore || !AuthUtils.hasAccount(this))
             return
         //val url = APIUrl.BASE_URL + APIUrl.CHAT + friendAuthor.username
@@ -139,9 +149,21 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
             if (pagesLoaded == 1)
                 LoadingUtils.EndLoadingView(rootView)
         })
+        */
     }
 
     fun updateMessages() {
+        val finalMessages = ArrayList<ChatMessage>();
+        var received = CustomChat.getUserMessages(friendAuthor.username)
+        if (received.size <= numberMessageReceived)
+            return
+        received = received.subList(numberMessageReceived, received.size)
+        for (elem in received) {
+            val auth = if (elem.username == friendAuthor.username) friendAuthor else myAuthor
+            finalMessages.add(ChatMessage(elem.message, auth, Date(elem.timestamp)))
+        }
+        adapter.addToEnd(finalMessages, false)
+        /*
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME
         APIRequest.JSONrequest(this, Request.Method.GET, url,
@@ -155,6 +177,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
                 adapter.addToStart(obj, true)
         }
                 , { _ -> })
+*/
     }
 
     fun parseMessages(topObj: JSONObject): ArrayList<ChatMessage> {

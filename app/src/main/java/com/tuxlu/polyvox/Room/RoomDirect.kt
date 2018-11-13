@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.exo_stream_playback_control.*
 
 
 class RoomDirect : RoomBase(), DialogFragmentInterface {
+    override var hasHistory: Boolean = false
     private var manifestHandler: Handler = Handler()
     private val manifestRunnable: Runnable = Runnable { getManifest() }
 

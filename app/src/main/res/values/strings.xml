@@ -174,17 +174,20 @@
     <string name="waited_turn"> \u0020 a passé son tour</string>
     <string name="joined_waitlist"> \u0020 a rejoint la file d\'attente</string>
 
+
+    <string name="start_chatting">envoyer un message</string>
+
     <string name="accept_permission">acceptez cette permission pour utiliser cette fonctionnalité</string>
 
-    <string name="licence_and_credits">Licenses et Crédits</string>
-
-    <string name="date_format_today">HH:mm</string>
     <string name="subscribe">M\'abonner</string>
     <string name="become_premium">Devenir premium</string>
     <string name="not_now">pas maintenant</string>
     <string name="premium_ok">Vous etes maintenant un utilisateur Premium de Polyvox!</string>
 
 
+    <string name="licence_and_credits">Licenses et Crédits</string>
+
+    <string name="date_format_today">HH:mm</string>
     <string name="date_format_yesterday">\'hier\', HH:mm</string>
     <string name="date_format_current_week">EEEE, HH:mm</string>
     <string name="date_format_current_year">d MMMM</string>

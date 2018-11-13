@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Room.Chat.CustomChat;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
@@ -98,6 +99,7 @@ public class Login extends AccountAuthenticatorActivity {
                     public void onResponse(JSONObject response) {
                         setResult(RESULT_OK); //si utilisation startActivityForResult()
                         button.setText(getString(R.string.login_connect));
+                        CustomChat.INSTANCE.setupSocket(getBaseContext());
                         finish();
                     }
                 }, error -> {

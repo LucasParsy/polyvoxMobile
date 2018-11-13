@@ -137,6 +137,19 @@ class ProfilePage : MyAppCompatActivity() {
             premiumButton.setOnClickListener {
                 UtilsTemp.becomePremium(false, this)
             }
+        } else if (!user.isCurrentUser) //chat messaging
+        {
+            premiumButton.visibility = View.VISIBLE
+            premiumButton.text = getString(R.string.start_chatting)
+            premiumButton.setOnClickListener {
+                val intent = Intent(this, Chat::class.java) //todo: replace with good fragment name
+                val b = Bundle()
+                b.putString("name", user.userName)
+                b.putString("url", user.picture)
+                intent.putExtras(b)
+                startActivity(intent)
+            }
+
         }
 
         ProfileActionButton.setOnClickListener {
