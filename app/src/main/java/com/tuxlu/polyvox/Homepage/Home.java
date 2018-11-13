@@ -27,16 +27,23 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
 import com.squareup.leakcanary.LeakCanary;
 import com.tuxlu.polyvox.BuildConfig;
+import com.tuxlu.polyvox.Chat.ChatList;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Room.Chat.CustomChat;
 import com.tuxlu.polyvox.Search.SearchResultsActivity;
 import com.tuxlu.polyvox.User.ProfilePage;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
+import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.GlideApp;
+import com.tuxlu.polyvox.Utils.UIElements.DialogFragmentDemoChangeURL;
 import com.tuxlu.polyvox.Utils.UIElements.PagerAdapter;
 import com.tuxlu.polyvox.Utils.UtilsTemp;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 import io.fabric.sdk.android.Fabric;
@@ -102,8 +109,16 @@ public class Home extends AppCompatActivity {
     }
 
     private void configToolbar() {
+        AppCompatActivity that = this;
         AppBarLayout appBar = findViewById(R.id.appbar);
         Toolbar myToolbar = findViewById(R.id.toolbar);
+        myToolbar.setOnLongClickListener((View.OnLongClickListener) view -> { //debug change URL
+            Fragment frag = new DialogFragmentDemoChangeURL();
+            FragmentTransaction transaction = that.getSupportFragmentManager().beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.add(android.R.id.content, frag).addToBackStack(null).commit();
+            return true;
+        });
         setSupportActionBar(myToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {

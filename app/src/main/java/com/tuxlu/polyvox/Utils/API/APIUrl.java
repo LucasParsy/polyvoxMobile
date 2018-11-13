@@ -7,8 +7,8 @@ package com.tuxlu.polyvox.Utils.API;
 public class APIUrl {
     public static final String SCHEME = "https";
     public static final String AUTHORITY = "api.polyvox.fr";
-    public static final String BASE_URL = SCHEME + "://" + AUTHORITY + "/";
-    public static final String CHAT_URL = "wss://chat.polyvox.fr";
+    public static String BASE_URL = SCHEME + "://" + AUTHORITY + "/";
+    public static String CHAT_URL = "wss://chat.polyvox.fr";
 
 
     public static final String FAKE_BASE_URL = SCHEME + "://" + "apo.polyvox.fr" + "/";
