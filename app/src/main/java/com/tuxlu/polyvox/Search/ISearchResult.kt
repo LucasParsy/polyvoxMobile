@@ -84,9 +84,9 @@ abstract class ISearchResult : AppCompatActivity() {
         val fragments = mutableListOf<Fragment>()
         if (savedInstanceState != null) {
             //val frags = supportFragmentManager.fragments
-            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment0"))
-            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment1"))
-            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment2"))
+            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment0")!!)
+            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment1")!!)
+            fragments.add(supportFragmentManager.getFragment(savedInstanceState, "SearchFragment2")!!)
             adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         } else {
 
@@ -109,9 +109,9 @@ abstract class ISearchResult : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        supportFragmentManager.putFragment(outState, "SearchFragment0", adapter?.getItem(0))
-        supportFragmentManager.putFragment(outState, "SearchFragment1", adapter?.getItem(1))
-        supportFragmentManager.putFragment(outState, "SearchFragment2", adapter?.getItem(2))
+        supportFragmentManager.putFragment(outState!!, "SearchFragment0", adapter!!.getItem(0))
+        supportFragmentManager.putFragment(outState, "SearchFragment1", adapter!!.getItem(1))
+        supportFragmentManager.putFragment(outState, "SearchFragment2", adapter!!.getItem(2))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

@@ -66,13 +66,11 @@ public class Login extends AccountAuthenticatorActivity {
         final TextInputLayout loginLayout = v.findViewById(R.id.LoginIDLayout);
         final TextInputEditText loginInput = loginLayout.findViewById(R.id.LoginIDInput);
 
-        loginInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    loginLayout.setErrorEnabled(false);
-            }
-        }});
+        loginInput.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                loginLayout.setErrorEnabled(false);
+        }
+    });
 
         final String login = loginInput.getText().toString();
         final String password = ((TextInputEditText)v.findViewById(R.id.LoginPasswordInput)).getText().toString();
@@ -102,20 +100,17 @@ public class Login extends AccountAuthenticatorActivity {
                         button.setText(getString(R.string.login_connect));
                         finish();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        button.setText(getString(R.string.login_connect));
-                        NetworkResponse networkResponse = error.networkResponse;
-                        loginLayout.setError(error.getMessage());
-                        if (networkResponse != null && networkResponse.statusCode == APIUrl.LOGIN_INVALID_USER_CODE) {
-                            loginLayout.setError(getString(R.string.login_incorrect_credentials));
-                            findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
-                        }
-                        else {
-                            NetworkUtils.checkNetworkError(getApplicationContext(), error);
-                            loginLayout.setError(getString(R.string.no_network));
-                        }
+                }, error -> {
+                    button.setText(getString(R.string.login_connect));
+                    NetworkResponse networkResponse = error.networkResponse;
+                    loginLayout.setError(error.getMessage());
+                    if (networkResponse != null && networkResponse.statusCode == APIUrl.LOGIN_INVALID_USER_CODE) {
+                        loginLayout.setError(getString(R.string.login_incorrect_credentials));
+                        findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        NetworkUtils.checkNetworkError(getApplicationContext(), error);
+                        loginLayout.setError(getString(R.string.no_network));
                     }
                 });
         VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);

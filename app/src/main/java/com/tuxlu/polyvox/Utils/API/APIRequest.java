@@ -74,12 +74,11 @@ public class APIRequest {
 
         if (!checkConnection(context, usesApi))
             return;
-        AsyncTask.execute(new Runnable() { @Override public void run() {
+        AsyncTask.execute(() -> {
                 final String token = usesApi ? AuthUtils.getToken(context) : null;
                 VolleyMultipartRequest request = new VolleyMultipartRequest(method, url, body, listener, errorListener, token, context);
                 addRequestToQueue(context, request);
-            }
-        });
+            });
     }
 
 

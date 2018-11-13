@@ -59,11 +59,11 @@ class OptionsInfoUser : MyAppCompatActivity() {
 
     fun buttonClick(v: View)
     {
-        if (!surname.text.matches("^[a-zA-Z].{2,128}$".toRegex())) {
+        if (!surname.text!!.matches("^[a-zA-Z].{2,128}$".toRegex())) {
             SurnameLayout.error = getString(R.string.info_user_hint_bottom)
             return
         }
-        if (!name.text.matches("^[a-zA-Z].{2,128}$".toRegex())) {
+        if (!name.text!!.matches("^[a-zA-Z].{2,128}$".toRegex())) {
             NameLayout.error = getString(R.string.info_user_hint_bottom)
             return
         }

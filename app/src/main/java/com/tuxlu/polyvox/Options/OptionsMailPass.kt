@@ -56,11 +56,12 @@ class OptionsMailPass : MyAppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun buttonClick(v: View) {
 
-        if(passwordInput.text.isBlank() && mailInput.text.isBlank())
+        if(passwordInput.text!!.isBlank() && mailInput.text!!.isBlank()) {
             return
+        }
 
-        if ((!mailInput.text.isBlank() && !checkMail(mailLayout, this)) ||
-                (!passwordInput.text.isBlank() && !checkPassword(passwordLayout, this)) ||
+        if ((!mailInput.text!!.isBlank() && !checkMail(mailLayout, this)) ||
+                (!passwordInput.text!!.isBlank() && !checkPassword(passwordLayout, this)) ||
                 !checkPassword(oldPasswordLayout, this))
             return
 

@@ -58,7 +58,7 @@ class LinearItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDeco
 
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
-                                state: RecyclerView.State?) {
+                                state: RecyclerView.State) {
         outRect.top = spaceHeight
     }
 }

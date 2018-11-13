@@ -77,7 +77,7 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
             b.putString("imageUrl", data[holder.adapterPosition].imageUrl)
             intent.putExtras(b)
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, ViewCompat.getTransitionName(image))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, ViewCompat.getTransitionName(image)!!)
             context.startActivity(intent, options.toBundle())
         }
         holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)

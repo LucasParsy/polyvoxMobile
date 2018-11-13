@@ -54,8 +54,8 @@ abstract class RoomBase : AppCompatActivity() {
     protected lateinit var streaming : Streaming
     private lateinit var castContext: CastContext
 
-    protected open val tabTitles = intArrayOf(R.string.tab_chat, R.string.tab_files, R.string.tab_queue)
-    protected open val tabIcons = intArrayOf(R.drawable.ic_forum_black_48dp, R.drawable.document_black, R.drawable.ic_mic_black_48dp)
+    protected open val tabTitles = intArrayOf(R.string.tab_queue, R.string.tab_chat, R.string.tab_files)
+    protected open val tabIcons = intArrayOf(R.drawable.ic_mic_black_48dp, R.drawable.ic_forum_black_48dp, R.drawable.document_black)
 
 
     private var chatVisibilityStatus = View.VISIBLE

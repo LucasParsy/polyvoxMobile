@@ -59,7 +59,7 @@ abstract class IRecycler<T: Any> : Fragment() {
 
         val layoutManager = setLayoutManager()
         if (itemDecoration != null)
-            recycler.addItemDecoration(itemDecoration)
+            recycler.addItemDecoration(itemDecoration!!)
         recycler.layoutManager = layoutManager
 
         adapter = Adapter(context!!, ArrayList(), layoutObjectId, binder!!)

@@ -40,7 +40,7 @@ class RoomDirect : RoomBase(), DialogFragmentInterface {
 
         val username = AuthUtils.getUsername(applicationContext)
         val fragments = getCommonFragments(username)
-        fragments.add(waitlist)
+        fragments.add(0, waitlist)
         setUpFragments(fragments)
 
         manifestHandler.post(manifestRunnable)

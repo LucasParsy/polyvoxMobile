@@ -164,7 +164,7 @@ class ProfilePage : MyAppCompatActivity() {
         }
 
         val map = HashMap<String, String>()
-        map.put("userName", user.userName)
+        map["userName"] = user.userName
         val url = NetworkUtils.getParametrizedUrl(APIUrl.FOLLOW, map)
         APIRequest.JSONrequest(this, method,
                 url, true, null, { _ ->

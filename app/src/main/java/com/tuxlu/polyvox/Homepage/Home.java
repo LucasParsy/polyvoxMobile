@@ -63,7 +63,7 @@ public class Home extends AppCompatActivity {
         //LeakCanary.install(this.getApplication());
 
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); //test
-        //MobileAds.initialize(this, "ca-app-pub-4121964947351781~9215757073"); //true
+        // MobileAds.initialize(this, "ca-app-pub-4121964947351781~9215757073"); //true
 
 
         if (!BuildConfig.DEBUG)

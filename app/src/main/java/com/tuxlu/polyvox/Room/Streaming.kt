@@ -50,12 +50,9 @@ class Streaming// This is the MediaSource representing the media to be played.
                     act.media_route_button.visibility = View.VISIBLE
             }
         }
-        val bandwidthMeter = DefaultBandwidthMeter()
         dataSourceFactory = DefaultDataSourceFactory(context,
-                Util.getUserAgent(context, act.resources.getString(R.string.app_name)), bandwidthMeter)
-        val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
-        val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-        player = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
+                Util.getUserAgent(context, act.resources.getString(R.string.app_name)))
+        player = ExoPlayerFactory.newSimpleInstance(context)
         act.videoPlayerView!!.player = player
     }
 
