@@ -45,34 +45,87 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
+                <!--
+                                <LinearLayout
+                                    android:id="@+id/premiumPrompt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone"
+                                    tools:visibility="visible">
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/view2"
-                    android:layout_width="62dp"
-                    android:layout_height="62dp"
-                    android:layout_gravity="center_horizontal"
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_weight="1"
+                                        android:text="Utilisateur Premium"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/white" />
 
-                    android:layout_marginTop="10dp"
-                    android:background="@android:color/black"
-                    android:clickable="false"
-                    android:innerRadius="0dp"
-                    android:shape="ring"
-                    android:thicknessRatio="30"
-                    app:cardBackgroundColor="@android:color/black"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="0dp"
-                    tools:cardElevation="0dp">
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:clickable="false"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/ic_account_circle_white_24dp"
+                                        app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+                                </LinearLayout>
+                -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/view2"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center_horizontal"
+
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@android:color/black"
+                        android:clickable="false"
+                        android:innerRadius="0dp"
+                        android:shape="ring"
+                        android:thicknessRatio="30"
+                        app:cardBackgroundColor="@android:color/black"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="0dp"
+                        tools:cardElevation="0dp">
+
+
+                        <ImageView
+                            android:id="@+id/ProfileIcon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="false"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_account_circle_white_24dp"
+                            app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+                    </android.support.v7.widget.CardView>
 
                     <ImageView
-                        android:id="@+id/ProfileIcon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:id="@+id/premiumPrompt"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|right"
                         android:clickable="false"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_account_circle_white_24dp"
-                        app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+                        android:visibility="invisible"
+                        tools:visibility="visible"
+                        android:src="@drawable/premium"
+                        app:srcCompat="@drawable/premium" />
 
-                </android.support.v7.widget.CardView>
+                </FrameLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -111,14 +164,32 @@
                     android:textSize="12sp"
                     tools:text="@string/bio_empty" />
 
-                <Button
-                    android:id="@+id/ProfileActionButton"
-                    style="@style/AppTheme.ColoredButton.Framed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0"
-                    android:text="@string/follow" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/ProfileActionButton"
+                        style="@style/AppTheme.ColoredButton.Framed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:text="@string/follow" />
+
+                    <Button
+                        android:id="@+id/premiumButton"
+                        style="@style/AppTheme.ColoredButton.Framed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:text="@string/become_premium"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -134,13 +205,13 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayoutHome"
             android:layout_width="match_parent"
-            app:tabMaxWidth="0dp"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:visibility="visible">
+            android:visibility="visible"
+
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/TabFollowers"

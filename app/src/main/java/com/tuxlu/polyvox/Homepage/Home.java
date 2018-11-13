@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SupportActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
@@ -76,16 +80,20 @@ public class Home extends AppCompatActivity {
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
         fragments.add(discover); //discover
 
-        if (AuthUtils.hasAccount(this))
-        {
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};;
+        if (AuthUtils.getPremiumStatus(this)) {
             historic = (HistoricRoomRecycler) Fragment.instantiate(this, HistoricRoomRecycler.class.getName());
             fragments.add(historic); //discover
+            tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic, R.string.tab_chat};
+        } else if (AuthUtils.hasAccount(getBaseContext())) {
+            Random r = new Random();
+            if (r.nextInt(10) == 4) //1 time out of 10
+                UtilsTemp.becomePremium(true, this);
         }
 
-        //TODO: disable this tab for the Playstore release
-        //fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
-        //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
-        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic};
+        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
+
+        //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic};
         pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);

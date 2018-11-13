@@ -7,9 +7,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.PagerAdapter
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.android.volley.Request
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.tuxlu.polyvox.Chat.Chat
 import com.tuxlu.polyvox.Options.Options
 import com.tuxlu.polyvox.R
 import com.tuxlu.polyvox.Search.FollowerUserRecycler
@@ -38,6 +41,7 @@ data class ProfileUser(var isCurrentUser: Boolean = false,
                        var lastName: String = "",
                        var description: String = "",
                        var picture: String = "",
+                       var premium: Boolean = false,
                        var following: Boolean = false)
 
 
@@ -66,6 +70,7 @@ class ProfilePage : MyAppCompatActivity() {
             user.lastName = info.getString("lastName")
             user.description = info.getString("description")
             user.picture = info.getString("picture")
+            user.premium = info.getString("privileges") == "premium"
             setupViewPager(topObj)
         }, null)
     }
@@ -124,7 +129,15 @@ class ProfilePage : MyAppCompatActivity() {
             ProfileIcon.setImageResource(R.drawable.ic_account_circle_white_24dp)
         setButtonsText()
 
+        if (user.premium)
+            premiumPrompt.visibility = View.VISIBLE
 
+        if (user.isCurrentUser && !user.premium) {
+            premiumButton.visibility = View.VISIBLE
+            premiumButton.setOnClickListener {
+                UtilsTemp.becomePremium(false, this)
+            }
+        }
 
         ProfileActionButton.setOnClickListener {
             if (user.isCurrentUser)

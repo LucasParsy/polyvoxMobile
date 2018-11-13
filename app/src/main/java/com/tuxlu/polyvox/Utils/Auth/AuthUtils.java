@@ -95,6 +95,27 @@ public class AuthUtils {
         return str;
     }
 
+    public static Boolean getPremiumStatus(final Context context)
+    {
+        AccountManager am = AccountManager.get(context);
+        if (!hasAccount(context, am))
+            return false;
+        Boolean res = false;
+        if (am.getUserData(getAppAccount(context, am), "premiumStatus").equals("premium"))
+            res = true;
+        return res;
+    }
+
+    public static void setPremiumStatus(final Context context)
+    {
+        AccountManager am = AccountManager.get(context);
+        if (!hasAccount(context, am))
+            return;
+        Account acc = getAppAccount(context, am);
+        am.setUserData(acc, "premiumStatus", "premium");
+    }
+
+
     public static void setPictureUrl(final Context context, String url)
     {
         AccountManager am = AccountManager.get(context);

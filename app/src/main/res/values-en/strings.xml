@@ -112,6 +112,13 @@
 
     <string name="licence_and_credits">licences and Credits</string>
     <string name="accept_permission">Accept this permission to use this feature.</string>
+
+    <string name="become_premium">Discover Premium</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="not_now">not now</string>
+    <string name="premium_ok">You are now a Polyvox Premium user!</string>
+
+
     <string name="joined_waitlist">has joined the waitlist.</string>
     <string name="waited_turn">has skipped his turn</string>
     <string name="left_waitlist">left the waitlist</string>

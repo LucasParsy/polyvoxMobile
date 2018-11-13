@@ -1,26 +1,39 @@
 package com.tuxlu.polyvox.Utils
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.util.DisplayMetrics
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.Request
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.API.APIRequest
+import com.tuxlu.polyvox.Utils.API.APIUrl
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 import es.dmoral.toasty.Toasty
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -41,15 +54,55 @@ class UtilsTemp {
         //@ColorInt val color = Color.parseColor("#DBDBDB")
 
         @JvmStatic
+        fun becomePremium(showNegativeReply: Boolean, context: Context) {
+            val body = JSONObject()
+            body.put("to", "2018-09-15T15:57:40.700Z");
+            //todo:change this parameter, but I think it won't last, it's just debug.
+
+            val build = AlertDialog.Builder(context)
+
+            val factory = LayoutInflater.from(context)
+            val alertView = factory.inflate(R.layout.util_premium_alertdialog, null)
+
+            build.setPositiveButton(context.getString(R.string.subscribe)
+            ) { _, _ ->
+                APIRequest.JSONrequest(context, Request.Method.POST, APIUrl.PREMIUM, true, body,
+                        { _ ->
+                            AuthUtils.setPremiumStatus(context)
+                            showToast(context, context.getString(R.string.premium_ok))
+                        }, null)
+            }
+            if (showNegativeReply)
+                build.setNegativeButton(context.getString(R.string.not_now), null)
+
+
+            val dialog = build.create();
+            dialog.setView(alertView)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show()
+            dialog.window?.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, 1100)
+
+            dialog.setOnShowListener {
+                val image = dialog.findViewById<ImageView>(R.id.dialog_imageview);
+                val icon = BitmapFactory.decodeResource(context.resources, R.drawable.become_premium)
+                val imageWidthInPX = image!!.width.toFloat()
+
+                val layoutParams = LinearLayout.LayoutParams(Math.round(imageWidthInPX),
+                        Math.round(imageWidthInPX * icon.height.toFloat() / icon.width.toFloat()))
+                image.layoutParams = layoutParams;
+            }
+        }
+
+        @JvmStatic
         fun getLocale(resources: Resources): Locale {
-            val locale : Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            val locale: Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 resources.configuration.locales.get(0)
             else
                 resources.configuration.locale;
             return locale;
         }
 
-            @JvmStatic
+        @JvmStatic
         fun getPath(nName: String): File {
 
             var extension: String = ""
@@ -118,7 +171,7 @@ class UtilsTemp {
 
 
         @JvmStatic
-        fun checkPermission(context: Activity, perm: String) : Boolean {
+        fun checkPermission(context: Activity, perm: String): Boolean {
             val permissionCheck = ContextCompat.checkSelfPermission(context, perm)
 
             if (permissionCheck == PackageManager.PERMISSION_DENIED) {
@@ -126,7 +179,7 @@ class UtilsTemp {
                     UtilsTemp.showToast(context, context.getString(R.string.accept_permission))
                 }
                 ActivityCompat.requestPermissions(context, arrayOf(perm), 729)
-            return false
+                return false
             }
             return true
         }
@@ -173,14 +226,16 @@ class UtilsTemp {
         @SuppressLint("InlinedApi")
         @JvmStatic
         fun setNotificationSilentState(context: Context, mode: Int): Boolean {
-            val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager? ?: return false
+            val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
+                    ?: return false
 
             //state: true -> silent, false -> normal
             if (manager.ringerMode == mode)
                 return true
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager? ?: return false
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+                        ?: return false
 
                 if (!notificationManager.isNotificationPolicyAccessGranted) {
 
@@ -235,9 +290,8 @@ class UtilsTemp {
         */
 
         @JvmStatic
-        fun dpToPixels(dp: Int, context: Context): Int
-        {
-            return (dp *(context.resources.displayMetrics.xdpi/ DisplayMetrics.DENSITY_DEFAULT)).toInt()
+        fun dpToPixels(dp: Int, context: Context): Int {
+            return (dp * (context.resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).toInt()
         }
 
 

@@ -130,7 +130,7 @@ abstract class RoomBase : AppCompatActivity() {
     }
 
     fun showAd() {
-        if (mInterstitialAd.isLoaded)
+        if (mInterstitialAd.isLoaded && !AuthUtils.getPremiumStatus(this))
             mInterstitialAd.show()
         //todo: comment when sharing,ads are annoying...
     }
