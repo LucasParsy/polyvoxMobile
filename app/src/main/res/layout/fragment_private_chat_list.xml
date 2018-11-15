@@ -20,6 +20,13 @@
 
 
     <include
+        android:id="@+id/notRegisteredView"
+        layout="@layout/util_please_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
         layout="@layout/util_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

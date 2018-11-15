@@ -43,20 +43,34 @@ class ChatList : android.support.v4.app.Fragment(), DialogsListAdapter.OnDialogC
         dialogsListAdapter.setOnDialogClickListener(this)
         view.findViewById<DialogsList>(R.id.dialogsList).setAdapter(dialogsListAdapter)
 
-        var list = ArrayList<ChatDialog>()
+        val list = ArrayList<ChatDialog>()
         CustomChat.requestListUsers()
+        val delay: Long = 2500
 
-        handler.postDelayed({
-            LoadingUtils.EndLoadingView(view)
-            val users = CustomChat.getListUsers()
-            if (users.isEmpty()) {
-                view.findViewById<View>(R.id.noFriendsView).visibility = View.VISIBLE
-            } else {
-                for (elem in users)
-                    list.add(ChatDialog(elem, 0, null))
-                dialogsListAdapter.setItems(list)
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                LoadingUtils.EndLoadingView(view)
+                val users = CustomChat.getListUsers()
+                if (!AuthUtils.hasAccount(requireContext())) {
+                    view.findViewById<View>(R.id.noFriendsView).visibility = View.INVISIBLE
+                    view.findViewById<View>(R.id.notRegisteredView).visibility = View.VISIBLE
+                }
+                else if (users.isEmpty()) {
+                    view.findViewById<View>(R.id.noFriendsView).visibility = View.VISIBLE
+                    view.findViewById<View>(R.id.notRegisteredView).visibility = View.INVISIBLE
+                }
+                else {
+                    view.findViewById<View>(R.id.noFriendsView).visibility = View.INVISIBLE
+                    view.findViewById<View>(R.id.notRegisteredView).visibility = View.INVISIBLE
+                    list.clear()
+                    for (elem in users)
+                        list.add(ChatDialog(elem, 0, null))
+                    dialogsListAdapter.setItems(list)
+                }
+                handler.postDelayed(this, delay)
+
             }
-        }, 2500)
+        }, delay)
 
 
 /*
