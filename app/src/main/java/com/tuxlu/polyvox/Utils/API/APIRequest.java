@@ -28,6 +28,7 @@ import com.tuxlu.polyvox.Utils.UtilsTemp;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -122,8 +123,15 @@ public class APIRequest {
                         UtilsTemp.showToast(context, context.getString(R.string.banned), ToastType.ERROR);
                         return;
                     }
+                    String data = null;
+
+                    try {
+                        data = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     if (error.networkResponse.statusCode == APIUrl.USER_NOT_VALIDATED &&
-                            Arrays.toString(error.networkResponse.data).contains("user_not_validated")) {
+                            data.contains("user_not_validated")) {
                         AlertDialog.Builder build = new AlertDialog.Builder(context);
                         build.setTitle(context.getString(R.string.not_verified_title))
                                 .setMessage(context.getString(R.string.not_verified_message))

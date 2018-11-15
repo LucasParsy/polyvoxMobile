@@ -60,6 +60,7 @@ public class Home extends AppCompatActivity {
     Handler handler = new Handler();
     PagerAdapter adapter;
     ViewPager pager;
+    private static boolean isStartup = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +74,16 @@ public class Home extends AppCompatActivity {
         //if (LeakCanary.isInAnalyzerProcess(this)) {return;}
         //LeakCanary.install(this.getApplication());
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); //test
-        // MobileAds.initialize(this, "ca-app-pub-4121964947351781~9215757073"); //true
+        if (isStartup) {
+            isStartup = false;
+            MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); //test
+            // MobileAds.initialize(this, "ca-app-pub-4121964947351781~9215757073"); //true
 
 
-        if (!BuildConfig.DEBUG)
-            Fabric.with(this, new Crashlytics());
-
+            if (!BuildConfig.DEBUG)
+                Fabric.with(this, new Crashlytics());
+            CustomChat.INSTANCE.setupSocket(this);
+        }
         //((ProgressBar)findViewById(R.id.progressBar)).getIndeterminateDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
 /*
@@ -91,8 +95,6 @@ public class Home extends AppCompatActivity {
         intent.putExtras(b);
         this.startActivity(intent);
 */
-        CustomChat.INSTANCE.setupSocket(this);
-
         if (this.isTaskRoot() && AuthUtils.hasAccount(this.getBaseContext())) {
             String url = APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER;
             APIRequest.JSONrequest(this, Request.Method.GET, url,

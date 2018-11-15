@@ -260,7 +260,8 @@ public class WebSocketClient {
                 try {
                     synchronized (mSendLock) {
                         if (mSocket == null) {
-                            throw new IllegalStateException("Socket not connected");
+                            return;
+                            //throw new IllegalStateException("Socket not connected");
                         }
                         OutputStream outputStream = mSocket.getOutputStream();
                         outputStream.write(frame);

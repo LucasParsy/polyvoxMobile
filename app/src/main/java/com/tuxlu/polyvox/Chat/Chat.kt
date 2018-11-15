@@ -80,6 +80,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
         onLoadMore(1, 42)
         LoadingUtils.EndLoadingView(rootView)
         val delay: Long = 2000 //10 seconds
+
         handler.postDelayed(object : Runnable {
             override fun run() {
                 updateMessages()
@@ -107,6 +108,9 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     override fun onSubmit(message: CharSequence): Boolean {
 
         CustomChat.sendUserMessage(friendAuthor.username, message.toString())
+        val message = ChatMessage(message.toString(), myAuthor, Date())
+        sentList.add(message.id)
+        adapter.addToStart(message, true)
         return true
         /*
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
@@ -153,16 +157,20 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
     }
 
     fun updateMessages() {
-        val finalMessages = ArrayList<ChatMessage>();
+        val finalMessages = ArrayList<ChatMessage>()
         var received = CustomChat.getUserMessages(friendAuthor.username)
-        if (received.size <= numberMessageReceived)
+        val maxSize = received.size
+        if (maxSize <= numberMessageReceived)
             return
-        received = received.subList(numberMessageReceived, received.size)
+
+        received = received.subList(numberMessageReceived, maxSize)
+        numberMessageReceived = maxSize
         for (elem in received) {
             val auth = if (elem.username == friendAuthor.username) friendAuthor else myAuthor
             finalMessages.add(ChatMessage(elem.message, auth, Date(elem.timestamp)))
+            adapter.addToStart(ChatMessage(elem.message, auth, Date(elem.timestamp)), true)
         }
-        adapter.addToEnd(finalMessages, false)
+        //adapter.addToStart(finalMessages, false)
         /*
         //val url = APIUrl.BASE_URL + APIUrl.CHAT_UPDATE + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT_UPDATE + APIUrl.FAKE_CHAT_NAME

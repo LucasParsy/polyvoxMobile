@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.stfalcon.chatkit.messages.MessageInput
 import com.tuxlu.polyvox.R
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils
 
 
 /**
@@ -38,6 +39,8 @@ class RoomChat : Fragment(), MessageInput.InputListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_room_chat, container, false)
+        if (!AuthUtils.hasAccount(context))
+            rootView.findViewById<View>(R.id.input).visibility = View.GONE
         return rootView
     }
 

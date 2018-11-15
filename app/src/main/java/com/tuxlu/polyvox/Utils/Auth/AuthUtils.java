@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.tuxlu.polyvox.Homepage.Home;
 import com.tuxlu.polyvox.R;
+import com.tuxlu.polyvox.Room.Chat.CustomChat;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 
@@ -57,6 +58,7 @@ public class AuthUtils {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         AuthUtils.removeAccountLogout(context);
+                                        CustomChat.INSTANCE.setupSocket(context);
                                         Intent nin = new Intent(context, Home.class);
                                         nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         context.startActivity(nin);
@@ -68,6 +70,7 @@ public class AuthUtils {
     }
 
     public static void removeAccountLogout(Context context) {
+
         AccountManager am = AccountManager.get(context);
         if (!hasAccount(context, am))
             return;

@@ -19,14 +19,26 @@ object CustomChat : WebSocketClient.Listener {
     private var userMessages: HashMap<String, UserMessageInfo> = HashMap()
     private var roomMessages: MutableList<RoomChatResult> = ArrayList()
     private lateinit var socket: WebSocketClient
+    private var isAuth = false
+    private var myUserName: String = ""
+    private var lastHistoryRequested = ""
 
     fun setupSocket(context: Context) {
         AsyncTask.execute {
             var authToken = ""
-            if (AuthUtils.hasAccount(context))
+            if (AuthUtils.hasAccount(context)) {
                 authToken = AuthUtils.getToken(context)
-            if (::socket.isInitialized)
+                myUserName = AuthUtils.getUsername(context)
+            }
+            isAuth = (authToken != "")
+            if (::socket.isInitialized) {
                 socket.disconnect()
+                listUsers.clear()
+                userMessages.clear()
+                roomMessages.clear()
+                lastHistoryRequested = ""
+                Thread.sleep(3500)
+            }
             socket = WebSocketClient(URI(APIUrl.CHAT_URL), this, authToken)
             socket.connect()
             socket.disconnect()
@@ -56,14 +68,19 @@ object CustomChat : WebSocketClient.Listener {
         when (cmd) {
             "history", "msg_list" -> {
                 val arr = obj.getJSONArray("data")
-                for (i in 0 until arr.length())
-                    if (cmd == "history")
+                //Log.wtf("ROOMCHAT", arr.toString())
+                if (cmd == "history") roomMessages.clear() else listUsers.clear()
+                for (i in 0 until arr.length()) {
+                    if (cmd == "history") {
                         roomMessages.add(addSingleMessage(arr.getJSONObject(i).getJSONObject("data")))
-                    else if (cmd == "msg_list")
+                    } else if (cmd == "msg_list") {
                         listUsers.add(getSingleUser(arr.getJSONObject(i).getJSONObject("userinfo")))
+                    }
+                }
+                //Log.wtf("ROOMCHAT", "len ListUser = ${listUsers.size}")
             }
             "broadcast" -> roomMessages.add(addSingleMessage(obj.getJSONObject("data")))
-            "msg" -> onPrivateHistoryMsg(obj)
+            "msg" -> onPrivateMsg(obj)
             "msg_history" -> onPrivateHistoryMsg(obj)
         }
     }
@@ -81,16 +98,16 @@ object CustomChat : WebSocketClient.Listener {
 
     private fun onPrivateHistoryMsg(obj: JSONObject) {
         val data = obj.getJSONObject("data")
-        val privateUser = getSingleUser(data.getJSONObject("info"))
+        //val privateUser = getSingleUser(data.getJSONObject("info"))
         val arr = data.getJSONArray("data")
         val histList = ArrayList<RoomChatResult>()
-        checkUserCreation(privateUser.username)
-        if (userMessages[privateUser.username]!!.hasHistory)
-            return
+        checkUserCreation(lastHistoryRequested)
+        if (userMessages[lastHistoryRequested]!!.hasHistory)
+            userMessages[lastHistoryRequested]!!.messages.clear()
         for (i in 0 until arr.length())
-            histList.add(addSingleMessage(arr.getJSONObject(i).getJSONObject("data")))
-        userMessages[privateUser.username]!!.messages.addAll(0, histList)
-        userMessages[privateUser.username]!!.hasHistory = true
+            histList.add(addSingleMessage(arr.getJSONObject(i)))
+        userMessages[lastHistoryRequested]!!.messages.addAll(0, histList)
+        userMessages[lastHistoryRequested]!!.hasHistory = true
     }
 
     override fun onMessage(data: ByteArray) {
@@ -104,6 +121,8 @@ object CustomChat : WebSocketClient.Listener {
     }
 
     override fun onConnect() {
+        if (isAuth)
+            requestListUsers()
 /*
         if (initialCommand.isNotEmpty())
             socket.send(initialCommand)
@@ -131,15 +150,15 @@ object CustomChat : WebSocketClient.Listener {
 
     fun getListUsers(): List<Author> {
         val res = ArrayList(listUsers)
-        listUsers.clear()
+        //listUsers.clear()
         return res
     }
 
     fun joinRoom(token: String, history: Boolean = false) {
         socket.send("/join $token")
         roomMessages.clear()
-        if (history)
-            socket.send("/history $token 0")
+        //if (history) //todo: reactivate if does not nake the server crash anymore
+            //socket.send("/history $token 0")
     }
 
     fun quitRoom() {
@@ -148,9 +167,12 @@ object CustomChat : WebSocketClient.Listener {
 
     fun requestListUsers() = socket.send("/msg_list")
 
-    fun requestUserMessages(user: String) = socket.send("/msg_history $user 0")
+    fun requestUserMessages(user: String) {
+        socket.send("/msg_history $user 0")
+        lastHistoryRequested = user
+    }
 
     fun sendRoomMessage(message: String) = socket.send("/broadcast $message")
 
-    fun sendUserMessage(message: String, user: String) = socket.send("/msg $user $message")
+    fun sendUserMessage(user: String, message: String) = socket.send("/msg $user $message")
 }
