@@ -61,6 +61,10 @@ class HistoricRoomRecycler : DiscoverRoomRecycler() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun parseTopData(response: JSONObject) {
+        this.add(response.getJSONArray("data"), true)
+    }
+
     override fun fillDataObject(json: JSONObject): RoomSearchResult {
         val res = super.fillDataObject(json)
         try {

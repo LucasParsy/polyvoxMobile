@@ -45,8 +45,8 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
     private val defaultPictures = intArrayOf(R.drawable.logo_grey)
 
     override fun bind(holder: Adapter.ViewHolder<RoomSearchResult>, item: RoomSearchResult) {
-        if (!item.active)
-            holder.v.visibility = View.GONE
+        if (item.active)
+            holder.v.findViewById<View>(R.id.logoLive).visibility = View.VISIBLE
         holder.v.findViewById<TextView>(R.id.infoRoomName).text = item.name
         holder.v.findViewById<TextView>(R.id.infoRoomSubject).text = item.tags
         if (item.speakers.isNotEmpty())
@@ -55,12 +55,11 @@ open class RoomSearchBinder(val activity: FragmentActivity) : ViewHolderBinder<R
         val image = holder.v.findViewById<ImageView>(R.id.infoRoomPicture)
 
         ViewCompat.setTransitionName(image, item.name)
-
         //random.nextInt(4)
-        if (!UtilsTemp.isStringEmpty(item.imageUrl)) {
-            GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(defaultPictures[0]).into(image)
-        } else
-            GlideApp.with(holder.v.context).clear(image)
+            if (!UtilsTemp.isStringEmpty(item.imageUrl)) {
+                GlideApp.with(holder.v.context).load(item.imageUrl).placeholder(defaultPictures[0]).into(image)
+            } else
+                GlideApp.with(holder.v.context).clear(image)
         //else
         //image.setImageDrawable(holder.v.context.resources.getDrawable(defaultPictures[random.nextInt(4)]))
     }
@@ -103,8 +102,8 @@ open class SearchRoomRecycler : IRecycler<RoomSearchResult>() {
     override fun fillDataObject(json: JSONObject): RoomSearchResult {
         val res = RoomSearchResult()
         try {
-            //if (!json.has("status") || json.get("status") !=  "running")
-            //res.active = false;
+            if (!json.has("status") || json.get("status") != "running")
+                res.active = false
             res.name = json.getString("name")
             res.imageUrl = json.getString(APIUrl.SEARCH_USER_IMAGE_URL)
             if (json.has("nbActors"))

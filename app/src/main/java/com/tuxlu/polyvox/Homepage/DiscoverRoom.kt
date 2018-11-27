@@ -14,6 +14,7 @@ import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
 import org.json.JSONException
+import org.json.JSONObject
 
 open class DiscoverRoomRecycler : SearchRoomRecycler() {
     override val layoutObjectId: Int = R.layout.info_discover_room
@@ -26,11 +27,17 @@ open class DiscoverRoomRecycler : SearchRoomRecycler() {
     override fun setLayoutManager(): RecyclerView.LayoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
 
+    open fun parseTopData(response: JSONObject)
+    {
+        this.add(response.getJSONObject("data").getJSONArray("running"), true)
+        this.add(response.getJSONObject("data").getJSONArray("created"), false)
+    }
+
     private fun updateRooms() {
         APIRequest.JSONrequest(rootView.context, Request.Method.GET, APIUrl.BASE_URL + requestUrl, usesAPI, null,
                 { response ->
                     try {
-                        this.add(response.getJSONArray(APIUrl.SEARCH_USER_JSONOBJECT), true)
+                        parseTopData(response)
                         swipeRefreshLayout.isRefreshing = false
                         LoadingUtils.EndLoadingView(rootView)
                     } catch (ignored: JSONException) {
