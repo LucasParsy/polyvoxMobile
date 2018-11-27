@@ -45,7 +45,7 @@ class ChatList : android.support.v4.app.Fragment(), DialogsListAdapter.OnDialogC
 
         val list = ArrayList<ChatDialog>()
         CustomChat.requestListUsers()
-        val delay: Long = 2500
+        val delay: Long = 1000
 
         handler.postDelayed(object : Runnable {
             override fun run() {

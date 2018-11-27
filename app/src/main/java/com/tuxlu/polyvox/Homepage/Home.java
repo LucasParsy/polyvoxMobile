@@ -94,38 +94,40 @@ public class Home extends AppCompatActivity {
         b.putString("imageUrl", "https://avatars1.githubusercontent.com/u/1269214?s=88&v=4");
         intent.putExtras(b);
         this.startActivity(intent);
-*/
+
+        //don't know why it is there...
         if (this.isTaskRoot() && AuthUtils.hasAccount(this.getBaseContext())) {
             String url = APIUrl.BASE_URL + APIUrl.INFO_CURRENT_USER;
             APIRequest.JSONrequest(this, Request.Method.GET, url,
                     true, null, response -> {
                     }, null);
         }
+*/
 
 
         List<Fragment> fragments = new Vector<>();
 
         discover = (DiscoverRoomRecycler) Fragment.instantiate(this, DiscoverRoomRecycler.class.getName());
         fragments.add(discover); //discover
+        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
 
-        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};;
+        int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat};
+        ;
         if (AuthUtils.getPremiumStatus(this)) {
             historic = (HistoricRoomRecycler) Fragment.instantiate(this, HistoricRoomRecycler.class.getName());
             fragments.add(historic); //discover
-            tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic, R.string.tab_chat};
+            tabTitles = new int[]{R.string.tab_discover, R.string.tab_chat, R.string.tab_historic};
         } else if (AuthUtils.hasAccount(getBaseContext())) {
             Random r = new Random();
             if (r.nextInt(10) == 4) //1 time out of 10
                 UtilsTemp.becomePremium(true, this);
         }
 
-        fragments.add(Fragment.instantiate(this, ChatList.class.getName())); //chat
 
         //int[] tabTitles = new int[]{R.string.tab_discover, R.string.tab_historic};
         pager = findViewById(R.id.pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), fragments, tabTitles, this);
         pager.setAdapter(adapter);
-
         ((TabLayout) findViewById(R.id.tabLayoutHome)).setupWithViewPager(pager);
     }
 
@@ -133,7 +135,7 @@ public class Home extends AppCompatActivity {
         AppCompatActivity that = this;
         AppBarLayout appBar = findViewById(R.id.appbar);
         Toolbar myToolbar = findViewById(R.id.toolbar);
-        myToolbar.setOnLongClickListener((View.OnLongClickListener) view -> { //debug change URL
+        myToolbar.setOnLongClickListener(view -> { //debug change URL
             Fragment frag = new DialogFragmentDemoChangeURL();
             FragmentTransaction transaction = that.getSupportFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -198,14 +200,9 @@ public class Home extends AppCompatActivity {
 
         //For search in different activity
         final Context that = this;
-        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
-
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                startActivity(new Intent(that, SearchResultsActivity.class));
-                return true;
-            }
+        searchItem.setOnMenuItemClickListener(menuItem -> {
+            startActivity(new Intent(that, SearchResultsActivity.class));
+            return true;
         });
 
 

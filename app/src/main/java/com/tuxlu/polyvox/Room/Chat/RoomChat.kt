@@ -39,8 +39,6 @@ class RoomChat : Fragment(), MessageInput.InputListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_room_chat, container, false)
-        if (!AuthUtils.hasAccount(context))
-            rootView.findViewById<View>(R.id.input).visibility = View.GONE
         return rootView
     }
 
@@ -49,6 +47,9 @@ class RoomChat : Fragment(), MessageInput.InputListener {
 
         val token = arguments!!.getString("token")
         val hasHistory = arguments!!.getBoolean("history")
+        if (!AuthUtils.hasAccount(context) || hasHistory)
+            rootView.findViewById<View>(R.id.input).visibility = View.GONE
+
         rootView.findViewById<MessageInput>(R.id.input).setInputListener(this)
 
 

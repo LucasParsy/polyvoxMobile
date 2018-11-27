@@ -86,7 +86,7 @@ class Chat : MyAppCompatActivity(), MessagesListAdapter.OnLoadMoreListener,
                 updateMessages()
                 handler.postDelayed(this, delay)
             }
-        }, delay)
+        }, 500)
 
         //val url = APIUrl.BASE_URL + APIUrl.CHAT + friendAuthor.username
         val url = APIUrl.FAKE_BASE_URL + APIUrl.CHAT + APIUrl.FAKE_CHAT_NAME

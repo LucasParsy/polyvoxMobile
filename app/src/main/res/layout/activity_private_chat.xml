@@ -64,7 +64,7 @@ app:outcomingTextSize="18sp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:inputHint="@string/enter_message_hint"
-            app:showAttachmentButton="true" />
+            app:showAttachmentButton="false" />
 
     </RelativeLayout>
 

@@ -51,6 +51,7 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
     var timeLimit: Int = 0
     var token: String = ""
     lateinit var act: RoomHistoric
+    var isFirst = true
 
     private fun secondToText(seconds: Int): String {
         return (String.format("%02d:%02d", seconds / 60, seconds % 60))
@@ -77,7 +78,7 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
 
             override fun onFinish() {}
         }
-        Companion.setTimerStatus(false, item)
+        setTimerStatus(false, item)
     }
 
 
@@ -88,7 +89,7 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
             return
         */
         val context = holder.v.context
-        val clickListener = View.OnClickListener { _ ->
+        val clickListener = View.OnClickListener {
 
             val selItem = data[holder.layoutPosition]
             if (selItem.isPlaying)
@@ -96,15 +97,17 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
 
             for (item in data)
                 if (item.isPlaying)
-                    Companion.setTimerStatus(false, item)
+                    setTimerStatus(false, item)
 
-            Companion.setTimerStatus(true, selItem)
+            setTimerStatus(true, selItem)
             loadStreamUrl(selItem, context, token, act)
         }
 
         holder.v.findViewById<View>(R.id.infoRoomLayout).setOnClickListener(clickListener)
-
-
+        if (isFirst) {
+            clickListener.onClick(null)
+            isFirst = false
+        }
     }
 
     companion object {
@@ -137,13 +140,14 @@ open class HistoricListBinder : ViewHolderBinder<HistoricListResult> {
             else
                 View.INVISIBLE
 
-            item.holder!!.v.findViewById<ImageView>(R.id.statusIcon).visibility = vis
-            item.holder!!.v.findViewById<TextView>(R.id.timePassed).visibility = vis
-            item.holder!!.v.findViewById<TextView>(R.id.timeLimit).visibility = vis
-
+            if (item.holder != null) {
+                item.holder!!.v.findViewById<ImageView>(R.id.statusIcon).visibility = vis
+                item.holder!!.v.findViewById<TextView>(R.id.timePassed).visibility = vis
+                item.holder!!.v.findViewById<TextView>(R.id.timeLimit).visibility = vis
+            }
             if (item.isPlaying)
                 item.timer!!.start()
-            else
+            else if (item.timer != null)
                 item.timer!!.cancel()
         }
 

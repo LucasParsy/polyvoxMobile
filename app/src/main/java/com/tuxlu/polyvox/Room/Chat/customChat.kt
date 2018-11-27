@@ -150,6 +150,7 @@ object CustomChat : WebSocketClient.Listener {
 
     fun getListUsers(): List<Author> {
         val res = ArrayList(listUsers)
+        requestListUsers()
         //listUsers.clear()
         return res
     }
