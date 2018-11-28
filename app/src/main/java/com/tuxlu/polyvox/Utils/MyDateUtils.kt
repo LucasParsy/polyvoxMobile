@@ -60,7 +60,7 @@ object MyDateUtils {
 
         root.findViewById<Spinner>(R.id.spinnerMonth).setSelection(calendar.get(Calendar.MONTH) + 1)
         root.findViewById<Spinner>(R.id.spinnerDays).setSelection(calendar.get(Calendar.DAY_OF_MONTH))
-        root.findViewById<Spinner>(R.id.spinnerYear).setSelection(currentYear - userYear)
+        root.findViewById<Spinner>(R.id.spinnerYear).setSelection(currentYear - userYear +2)
     }
 
 

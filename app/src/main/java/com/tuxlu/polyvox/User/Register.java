@@ -1,25 +1,25 @@
 package com.tuxlu.polyvox.User;
 
-import android.app.Dialog;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tuxlu.polyvox.R;
 import com.tuxlu.polyvox.Utils.API.APIRequest;
 import com.tuxlu.polyvox.Utils.API.APIUrl;
 import com.tuxlu.polyvox.Utils.Auth.AuthRequest;
+import com.tuxlu.polyvox.Utils.Auth.AuthUtils;
 import com.tuxlu.polyvox.Utils.MyDateUtils;
 import com.tuxlu.polyvox.Utils.NetworkLibraries.VHttp;
 import com.tuxlu.polyvox.Utils.NetworkUtils;
@@ -80,8 +80,7 @@ public class Register extends AppCompatActivity {
     }
 
 
-    private Date checkInput(String IDText, String mailText, String passText)
-    {
+    private Date checkInput(String IDText, String mailText, String passText) {
 
         TextView CGUHint = findViewById(R.id.CGUButton);
         Boolean CGUAccepted = ((CheckBox) findViewById(R.id.CGUCheck)).isChecked();
@@ -137,46 +136,40 @@ public class Register extends AppCompatActivity {
         }
 
         button.setText(getString(R.string.register_sending));
+        Context context = getApplicationContext();
 
-
-        JsonObjectRequest jsObjRequest = new APIRequest.APIJsonObjectRequest(Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        button.setText(getString(R.string.create_account));
-                        endActivity(mailText);
-                        //la réponse
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        TextInputLayout mail =  findViewById(R.id.RegisterEmailLayout);
-                        TextInputLayout id =  findViewById(R.id.RegisterIDLayout);
-                        findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
-                        button.setText(getString(R.string.create_account));
-                        if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE)
-                        {
-                            String errData = new String(error.networkResponse.data);
-                            id.clearFocus();
-                            if (errData.contains(APIUrl.REGISTER_MAIL_ERROR)) {
-                                findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
-                                mail.setError(getString(R.string.register_mail_already_used));
-                            }
-                            else if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
-                                id.setError(getString(R.string.register_ID_already_used));
-                            else
-                                id.setError(getString(R.string.unknown_error));
-                        }
-                        else {
-                            NetworkUtils.checkNetworkError(getApplicationContext(), error);
-                            findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
-                            id.setError(getString(R.string.no_network));
-                        }
-                    }
-                }, null, this.getApplicationContext());
+        AuthRequest jsObjRequest = new AuthRequest(context, IDText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
+                response -> {
+                    AccountManager am = AccountManager.get(context);
+                    Account account = AuthUtils.getAppAccount(context, am);
+                    am.setUserData(account, "name", IDText);
+                    am.setUserData(account, "picture", "");
+                    am.setUserData(account, "premiumStatus", "");
+                    button.setText(getString(R.string.create_account));
+                    NetworkUtils.sendMail(getApplicationContext(), r -> endActivity());
+                    UtilsTemp.showToast(context,getString(R.string.account_created), ToastType.SUCCESS);
+                    endActivity();
+                }, error -> {
+            TextInputLayout mail = findViewById(R.id.RegisterEmailLayout);
+            TextInputLayout id = findViewById(R.id.RegisterIDLayout);
+            findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
+            button.setText(getString(R.string.create_account));
+            if (error.networkResponse != null && error.networkResponse.statusCode == APIUrl.REGISTER_ERROR_CODE) {
+                String errData = new String(error.networkResponse.data);
+                id.clearFocus();
+                if (errData.contains(APIUrl.REGISTER_MAIL_ERROR)) {
+                    findViewById(R.id.RegisterMailHint).setVisibility(View.GONE);
+                    mail.setError(getString(R.string.register_mail_already_used));
+                } else if (errData.contains(APIUrl.REGISTER_LOGIN_ERROR))
+                    id.setError(getString(R.string.register_ID_already_used));
+                else
+                    id.setError(getString(R.string.unknown_error));
+            } else {
+                NetworkUtils.checkNetworkError(getApplicationContext(), error);
+                findViewById(R.id.RegisterIDHint).setVisibility(View.GONE);
+                id.setError(getString(R.string.no_network));
+            }
+        });
         VHttp.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
 
@@ -194,13 +187,14 @@ public class Register extends AppCompatActivity {
         startActivity(webIntent);
     }
 
-    private void endActivity(String mail) {
+    private void endActivity() {
         /*
         Intent intent = new Intent(this, RegisterSuccessful.class);
         intent.putExtra("mail", mail);
         startActivity(intent);
         */
-        UtilsTemp.showToast(this, getResources().getString(R.string.account_created), ToastType.SUCCESS);
+        //UtilsTemp.showToast(this, getResources().getString(R.string.account_created), ToastType.SUCCESS);
+        setResult(42);
         finish();
     }
 

@@ -39,8 +39,7 @@ public class Login extends AccountAuthenticatorActivity {
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             setActionBar(bar);
             bar.setTitleTextColor(Color.WHITE);
-        }
-        else
+        } else
             bar.setVisibility(View.GONE);
 
         //lastPass Integration
@@ -54,14 +53,12 @@ public class Login extends AccountAuthenticatorActivity {
         }
     }
 
-    private void displayError(JSONException e, TextInputLayout loginLayout)
-    {
+    private void displayError(JSONException e, TextInputLayout loginLayout) {
         e.printStackTrace();
         loginLayout.setError(getString(R.string.unknown_error));
     }
 
-    public void onLoginClick(View buttonView)
-    {
+    public void onLoginClick(View buttonView) {
 
         View v = buttonView.getRootView();
         final TextInputLayout loginLayout = v.findViewById(R.id.LoginIDLayout);
@@ -70,11 +67,11 @@ public class Login extends AccountAuthenticatorActivity {
         loginInput.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
                 loginLayout.setErrorEnabled(false);
-        }
-    });
+            }
+        });
 
         final String login = loginInput.getText().toString();
-        final String password = ((TextInputEditText)v.findViewById(R.id.LoginPasswordInput)).getText().toString();
+        final String password = ((TextInputEditText) v.findViewById(R.id.LoginPasswordInput)).getText().toString();
         if (login.isEmpty() || password.isEmpty())
             return;
 
@@ -82,26 +79,21 @@ public class Login extends AccountAuthenticatorActivity {
         try {
             req.put(APIUrl.LOGIN_PARAM1, login);
             req.put(APIUrl.LOGIN_PARAM2, password);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             displayError(e, loginLayout);
             return;
         }
         //Drawable d = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_email);
 
 
-        final Button button = ((Button)buttonView);
+        final Button button = ((Button) buttonView);
         button.setText(getString(R.string.login_connect_waiting));
         JsonObjectRequest jsObjRequest = new AuthRequest
-                (getApplicationContext(), login, Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        setResult(RESULT_OK); //si utilisation startActivityForResult()
-                        button.setText(getString(R.string.login_connect));
-                        CustomChat.INSTANCE.setupSocket(getBaseContext());
-                        finish();
-                    }
+                (getApplicationContext(), login, Request.Method.POST, APIUrl.BASE_URL + APIUrl.LOGIN, req, response -> {
+                    setResult(RESULT_OK); //si utilisation startActivityForResult()
+                    button.setText(getString(R.string.login_connect));
+                    CustomChat.INSTANCE.setupSocket(getBaseContext());
+                    finish();
                 }, error -> {
                     button.setText(getString(R.string.login_connect));
                     NetworkResponse networkResponse = error.networkResponse;
@@ -109,8 +101,7 @@ public class Login extends AccountAuthenticatorActivity {
                     if (networkResponse != null && networkResponse.statusCode == APIUrl.LOGIN_INVALID_USER_CODE) {
                         loginLayout.setError(getString(R.string.login_incorrect_credentials));
                         findViewById(R.id.LoginConnectionProblemButton).setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         NetworkUtils.checkNetworkError(getApplicationContext(), error);
                         loginLayout.setError(getString(R.string.no_network));
                     }
@@ -118,15 +109,19 @@ public class Login extends AccountAuthenticatorActivity {
         VHttp.getInstance(v.getContext().getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
 
-    public void onLoginProblemClick(View v)
-    {
+    public void onLoginProblemClick(View v) {
         startActivity(new Intent(this, ForgotPassword.class));
     }
 
-    public void onCreateAccountClick(View v)
-    {
-        startActivity(new Intent(this, Register.class));
+    public void onCreateAccountClick(View v) {
+        startActivityForResult(new Intent(this, Register.class), 4256);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 42) {
+            finish();
+        }
+    }
 
 }

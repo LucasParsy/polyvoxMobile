@@ -50,21 +50,15 @@ public class AuthUtils {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.logout))
                 .setMessage(context.getString(R.string.logout_confirm))
-                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        APIRequest.JSONrequest(context, Request.Method.GET,
-                                APIUrl.BASE_URL + APIUrl.LOGOUT,
-                                true, null, new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        AuthUtils.removeAccountLogout(context);
-                                        CustomChat.INSTANCE.setupSocket(context);
-                                        Intent nin = new Intent(context, Home.class);
-                                        nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        context.startActivity(nin);
-                                    }
-                                }, null);
-                    }})
+                .setPositiveButton(context.getString(R.string.yes), (dialog, whichButton) -> APIRequest.JSONrequest(context, Request.Method.GET,
+                        APIUrl.BASE_URL + APIUrl.LOGOUT,
+                        true, null, response -> {
+                            AuthUtils.removeAccountLogout(context);
+                            CustomChat.INSTANCE.setupSocket(context);
+                            Intent nin = new Intent(context, Home.class);
+                            nin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(nin);
+                        }, null))
                 .setNegativeButton(context.getString(R.string.no), null)
             .show();
     }
@@ -94,8 +88,7 @@ public class AuthUtils {
         AccountManager am = AccountManager.get(context);
         if (!hasAccount(context, am))
             return "";
-        String str = am.getUserData(getAppAccount(context, am), "picture");
-        return str;
+        return am.getUserData(getAppAccount(context, am), "picture");
     }
 
     public static Boolean getPremiumStatus(final Context context)

@@ -135,11 +135,7 @@ public class APIRequest {
                         AlertDialog.Builder build = new AlertDialog.Builder(context);
                         build.setTitle(context.getString(R.string.not_verified_title))
                                 .setMessage(context.getString(R.string.not_verified_message))
-                                .setPositiveButton(context.getString(R.string.not_verified_resend), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        NetworkUtils.sendMail(context);
-                                    }
-                                })
+                                .setPositiveButton(context.getString(R.string.not_verified_resend), (dialog, id) -> NetworkUtils.sendMail(context))
                                 .setNegativeButton(context.getString(R.string.not_verified_nope), null)
                                 .show();
                     }

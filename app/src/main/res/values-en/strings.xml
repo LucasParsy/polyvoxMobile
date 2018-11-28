@@ -36,7 +36,7 @@
     <string name="login_connection_problem">login issues?</string>
     <string name="login_create_prompt">didn\'t joined the community yet?</string>
     <string name="login_create_account">Create an account</string>
-    <string name="account_created">Your account has been created, you can login!</string>
+    <string name="account_created">Your account has been created, you are now logged in!</string>
     <string name="login_incorrect_credentials">Incorrect E-mail or password</string>
     <string name="new_incorrect_credentials">Incorrect new E-mail or password</string>
     <string name="logout">Logout</string>
