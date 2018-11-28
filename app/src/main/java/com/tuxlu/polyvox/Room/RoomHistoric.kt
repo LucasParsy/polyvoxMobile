@@ -5,6 +5,7 @@ package com.tuxlu.polyvox.Room
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.View
 import com.android.volley.Request
 import com.google.android.exoplayer2.Player
@@ -41,9 +42,12 @@ class RoomHistoric : RoomBase() {
         historic = Fragment.instantiate(this, HistoricListRecycler::class.java.name) as HistoricListRecycler
         historic.arguments = bundle
 
-        val username = AuthUtils.getUsername(applicationContext)
-        val fragments = getCommonFragments(username)
-        fragments.add(0, historic) //add at beginning
+        //val username = AuthUtils.getUsername(applicationContext)
+        val fragments : ArrayList<Fragment>  = ArrayList()
+        fragments.add(historic) //add at beginning
+        fragments.add(this.getRoomChat(AuthUtils.getUsername(applicationContext))) //dummy, no chat!
+        fileList = this.getFileList() as FLRecycler
+        fragments.add(fileList)
         setUpFragments(fragments)
 
         manifestHandler.post(manifestRunnable)

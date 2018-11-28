@@ -40,8 +40,11 @@ class RoomDirect : RoomBase(), DialogFragmentInterface {
         waitlist.arguments = bundle
 
         val username = AuthUtils.getUsername(applicationContext)
-        val fragments = getCommonFragments(username)
-        fragments.add(0, waitlist)
+        val fragments : ArrayList<Fragment>  = ArrayList()
+        fragments.add(waitlist)
+        fragments.add(this.getRoomChat(username)) //val fragments = getCommonFragments(username)
+        fileList = this.getFileList() as FLRecycler
+        fragments.add(fileList)
         setUpFragments(fragments)
 
         manifestHandler.post(manifestRunnable)

@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -50,8 +51,8 @@ abstract class RoomBase : AppCompatActivity() {
 
     protected lateinit var fileList: FLRecycler
 
-    protected lateinit var mInterstitialAd : InterstitialAd //setup this in child onCreate with InterstitialAd(this)
-    protected lateinit var streaming : Streaming
+    protected lateinit var mInterstitialAd: InterstitialAd //setup this in child onCreate with InterstitialAd(this)
+    protected lateinit var streaming: Streaming
     private lateinit var castContext: CastContext
 
     protected open val tabTitles = intArrayOf(R.string.tab_queue, R.string.tab_chat, R.string.tab_files)
@@ -63,32 +64,39 @@ abstract class RoomBase : AppCompatActivity() {
     private var transitionHandler = Handler()
     abstract var hasHistory: Boolean;
 
-    fun getCommonFragments(username: String): ArrayList<Fragment>
-    {
+    fun getRoomChat(username: String): Fragment {
         val roomChat = Fragment.instantiate(this, RoomChat::class.java.name)
         val bundle = Bundle()
         bundle.putString("username", username)
         bundle.putString("token", token)
         bundle.putBoolean("history", hasHistory)
         roomChat.arguments = bundle
-
-        fileList = Fragment.instantiate(this, FLRecycler::class.java.name) as FLRecycler
-
-        return arrayListOf(roomChat, fileList)
+        return roomChat
     }
 
-    fun setUpFragments(fragments: ArrayList<Fragment>)
-    {
+    fun getFileList(): Fragment {
+        return Fragment.instantiate(this, FLRecycler::class.java.name)
+    }
+
+    fun setUpFragments(fragments: ArrayList<Fragment>) {
         val adapter = PagerAdapter(supportFragmentManager, fragments, tabTitles, this)
         pager.adapter = adapter
         pager.offscreenPageLimit = 3
+
         tabLayoutHome.setupWithViewPager(pager)
         for (i in 0..(fragments.size - 1)) {
+            //Log.wtf("PolyRoom", "FRAGMENT NAME: " + fragments[0]::class::simpleName)
             val tab = tabLayoutHome.getTabAt(i)
             tab!!.setIcon(tabIcons[i])
             tab.icon!!.setColorFilter(ContextCompat.getColor(this, R.color.cornflower_blue_two_24), PorterDuff.Mode.SRC_ATOP)
         }
 
+        if (fragments.size == 2) //sad hack to remove history
+        {
+            val tab = tabLayoutHome.getTabAt(1)
+            tab!!.setIcon(tabIcons[2])
+            tab.setText(tabTitles[2])
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,8 +125,7 @@ abstract class RoomBase : AppCompatActivity() {
         //player_room_subtitle.text = "sous-titre"
     }
 
-    private fun setupAd()
-    {
+    private fun setupAd() {
         mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
         //mInterstitialAd.adUnitId = "ca-app-pub-4121964947351781/9439952508" //vrai
         mInterstitialAd.loadAd(AdRequest.Builder().build())

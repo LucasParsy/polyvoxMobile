@@ -72,7 +72,7 @@ object CustomChat : WebSocketClient.Listener {
                 if (cmd == "history") roomMessages.clear() else listUsers.clear()
                 for (i in 0 until arr.length()) {
                     if (cmd == "history") {
-                        roomMessages.add(addSingleMessage(arr.getJSONObject(i).getJSONObject("data")))
+                        roomMessages.add(addSingleMessage(arr.getJSONObject(i)))
                     } else if (cmd == "msg_list") {
                         listUsers.add(getSingleUser(arr.getJSONObject(i).getJSONObject("userinfo")))
                     }
@@ -158,8 +158,8 @@ object CustomChat : WebSocketClient.Listener {
     fun joinRoom(token: String, history: Boolean = false) {
         socket.send("/join $token")
         roomMessages.clear()
-        //if (history) //todo: reactivate if does not nake the server crash anymore
-            //socket.send("/history $token 0")
+        if (history) //todo: reactivate if does not nake the server crash anymore
+            socket.send("/history $token 0")
     }
 
     fun quitRoom() {
