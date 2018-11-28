@@ -13,6 +13,7 @@ import com.tuxlu.polyvox.Search.SearchRoomRecycler
 import com.tuxlu.polyvox.Utils.API.APIRequest
 import com.tuxlu.polyvox.Utils.API.APIUrl
 import com.tuxlu.polyvox.Utils.UIElements.LoadingUtils
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -27,10 +28,14 @@ open class DiscoverRoomRecycler : SearchRoomRecycler() {
     override fun setLayoutManager(): RecyclerView.LayoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.homepage_rooms_row_number))
 
-    open fun parseTopData(response: JSONObject)
-    {
-        this.add(response.getJSONObject("data").getJSONArray("running"), true)
-        this.add(response.getJSONObject("data").getJSONArray("created"), false)
+    open fun parseTopData(response: JSONObject) {
+        val arr: JSONArray = response.getJSONObject("data").getJSONArray("running")
+        val arr2: JSONArray = response.getJSONObject("data").getJSONArray("created")
+        for (i in 0 until arr2.length())
+            arr.put(arr2[i])
+
+        this.add(arr, true)
+        //this.add(response.getJSONObject("data").getJSONArray("created"), false)
     }
 
     private fun updateRooms() {
