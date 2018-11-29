@@ -17,6 +17,7 @@ import android.os.Environment
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AlertDialog
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -67,8 +68,12 @@ class UtilsTemp {
             build.setPositiveButton(context.getString(R.string.subscribe)
             ) { _, _ ->
                 APIRequest.JSONrequest(context, Request.Method.POST, APIUrl.BASE_URL + APIUrl.PREMIUM, true, body,
-                        { _ ->
+                        {
                             AuthUtils.setPremiumStatus(context)
+                            val i = context.packageManager
+                                    .getLaunchIntentForPackage(context.packageName)
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(context, i, null)
                             showToast(context, context.getString(R.string.premium_ok))
                         }, null)
             }
