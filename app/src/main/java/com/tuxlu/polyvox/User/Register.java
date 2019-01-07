@@ -140,11 +140,6 @@ public class Register extends AppCompatActivity {
 
         AuthRequest jsObjRequest = new AuthRequest(context, IDText, Request.Method.POST, APIUrl.BASE_URL + APIUrl.REGISTER, req,
                 response -> {
-                    AccountManager am = AccountManager.get(context);
-                    Account account = AuthUtils.getAppAccount(context, am);
-                    am.setUserData(account, "name", IDText);
-                    am.setUserData(account, "picture", "");
-                    am.setUserData(account, "premiumStatus", "");
                     button.setText(getString(R.string.create_account));
                     NetworkUtils.sendMail(getApplicationContext(), r -> endActivity());
                     UtilsTemp.showToast(context,getString(R.string.account_created), ToastType.SUCCESS);

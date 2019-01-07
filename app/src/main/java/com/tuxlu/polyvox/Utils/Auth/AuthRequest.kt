@@ -51,6 +51,11 @@ class AuthRequest(ncontext: Context, nlogin: String, method: Int, url: String, j
                 am.setUserData(account, "picture", url)
                 val premiumStatus = jsonResponse.getJSONObject("data").getString("privileges")
                 am.setUserData(account, "premiumStatus", premiumStatus)
+            } else {
+                am.setUserData(account, "name", login.capitalize())
+                am.setUserData(account, "picture", "")
+                am.setUserData(account, "premiumStatus", "")
+
             }
             return Response.success(jsonResponse, HttpHeaderParser.parseCacheHeaders(response))
         } catch (e: Exception) {
